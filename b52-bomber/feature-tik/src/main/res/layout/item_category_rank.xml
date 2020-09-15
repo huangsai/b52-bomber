@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_category_rank"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/size_78dp"
+    android:orientation="horizontal">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_play_count"
+        android:layout_width="@dimen/size_0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/img_play_count"
+            style="@style/ConCon"
+            android:scaleType="centerCrop"
+            android:src="@drawable/fl_bg2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txt_play_title"
+            style="@style/WrapWrap"
+            android:layout_marginLeft="@dimen/size_8dp"
+            android:text="最高播放榜"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/font_15sp"
+            app:layout_constraintLeft_toLeftOf="@+id/img_play_count"
+            app:layout_constraintTop_toTopOf="@+id/img_play_count" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/img_play_profile"
+            android:layout_width="@dimen/size_40dp"
+            android:layout_height="@dimen/size_40dp"
+            app:layout_constraintBottom_toBottomOf="@+id/img_play_count"
+            app:layout_constraintLeft_toLeftOf="@+id/txt_play_title"
+            app:layout_constraintTop_toBottomOf="@+id/txt_play_title"
+            app:shapeAppearanceOverlay="@style/CircleImageView"
+            tools:srcCompat="@drawable/default_profile" />
+
+        <TextView
+            android:id="@+id/txt_play_name"
+            style="@style/WrapWrap"
+            android:layout_marginLeft="@dimen/size_8dp"
+            android:lines="2"
+            android:maxLines="2"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/font_14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/img_play_profile"
+            app:layout_constraintLeft_toRightOf="@+id/img_play_profile"
+            app:layout_constraintTop_toTopOf="@+id/img_play_profile"
+            tools:text="路人甲\nTop.1" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_like_count"
+        android:layout_width="@dimen/size_0dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/size_10dp"
+        android:layout_weight="1">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/img_like_count"
+            style="@style/ConCon"
+            android:scaleType="centerCrop"
+            android:src="@drawable/fl_bg1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txt_like_title"
+            style="@style/WrapWrap"
+            android:layout_marginLeft="@dimen/size_8dp"
+            android:text="最高点赞榜"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/font_15sp"
+            app:layout_constraintLeft_toLeftOf="@+id/img_like_count"
+            app:layout_constraintTop_toTopOf="@+id/img_like_count" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/img_like_profile"
+            android:layout_width="@dimen/size_40dp"
+            android:layout_height="@dimen/size_40dp"
+            app:layout_constraintBottom_toBottomOf="@+id/img_like_count"
+            app:layout_constraintLeft_toLeftOf="@+id/txt_like_title"
+            app:layout_constraintTop_toBottomOf="@+id/txt_like_title"
+            app:shapeAppearanceOverlay="@style/CircleImageView"
+            tools:srcCompat="@drawable/default_profile" />
+
+        <TextView
+            android:id="@+id/txt_like_name"
+            style="@style/WrapWrap"
+            android:layout_marginLeft="@dimen/size_8dp"
+            android:lines="2"
+            android:maxLines="2"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/font_14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/img_like_profile"
+            app:layout_constraintLeft_toRightOf="@+id/img_like_profile"
+            app:layout_constraintTop_toTopOf="@+id/img_like_profile"
+            tools:text="路人甲\nTop.1" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

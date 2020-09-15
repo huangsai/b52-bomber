@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_msg"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/size_56dp"
+    android:background="@android:color/black">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/img_profile"
+        android:layout_width="@dimen/size_40dp"
+        android:layout_height="@dimen/size_40dp"
+        android:layout_marginLeft="@dimen/size_16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/CircleImageView"
+        tools:srcCompat="@drawable/default_profile" />
+
+    <TextView
+        android:id="@+id/txt_title"
+        style="@style/WrapWrap"
+        android:layout_marginLeft="@dimen/size_8dp"
+        android:gravity="center_vertical"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/font_15sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline1"
+        app:layout_constraintLeft_toRightOf="@+id/img_profile"
+        tools:text="系统通知" />
+
+    <TextView
+        android:id="@+id/txt_content"
+        style="@style/WrapWrap"
+        android:gravity="center_vertical"
+        android:textColor="@color/msg_desc"
+        android:textSize="@dimen/font_14sp"
+        app:layout_constraintLeft_toLeftOf="@+id/txt_title"
+        app:layout_constraintTop_toBottomOf="@+id/guideline1"
+        tools:text="动漫合计，不容错过" />
+
+    <TextView
+        android:id="@+id/txt_time"
+        style="@style/WrapWrap"
+        android:layout_marginTop="@dimen/size_8dp"
+        android:layout_marginRight="@dimen/size_16dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/msg_desc"
+        android:textSize="@dimen/font_14sp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="2020-08-28" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

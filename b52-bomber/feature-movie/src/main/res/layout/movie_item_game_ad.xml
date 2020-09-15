@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/size_60dp"
+    android:paddingLeft="@dimen/size_10dp"
+    android:paddingRight="@dimen/size_10dp"
+    tools:background="@color/main_background">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/img_icon"
+        android:layout_width="@dimen/size_44dp"
+        android:layout_height="@dimen/size_44dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/jq_icon_40" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guide1"
+        style="@style/WrapWrap"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <TextView
+        android:id="@+id/txt_title"
+        style="@style/WrapWrap"
+        android:layout_marginLeft="@dimen/size_10dp"
+        android:text="TextView"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/font_15sp"
+        app:layout_constraintBottom_toTopOf="@+id/guide1"
+        app:layout_constraintStart_toEndOf="@+id/img_icon" />
+
+    <TextView
+        android:id="@+id/txt_desc"
+        style="@style/WrapWrap"
+        android:text="TextView"
+        android:textColor="@color/movie_player_game_ad_desc"
+        app:layout_constraintStart_toStartOf="@+id/txt_title"
+        app:layout_constraintTop_toBottomOf="@+id/guide1" />
+
+    <TextView
+        android:id="@+id/txt_go"
+        android:layout_width="@dimen/size_64dp"
+        android:layout_height="@dimen/size_32dp"
+        android:background="@drawable/movie_player_game_ad_go"
+        android:gravity="center"
+        android:text="@string/movie_player_game_ad_go"
+        android:textSize="@dimen/font_15sp"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

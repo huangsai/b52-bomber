@@ -1,0 +1,15 @@
+apply plugin: 'com.android.library'
+apply from: '../gradle/android_module.gradle'
+apply plugin: 'android-aspectjx'
+
+android {
+}
+
+aspectjx {
+    exclude 'com.squareup.leakcanary'
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    api project(':app-runner')
+}

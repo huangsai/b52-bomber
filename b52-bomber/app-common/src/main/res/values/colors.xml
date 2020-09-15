@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+00%=FF（不透明）
+5%=F2
+10%=E5
+15%=D8
+20%=CC
+25%=BF
+30%=B2
+35%=A5
+40%=99
+45%=8c
+50%=7F
+55%=72
+60%=66
+65%=59
+70%=4c
+75%=3F
+80%=33
+85%=21
+90%=19
+95%=0c
+100%=00（全透明）
+-->
+<resources>
+    <color name="colorPrimary">@color/main_background</color>
+    <color name="colorPrimaryDark">@color/main_background</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="main_background">#060612</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="transparent">#00000000</color>
+    <color name="colorRed">#FF3333</color>
+
+    <!--    文字公共颜色值-->
+    <color name="color_text_848388">#848388</color>
+    <color name="color_text_white">#FFFFFF</color>
+    <color name="color_text_3478f6">#3478f6</color>
+    <color name="color_text_black">#000000</color>
+    <color name="color_text_605d69">#605d69</color>
+    <color name="color_text_5b5b5b">#5b5b5b</color>
+    <color name="color_text_919095">#919095</color>
+    <color name="color_text_bab8c0">#bab8c0</color>
+    <color name="color_text_ffcc00">#FFCC00</color>
+    <color name="color_text_37374c">#37374c</color>
+
+</resources>

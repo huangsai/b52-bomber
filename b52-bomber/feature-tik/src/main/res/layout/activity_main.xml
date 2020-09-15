@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/MatchMatch"
+    android:background="@color/main_background">
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view_pager"
+        style="@style/ConCon"
+        app:layout_constraintBottom_toTopOf="@+id/main_rg"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RadioGroup
+        android:id="@+id/main_rg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/size_10dp"
+        android:paddingBottom="@dimen/size_10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <RadioButton
+            android:id="@+id/main_home_rb"
+            android:layout_width="@dimen/size_0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:button="@null"
+            android:checked="true"
+            android:drawableTop="@drawable/main_tab_home"
+            android:drawablePadding="@dimen/size_5dp"
+            android:gravity="center"
+            android:text="@string/main_tab_home"
+            android:textColor="@color/color_home_tab_text" />
+
+        <RadioButton
+            android:id="@+id/main_categoty_rb"
+            android:layout_width="@dimen/size_0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:button="@null"
+            android:drawableTop="@drawable/main_tab_category"
+            android:drawablePadding="@dimen/size_5dp"
+            android:gravity="center"
+            android:text="@string/main_tab_category"
+            android:textColor="@color/color_home_tab_text" />
+
+        <View
+            android:layout_width="@dimen/size_0dp"
+            android:layout_height="@dimen/size_0dp"
+            android:visibility="gone"
+            android:layout_weight="1" />
+
+        <RadioButton
+            android:id="@+id/main_msg_rb"
+            android:layout_width="@dimen/size_0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:button="@null"
+            android:drawableTop="@drawable/main_tab_msg"
+            android:drawablePadding="@dimen/size_5dp"
+            android:gravity="center"
+            android:text="@string/main_tab_mgs"
+            android:textColor="@color/color_home_tab_text" />
+
+        <RadioButton
+            android:id="@+id/main_mine_rb"
+            android:layout_width="@dimen/size_0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:button="@null"
+            android:drawableTop="@drawable/main_tab_mine"
+            android:drawablePadding="@dimen/size_5dp"
+            android:gravity="center"
+            android:text="@string/main_tab_mine"
+            android:textColor="@color/color_home_tab_text" />
+    </RadioGroup>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/img_add"
+        style="@style/CommonImage"
+        android:src="@drawable/sy_shiping"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/main_rg"
+        app:layout_constraintLeft_toLeftOf="@+id/main_rg"
+        app:layout_constraintRight_toRightOf="@+id/main_rg"
+        app:layout_constraintTop_toTopOf="@+id/main_rg" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

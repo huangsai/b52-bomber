@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="horizontal"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/black"
+
+    >
+
+    <LinearLayout
+        android:id="@+id/back_root"
+
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:gravity="center_vertical"
+        android:background="#000000"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/imgBtn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:background="#00000000"
+            android:scaleType="fitCenter"
+            android:src="@drawable/gg_fanhui" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="10"
+            android:layout_marginLeft="@dimen/size_40dp"
+            android:layout_marginRight="@dimen/size_40dp"
+            android:gravity="center"
+            android:text="@string/bind_wechat_num"
+            android:textColor="#ffffff"
+            android:textAlignment="center"
+            android:textSize="17dp" />
+
+        <TextView
+            android:id="@+id/imgBtn_finsh"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="20dp"
+            android:text="@string/save_activity_info"
+           android:gravity="center_vertical"
+            android:textAlignment="center"
+
+            android:textSize="16dp"
+            android:textColor="#ffffff"
+             />
+    </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_below="@+id/back_root"
+            android:layout_marginTop="@dimen/size_10dp"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/nick"
+                android:text="我的微信号"
+                android:textSize="15dp"
+                android:textColor="#ffffff"
+                android:layout_weight="1"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="@dimen/font_20sp"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:id="@+id/edit_text"
+                android:layout_below="@+id/nick"
+                android:hint="@string/bind_wechat_num"
+                android:textColorHint="#848388"
+                android:textColor="#848388"
+                android:textSize="15dp"
+                android:layout_marginTop="@dimen/size_10dp"
+                android:layout_marginRight="@dimen/size_10dp"
+                android:layout_marginLeft="@dimen/size_10dp"
+                android:gravity="center_vertical|left"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+<!--        <View-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="0.5dp"-->
+
+<!--            android:background="#090808"/>-->
+
+
+
+
+
+</RelativeLayout>

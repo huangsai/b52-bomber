@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000">
+
+    <LinearLayout
+        android:id="@+id/fl_videoView_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/rootView"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="@dimen/size_10dp"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/back_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/gg_fanhui" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="30dp"
+                android:gravity="center"
+                android:text="发布视频"
+                android:textColor="#ffffff"
+                android:textSize="16dp" />
+        </LinearLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/topView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
+
+            <ImageView
+                android:id="@+id/record_cover_img"
+                android:layout_width="150dp"
+                android:layout_height="200dp"
+                android:layout_marginLeft="20dp"
+                android:scaleType="centerCrop" />
+
+            <EditText
+
+                android:id="@+id/editDes"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_toRightOf="@+id/record_cover_img"
+                android:background="@null"
+                android:gravity="top|left"
+                android:hint="添加视频描述。。。"
+                android:maxLength="22"
+                android:textColor="#bab8c0"
+                android:textColorHint="#bab8c0"
+                android:textSize="15dp" />
+
+            <TextView
+                android:id="@+id/text_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editDes"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:text="0/22"
+                android:textColor="#bab8c0"
+                android:textSize="16dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/centerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:id="@+id/comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="推荐话题"
+                android:textColor="#ffffff"
+                android:textSize="16dp" />
+
+
+            <com.mobile.app.bomber.common.base.views.ShowButtonLayout
+                android:id="@+id/mShowBtnLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/comment"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="10dp"
+                android:background="#000000" />
+
+
+            <TextView
+                android:id="@+id/tv_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/mShowBtnLayout"
+                android:layout_marginLeft="@dimen/size_16dp"
+                android:layout_marginTop="@dimen/size_20dp"
+                android:drawableLeft="@drawable/publish_location_icon_selector"
+                android:drawablePadding="@dimen/size_10dp"
+                android:gravity="center_vertical"
+                android:text="未启动定位"
+                android:textColor="@drawable/publish_location_text_selector"
+                android:textSize="14dp" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/share"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="分享至"
+                android:textColor="#bab8c0"
+                android:textSize="16dp"></TextView>
+
+            <LinearLayout
+                android:id="@+id/solocal"
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp">
+
+                <LinearLayout
+                    android:id="@+id/ll_share_wechat_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    tools:ignore="Suspicious0dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/share"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="50dp"
+                        android:gravity="right">
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="130dp">
+
+                            <ImageView
+                                android:id="@+id/weixin"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:src="@drawable/share_wechat_btn_selector"></ImageView>
+
+                            <TextView
+                                android:id="@+id/share_wechat_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/weixin"
+                                android:layout_centerInParent="true"
+                                android:layout_marginTop="5dp"
+                                android:gravity="center"
+                                android:text="微信"
+                                android:textColor="@drawable/share_text_color"
+                                android:textSize="16dp"></TextView>
+                        </RelativeLayout>
+
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_share_qq_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="140dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    tools:ignore="Suspicious0dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/share"
+                        android:layout_marginLeft="50dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="left">
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="130dp">
+
+                            <ImageView
+                                android:id="@+id/qq"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:src="@drawable/share_qq_btn_selector"></ImageView>
+
+                            <TextView
+                                android:id="@+id/share_qq_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/qq"
+                                android:layout_centerInParent="true"
+                                android:layout_marginTop="5dp"
+                                android:gravity="center"
+                                android:text="QQ"
+                                android:textColor="@drawable/share_text_color"
+                                android:textSize="16dp"></TextView>
+
+                        </RelativeLayout>
+
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/checkboxlayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <CheckBox
+                android:id="@+id/checkbox_release"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="90dp"
+                android:theme="@style/My_CheckBox"></CheckBox>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:text="保存本地"
+                android:textAlignment="center"
+                android:textColor="#d2cfe2"
+                android:textSize="16dp">
+
+            </TextView>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="50dp">
+
+            <Button
+                android:id="@+id/developVideo"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:background="@drawable/login_sett"
+                android:text="确认发布"
+                android:textColor="@color/white" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

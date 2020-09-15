@@ -1,0 +1,29 @@
+<resources>
+    <string name="movie_app_name">长视频</string>
+    <string name="movie_text_all_label">全部频道</string>
+    <string name="movie_search_input_hint">输入电影名称或导演，演员信息</string>
+    <string name="movie_text_empty_click_refresh">暂无数据，点击刷新</string>
+    <string name="movie_text_top_like_label">猜你喜欢</string>
+    <string name="movie_text_top_recommend_label">为你推荐</string>
+    <string name="movie_text_visit_history_label">历史观看</string>
+    <string name="movie_text_visit_friend_label">好友观看</string>
+    <string name="movie_text_recommend_best_label">小编力推</string>
+    <string name="movie_player_game_ad_go">前往</string>
+    <string name="movie_player_movie_play_count">{count}次播放，影片简介 ></string>
+    <string name="movie_player_movie_bookmark">收藏</string>
+    <string name="movie_player_movie_download">下载</string>
+    <string name="movie_player_movie_share">分享</string>
+    <string name="movie_player_movie_like">点赞\u3000{count}</string>
+    <string name="movie_player_comment_title">全部热评</string>
+    <string name="movie_player_comment_count">{count}条评论</string>
+    <string name="movie_comment_hint">我来说两句</string>
+    <string name="movie_player_comment_no_more">无更多评论</string>
+    <string name="movie_search_cancel">取消</string>
+    <string name="movie_search_done">搜索</string>
+    <string name="movie_search_history_label">搜索历史</string>
+    <string name="movie_search_history_clear">清除</string>
+    <string name="movie_search_recommend_label">推荐热搜</string>
+    <string name="movie_search_today_label">今日热搜索</string>
+    <string name="movie_pls_input_search_content">请输入搜索内容</string>
+    <string name="movie_search_result_recommend_title">没有搜出你喜欢的电影？下面短视频你也许会喜欢</string>
+</resources>

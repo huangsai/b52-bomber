@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_category_title"
+    style="@style/CategoryTitle"
+    android:layout_marginLeft="@dimen/size_8dp"
+    android:layout_marginTop="@dimen/size_6dp"
+    android:layout_marginBottom="@dimen/size_6dp"
+    android:drawablePadding="@dimen/size_6dp"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    tools:drawableLeft="@drawable/fl_huobaohuodong"
+    tools:text="火爆活动" />
+

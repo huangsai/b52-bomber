@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/MatchMatch"
+    app:cardCornerRadius="@dimen/size_8dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_content"
+        style="@style/MatchMatch">
+
+        <com.google.android.exoplayer2.ui.PlayerView
+            android:id="@+id/view_player"
+            style="@style/ConCon"
+            android:background="@color/home_background"
+            app:hide_on_touch="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:resize_mode="fixed_width"
+            app:use_controller="false">
+
+        </com.google.android.exoplayer2.ui.PlayerView>
+
+        <ImageView
+            android:id="@+id/img_cover"
+            android:layout_width="@dimen/size_0dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ProgressBar
+            android:id="@+id/progress"
+            style="?android:attr/progressBarStyleInverse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="@android:color/white"
+            android:indeterminateTintMode="src_in"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/img_profile"
+            android:layout_width="@dimen/size_50dp"
+            android:layout_height="@dimen/size_50dp"
+            android:layout_marginBottom="@dimen/size_30dp"
+            app:layout_constraintBottom_toTopOf="@+id/txt_liked"
+            app:layout_constraintLeft_toLeftOf="@+id/img_music"
+            app:layout_constraintRight_toRightOf="@+id/img_music"
+            app:shapeAppearanceOverlay="@style/CircleImageView"
+            tools:srcCompat="@drawable/default_profile" />
+
+        <ImageView
+            android:id="@+id/img_add"
+            style="@style/CommonImage"
+            app:layout_constraintBottom_toBottomOf="@+id/img_profile"
+            app:layout_constraintLeft_toLeftOf="@+id/img_music"
+            app:layout_constraintRight_toRightOf="@+id/img_music"
+            app:layout_constraintTop_toBottomOf="@+id/img_profile"
+            tools:srcCompat="@drawable/sy_tianjia" />
+
+        <TextView
+            android:id="@+id/txt_liked"
+            style="@style/RecommendPlayAction"
+            android:drawableTop="@drawable/play_like"
+            app:layout_constraintBottom_toTopOf="@+id/txt_comment"
+            app:layout_constraintLeft_toLeftOf="@+id/img_music"
+            app:layout_constraintRight_toRightOf="@+id/img_music"
+            tools:text="@string/abc" />
+
+        <TextView
+            android:id="@+id/txt_comment"
+            style="@style/RecommendPlayAction"
+            android:drawableTop="@drawable/sy_xiaoxi"
+            app:layout_constraintBottom_toTopOf="@+id/txt_share"
+            app:layout_constraintLeft_toLeftOf="@+id/img_music"
+            app:layout_constraintRight_toRightOf="@+id/img_music"
+            tools:text="@string/abc" />
+
+        <TextView
+            android:id="@+id/txt_share"
+            style="@style/RecommendPlayAction"
+            android:drawableTop="@drawable/sy_fenxiang"
+            app:layout_constraintBottom_toTopOf="@+id/img_music"
+            app:layout_constraintLeft_toLeftOf="@+id/img_music"
+            app:layout_constraintRight_toRightOf="@+id/img_music"
+            tools:text="@string/abc" />
+
+        <ImageView
+            android:id="@+id/img_music"
+            android:layout_width="@dimen/size_40dp"
+            android:layout_height="@dimen/size_40dp"
+            android:layout_marginRight="@dimen/size_20dp"
+            android:layout_marginBottom="@dimen/size_32dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:srcCompat="@drawable/sy_yinyueneipan" />
+
+        <FrameLayout
+            android:id="@+id/layout_link"
+            android:layout_width="@dimen/size_108dp"
+            android:layout_height="@dimen/size_30dp"
+            android:layout_marginLeft="@dimen/size_20dp"
+            android:layout_marginBottom="@dimen/size_16dp"
+            android:background="@color/play_ad_view_detail"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent">
+
+            <TextView
+                android:id="@+id/txt_link"
+                style="@style/WrapWrap"
+                android:layout_gravity="center"
+                android:drawableRight="@drawable/sy_chakanxiangqing"
+                android:drawablePadding="@dimen/size_4dp"
+                android:gravity="center"
+                android:text="@string/ad_view_detail"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/font_15sp" />
+        </FrameLayout>
+
+        <ImageView
+            android:id="@+id/img_music_source"
+            style="@style/CommonImage"
+            android:layout_marginLeft="@dimen/size_20dp"
+            android:layout_marginBottom="@dimen/size_12dp"
+            app:layout_constraintBottom_toTopOf="@+id/layout_link"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_goneMarginBottom="@dimen/size_32dp"
+            app:srcCompat="@drawable/sy_yinyuefu" />
+
+        <TextView
+            android:id="@+id/txt_name"
+            style="@style/WrapWrap"
+            android:layout_marginBottom="@dimen/size_10dp"
+            android:gravity="left|center_vertical"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/font_16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/txt_desc"
+            app:layout_constraintLeft_toLeftOf="@+id/img_music_source"
+            tools:text="@string/abc" />
+
+        <com.borjabravo.readmoretextview.ReadMoreTextView
+            android:id="@+id/txt_desc"
+            style="@style/WrapWrap"
+            android:layout_marginBottom="@dimen/size_12dp"
+            android:gravity="left|center_vertical"
+            android:lineSpacingExtra="@dimen/size_10dp"
+            android:maxWidth="@dimen/size_164dp"
+            android:minWidth="@dimen/size_24dp"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/font_16sp"
+            app:colorClickableText="@android:color/white"
+            app:layout_constraintBottom_toTopOf="@+id/img_music_source"
+            app:layout_constraintLeft_toLeftOf="@+id/img_music_source"
+            app:layout_constraintWidth_max="@dimen/size_164dp"
+            app:layout_constraintWidth_min="@dimen/size_24dp"
+            app:showTrimExpandedText="true"
+            app:trimCollapsedText="@string/comment_trim_collapsed"
+            app:trimExpandedText="@string/comment_trim_expanded"
+            app:trimLines="2"
+            app:trimMode="trimModeLine" />
+
+        <ImageView
+            android:id="@+id/img_ad_label"
+            style="@style/CommonImage"
+            android:paddingLeft="@dimen/size_8dp"
+            android:src="@drawable/sy_ad_label"
+            app:layout_constraintLeft_toRightOf="@+id/txt_desc"
+            app:layout_constraintTop_toTopOf="@+id/txt_desc" />
+
+        <FrameLayout
+            android:layout_width="@dimen/size_144dp"
+            android:layout_height="@dimen/size_30dp"
+            android:paddingLeft="@dimen/size_2dp"
+            app:layout_constraintBottom_toBottomOf="@+id/img_music_source"
+            app:layout_constraintLeft_toRightOf="@+id/img_music_source"
+            app:layout_constraintTop_toTopOf="@+id/img_music_source">
+
+            <com.mobile.app.bomber.tik.base.views.MarqueeView
+                android:id="@+id/marquee"
+                style="@style/MatchMatch"
+                android:layout_gravity="center_vertical"
+                app:speed="@dimen/size_16dp"
+                app:text_color="@android:color/white"
+                app:text_shadowColor="@color/home_background"
+                app:text_size="@dimen/font_16sp"
+                app:txt_dx="1.0"
+                app:txt_dy="1.0"
+                app:txt_radius="1.0"
+                app:txt_spacing="@dimen/size_16dp" />
+
+        </FrameLayout>
+
+        <ImageView
+            android:id="@+id/img_play"
+            android:layout_width="@dimen/size_56dp"
+            android:layout_height="@dimen/size_56dp"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"
+            android:src="@drawable/sy_bofanganniu_guan"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatSeekBar
+            android:id="@+id/seek_bar"
+            android:layout_width="@dimen/size_0dp"
+            android:layout_height="wrap_content"
+            android:max="100"
+            android:min="0"
+            android:background="@android:color/transparent"
+            android:paddingStart="@dimen/size_8dp"
+            android:paddingTop="@dimen/size_12dp"
+            android:paddingEnd="@dimen/size_8dp"
+            android:progressBackgroundTint="@android:color/transparent"
+            android:progressTint="@android:color/white"
+            android:splitTrack="false"
+            android:thumb="@drawable/play_seek_bar_thumb"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

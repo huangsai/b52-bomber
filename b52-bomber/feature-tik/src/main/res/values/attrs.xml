@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="MarqueeView">
+        <attr name="speed" format="dimension" />
+        <attr name="text_size" format="dimension" />
+        <attr name="text_color" format="color|reference" />
+        <attr name="txt_spacing" format="dimension" />
+        <attr name="txt_radius" format="float" />
+        <attr name="txt_dx" format="float" />
+        <attr name="txt_dy" format="float" />
+        <attr name="text_shadowColor" format="color|reference" />
+    </declare-styleable>
+    <declare-styleable name="ProgressView">
+        <attr name="pv_radius" format="dimension|reference" />
+        <attr name="pv_bg_color" format="color|reference" />
+        <attr name="pv_content_color" format="color|reference" />
+        <attr name="pv_divider_color" format="color|reference" />
+        <attr name="pv_divider_width" format="dimension|reference" />
+    </declare-styleable>
+</resources>

@@ -1,0 +1,8 @@
+apply from: "../gradle/jvm_module.gradle"
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    api dep.company.guavaJvm
+    api dep.company.guavaHttps
+}

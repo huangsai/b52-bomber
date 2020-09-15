@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#000000"
+
+    >
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_5dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/header_img"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/line"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="@dimen/size_20dp"
+            app:shapeAppearanceOverlay="@style/CircleImageView"
+            android:src="@drawable/default_profile" />
+
+        <TextView
+            android:id="@+id/nofi_bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="@dimen/size_20dp"
+            android:layout_toRightOf="@+id/header_img"
+            android:gravity="left"
+            android:text="小蜜蜂呀"
+            android:textColor="#ffffff"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/Buddy_friend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="@dimen/size_20dp"
+            android:layout_toRightOf="@+id/nofi_bottom"
+            android:gravity="left"
+            android:text="好友"
+            android:textColor="#848388"
+            android:textSize="13dp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/desption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/nofi_bottom"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/header_img"
+            android:layout_weight="9"
+            android:gravity="left"
+            android:text="等6人攒了你的作品"
+            android:textColor="#ffffff"
+            android:textSize="13dp" />
+
+        <LinearLayout
+            android:id="@+id/viewGroud"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/desption"
+            android:layout_marginLeft="@dimen/size_5dp"
+            android:layout_marginTop="3dp"
+            android:layout_toRightOf="@+id/header_img"
+            android:orientation="horizontal">
+
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/direct_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/viewGroud"
+            android:layout_marginTop="@dimen/size_3dp"
+            android:layout_toRightOf="@+id/viewGroud"
+            android:src="@drawable/gg_fanhui"></androidx.appcompat.widget.AppCompatImageView>
+
+
+        <TextView
+            android:id="@+id/attention_date"
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/viewGroud"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="@dimen/size_5dp"
+            android:layout_toRightOf="@+id/header_img"
+            android:gravity="left"
+            android:text="5-5"
+            android:textColor="#848388"
+            android:textSize="13dp" />
+
+        <TextView
+            android:id="@+id/time_display"
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/desption"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="3dp"
+            android:layout_toRightOf="@+id/attention_date"
+            android:layout_weight="9"
+            android:gravity="left"
+            android:text="刚刚"
+            android:textColor="#848388"
+            android:textSize="13dp"
+            android:visibility="gone" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/LikeImage"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentRight="true"
+            android:layout_margin="13dp"
+            android:layout_marginTop="@dimen/font_20sp"
+            android:layout_marginRight="40dp"
+            android:gravity="center"
+            android:src="@drawable/default_profile"
+
+            />
+
+    </RelativeLayout>
+</RelativeLayout>

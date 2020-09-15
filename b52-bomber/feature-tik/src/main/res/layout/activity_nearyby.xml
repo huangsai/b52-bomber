@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    android:background="#000000"
+     android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/back_root"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+         android:layout_marginTop="@dimen/size_10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:orientation="horizontal"
+        tools:ignore="MissingConstraints">
+
+        <ImageButton
+            android:id="@+id/imgBtn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:background="#00000000"
+            android:scaleType="fitCenter"
+             android:src="@drawable/gg_fanhui" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/size_40dp"
+            android:layout_marginRight="@dimen/size_40dp"
+            android:layout_weight="10"
+            android:visibility="gone"
+            android:gravity="center"
+            android:text="@string/nick_activity_info"
+            android:textAlignment="center"
+            android:textColor="#ffffff"
+            android:textSize="17sp" />
+
+    </LinearLayout>
+
+     <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_nearby_container_view"
+        style="@style/ConCon"
+         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/back_root" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

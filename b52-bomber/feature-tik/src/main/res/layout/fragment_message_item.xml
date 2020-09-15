@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#000000"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_4dp"
+        android:layout_marginBottom="@dimen/size_4dp">
+
+        <ImageView
+            android:id="@+id/heartImage"
+            android:layout_width="45dp"
+            android:layout_height="55dp"
+            android:layout_alignTop="@+id/line"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/default_profile"
+
+            />
+
+        <TextView
+            android:id="@+id/nofi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/heartImage"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@+id/heartImage"
+            android:text="系统通知"
+            android:textAlignment="center"
+            android:textColor="#ffffff"
+
+            android:textSize="17dp" />
+
+        <TextView
+            android:id="@+id/nofi_bottom"
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/nofi"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="1dp"
+            android:layout_toRightOf="@+id/heartImage"
+            android:text="动漫合计，不容错过"
+            android:textAlignment="center"
+            android:textColor="#848388"
+            android:textSize="14dp" />
+
+        <TextView
+            android:id="@+id/nofi_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/nofi"
+
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:text="2020-08-28"
+            android:textAlignment="center"
+            android:textColor="#848388"
+            android:textSize="15dp"
+
+            />
+    </RelativeLayout>
+</RelativeLayout>

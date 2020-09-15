@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_comment_c"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/toolbar_height"
+    tools:background="@android:color/black">
+
+    <View
+        android:id="@+id/view_line"
+        android:layout_width="@dimen/size_36dp"
+        android:layout_height="@dimen/size_05dp"
+        android:background="@color/comment_line"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/txt_comment"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginRight="@dimen/size_8dp"
+        app:shapeAppearanceOverlay="@style/CircleImageView" />
+
+    <TextView
+        android:id="@+id/txt_comment"
+        style="@style/WrapWrap"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/font_16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="TextView" />
+
+    <ImageView
+        android:id="@+id/img_arrow"
+        style="@style/CommonImage"
+        android:layout_marginLeft="@dimen/size_4dp"
+        android:src="@drawable/baisesanjiaoxing"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_comment"
+        app:layout_constraintLeft_toRightOf="@+id/txt_comment"
+        app:layout_constraintTop_toTopOf="@+id/txt_comment" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,48 @@
+if (rootProject.ext.isMovieApplication) {
+    apply plugin: 'com.android.application'
+} else {
+    apply plugin: 'com.android.library'
+}
+apply from: '../gradle/android_module.gradle'
+
+android {
+    defaultConfig {
+        if (rootProject.ext.isMovieApplication) {
+            applicationId "com.mobile.app.bomber.movie"
+        }
+    }
+
+    sourceSets {
+        main {
+            if (rootProject.ext.isMovieApplication) {
+                manifest.srcFile 'src/main/AndroidManifest_app.xml'
+            } else {
+                manifest.srcFile 'src/main/AndroidManifest.xml'
+            }
+        }
+    }
+
+    resourcePrefix "movie_"
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    api project(':app-common')
+
+    implementation 'com.google.android.exoplayer:exoplayer-core:2.11.8'
+    implementation 'com.google.android.exoplayer:exoplayer-dash:2.11.8'
+    implementation 'com.google.android.exoplayer:exoplayer-hls:2.11.8'
+    implementation 'com.google.android.exoplayer:exoplayer-smoothstreaming:2.11.8'
+    implementation 'com.google.android.exoplayer:exoplayer-ui:2.11.8'
+    implementation 'com.google.android.exoplayer:extension-okhttp:2.11.8'
+
+    implementation 'com.linkedin.android.spyglass:spyglass:2.1.1'
+    implementation 'com.borjabravo:readmoretextview:2.1.0'
+    implementation 'com.youth.banner:banner:2.1.0'
+
+    implementation 'com.github.rubensousa:previewseekbar:3.0.0'
+    implementation 'com.github.rubensousa:previewseekbar-exoplayer:2.11.4.0'
+    implementation 'dev.chrisbanes:insetter:0.3.1'
+    implementation 'dev.chrisbanes:insetter-ktx:0.3.1'
+    implementation "com.github.skydoves:balloon:1.2.2"
+}

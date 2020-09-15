@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/uploadVideo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:textColor="#ffffff"
+            android:gravity="center"
+             android:text="上传视频"
+            android:textSize="18dp" />
+    </LinearLayout>
+
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_below="@+id/uploadVideo"
+       android:layout_height="wrap_content">
+       <ImageView
+           android:id="@+id/tv_shape"
+           android:src="@mipmap/ic_launcher"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:scaleType="centerCrop"
+           />
+
+   </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+
+        android:layout_height="180dp">
+
+
+        <ImageView
+            android:src="@mipmap/ic_launcher"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
+            android:layout_centerHorizontal="true"
+
+            />
+
+        <ProgressBar
+            android:id="@+id/progress_line"
+             android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="@dimen/size_10dp"
+            android:layout_marginRight="@dimen/size_10dp"
+            android:layout_centerVertical="true"
+               />
+
+        <ImageView
+            android:src="@mipmap/ic_launcher"
+            android:layout_below="@+id/progress_line"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true"
+             android:layout_alignParentBottom="true"
+            android:layout_marginBottom="25dp"
+
+            />
+
+        <TextView
+            android:src="@mipmap/ic_launcher"
+            android:layout_below="@+id/progress_line"
+            android:layout_width="70dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginRight="@dimen/size_40dp"
+             android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:text="下一步"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="16dp"
+            android:layout_marginBottom="30dp"
+
+            />
+    </RelativeLayout>
+</RelativeLayout>

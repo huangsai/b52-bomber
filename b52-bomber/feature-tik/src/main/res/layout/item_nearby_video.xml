@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_nearby_video"
+    style="@style/MatchWrap"
+    tools:background="@color/home_background">
+
+    <ImageView
+        android:id="@+id/img_cover"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_height="@dimen/size_300dp" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txt_desc"
+        style="@style/NearbyVideoName"
+        android:layout_width="@dimen/size_0dp"
+        android:padding="@dimen/size_10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img_cover"
+        tools:text="0.00km" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/img_profile"
+        android:layout_width="@dimen/size_40dp"
+        android:layout_height="@dimen/size_40dp"
+        android:layout_marginLeft="@dimen/size_10dp"
+        android:layout_marginBottom="@dimen/size_8dp"
+        app:layout_constraintBottom_toTopOf="@+id/txt_desc"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:shapeAppearanceOverlay="@style/CircleImageView"
+        tools:srcCompat="@drawable/default_profile" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txt_name"
+        style="@style/NearbyVideoName"
+        android:layout_marginLeft="@dimen/size_4dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@+id/img_profile"
+        app:layout_constraintLeft_toRightOf="@+id/img_profile"
+        app:layout_constraintTop_toTopOf="@+id/img_profile"
+        tools:text="TextView" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txt_distance"
+        style="@style/NearbyVideoName"
+        android:layout_marginRight="@dimen/size_10dp"
+        android:layout_marginBottom="@dimen/size_8dp"
+        android:drawableTop="@drawable/sy_dingweitubiao"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@+id/txt_desc"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:text="0.00km" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

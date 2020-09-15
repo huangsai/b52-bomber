@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/MatchWrap"
+    android:background="@drawable/sharecontent"
+    android:padding="@dimen/size_20dp">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txt_title"
+        style="@style/WrapWrap"
+        android:text="@string/share_title"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_16sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/img_close"
+        style="@style/CommonImage"
+        android:paddingLeft="@dimen/size_20dp"
+        android:src="@drawable/sy_quxiaochacha_bai"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txt_qq"
+        style="@style/ShareActionText"
+        android:layout_marginTop="@dimen/size_20dp"
+        android:drawableTop="@drawable/ps_qq"
+        android:text="@string/share_action_qq"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_title" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txt_wechat"
+        style="@style/ShareActionText"
+        android:drawableTop="@drawable/ps_weixin1"
+        android:text="@string/share_action_wechat"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_qq"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/txt_qq" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txt_link"
+        style="@style/ShareActionText"
+        android:drawableTop="@drawable/ps_fuzhilianjie"
+        android:text="@string/share_action_link"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_qq"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/txt_qq" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

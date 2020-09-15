@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/comment_input_round">
+
+    <com.mobile.guava.android.ui.view.expandable.ExpandableLayout2
+        android:id="@+id/layout_at"
+        style="@style/ConWrap"
+        android:layout_width="@dimen/size_0dp"
+        android:layout_height="@dimen/size_172dp"
+        android:paddingTop="@dimen/size_8dp"
+        app:el_expanded="false"
+        app:layout_constraintBottom_toTopOf="@+id/view_line"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical" />
+
+    </com.mobile.guava.android.ui.view.expandable.ExpandableLayout2>
+
+    <View
+        android:id="@+id/view_line"
+        android:layout_width="@dimen/size_0dp"
+        android:layout_height="@dimen/size_05dp"
+        android:background="@color/comment_name"
+        app:layout_constraintBottom_toTopOf="@+id/layout_input"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_input"
+        android:layout_width="@dimen/size_0dp"
+        android:layout_height="@dimen/size_48dp"
+        android:paddingLeft="@dimen/size_16dp"
+        android:paddingRight="@dimen/size_16dp"
+        app:layout_constraintBottom_toTopOf="@+id/chk_forward"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <com.linkedin.android.spyglass.ui.MentionsEditText
+            android:id="@+id/edit_comment"
+            style="@style/ConWrap"
+            android:layout_marginRight="@dimen/size_16dp"
+            android:background="@android:color/transparent"
+            android:gravity="center_vertical"
+            android:hint="@string/comment_hint"
+            android:imeOptions="actionSend"
+            android:lines="2"
+            android:textColorHint="@color/comment_input_hint"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/img_at"
+            app:layout_constraintTop_toTopOf="parent"
+            app:mentionTextColor="@color/comment_at"
+            app:selectedMentionTextBackgroundColor="@color/comment_at" />
+
+        <ImageView
+            android:id="@+id/img_at"
+            style="@style/CommonImage"
+            android:src="@drawable/icon_aite"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/img_emoji"
+            style="@style/CommonImage"
+            android:src="@drawable/sy_xiaoliantubiao"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <CheckBox
+        android:id="@+id/chk_forward"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/size_32dp"
+        android:layout_marginLeft="@dimen/size_10dp"
+        android:button="@null"
+        android:drawableLeft="@drawable/comment_chk"
+        android:drawablePadding="@dimen/size_4dp"
+        android:gravity="center_vertical"
+        android:text="@string/comment_forward"
+        android:textColor="@color/comment_forward"
+        app:layout_constraintBottom_toTopOf="@+id/layout_send"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/layout_send"
+        android:layout_width="@dimen/size_0dp"
+        android:layout_height="@dimen/size_36dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/size_16dp"
+        android:paddingRight="@dimen/size_16dp"
+        app:layout_constraintBottom_toTopOf="@+id/layout_emoji"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <TextView
+            android:id="@+id/txt_emoji1"
+            style="@style/ConWrap"
+            android:layout_weight="1"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/txt_emoji2"
+            style="@style/ConWrap"
+            android:layout_weight="1"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/txt_emoji3"
+            style="@style/ConWrap"
+            android:layout_weight="1"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/txt_emoji4"
+            style="@style/ConWrap"
+            android:layout_weight="1"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/txt_emoji5"
+            style="@style/ConWrap"
+            android:layout_weight="1"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/txt_emoji6"
+            style="@style/ConWrap"
+            android:layout_weight="1"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/txt_emoji7"
+            style="@style/ConWrap"
+            android:layout_weight="1"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/txt_send"
+            style="@style/ConWrap"
+            android:layout_weight="1"
+            android:background="@drawable/comment_shape_send"
+            android:gravity="center"
+            android:padding="@dimen/size_6dp"
+            android:text="@string/comment_send"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+
+    <com.mobile.guava.android.ui.view.expandable.ExpandableLayout2
+        android:id="@+id/layout_emoji"
+        android:layout_width="@dimen/size_0dp"
+        android:layout_height="@dimen/height_soft_keyboard"
+        android:background="@android:color/darker_gray"
+        app:el_expanded="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+    </com.mobile.guava.android.ui.view.expandable.ExpandableLayout2>
+
+    <ProgressBar
+        android:id="@+id/progress"
+        style="?android:attr/progressBarStyleInverse"
+        android:layout_width="@dimen/size_16dp"
+        android:layout_height="@dimen/size_16dp"
+        android:layout_margin="@dimen/size_3dp"
+        android:indeterminateTint="@color/colorAccent"
+        android:indeterminateTintMode="src_in"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+

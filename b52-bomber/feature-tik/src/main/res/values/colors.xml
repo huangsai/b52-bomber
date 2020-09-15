@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+00%=FF（不透明）
+5%=F2
+10%=E5
+15%=D8
+20%=CC
+25%=BF
+30%=B2
+35%=A5
+40%=99
+45%=8c
+50%=7F
+55%=72
+60%=66
+65%=59
+70%=4c
+75%=3F
+80%=33
+85%=21
+90%=19
+95%=0c
+100%=00（全透明）
+-->
+<resources>
+    <color name="home_tab_text_normal">#bab8c0</color>
+    <color name="home_tab_text_pressed">#f8f0ed</color>
+    <color name="main_background">#060612</color>
+    <color name="home_background">#030312</color>
+    <color name="comment_name">#848388</color>
+    <color name="comment_background">#0D0B16</color>
+    <color name="comment_line">#E5E5E6</color>
+    <color name="comment_input_background">#1C1929</color>
+    <color name="comment_send_background">#2E96F9</color>
+    <color name="comment_input_hint">#919095</color>
+    <color name="comment_forward">#BAB8C0</color>
+    <color name="comment_like_bomb">#FE652F</color>
+    <color name="comment_at">#FFCD35</color>
+
+    <color name="date_picker_confirm">#3478F6</color>
+    <color name="date_picker_switch">#999999</color>
+    <color name="play_ad_view_detail">#CC9e0bea</color>
+    <color name="ad_timer">#33848388</color>
+    <color name="search_view">#0D0D1E</color>
+    <color name="msg_desc">#848388</color>
+    <color name="rank_divider">#403e4b</color>
+    <color name="transparent_gray_light">#89000000</color>
+
+</resources>

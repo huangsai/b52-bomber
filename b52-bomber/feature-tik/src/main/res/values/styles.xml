@@ -1,0 +1,123 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="ZygoteTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_bg</item>
+    </style>
+
+    <style name="HomeTabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">@dimen/font_18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/color_home_tab_text</item>
+        <item name="textAllCaps">false</item>
+    </style>
+
+    <style name="MainTabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">@dimen/font_13sp</item>
+        <item name="android:textColor">@color/color_home_tab_text</item>
+        <item name="textAllCaps">false</item>
+    </style>
+
+    <style name="UserTabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">@dimen/font_16sp</item>
+        <item name="android:textColor">@color/color_user_tab_text</item>
+        <item name="textAllCaps">false</item>
+    </style>
+
+    <style name="NearbyVideoName" parent="WrapWrap">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/font_14sp</item>
+    </style>
+
+    <style name="RecommendPlayAction">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">@dimen/size_20dp</item>
+        <item name="android:drawablePadding">@dimen/size_4dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/font_13sp</item>
+    </style>
+
+    <style name="ShareActionText" parent="WrapWrap">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/font_16sp</item>
+        <item name="android:drawablePadding">@dimen/size_8dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="ShareRoundBottomSheetDialog" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/ShareBottomSheet</item>
+    </style>
+
+    <style name="ShareBottomSheetShapeAppearanceOverlay">
+        <item name="cornerSize">@dimen/size_0dp</item>
+        <item name="cornerFamilyTopLeft">rounded</item>
+        <item name="cornerSizeTopLeft">@dimen/size_12dp</item>
+        <item name="cornerFamilyTopRight">rounded</item>
+        <item name="cornerSizeTopRight">@dimen/size_12dp</item>
+    </style>
+
+    <style name="ShareBottomSheet" parent="Theme.Design.BottomSheetDialog">
+        <item name="shapeAppearanceOverlay">@style/ShareBottomSheetShapeAppearanceOverlay</item>
+    </style>
+
+    <style name="CameraDialog" parent="AlertDialog.AppCompat">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">false</item>
+    </style>
+
+    <style name="NoDimBottomSheetDialog" parent="ShareRoundBottomSheetDialog">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+    <style name="AdMsgDialog" parent="AlertDialog.AppCompat">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="MsgAction" parent="WrapWrap">
+        <item name="android:drawablePadding">@dimen/size_4dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/font_15sp</item>
+    </style>
+
+    <style name="CategoryTitle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/size_24dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/font_14sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="RankRadio">
+        <item name="android:layout_width">@dimen/size_60dp</item>
+        <item name="android:layout_height">@dimen/size_26dp</item>
+        <item name="android:background">@drawable/selector_color_radiobutton</item>
+        <item name="android:button">@null</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/radiobutton_textcolor</item>
+        <item name="android:textSize">@dimen/font_15sp</item>
+    </style>
+
+
+
+    <style name="animFriendCircle">
+        <item name="android:windowEnterAnimation">@anim/anim_friend_circle_in</item>
+        <item name="android:windowExitAnimation">@anim/anim_friend_circle_out</item>
+    </style>
+
+    <style name="animScaleY">
+        <item name="android:windowEnterAnimation">@anim/anim_scale_y_in</item>
+        <item name="android:windowExitAnimation">@anim/anim_scale_y_out</item>
+    </style>
+
+    <style name="animAlpha">
+        <item name="android:windowEnterAnimation">@anim/anim_alpha_in</item>
+        <item name="android:windowExitAnimation">@anim/anim_alpha_out</item>
+    </style>
+
+</resources>

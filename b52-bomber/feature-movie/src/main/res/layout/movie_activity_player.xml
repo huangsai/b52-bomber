@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/MatchMatch"
+    android:background="@android:color/black"
+    tools:context=".player.PlayerActivity">
+
+    <com.google.android.exoplayer2.ui.PlayerView
+        android:id="@+id/view_player"
+        android:layout_width="@dimen/size_0dp"
+        android:layout_height="@dimen/size_0dp"
+        app:controller_layout_id="@layout/movie_min_exo_controls"
+        app:hide_on_touch="true"
+        app:layout_constraintDimensionRatio="16:9"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:resize_mode="fixed_width"
+        app:shutter_background_color="@android:color/white"
+        app:use_controller="true"
+        app:use_sensor_rotation="true" />
+
+    <ImageView
+        android:id="@+id/img_back"
+        style="@style/CommonImage"
+        android:paddingLeft="@dimen/size_6dp"
+        android:paddingTop="@dimen/size_16dp"
+        android:src="@drawable/jq_fanhui"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progress"
+        style="?android:attr/progressBarStyleInverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminateTint="@android:color/white"
+        android:indeterminateTintMode="src_in"
+        app:layout_constraintBottom_toBottomOf="@+id/view_player"
+        app:layout_constraintLeft_toLeftOf="@+id/view_player"
+        app:layout_constraintRight_toRightOf="@+id/view_player"
+        app:layout_constraintTop_toTopOf="@+id/view_player" />
+
+    <com.mobile.guava.android.ui.view.expandable.ExpandableLayout2
+        android:id="@+id/layout_game_ad"
+        android:layout_width="@dimen/size_0dp"
+        android:layout_height="@dimen/size_60dp"
+        app:el_duration="500"
+        app:el_expanded="true"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_player">
+
+        <include
+            android:id="@+id/include_game_ad"
+            style="@style/ConCon"
+            layout="@layout/movie_item_game_ad"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </com.mobile.guava.android.ui.view.expandable.ExpandableLayout2>
+
+    <TextView
+        android:id="@+id/txt_title"
+        style="@style/MoviePlayerMovieCommentText"
+        android:layout_marginLeft="@dimen/size_10dp"
+        android:layout_marginTop="@dimen/size_8dp"
+        android:text="影片名字"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_game_ad" />
+
+    <TextView
+        android:id="@+id/txt_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/size_24dp"
+        android:gravity="left|center_vertical"
+        android:text="@string/movie_player_movie_play_count"
+        android:textColor="@color/movie_player_game_ad_desc"
+        android:textSize="@dimen/font_13sp"
+        app:layout_constraintLeft_toLeftOf="@+id/txt_title"
+        app:layout_constraintTop_toBottomOf="@+id/txt_title" />
+
+    <ImageView
+        android:id="@+id/img_detail_arrow"
+        style="@style/CommonImage"
+        android:layout_marginRight="@dimen/size_10dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/jq_zhankaijiantou"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_desc"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/txt_title" />
+
+    <TextView
+        android:id="@+id/txt_share"
+        style="@style/MoviePlayerMovieActionText"
+        android:layout_marginTop="@dimen/size_8dp"
+        android:layout_marginRight="@dimen/size_10dp"
+        android:drawableTop="@drawable/jq_fenxinag"
+        android:text="@string/movie_player_movie_share"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_desc" />
+
+    <TextView
+        android:id="@+id/txt_bookmark"
+        style="@style/MoviePlayerMovieActionText"
+        android:layout_marginRight="@dimen/size_24dp"
+        android:drawableTop="@drawable/jq_shoucang"
+        android:text="@string/movie_player_movie_bookmark"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_share"
+        app:layout_constraintEnd_toStartOf="@+id/img_detail_arrow" />
+
+    <TextView
+        android:id="@+id/txt_download"
+        style="@style/MoviePlayerMovieActionText"
+        android:layout_marginRight="@dimen/size_24dp"
+        android:drawableTop="@drawable/jq_xiazai"
+        android:text="@string/movie_player_movie_download"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_share"
+        app:layout_constraintEnd_toStartOf="@+id/txt_bookmark" />
+
+    <TextView
+        android:id="@+id/txt_like"
+        style="@style/WrapWrap"
+        android:drawableLeft="@drawable/movie_player_like"
+        android:drawablePadding="@dimen/size_8dp"
+        android:gravity="left|bottom"
+        android:text="@string/movie_player_movie_like"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/font_14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_share"
+        app:layout_constraintStart_toStartOf="@+id/txt_title"
+        app:layout_constraintTop_toTopOf="@+id/txt_share" />
+
+    <View
+        android:id="@+id/divider1"
+        android:layout_width="@dimen/size_0dp"
+        android:layout_height="@dimen/size_05dp"
+        android:layout_marginLeft="@dimen/size_10dp"
+        android:layout_marginTop="@dimen/size_10dp"
+        android:layout_marginRight="@dimen/size_10dp"
+        android:background="@color/movie_player_game_ad_desc"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_share" />
+
+    <TextView
+        android:id="@+id/txt_comment_title"
+        style="@style/MoviePlayerMovieCommentText"
+        android:layout_marginTop="@dimen/size_10dp"
+        android:text="@string/movie_player_comment_title"
+        app:layout_constraintStart_toStartOf="@+id/txt_title"
+        app:layout_constraintTop_toBottomOf="@+id/divider1" />
+
+    <TextView
+        android:id="@+id/txt_comment_desc"
+        style="@style/WrapWrap"
+        android:layout_marginLeft="@dimen/size_8dp"
+        android:text="@string/movie_player_comment_count"
+        android:textColor="@color/movie_player_game_ad_desc"
+        android:textSize="@dimen/font_13sp"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_comment_title"
+        app:layout_constraintLeft_toRightOf="@+id/txt_comment_title"
+        app:layout_constraintTop_toTopOf="@+id/txt_comment_title" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/img_profile"
+        style="@style/MoviePlayerCommentProfile"
+        android:layout_marginTop="@dimen/size_8dp"
+        app:layout_constraintStart_toStartOf="@+id/txt_comment_title"
+        app:layout_constraintTop_toBottomOf="@+id/txt_comment_title"
+        app:shapeAppearanceOverlay="@style/CircleImageView"
+        app:srcCompat="@drawable/jq_icon_40" />
+
+    <EditText
+        android:id="@+id/edit_comment"
+        android:layout_width="@dimen/size_0dp"
+        android:layout_height="@dimen/size_32dp"
+        android:layout_marginLeft="@dimen/size_10dp"
+        android:layout_marginRight="@dimen/size_10dp"
+        android:background="@drawable/movie_player_edit_comment"
+        android:cursorVisible="false"
+        android:gravity="center"
+        android:hint="@string/movie_comment_hint"
+        android:imeOptions="actionSend"
+        android:lines="1"
+        android:padding="@dimen/size_3dp"
+        android:textColor="@android:color/white"
+        android:textColorHint="@color/movie_comment_hint"
+        android:textSize="@dimen/font_14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/img_profile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/img_profile"
+        app:layout_constraintTop_toTopOf="@+id/img_profile" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler"
+        style="@style/ConCon"
+        android:layout_marginTop="@dimen/size_8dp"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img_profile" />
+
+    <include
+        android:id="@+id/include_movie_info"
+        style="@style/ConCon"
+        layout="@layout/movie_layout_movie_info"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_desc"
+        tools:visibility="gone" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

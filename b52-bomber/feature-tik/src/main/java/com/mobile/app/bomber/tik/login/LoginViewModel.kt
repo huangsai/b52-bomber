@@ -1,0 +1,49 @@
+package com.mobile.app.bomber.tik.login
+
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.asLiveData
+import com.mobile.app.bomber.common.base.MyBaseViewModel
+import com.mobile.app.bomber.data.http.entities.ApiAd
+import com.mobile.app.bomber.data.http.entities.ApiAdMsg
+import com.mobile.app.bomber.data.http.entities.ApiToken
+import com.mobile.app.bomber.data.http.entities.Nope
+import com.mobile.guava.android.mvvm.AndroidX
+import com.mobile.guava.jvm.coroutines.Bus
+import com.mobile.guava.jvm.domain.Source
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
+
+class LoginViewModel @Inject constructor() : MyBaseViewModel() {
+
+    fun logout() {
+        userRepository.logout()
+        Bus.offer(AndroidX.BUS_LOGOUT)
+    }
+
+    fun login(telephone: String, verifyCode: String): LiveData<Source<ApiToken>> {
+        return flow { emit(userRepository.login(telephone, verifyCode)) }
+                .asLiveData(Dispatchers.IO)
+    }
+
+    fun fastLogin(): LiveData<Source<ApiToken>> {
+        return flow { emit(userRepository.fastLogin()) }
+                .asLiveData(Dispatchers.IO)
+    }
+
+    fun getVerifyCode(telephone: String): LiveData<Source<Nope>> {
+        return flow { emit(userRepository.getVerifyCode(telephone)) }
+                .asLiveData(Dispatchers.IO)
+    }
+
+    fun adMsg(): LiveData<Source<ApiAdMsg>> {
+        return flow { emit(adRepository.adMsg()) }
+                .asLiveData(Dispatchers.IO)
+    }
+
+    fun ad(): LiveData<Source<ApiAd>> {
+        return flow { emit(adRepository.ad()) }
+                .asLiveData(Dispatchers.IO)
+    }
+
+}

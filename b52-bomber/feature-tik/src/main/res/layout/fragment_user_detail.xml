@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/swipe_refresh"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/size_14dp"
+        android:paddingRight="@dimen/size_14dp">
+
+        <!--    头像，个人信息-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_20dp"
+            android:orientation="horizontal">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/user_profile"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/default_profile"
+                app:shapeAppearanceOverlay="@style/CircleImageView" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/size_10dp"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/user_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_10dp"
+                    android:layout_marginBottom="@dimen/size_10dp"
+                    android:text=""
+                    android:textColor="@color/white" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/user_gender"
+                        android:layout_width="35dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/tvgender_setting"
+                        android:gravity="center"
+                        android:radius="1dp"
+                        android:text=""
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/font_15sp" />
+
+                    <TextView
+                        android:id="@+id/user_age"
+                        android:layout_width="35dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/size_8dp"
+                        android:background="@drawable/tvgender_setting"
+                        android:gravity="center"
+                        android:text=""
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/font_15sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!--    微信号-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_10dp"
+            android:background="@drawable/edit_info_wechat_bg"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="8dp"
+            android:paddingTop="3dp"
+            android:paddingRight="8dp"
+            android:paddingBottom="3dp">
+
+            <TextView
+                android:id="@+id/user_wechat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/user_copy_wechat"
+                android:layout_width="@dimen/size_40dp"
+                android:layout_height="@dimen/font_20sp"
+                android:layout_marginStart="@dimen/size_5dp"
+                android:background="@drawable/copy_setting"
+                android:gravity="center"
+                android:text="复制"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+        <!--    签名-->
+        <TextView
+            android:id="@+id/user_sign"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_10dp"
+            android:hint="这家伙很烂，什么都没留下"
+            android:textColor="#9a9a9a"
+            android:textColorHint="#9a9a9a"
+
+            />
+        <!--   点赞、粉丝、关注 -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/user_like"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:text=""
+                android:textColor="#848388"
+                android:textSize="@dimen/font_17sp" />
+
+            <TextView
+                android:id="@+id/user_fans"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginStart="20dp"
+                android:gravity="center"
+                android:text=""
+                android:textColor="#848388"
+                android:textSize="@dimen/font_17sp" />
+
+            <TextView
+                android:id="@+id/user_follow"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginStart="@dimen/size_20dp"
+                android:text=""
+                android:textColor="#848388"
+                android:textSize="@dimen/font_17sp" />
+
+        </LinearLayout>
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/layout_tab"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_40dp"
+            android:layout_marginTop="@dimen/size_20dp"
+            app:tabBackground="@drawable/user_tab_selector"
+            app:tabIndicatorFullWidth="true"
+            app:tabIndicatorHeight="@dimen/size_0dp"
+            app:tabMode="fixed"
+            app:tabTextAppearance="@style/UserTabTextAppearance" />
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/view_pager"
+            style="@style/MatchMatch" />
+    </LinearLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

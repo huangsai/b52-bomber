@@ -1,0 +1,4 @@
+ext {
+    isTikApplication = false
+    isMovieApplication = false
+}

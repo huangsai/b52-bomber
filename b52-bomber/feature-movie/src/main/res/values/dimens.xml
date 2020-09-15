@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="movie_player_comment_min_height">@dimen/size_48dp</dimen>
+    <dimen name="movie_player_min_height">200dp</dimen>
+    <dimen name="movie_preview_frame_width">@dimen/size_1dp</dimen>
+
+</resources>

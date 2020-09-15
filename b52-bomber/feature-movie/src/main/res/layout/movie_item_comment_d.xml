@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_comment_d"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/size_32dp"
+    android:gravity="center"
+    android:text="@string/movie_player_comment_no_more"
+    android:textColor="@android:color/white"
+    tools:background="@android:color/black" />

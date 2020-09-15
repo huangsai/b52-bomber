@@ -1,0 +1,94 @@
+<resources>
+    <string name="app_name">短视频</string>
+    <string name="recommend">推荐</string>
+    <string name="classification">关注</string>
+    <string name="local">同城</string>
+    <string name="recycle_fragment">个人信息</string>
+    <string name="recycle_cate">分类</string>
+    <string name="button_more">More</string>
+    <string name="setting_activity_setting">设置</string>
+    <string name="message_activity_message">消息</string>
+    <string name="search_activity_search">搜索</string>
+    <string name="me_activity_me">我的</string>
+    <!--    <string name="video_theme">我的</string>-->
+
+    <string name="info_activity_info">编辑个人资料</string>
+    <string name="nick_activity_info">名字修改</string>
+    <string name="bind_wechat_num">绑定微信号</string>
+    <string name="setting_activity_info">设置</string>
+    <string name="save_activity_info">保存</string>
+    <string name="person_info">标题</string>
+
+    <string name="person_dianzan">点赞</string>
+    <string name="aite_me">@我的</string>
+    <string name="aite_comment_person">@我的Amy哈哈哈哈</string>
+
+    <!--loginActivity -->
+    <string name="activity_login_login">立即登录</string>
+    <string name="activity_login_fast">一键登录</string>
+    <string name="activity_login_register">注册新用户</string>
+    <string name="activity_login_username">输入手机号</string>
+    <string name="activity_login_password">输入验证码</string>
+    <!--loginActivity -->
+
+    <!--registerActivity -->
+    <string name="activity_register_register">注册</string>
+    <string name="activity_register_username">用户名(4~24位字母、数字、下划线)</string>
+    <string name="activity_register_password">密码(8~16位个字符)</string>
+    <string name="activity_register_password_verify">确认密码</string>
+    <!--registerActivity -->
+
+
+    <string name="fragment_user_info_please_lonin">请先登录</string>
+
+    <string name="fragment_bgm_cancel">取消</string>
+
+    <string name="dialog_ugc_tip_already_known">知道了</string>
+
+    <string name="unit_second">秒</string>
+
+    <string name="fragment_confirm_confirm">确定</string>
+    <string name="fragment_confirm_cancel">取消</string>
+    <string name="fragment_confirm_ok">确定</string>
+    <string name="fragment_confirm_input_tip">请输入内容</string>
+
+    <string name="activity_register_register_new_user">注册新用户</string>
+
+    <string name="alert_msg_permission_camera">相机权限被拒绝，本程序将自动关闭</string>
+    <string name="alert_msg_permission_storage">存储权限被拒绝，本程序将自动关闭</string>
+    <string name="alert_msg_permission_record">录音权限被拒绝，本程序将自动关闭</string>
+
+    <string name="alert_msg_permission_phone_state">读取设备信息权限被拒绝，为了你的账户安全，本程序将自动关闭</string>
+    <string name="alert_msg_permission_location">开启位置信息可以获得更好的同城体验</string>
+    <string name="abc">abc</string>
+    <string name="share_title">分享至</string>
+    <string name="share_action_link">复制链接</string>
+    <string name="share_action_qq">QQ</string>
+    <string name="share_action_wechat">微信</string>
+
+    <string name="main_tab_home">首页</string>
+    <string name="main_tab_category">分类</string>
+    <string name="main_tab_mgs">信息</string>
+    <string name="main_tab_mine">我</string>
+    <string name="comment_hint">有爱评论，说点什么好呢...</string>
+    <string name="comment_forward">评论并转发</string>
+    <string name="comment_send">发送</string>
+    <string name="comment_trim_expanded">\u3000收起</string>
+    <string name="comment_trim_collapsed">查看更多</string>
+    <string name="comment_no_more">无更多评论</string>
+    <string name="date_picker_show">不展示</string>
+    <string name="mine_modify_profile">点击更换头像</string>
+    <string name="ad_view_detail">查看详情</string>
+    <string name="ad_close">关闭</string>
+    <string name="search">搜索</string>
+    <string name="search_input_hint">搜索用户|视频</string>
+    <string name="msg_at">@我的</string>
+    <string name="msg_like">赞</string>
+    <string name="msg_fans">粉丝</string>
+    <string name="msg_comment">评论</string>
+    <string name="msg_empty">暂无数据</string>
+    <string name="msg_empty_pull_refresh">暂无数据，下拉刷新</string>
+    <string name="msg_empty_click_refresh">暂无数据，点击刷新</string>
+    <string name="action_delete">删除</string>
+    <string name="action_copy">复制</string>
+</resources>

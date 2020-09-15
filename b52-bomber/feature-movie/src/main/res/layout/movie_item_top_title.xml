@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_title"
+    style="@style/MovieBeautifulTitle"
+    android:layout_marginLeft="@dimen/size_16dp"
+    tools:text="火爆活动" />
+

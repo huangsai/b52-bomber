@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:ignore="MissingDefaultResource">
+
+    <LinearLayout
+        android:id="@+id/back_root"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="0dp"
+        android:background="#000000"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/imgBtn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="#00000000"
+            android:scaleType="fitCenter"
+            android:src="@drawable/gg_fanhui" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/info_activity_info"
+            android:textColor="#ffffff"
+            android:textSize="17sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/topView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/back_root"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/root_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/h_head"
+                android:layout_width="@dimen/size_100dp"
+                android:layout_height="@dimen/size_100dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="@dimen/size_10dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/default_profile"
+                app:shapeAppearanceOverlay="@style/CircleImageView" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/h_head"
+                android:layout_centerInParent="true"
+
+                android:layout_marginTop="@dimen/size_10dp"
+                android:text="点击更换头像"
+                android:textColor="#ffffff"
+                android:textSize="12dp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/topView"
+        android:layout_marginTop="@dimen/size_10dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="12dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="名字"
+                android:textColor="#ffffff"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/edit_info__name"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="@dimen/size_10dp"
+                android:gravity="center_vertical"
+                android:hint="路人甲"
+                android:textColor="#848388"
+                android:textColorHint="#848388"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:layout_width="@dimen/font_20sp"
+                android:layout_height="@dimen/font_20sp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/wo_jinrutubiao" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+
+            android:background="#090808" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="12dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="微信号"
+                android:textColor="#ffffff"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/wechatNum"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
+                android:gravity="center_vertical"
+                android:hint="@string/bind_wechat_num"
+                android:textAlignment="center"
+                android:textColor="#848388"
+
+                android:textColorHint="#848388"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:layout_width="@dimen/font_20sp"
+                android:layout_height="@dimen/font_20sp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/wo_jinrutubiao" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#090808" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="12dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="简介"
+                android:textColor="#ffffff"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/desptionNum"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
+                android:gravity="center_vertical|right"
+                android:hint="这家伙什么也没留下"
+                android:textColor="#848388"
+                android:textColorHint="#848388"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:layout_width="@dimen/font_20sp"
+                android:layout_height="@dimen/font_20sp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/wo_jinrutubiao" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#090808" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="12dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="性别"
+                android:textColor="#ffffff"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/genders"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="@dimen/size_10dp"
+                android:gravity="center_vertical"
+                android:hint="男"
+                android:textColor="#848388"
+                android:textColorHint="#848388"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:layout_width="@dimen/font_20sp"
+                android:layout_height="@dimen/font_20sp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/wo_jinrutubiao" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+
+            android:background="#090808" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="12dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="生日"
+                android:textColor="#ffffff"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/birNum"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
+                android:gravity="center_vertical"
+                android:hint="点击设置"
+                android:textColor="#848388"
+                android:textColorHint="#848388"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:layout_width="@dimen/font_20sp"
+                android:layout_height="@dimen/font_20sp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/wo_jinrutubiao" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

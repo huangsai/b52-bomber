@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/date_picker_round">
+
+    <Switch
+        android:id="@+id/switch_show"
+        style="@style/WrapWrap"
+        android:checked="true"
+        android:gravity="center"
+        android:padding="@dimen/size_16dp"
+        android:text="@string/date_picker_show"
+        android:textColor="@color/date_picker_switch"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txt_done"
+        style="@style/WrapWrap"
+        android:gravity="center"
+        android:padding="@dimen/size_16dp"
+        android:text="@string/alert_confirm"
+        android:textColor="@color/date_picker_confirm"
+        android:textSize="@dimen/font_16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/switch_show"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/switch_show" />
+
+    <com.ycuwq.datepicker.date.DatePicker
+        android:id="@+id/view_date_picker"
+        android:layout_width="@dimen/size_0dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        app:itemTextColor="@color/date_picker_switch"
+        app:itemTextSize="@dimen/font_14sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/switch_show"
+        app:selectedTextColor="@color/date_picker_switch"
+        app:selectedTextSize="@dimen/font_20sp"
+        app:wheelCurtain="false"
+        app:wheelCurtainBorder="false" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/root_line"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="0dp"
+        android:background="#000000"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/ib_back"
+            android:layout_width="35dp"
+            android:layout_height="45dp"
+            android:layout_marginLeft="10dp"
+            android:background="#00000000"
+
+            android:scaleType="centerInside"
+            android:src="@drawable/gg_fanhui" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="70dp"
+            android:layout_marginRight="70dp"
+            android:layout_weight="5"
+            android:gravity="center"
+            android:text="@string/person_info"
+            android:textColor="#ffffff"
+            android:textSize="17dp" />
+
+        <ImageButton
+            android:id="@+id/ib_more"
+            android:layout_width="35dp"
+            android:layout_height="45dp"
+            android:layout_marginRight="15dp"
+            android:background="#00000000"
+            android:scaleType="fitCenter"
+            android:src="@drawable/gg_gengduo" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/layout_container"
+            style="@style/MatchMatch" />
+
+        <Button
+            android:id="@+id/user_btn_follow"
+            android:layout_width="60dp"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/size_20dp"
+            android:layout_marginEnd="@dimen/size_20dp"
+            android:background="@drawable/follow_btn_selector"
+            android:gravity="center"
+            android:text="+关注"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_15sp" />
+    </RelativeLayout>
+
+
+</LinearLayout>

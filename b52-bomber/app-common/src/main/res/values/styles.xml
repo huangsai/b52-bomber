@@ -1,0 +1,56 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+
+    <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:textColorPrimary">@android:color/white</item>
+    </style>
+
+    <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="ActivityToolbarTitle" parent="WrapWrap">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/font_17sp</item>
+    </style>
+
+    <style name="PopupWindow">
+        <item name="android:windowEnterAnimation">@anim/window_in</item>
+        <item name="android:windowExitAnimation">@anim/window_out</item>
+    </style>
+
+    <style name="My_CheckBox" parent="@android:style/Widget.Material.CompoundButton.CheckBox" tools:targetApi="lollipop">
+        <item name="android:colorControlActivated">#ffffff</item>
+        <item name="android:colorControlNormal">#ffffff</item>
+    </style>
+
+    <style name="CommonImage" parent="WrapWrap">
+        <item name="android:scaleType">centerCrop</item>
+    </style>
+
+    <style name="CircleImageView" parent="WrapWrap">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="Round4ImageView" parent="WrapWrap">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">1%</item>
+    </style>
+
+    <style name="EmptyText" parent="WrapWrap">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/font_16sp</item>
+        <item name="android:visibility">invisible</item>
+    </style>
+
+    <style name="FullScreenDialog" parent="AlertDialog.AppCompat">
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+</resources>

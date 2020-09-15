@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="#FFffff">
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:startColor="#e32020"
+                android:endColor="#ff5f5f"
+                android:angle="90" />
+            <!--angle控制渐变的方向-->
+            <!-- 设置按钮的四个角为弧形 -->
+            <!-- android:radius 弧形的半径 -->
+            <corners android:radius="8px" />
+        </shape>
+
+        <!--设置渐变-->
+
+    </item>
+</ripple>

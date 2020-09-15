@@ -1,0 +1,34 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.mobile.app.bomber.movie">
+
+    <application
+        android:name=".MovieApp"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/movie_app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".MovieActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".top.like.TopLikeActivity" />
+        <activity android:name=".top.recommend.TopRecommendActivity" />
+
+        <activity
+            android:name=".player.PlayerActivity"
+            android:screenOrientation="sensor"
+            android:configChanges="keyboardHidden|orientation"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+
+        <activity android:name=".search.SearchActivity" />
+    </application>
+</manifest>

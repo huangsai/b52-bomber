@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="@dimen/size_40dp"
+    android:background="@color/movie_player_options"
+    android:orientation="horizontal">
+
+    <RadioButton
+        android:id="@+id/rb_one"
+        style="@style/MoviePlayerControlRadio" />
+
+    <RadioButton
+        android:id="@+id/rb_two"
+        style="@style/MoviePlayerControlRadio" />
+
+    <RadioButton
+        android:id="@+id/rb_three"
+        style="@style/MoviePlayerControlRadio" />
+
+    <RadioButton
+        android:id="@+id/rb_four"
+        style="@style/MoviePlayerControlRadio" />
+
+    <RadioButton
+        android:id="@+id/rb_five"
+        style="@style/MoviePlayerControlRadio" />
+
+    <RadioButton
+        android:id="@+id/rb_six"
+        style="@style/MoviePlayerControlRadio" />
+
+</RadioGroup>

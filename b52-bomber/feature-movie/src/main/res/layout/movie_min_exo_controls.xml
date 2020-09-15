@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/MatchMatch"
+    tools:background="@android:color/black">
+
+    <LinearLayout
+        android:id="@+id/layout_control_left"
+        style="@style/MoviePlayerControlLayout"
+        android:layout_width="@dimen/size_20dp"
+        android:layout_marginLeft="@dimen/size_8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageButton
+            android:id="@id/exo_play"
+            style="@style/MovieExoMediaButton"
+            android:src="@drawable/jq_bofanganniu_guan" />
+
+        <ImageButton
+            android:id="@id/exo_pause"
+            style="@style/MovieExoMediaButton"
+            android:src="@drawable/jq_bofanganniu_kai" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_control_right"
+        style="@style/MoviePlayerControlLayout"
+        android:layout_width="wrap_content"
+        android:layout_marginRight="@dimen/size_8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/btn_speed"
+            style="@style/MovieControlText"
+            android:layout_width="@dimen/size_50dp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/btn_rate"
+            style="@style/MovieControlText"
+            android:layout_width="@dimen/size_50dp"
+            android:layout_marginRight="@dimen/size_32dp"
+            android:visibility="gone" />
+
+        <ImageButton
+            android:id="@+id/btn_fullscreen"
+            style="@style/MovieExoMediaButton"
+            android:src="@drawable/jq_fangda" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@id/exo_position"
+        style="@style/WrapWrap"
+        android:layout_margin="@dimen/size_6dp"
+        android:includeFontPadding="false"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/font_12sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/layout_control_left"
+        app:layout_constraintStart_toEndOf="@+id/layout_control_left"
+        app:layout_constraintTop_toTopOf="@+id/layout_control_left"
+        tools:text="18:20" />
+
+    <com.github.rubensousa.previewseekbar.exoplayer.PreviewTimeBar
+        android:id="@+id/exo_progress"
+        style="@style/ConWrap"
+        app:bar_height="@dimen/size_2dp"
+        app:layout_constraintBottom_toBottomOf="@id/exo_position"
+        app:layout_constraintEnd_toStartOf="@id/exo_duration"
+        app:layout_constraintStart_toEndOf="@+id/exo_position"
+        app:layout_constraintTop_toTopOf="@+id/exo_position"
+        app:previewAnimationEnabled="true"
+        app:previewFrameLayout="@id/previewFrameLayout"
+        app:scrubber_dragged_size="@dimen/size_16dp"
+        app:scrubber_enabled_size="@dimen/size_10dp" />
+
+    <TextView
+        android:id="@id/exo_duration"
+        style="@style/WrapWrap"
+        android:layout_gravity="bottom"
+        android:layout_margin="@dimen/size_6dp"
+        android:includeFontPadding="false"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/font_12sp"
+        android:textStyle="bold"
+        app:layout_constraintBaseline_toBaselineOf="@id/exo_position"
+        app:layout_constraintEnd_toStartOf="@+id/layout_control_right"
+        tools:text="25:23" />
+
+    <FrameLayout
+        android:id="@+id/previewFrameLayout"
+        style="@style/ConCon"
+        android:layout_marginStart="@dimen/size_16dp"
+        android:layout_marginEnd="@dimen/size_16dp"
+        android:layout_marginBottom="@dimen/size_16dp"
+        android:background="@drawable/movie_preview_frame"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/exo_progress"
+        app:layout_constraintDimensionRatio="16:9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.35"
+        tools:visibility="visible">
+
+        <ImageView
+            android:id="@+id/img_preview"
+            style="@style/MatchMatch"
+            android:layout_margin="@dimen/movie_preview_frame_width"
+            android:scaleType="fitXY" />
+
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
