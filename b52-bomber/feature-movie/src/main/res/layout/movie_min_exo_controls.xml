@@ -7,7 +7,7 @@
 
     <LinearLayout
         android:id="@+id/layout_control_left"
-        style="@style/MoviePlayerControlLayout"
+        style="@style/movie_PlayerControlLayout"
         android:layout_width="@dimen/size_20dp"
         android:layout_marginLeft="@dimen/size_8dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -15,19 +15,19 @@
 
         <ImageButton
             android:id="@id/exo_play"
-            style="@style/MovieExoMediaButton"
+            style="@style/movie_ExoMediaButton"
             android:src="@drawable/jq_bofanganniu_guan" />
 
         <ImageButton
             android:id="@id/exo_pause"
-            style="@style/MovieExoMediaButton"
+            style="@style/movie_ExoMediaButton"
             android:src="@drawable/jq_bofanganniu_kai" />
 
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/layout_control_right"
-        style="@style/MoviePlayerControlLayout"
+        style="@style/movie_PlayerControlLayout"
         android:layout_width="wrap_content"
         android:layout_marginRight="@dimen/size_8dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -35,20 +35,20 @@
 
         <TextView
             android:id="@+id/btn_speed"
-            style="@style/MovieControlText"
+            style="@style/movie_ControlText"
             android:layout_width="@dimen/size_50dp"
             android:visibility="gone" />
 
         <TextView
             android:id="@+id/btn_rate"
-            style="@style/MovieControlText"
+            style="@style/movie_ControlText"
             android:layout_width="@dimen/size_50dp"
             android:layout_marginRight="@dimen/size_32dp"
             android:visibility="gone" />
 
         <ImageButton
             android:id="@+id/btn_fullscreen"
-            style="@style/MovieExoMediaButton"
+            style="@style/movie_ExoMediaButton"
             android:src="@drawable/jq_fangda" />
 
     </LinearLayout>

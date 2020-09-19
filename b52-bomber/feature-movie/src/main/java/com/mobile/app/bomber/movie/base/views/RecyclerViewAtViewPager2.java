@@ -51,6 +51,4 @@ public class RecyclerViewAtViewPager2 extends RecyclerView {
         }
         return super.dispatchTouchEvent(ev);
     }
-
-
 }

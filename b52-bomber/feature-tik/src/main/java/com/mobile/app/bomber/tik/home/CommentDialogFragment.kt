@@ -244,7 +244,7 @@ class CommentDialogFragment : BaseBottomSheetDialogFragment(), View.OnClickListe
             } else {
                 adapter.add(CommentItem.TypeA(newComment))
             }
-            binding.recycler.keepItemViewVisible(0)
+            binding.recycler.keepItemViewVisible(0,true)
         } else {
             val index = adapter.indexOf(commentItem!!)
             if (adapter.itemCount == index + 1) {
@@ -252,7 +252,7 @@ class CommentDialogFragment : BaseBottomSheetDialogFragment(), View.OnClickListe
             } else {
                 adapter.add(index + 1, CommentItem.TypeB(newComment))
             }
-            binding.recycler.keepItemViewVisible(index + 1)
+            binding.recycler.keepItemViewVisible(index + 1,true)
         }
     }
 

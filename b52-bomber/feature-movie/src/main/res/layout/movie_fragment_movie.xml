@@ -27,7 +27,7 @@
         app:tabPaddingStart="@dimen/size_8dp"
         app:tabPaddingTop="@dimen/size_0dp"
         app:tabRippleColor="@color/transparent"
-        app:tabTextAppearance="@style/MovieTabTextAppearance" />
+        app:tabTextAppearance="@style/movie_TabTextAppearance" />
 
     <ImageView
         android:id="@+id/menu"

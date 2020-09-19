@@ -27,7 +27,6 @@ import com.mobile.app.bomber.data.repository.SourceExtKt;
 import com.mobile.guava.android.mvvm.AndroidX;
 import com.mobile.app.bomber.runner.base.PrefsManager;
 import com.mobile.app.bomber.runner.features.FeatureRouter;
-import com.mobile.guava.android.mvvm.AndroidX;
 import com.mobile.guava.android.mvvm.RouterKt;
 import com.mobile.app.bomber.tik.ad.PopupAdDialogFragment;
 import com.mobile.app.bomber.tik.ad.SplashDialogFragment;

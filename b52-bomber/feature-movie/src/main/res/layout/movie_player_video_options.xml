@@ -7,26 +7,26 @@
 
     <RadioButton
         android:id="@+id/rb_one"
-        style="@style/MoviePlayerControlRadio" />
+        style="@style/movie_PlayerControlRadio" />
 
     <RadioButton
         android:id="@+id/rb_two"
-        style="@style/MoviePlayerControlRadio" />
+        style="@style/movie_PlayerControlRadio" />
 
     <RadioButton
         android:id="@+id/rb_three"
-        style="@style/MoviePlayerControlRadio" />
+        style="@style/movie_PlayerControlRadio" />
 
     <RadioButton
         android:id="@+id/rb_four"
-        style="@style/MoviePlayerControlRadio" />
+        style="@style/movie_PlayerControlRadio" />
 
     <RadioButton
         android:id="@+id/rb_five"
-        style="@style/MoviePlayerControlRadio" />
+        style="@style/movie_PlayerControlRadio" />
 
     <RadioButton
         android:id="@+id/rb_six"
-        style="@style/MoviePlayerControlRadio" />
+        style="@style/movie_PlayerControlRadio" />
 
 </RadioGroup>

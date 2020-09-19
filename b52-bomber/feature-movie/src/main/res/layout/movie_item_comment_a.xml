@@ -11,7 +11,7 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/img_profile"
-        style="@style/MoviePlayerCommentProfile"
+        style="@style/movie_PlayerCommentProfile"
         android:layout_marginTop="@dimen/size_8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"

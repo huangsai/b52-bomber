@@ -16,7 +16,7 @@ import com.mobile.guava.jvm.date.ago
 import com.pacific.adapter.AdapterViewHolder
 import com.pacific.adapter.SimpleRecyclerItem
 
-abstract class CommentItem(val data: ApiComment.Comment, val type: Int) : SimpleRecyclerItem() {
+abstract class CommentItem(val data: ApiComment.Comment, type: Int) : SimpleRecyclerItem() {
 
     protected val isMe: Boolean = if (type == 3) false else PrefsManager.getUserId() == data.uid
     protected val spannableComment: MySpannable by lazy {
@@ -156,7 +156,6 @@ abstract class CommentItem(val data: ApiComment.Comment, val type: Int) : Simple
 
     companion object {
 
-        @get:JvmName("SLOT_COUNT")
         const val SLOT_COUNT = 3
     }
 }
