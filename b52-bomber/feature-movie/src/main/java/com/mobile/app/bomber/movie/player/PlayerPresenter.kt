@@ -54,10 +54,10 @@ class PlayerPresenter(
     private lateinit var balloon: Balloon
 
     private val speeds = arrayOf("0.75x", "1.0x", "1.25x", "1.5x", "1.75x", "2.0x")
-    private val rates = arrayOf("自动", "240p", "360p", "480p", "720p", "1080p")
+    private val bitRates = arrayOf("自动", "240p", "360p", "480p", "720p", "1080p")
     private val radioButtons = ArrayList<RadioButton>()
     private var currentSpeed = 1
-    private var currentRate = 0
+    private var currentBitRate = 0
     private var optionFlag = 0
 
     init {
@@ -71,7 +71,7 @@ class PlayerPresenter(
         previewTimeBar.setPreviewLoader(this)
         previewTimeBar.isPreviewEnabled = thumbnailsUrl.isNotEmpty()
         btnSpeed.text = speeds[currentSpeed]
-        btnRate.text = rates[currentRate]
+        btnRate.text = bitRates[currentBitRate]
         AndroidX.appDialogCount.observe(playerActivity, { dialogCount ->
             if (::player.isInitialized) {
                 if (dialogCount > 0) {
@@ -232,9 +232,9 @@ class PlayerPresenter(
             }
         } else {
             radioButtons.indices.forEach { index ->
-                radioButtons[currentRate].isChecked = true
+                radioButtons[currentBitRate].isChecked = true
                 radioButtons[index].setOnCheckedChangeListener(this)
-                radioButtons[index].text = rates[index]
+                radioButtons[index].text = bitRates[index]
             }
         }
 
@@ -252,8 +252,8 @@ class PlayerPresenter(
                         1.0f
                 ))
             } else if (optionFlag == 2) {
-                currentRate = index
-                btnRate.text = rates[index]
+                currentBitRate = index
+                btnRate.text = bitRates[index]
             }
         }
         balloon.dismiss()

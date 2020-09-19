@@ -5,14 +5,14 @@ import com.google.android.exoplayer2.DefaultControlDispatcher
 import com.google.android.exoplayer2.database.ExoDatabaseProvider
 import com.google.android.exoplayer2.ext.okhttp.OkHttpDataSourceFactory
 import com.google.android.exoplayer2.upstream.DataSpec
-import com.google.android.exoplayer2.upstream.cache.CacheDataSourceFactory
-import com.google.android.exoplayer2.upstream.cache.CacheUtil
+import com.google.android.exoplayer2.upstream.cache.CacheDataSource
+import com.google.android.exoplayer2.upstream.cache.CacheWriter
 import com.google.android.exoplayer2.upstream.cache.LeastRecentlyUsedCacheEvictor
 import com.google.android.exoplayer2.upstream.cache.SimpleCache
 import com.google.android.exoplayer2.util.Util
-import com.mobile.guava.https.nullSafe
 import com.mobile.guava.android.mvvm.AndroidX
 import com.mobile.guava.https.createPoorSSLOkHttpClient
+import com.mobile.guava.https.nullSafe
 import com.mobile.guava.jvm.Guava
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.File
 
-object GoogleExo : CacheUtil.ProgressListener {
+object GoogleExo : CacheWriter.ProgressListener {
 
     private val cache by lazy {
         SimpleCache(
@@ -30,32 +30,37 @@ object GoogleExo : CacheUtil.ProgressListener {
         )
     }
 
-    private val upstreamFactory by lazy {
-        OkHttpDataSourceFactory(
-                createPoorSSLOkHttpClient("ExoPlayer"),
-                Util.getUserAgent(AndroidX.myApp, "com.mobile.app.bomber.tik")
-        )
-    }
+    val cacheDataSourceFactory = CacheDataSource.Factory()
+            .setCache(cache)
+            .setUpstreamDataSourceFactory(OkHttpDataSourceFactory(
+                    createPoorSSLOkHttpClient("ExoPlayer"),
+                    Util.getUserAgent(AndroidX.myApp, "com.mobile.app.bomber.tik")
+            ))
 
-    val cacheDataSourceFactory = CacheDataSourceFactory(cache, upstreamFactory)
     val controlDispatcher = DefaultControlDispatcher()
 
     fun preload(uri: Uri) {
         GlobalScope.launch(Dispatchers.IO) {
             try {
-                val nKB = if (Guava.isDebug) 64L else 1024L
-                val dataSpec = DataSpec(uri, 0L, nKB * 1024L, null)
-                val cached = CacheUtil.getCached(dataSpec, cache, null)
-                if (cached.second >= cached.first) {
+                val requestCacheLength = (if (Guava.isDebug) 64L else 1024L) * 1024L
+                val dataSpec = DataSpec.Builder()
+                        .setUri(uri)
+                        .setPosition(0L)
+                        .setLength(requestCacheLength)
+                        .setKey(uri.toString())
+                        .build()
+                val cached = cache.getCachedBytes(uri.toString(), 0, requestCacheLength)
+                if (cached > 0) {
                     Timber.tag("ExoPlayer").d("skip preload")
                 } else {
-                    CacheUtil.cache(
+                    CacheWriter(
+                            cacheDataSourceFactory.createDataSource(),
                             dataSpec,
-                            cache,
-                            upstreamFactory.createDataSource(),
-                            this@GoogleExo,
-                            null
-                    )
+                            true,
+                            null,
+                            this@GoogleExo
+
+                    ).cache()
                 }
             } catch (e: Exception) {
                 Timber.tag("ExoPlayer").d(e.message.nullSafe())

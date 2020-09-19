@@ -62,6 +62,7 @@ buildscript {
             'theGuava'         : '0.0.9',
             'theExt'           : '0.0.1',
             'pacificAdapter'   : '3.0.3',
+            'exoplayer'        : '2.12.0',
 
             'androidX'         : [
                     'activity'                  : '1.2.0-alpha08',
@@ -239,6 +240,14 @@ buildscript {
                     'processor' : "com.squareup.inject:assisted-inject-processor-dagger2:${versions.assistedInject}"
             ],
             'timber'           : "com.jakewharton.timber:timber:${versions.timber}",
+            'exoplayer'        : [
+                    'core'           : "com.google.android.exoplayer:exoplayer-core:${versions.exoplayer}",
+                    'dash'           : "com.google.android.exoplayer:exoplayer-dash:${versions.exoplayer}",
+                    'hls'            : "com.google.android.exoplayer:exoplayer-hls:${versions.exoplayer}",
+                    'smoothstreaming': "com.google.android.exoplayer:exoplayer-smoothstreaming:${versions.exoplayer}",
+                    'ui'             : "com.google.android.exoplayer:exoplayer-ui:${versions.exoplayer}",
+                    'okhttp'         : "com.google.android.exoplayer:extension-okhttp:${versions.exoplayer}"
+            ],
             'company'          : [
                     'guavaJvm'      : "com.mobile.guava:guava-jvm:${versions.theGuava}",
                     'guavaAndroid'  : "com.mobile.guava:guava-android:${versions.theGuava}",
@@ -482,7 +491,7 @@ buildscript {
                             'testing'   : "androidx.work:work-testing:${versions.androidX.work}",
                     ],
                     'material'           : "com.google.android.material:material:${versions.androidX.material}",
-                    'gmsGoogleServices'  : "com.google.gms:google-services:${versions.androidX.gmsGoogleServices}",
+                    'gmsGoogleServices'  : "com.google.gms:google-services:${versions.androidX.gmsGoogleServices}"
             ]
     ]
 }

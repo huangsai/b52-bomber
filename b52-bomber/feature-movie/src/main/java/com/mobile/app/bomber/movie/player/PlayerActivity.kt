@@ -5,14 +5,15 @@ import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.viewModels
+import com.google.android.exoplayer2.util.Util
 import com.mobile.app.bomber.common.base.tool.isLandscape
 import com.mobile.app.bomber.common.base.tool.requestNormalScreenWithPortrait
 import com.mobile.app.bomber.data.http.entities.ApiMovie
-import com.mobile.guava.https.Values
 import com.mobile.app.bomber.movie.MovieLib
 import com.mobile.app.bomber.movie.databinding.MovieActivityPlayerBinding
 import com.mobile.guava.android.mvvm.BaseActivity
 import com.mobile.guava.android.mvvm.newStartActivity
+import com.mobile.guava.https.Values
 
 class PlayerActivity : BaseActivity() {
 
@@ -47,14 +48,32 @@ class PlayerActivity : BaseActivity() {
         playerPresenter.onConfigurationChanged(newConfig)
     }
 
+    override fun onStart() {
+        super.onStart()
+        if (Util.SDK_INT >= 24) {
+            playerPresenter.onResume()
+        }
+    }
+
     override fun onResume() {
         super.onResume()
-        playerPresenter.onResume()
+        if (Util.SDK_INT < 24) {
+            playerPresenter.onResume()
+        }
     }
 
     override fun onPause() {
         super.onPause()
-        playerPresenter.onPause()
+        if (Util.SDK_INT < 24) {
+            playerPresenter.onPause()
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        if (Util.SDK_INT >= 24) {
+            playerPresenter.onPause()
+        }
     }
 
     override fun onDestroy() {

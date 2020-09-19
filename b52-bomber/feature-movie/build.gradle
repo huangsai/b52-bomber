@@ -29,12 +29,12 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     api project(':app-common')
 
-    implementation 'com.google.android.exoplayer:exoplayer-core:2.11.8'
-    implementation 'com.google.android.exoplayer:exoplayer-dash:2.11.8'
-    implementation 'com.google.android.exoplayer:exoplayer-hls:2.11.8'
-    implementation 'com.google.android.exoplayer:exoplayer-smoothstreaming:2.11.8'
-    implementation 'com.google.android.exoplayer:exoplayer-ui:2.11.8'
-    implementation 'com.google.android.exoplayer:extension-okhttp:2.11.8'
+    implementation dep.exoplayer.core
+    implementation dep.exoplayer.dash
+    implementation dep.exoplayer.hls
+    implementation dep.exoplayer.smoothstreaming
+    implementation dep.exoplayer.ui
+    implementation dep.exoplayer.okhttp
 
     implementation 'com.linkedin.android.spyglass:spyglass:2.1.1'
     implementation 'com.borjabravo:readmoretextview:2.1.0'
