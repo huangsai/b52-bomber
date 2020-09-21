@@ -51,9 +51,7 @@ interface DataService {
     ): Call<ApiVideo>
 
     @GET("${API_USER}/getuserinfo/{uid}/")
-    fun user(
-            @Path("uid") uid: Long
-    ): Call<ApiUser>
+    fun user(@Path("uid") uid: Long): Call<ApiUser>
 
     @POST("${API_USER}/modifyuserInfo/")
     fun updateBirthday(@Body body: ApiUser.BirthdayReq): Call<Nope>

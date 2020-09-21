@@ -14,8 +14,8 @@ class AppActivity : MyBaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAppBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        // testMovie()
-        testTik()
+        testMovie()
+        // testTik()
     }
 
     private fun testTik() {

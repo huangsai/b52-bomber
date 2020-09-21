@@ -95,7 +95,8 @@ class PlayerPresenter(
         player.addListener(this)
         player.playWhenReady = true
         player.repeatMode = Player.REPEAT_MODE_ALL
-        player.prepare(createMediaSource(), false, false)
+        player.setMediaSource(createMediaSource(), false)
+        player.prepare()
     }
 
     override fun onResume() {
@@ -144,7 +145,7 @@ class PlayerPresenter(
     }
 
     override fun preparePlayback() {
-        player.retry()
+        player.prepare()
     }
 
     override fun loadPreview(currentPosition: Long, max: Long) {
