@@ -116,7 +116,8 @@ class PlayerPresenter(
 
     private fun createMediaSource(): MediaSource {
         AndroidX.myApp.getExternalFilesDir(null)!!.absolutePath.also {
-            mediaSourceBuilder.uri = (ensureFileSeparator(it) + "trailer.mp4").toUri()
+            // mediaSourceBuilder.uri = (ensureFileSeparator(it) + "trailer.mp4").toUri()
+            mediaSourceBuilder.uri = "http://192.168.2.121:8080/3,033b01890a".toUri()
         }
         return mediaSourceBuilder.getMediaSource(true)
     }

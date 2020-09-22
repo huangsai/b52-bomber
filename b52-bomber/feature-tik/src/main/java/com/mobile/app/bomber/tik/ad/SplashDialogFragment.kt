@@ -77,12 +77,23 @@ class SplashDialogFragment : BaseAppCompatDialogFragment(), View.OnClickListener
         (requireActivity() as MainActivity).requestPopupAd()
     }
 
-    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+    override fun onLoadFailed(
+            e: GlideException?,
+            model: Any?,
+            target: Target<Drawable>?,
+            isFirstResource: Boolean
+    ): Boolean {
         dismissAllowingStateLoss()
         return false
     }
 
-    override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+    override fun onResourceReady(
+            resource: Drawable?,
+            model: Any?,
+            target: Target<Drawable>?,
+            dataSource: DataSource?,
+            isFirstResource: Boolean
+    ): Boolean {
         binding.progress.visibility = View.GONE
         binding.txtTimer.visibility = View.VISIBLE
         timer.start()
