@@ -192,4 +192,22 @@ interface DataService {
 
     @POST("${API_VIDEO}/postvideoplayduration/")
     fun playDuration(@Body body: ApiDurationReq): Call<Nope>
+
+    @POST("${API_VIDEO}/postSearchVideoUser/{uid}/{keyword}/{page}/{size}")
+    fun SearchVideo(
+            @Path("uid") uId: Long,
+            @Path("keyword") keyword: String,
+            @Path("page") page: Int,
+            @Path("size") pageSize: Int
+    ): Call<ApiVideo>
+
+    @GET("${API_VIDEO}/getHotKeyTopN")
+    fun getHotKey(): Call<ApitHotKey>
+
+    @POST("${API_VIDEO}/postSearchMovie/{keyword}/{page}/{size}")
+    fun searchMovie(
+            @Path("keyword") keyword: String,
+            @Path("page") page: Int,
+            @Path("size") pageSize: Int
+    ): Call<ApiMovie.Movie>
 }

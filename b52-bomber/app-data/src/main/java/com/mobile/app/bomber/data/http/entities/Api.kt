@@ -539,3 +539,19 @@ data class ApiSearch(
             @Json(name = "rank") val rankDesc: String
     )
 }
+@JsonClass(generateAdapter = true)
+data class ApiSearchVideo(
+        @Json(name = "RetCode") val code: Int,
+        @Json(name = "Desc") val desc: String,
+        @Json(name = "totalcount") val totalCount: Int,
+        @Json(name = "next") val nextPage: Int,
+        @Json(name = "totalpage") val totalPage: Int,
+        @Json(name = "VideoList") val Videos: List<ApiVideo.Video>?
+)
+
+@JsonClass(generateAdapter = true)
+data class ApitHotKey(
+        @Json(name = "RetCode") val code: Int,
+        @Json(name = "Desc") val desc: String,
+        @Json(name = "KeyWords") val KeyWords: List<String>?
+)
