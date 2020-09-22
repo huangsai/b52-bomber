@@ -39,6 +39,8 @@ interface DataComponent {
 
     fun userRepository(): UserRepository
 
+    fun versionRepository(): VersionRepository
+
     fun adRepository(): AdRepository
 
     fun uploadRepository(): UploadRepository

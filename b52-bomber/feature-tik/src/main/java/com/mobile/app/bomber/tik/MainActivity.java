@@ -128,6 +128,8 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
         }
         if (hasNeededPermission) {
             requestSplashAd();
+            requestPopupCheckVersion();
+
         }
     }
 
@@ -188,6 +190,16 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
                         PopupAdDialogFragment.newInstance(source.requireData())
                 );
             }
+        });
+    }
+
+    public void requestPopupCheckVersion() {
+        model.ckVersino().observe(this, source -> {
+            if (source instanceof Source.Success) {
+                Msg.INSTANCE.toast("111");
+            }else{
+                Msg.INSTANCE.handleSourceException(source.requireError());
+             }
         });
     }
 

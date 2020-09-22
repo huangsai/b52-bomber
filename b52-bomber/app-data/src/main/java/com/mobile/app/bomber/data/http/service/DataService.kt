@@ -210,4 +210,8 @@ interface DataService {
             @Path("page") page: Int,
             @Path("size") pageSize: Int
     ): Call<ApiMovie.Movie>
+
+    @GET("${API_VIDEO}/getVersion/{platform}")
+    fun getVersion(@Path("platform") platform: Int
+    ): Call<Version>
 }

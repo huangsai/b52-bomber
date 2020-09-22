@@ -555,3 +555,10 @@ data class ApitHotKey(
         @Json(name = "Desc") val desc: String,
         @Json(name = "KeyWords") val KeyWords: List<String>?
 )
+
+@JsonClass(generateAdapter = true)
+data class Version(
+        @Json(name = "RetCode") val code: Int,
+        @Json(name = "Desc") val desc: String,
+        @Json(name = "Versions") val version: List<String>?
+)
