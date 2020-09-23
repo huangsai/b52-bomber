@@ -38,7 +38,7 @@ class LoginViewModel @Inject constructor() : MyBaseViewModel() {
                 .asLiveData(Dispatchers.IO)
     }
 
-    fun ckVersino(): LiveData<Source<Version>> {
+    fun ckVersino(): LiveData<Source<ApiVersion.Version>> {
         return flow { emit(versionRepository.checkVersion()) }
                 .asLiveData(Dispatchers.IO)
     }

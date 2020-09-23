@@ -2,7 +2,7 @@ package com.mobile.app.bomber.data.repository
 
 import com.mobile.app.bomber.data.db.AppDatabase
 import com.mobile.app.bomber.data.files.AppPrefsManager
-import com.mobile.app.bomber.data.http.entities.Version
+import com.mobile.app.bomber.data.http.entities.ApiVersion
 import com.mobile.guava.https.toSource
 import com.mobile.app.bomber.data.http.service.DataService
 import com.mobile.guava.jvm.domain.Source
@@ -17,7 +17,7 @@ class VersionRepository @Inject constructor(
 ) : BaseRepository(dataService, db, appPrefsManager) {
 
 
-    suspend fun checkVersion(): Source<Version> {
+    suspend fun checkVersion(): Source<ApiVersion.Version> {
         return try {
             dataService.getVersion(1).execute().toSource()
         } catch (e: Exception) {

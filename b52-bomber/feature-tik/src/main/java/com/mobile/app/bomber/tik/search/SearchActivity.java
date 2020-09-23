@@ -15,8 +15,10 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.mobile.app.bomber.common.base.Msg;
 import com.mobile.app.bomber.runner.RunnerLib;
 import com.mobile.guava.android.mvvm.AndroidX;
+import com.mobile.guava.jvm.domain.Source;
 import com.pacific.adapter.AdapterUtils;
 import com.pacific.adapter.AdapterViewHolder;
 import com.pacific.adapter.RecyclerAdapter;
@@ -46,7 +48,8 @@ public class SearchActivity extends MyBaseActivity
     private String[] hotWords;
     private SearchTitleBarPresenter searchTitleBarPresenter;
     private SearchViewModel model;
-
+    private FragmentSearchVideo fragmentSearchVideo;
+    private FragmentSearchUser fragmentSearchUser;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,8 +78,8 @@ public class SearchActivity extends MyBaseActivity
     private void initSearchResultView() {
         if (fragmentsList == null) {
             fragmentsList = new ArrayList<>();
-            fragmentsList.add(new FragmentSearchVideo());
-            fragmentsList.add(new FragmentSearchUser());
+            fragmentsList.add(fragmentSearchVideo);
+            fragmentsList.add(fragmentSearchUser);
         }
         if (indexTitles == null) {
             indexTitles = new ArrayList<>();
@@ -120,17 +123,24 @@ public class SearchActivity extends MyBaseActivity
      * 初始化热门搜索词汇
      */
     private void initHotSearchData() {
-        hotWords = getResources().getStringArray(R.array.search_hot_labels);
-        for (String hotWord : hotWords) {
-            TextView textView = (TextView) LayoutInflater.from(this).inflate(R.layout.item_tag_tv, binding.mShowBtnLayout, false);
-            textView.setText(hotWord);
-            textView.setTag(hotWord);
-            textView.setOnClickListener(view -> {
-                String keyword = (String) view.getTag();
-                searchTitleBarPresenter.selectKeyword(keyword);
-            });
-            binding.mShowBtnLayout.addView(textView);
-        }
+        model.getHotKeyTop().observe(this, source -> {
+            if (source instanceof Source.Success) {
+                List<String> hotKeys = source.requireData();
+                for (int i = 0; i < hotKeys.size(); i++) {
+                    TextView textView = (TextView) LayoutInflater.from(this).inflate(R.layout.item_tag_tv, binding.mShowBtnLayout, false);
+                    textView.setText(hotKeys.get(i).toString());
+                    textView.setTag(i);
+                    textView.setOnClickListener(view -> {
+                        String keyword = hotKeys.get((Integer) view.getTag()).toString();
+                        Msg.INSTANCE.toast("当前的下标索引值：" + view.getTag().toString());
+                        searchTitleBarPresenter.selectKeyword(keyword);
+                    });
+                    binding.mShowBtnLayout.addView(textView);
+                }
+            } else {
+                Msg.INSTANCE.handleSourceException(source.requireError());
+            }
+        });
     }
 
     /**
@@ -138,6 +148,9 @@ public class SearchActivity extends MyBaseActivity
      */
     public void handleSearchResult(String keyword) {
         //后期把data传过去,刷新搜索结果Fragment
+        Bundle bundle = new Bundle();
+        bundle.putString("keyword", keyword);
+        fragmentSearchVideo.setArguments(bundle);
         Bus.INSTANCE.offer(RunnerLib.BUS_SEARCH_RESULT);
         binding.layoutResultView.setVisibility(View.VISIBLE);
         binding.layoutSearchView.setVisibility(View.INVISIBLE);

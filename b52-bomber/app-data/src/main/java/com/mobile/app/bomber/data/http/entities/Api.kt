@@ -8,9 +8,12 @@ import java.io.Serializable
 
 private const val HOST_TEST = "http://119.28.18.135:"
 private const val HOST_UPLOAD_TEST = "http://119.28.54.13:"
+private const val HOST_SearchAVersion_TEST = "http://192.168.2.120:"
 
 const val HOST_USER = "${HOST_TEST}8000"
 const val HOST_VIDEO = "${HOST_TEST}8001"
+const val HOST_SearchAVersion = "${HOST_SearchAVersion_TEST}8001"
+
 const val HOST_SYS = "${HOST_TEST}8003"
 const val HOST_UPLOAD = "${HOST_UPLOAD_TEST}8080"
 const val DECODE_URL = "${HOST_UPLOAD_TEST}8000"
@@ -539,6 +542,7 @@ data class ApiSearch(
             @Json(name = "rank") val rankDesc: String
     )
 }
+
 @JsonClass(generateAdapter = true)
 data class ApiSearchVideo(
         @Json(name = "RetCode") val code: Int,
@@ -557,8 +561,19 @@ data class ApitHotKey(
 )
 
 @JsonClass(generateAdapter = true)
-data class Version(
+data class ApiVersion(
         @Json(name = "RetCode") val code: Int,
         @Json(name = "Desc") val desc: String,
-        @Json(name = "Versions") val version: List<String>?
-)
+        @Json(name = "Versions") val version: Version
+) {
+    @JsonClass(generateAdapter = true)
+    data class Version(
+            @Json(name = "Id") val id: Int,
+            @Json(name = "Type") val type: String,
+            @Json(name = "VersionName") val versionName: String,
+            @Json(name = "VersionCode") val versionCode: String,
+            @Json(name = "DownloadUrl") val downloadUrl: String,
+            @Json(name = "Desc") val desc: String,
+            @Json(name = "AddTime") val addTime: Long?
+    )
+}

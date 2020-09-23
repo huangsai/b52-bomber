@@ -23,6 +23,7 @@ import com.mobile.app.bomber.common.base.tool.AppUtil;
 import com.mobile.app.bomber.common.base.tool.SingleClick;
 import com.mobile.app.bomber.data.http.entities.ApiAd;
 import com.mobile.app.bomber.data.http.entities.ApiToken;
+import com.mobile.app.bomber.data.http.entities.ApiVersion;
 import com.mobile.app.bomber.data.repository.SourceExtKt;
 import com.mobile.guava.android.mvvm.AndroidX;
 import com.mobile.app.bomber.runner.base.PrefsManager;
@@ -47,6 +48,7 @@ import com.mobile.guava.jvm.domain.Source;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import kotlin.Pair;
@@ -128,7 +130,7 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
         }
         if (hasNeededPermission) {
             requestSplashAd();
-            requestPopupCheckVersion();
+            requestCheckVersion();
 
         }
     }
@@ -193,13 +195,18 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
         });
     }
 
-    public void requestPopupCheckVersion() {
+    public void requestCheckVersion() {
+        int currentversion = AppUtil.getVersionCode(getApplicationContext());
         model.ckVersino().observe(this, source -> {
             if (source instanceof Source.Success) {
-                Msg.INSTANCE.toast("111");
-            }else{
+                ApiVersion.Version version = source.requireData();
+                String vn = version.getVersionCode();
+                if (!(vn.equals(String.valueOf(currentversion)))) {
+
+                }
+            } else {
                 Msg.INSTANCE.handleSourceException(source.requireError());
-             }
+            }
         });
     }
 

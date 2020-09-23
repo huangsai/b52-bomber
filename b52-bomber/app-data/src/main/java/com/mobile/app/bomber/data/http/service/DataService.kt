@@ -213,5 +213,5 @@ interface DataService {
 
     @GET("${API_VIDEO}/getVersion/{platform}")
     fun getVersion(@Path("platform") platform: Int
-    ): Call<Version>
+    ): Call<ApiVersion.Version>
 }
