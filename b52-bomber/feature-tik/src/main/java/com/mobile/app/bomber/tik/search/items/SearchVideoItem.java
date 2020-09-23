@@ -2,6 +2,9 @@ package com.mobile.app.bomber.tik.search.items;
 
 import androidx.annotation.NonNull;
 
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.mobile.app.bomber.common.base.GlideApp;
+import com.mobile.app.bomber.tik.base.GlideExtKt;
 import com.pacific.adapter.AdapterViewHolder;
 import com.pacific.adapter.SimpleRecyclerItem;
 import com.mobile.app.bomber.data.http.entities.ApiVideo;
@@ -24,6 +27,13 @@ public class SearchVideoItem extends SimpleRecyclerItem {
     public void bind(@NotNull AdapterViewHolder holder) {
         FragmentSearchVideoItemBinding binding = holder.binding(FragmentSearchVideoItemBinding::bind);
         holder.attachOnClickListener(R.id.layout_video_item);
+         binding.userName.setText(data.getUsername());
+        binding.videoName.setText(data.getDesc());
+        GlideExtKt.loadProfile(holder.activity(), data.getProfile(), binding.headImg);
+        GlideApp.with(holder.activity())
+                .load(data.getCoverImageUrl())
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(binding.videoCover);
     }
 
     @Override
