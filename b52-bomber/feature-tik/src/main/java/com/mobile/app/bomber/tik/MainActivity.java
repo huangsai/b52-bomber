@@ -1,8 +1,10 @@
 package com.mobile.app.bomber.tik;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.RadioButton;
@@ -21,8 +23,10 @@ import com.mobile.app.bomber.common.base.Msg;
 import com.mobile.app.bomber.common.base.MyBaseActivity;
 import com.mobile.app.bomber.common.base.tool.AppUtil;
 import com.mobile.app.bomber.common.base.tool.SingleClick;
+import com.mobile.app.bomber.common.base.tool.UpdateManger;
 import com.mobile.app.bomber.data.http.entities.ApiAd;
 import com.mobile.app.bomber.data.http.entities.ApiToken;
+import com.mobile.app.bomber.data.http.entities.ApiVersion;
 import com.mobile.app.bomber.data.repository.SourceExtKt;
 import com.mobile.guava.android.mvvm.AndroidX;
 import com.mobile.app.bomber.runner.base.PrefsManager;
@@ -47,6 +51,7 @@ import com.mobile.guava.jvm.domain.Source;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import kotlin.Pair;
@@ -153,11 +158,13 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
                 ApiAd ad = source.requireData();
                 if (TextUtils.isEmpty(ad.getUrl())) {
                     requestPopupAd();
+//                    requestCheckVersion();
                 } else {
                     RouterKt.showDialogFragment(this, SplashDialogFragment.newInstance(ad));
                 }
             } else {
                 requestPopupAd();
+//                requestCheckVersion();
             }
         });
     }
@@ -187,6 +194,28 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
                         this,
                         PopupAdDialogFragment.newInstance(source.requireData())
                 );
+            }
+        });
+        requestCheckVersion();
+    }
+
+    public void requestCheckVersion() {
+        Log.e("sss", "55555555");
+        int currentversion = AppUtil.getVersionCode(getApplicationContext());
+        model.ckVersino().observe(this, source -> {
+            if (source instanceof Source.Success) {
+                ApiVersion.Version version = source.requireData();
+                String vn = version.getVersionCode();
+                Msg.INSTANCE.toast("444");
+                if (!(vn.equals(String.valueOf(currentversion)))) {
+                    Msg.INSTANCE.toast("333");
+                    UpdateManger updateManger = new UpdateManger(getApplicationContext(),
+                            version.getDownloadUrl(), true,
+                            version.getVersionCode(), String.valueOf(currentversion));
+                    updateManger.showNoticeDialog(version.getVersionCode(), String.valueOf(currentversion));
+                }
+            } else {
+                Msg.INSTANCE.handleSourceException(source.requireError());
             }
         });
     }

@@ -3,10 +3,7 @@ package com.mobile.app.bomber.tik.login
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import com.mobile.app.bomber.common.base.MyBaseViewModel
-import com.mobile.app.bomber.data.http.entities.ApiAd
-import com.mobile.app.bomber.data.http.entities.ApiAdMsg
-import com.mobile.app.bomber.data.http.entities.ApiToken
-import com.mobile.app.bomber.data.http.entities.Nope
+import com.mobile.app.bomber.data.http.entities.*
 import com.mobile.guava.android.mvvm.AndroidX
 import com.mobile.guava.jvm.coroutines.Bus
 import com.mobile.guava.jvm.domain.Source
@@ -41,6 +38,10 @@ class LoginViewModel @Inject constructor() : MyBaseViewModel() {
                 .asLiveData(Dispatchers.IO)
     }
 
+    fun ckVersino(): LiveData<Source<ApiVersion.Version>> {
+        return flow { emit(versionRepository.checkVersion()) }
+                .asLiveData(Dispatchers.IO)
+    }
     fun ad(): LiveData<Source<ApiAd>> {
         return flow { emit(adRepository.ad()) }
                 .asLiveData(Dispatchers.IO)

@@ -1,14 +1,12 @@
 package com.mobile.app.bomber.data.http.okhttp3
 
-import com.mobile.app.bomber.data.http.entities.HOST_SYS
-import com.mobile.app.bomber.data.http.entities.HOST_UPLOAD
-import com.mobile.app.bomber.data.http.entities.HOST_USER
-import com.mobile.app.bomber.data.http.entities.HOST_VIDEO
+import com.mobile.app.bomber.data.http.entities.*
 import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.Interceptor
 import okhttp3.Response
 import java.io.IOException
+import kotlin.jvm.Throws
 
 class HostSelectionInterceptor : Interceptor {
 
@@ -30,6 +28,7 @@ class HostSelectionInterceptor : Interceptor {
             isAboutUser(original) -> HOST_USER
             isAboutUpload(original) -> HOST_UPLOAD
             isAboutAd(original) -> HOST_SYS
+            isAboutSearchAVersion(original) -> HOST_SearchAVersion
             else -> HOST_VIDEO
         }.toHttpUrl()
     }
@@ -48,6 +47,10 @@ class HostSelectionInterceptor : Interceptor {
         if (original.contains("getfanslist")) return true
         if (original.contains("searchuser")) return true
         if (original.contains("isfollowed")) return true
+        return false
+    }
+    private fun isAboutSearchAVersion(original: String): Boolean {
+        if (original.contains("getVersion")) return true
         return false
     }
 

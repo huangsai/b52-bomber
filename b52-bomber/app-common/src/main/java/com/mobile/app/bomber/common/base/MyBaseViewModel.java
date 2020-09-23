@@ -9,6 +9,7 @@ import com.mobile.app.bomber.data.repository.MsgRepository;
 import com.mobile.app.bomber.data.repository.TikSearchRepository;
 import com.mobile.app.bomber.data.repository.UploadRepository;
 import com.mobile.app.bomber.data.repository.UserRepository;
+import com.mobile.app.bomber.data.repository.VersionRepository;
 import com.mobile.app.bomber.data.repository.VideoRepository;
 
 import javax.inject.Inject;
@@ -38,4 +39,7 @@ public abstract class MyBaseViewModel extends ViewModel {
 
     @Inject
     protected MovieSearchRepository movieSearchRepository;
+
+    @Inject
+    protected VersionRepository versionRepository;
 }

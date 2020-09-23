@@ -2,15 +2,27 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-     android:orientation="vertical"
     android:background="@color/black"
+    android:orientation="vertical"
 
     >
- <androidx.recyclerview.widget.RecyclerView
-     android:id="@+id/video_recycle"
-     android:layout_width="match_parent"
-     android:layout_height="match_parent">
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/layout_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
 
- </androidx.recyclerview.widget.RecyclerView>
-  </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/video_recycle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical">
+
+        </androidx.recyclerview.widget.RecyclerView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <include
+        android:id="@+id/layout_empty_view"
+        layout="@layout/item_empty" />
+</LinearLayout>

@@ -56,7 +56,7 @@ object RunnerLib {
         AppManager.initialize()
 
         if (isDebug) {
-            enableStrictMode()
+//            enableStrictMode()
         }
     }
 
