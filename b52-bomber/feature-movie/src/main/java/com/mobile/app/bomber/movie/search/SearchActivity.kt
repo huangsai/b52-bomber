@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.mobile.app.bomber.common.base.Msg
 import com.mobile.app.bomber.common.base.MyBaseActivity
 import com.mobile.app.bomber.common.base.tool.SingleClick
-import com.mobile.app.bomber.movie.MovieLib
+import com.mobile.app.bomber.movie.MovieX
 import com.mobile.app.bomber.movie.R
 import com.mobile.app.bomber.movie.databinding.MovieActivitySearchBinding
 import com.mobile.app.bomber.movie.search.items.SearchInputItem
@@ -26,7 +26,7 @@ import timber.log.Timber
 
 class SearchActivity : MyBaseActivity(), TextWatcher, View.OnClickListener {
     private lateinit var binding: MovieActivitySearchBinding
-    val model: SearchViewModel by viewModels { MovieLib.component.viewModelFactory() }
+    val model: SearchViewModel by viewModels { MovieX.component.viewModelFactory() }
 
     private val adapter = RecyclerAdapter()
     private lateinit var mainItems: ArrayList<SimpleRecyclerItem>

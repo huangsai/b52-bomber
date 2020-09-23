@@ -3,7 +3,7 @@ package com.mobile.app.bomber.movie.player
 import android.view.View
 import android.widget.ImageView
 import androidx.recyclerview.widget.GridLayoutManager
-import com.mobile.app.bomber.common.base.GlideApp
+import com.mobile.ext.glide.GlideApp
 import com.mobile.app.bomber.movie.R
 import com.mobile.app.bomber.movie.base.animRotate
 import com.mobile.app.bomber.movie.databinding.MovieActivityPlayerBinding

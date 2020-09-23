@@ -12,7 +12,7 @@ import com.github.rubensousa.previewseekbar.exoplayer.PreviewTimeBar
 import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
-import com.mobile.app.bomber.common.base.GlideApp
+import com.mobile.ext.glide.GlideApp
 import com.mobile.app.bomber.common.base.tool.isLandscape
 import com.mobile.app.bomber.common.base.tool.requestFullScreenWithLandscape
 import com.mobile.app.bomber.movie.R

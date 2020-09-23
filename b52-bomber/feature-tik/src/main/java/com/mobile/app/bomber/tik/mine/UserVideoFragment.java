@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-import com.mobile.app.bomber.common.base.GlideApp;
+import com.mobile.ext.glide.GlideApp;
 import com.mobile.app.bomber.common.base.Msg;
 import com.mobile.app.bomber.common.base.MyBaseFragment;
 import com.mobile.app.bomber.common.base.RecyclerAdapterEmpty;
@@ -19,7 +19,7 @@ import com.mobile.app.bomber.common.base.tool.SingleClick;
 import com.mobile.app.bomber.data.http.entities.ApiVideo;
 import com.mobile.app.bomber.data.http.entities.Pager;
 import com.mobile.guava.https.Values;
-import com.mobile.app.bomber.runner.RunnerLib;
+import com.mobile.app.bomber.runner.RunnerX;
 import com.mobile.app.bomber.tik.R;
 import com.mobile.app.bomber.tik.base.AppRouterUtils;
 import com.mobile.app.bomber.tik.base.GlideExtKt;
@@ -183,7 +183,7 @@ public class UserVideoFragment extends MyBaseFragment implements AdapterImageLoa
     @Override
     public void onBusEvent(@NotNull Pair<Integer, ?> event) {
         super.onBusEvent(event);
-        if (event.getFirst() == RunnerLib.BUS_FRAGMENT_ME_REFRESH) {
+        if (event.getFirst() == RunnerX.BUS_FRAGMENT_ME_REFRESH) {
             pager.reset();
             endlessListener.reset();
             if (type == TYPE_VIDEO) {

@@ -6,7 +6,7 @@ import android.widget.ImageView
 import androidx.annotation.CallSuper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.mobile.app.bomber.common.base.GlideApp
+import com.mobile.ext.glide.GlideApp
 import com.mobile.app.bomber.common.base.Msg
 import com.mobile.app.bomber.common.base.RecyclerAdapterEmpty
 import com.mobile.app.bomber.data.http.entities.ApiMovie

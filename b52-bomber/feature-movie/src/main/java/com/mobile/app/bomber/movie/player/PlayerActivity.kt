@@ -9,7 +9,7 @@ import com.google.android.exoplayer2.util.Util
 import com.mobile.app.bomber.common.base.tool.isLandscape
 import com.mobile.app.bomber.common.base.tool.requestNormalScreenWithPortrait
 import com.mobile.app.bomber.data.http.entities.ApiMovie
-import com.mobile.app.bomber.movie.MovieLib
+import com.mobile.app.bomber.movie.MovieX
 import com.mobile.app.bomber.movie.databinding.MovieActivityPlayerBinding
 import com.mobile.guava.android.mvvm.BaseActivity
 import com.mobile.guava.android.mvvm.newStartActivity
@@ -23,7 +23,7 @@ class PlayerActivity : BaseActivity() {
     private lateinit var sourcePresenter: SourcePresenter
     private lateinit var playerPresenter: PlayerPresenter
 
-    private val model: PlayerViewModel by viewModels { MovieLib.component.viewModelFactory() }
+    private val model: PlayerViewModel by viewModels { MovieX.component.viewModelFactory() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

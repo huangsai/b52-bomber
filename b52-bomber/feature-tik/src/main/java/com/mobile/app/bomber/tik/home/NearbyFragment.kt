@@ -22,7 +22,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import com.mobile.app.bomber.tik.R
-import com.mobile.app.bomber.common.base.GlideApp
+import com.mobile.ext.glide.GlideApp
 import com.mobile.app.bomber.common.base.Msg
 import com.mobile.app.bomber.common.base.RecyclerViewFragment
 import com.mobile.app.bomber.tik.base.decodeImgUrl

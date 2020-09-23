@@ -6,7 +6,7 @@ import android.view.View;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 
-import com.mobile.app.bomber.runner.RunnerLib;
+import com.mobile.app.bomber.runner.RunnerX;
 import com.mobile.guava.android.mvvm.RouterKt;
 import com.mobile.guava.https.Values;
 import com.mobile.guava.jvm.coroutines.Bus;
@@ -18,8 +18,6 @@ import com.mobile.app.bomber.common.base.Msg;
 import com.mobile.app.bomber.common.base.MyBaseActivity;
 import com.mobile.app.bomber.common.base.tool.SingleClick;
 import com.mobile.app.bomber.tik.databinding.ActivityUserDetailBinding;
-
-import com.mobile.guava.android.mvvm.AndroidX;
 
 /**
  * 用户详情页
@@ -94,7 +92,7 @@ public class UserDetailActivity extends MyBaseActivity implements View.OnClickLi
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Bus.INSTANCE.offer(RunnerLib.BUS_VIDEO_UPDATE);
+        Bus.INSTANCE.offer(RunnerX.BUS_VIDEO_UPDATE);
     }
 }
 

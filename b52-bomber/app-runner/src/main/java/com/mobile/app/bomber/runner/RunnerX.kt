@@ -3,16 +3,16 @@ package com.mobile.app.bomber.runner
 import android.app.Application
 import android.os.StrictMode
 import androidx.room.Room
-import com.mobile.app.bomber.data.DataLib
-import com.mobile.app.bomber.runner.base.*
+import com.mobile.app.bomber.data.DataX
+import com.mobile.app.bomber.runner.base.PrefsManager
+import com.mobile.app.bomber.runner.base.RoomAppDatabase
 import com.mobile.app.bomber.runner.dagger.DaggerRunnerComponent
 import com.mobile.app.bomber.runner.dagger.RunnerComponent
 import com.mobile.guava.android.mvvm.AndroidX
 import com.mobile.guava.android.mvvm.AppContext
-import com.mobile.guava.jvm.Guava
-import timber.log.Timber
+import com.mobile.guava.android.mvvm.AppManager
 
-object RunnerLib {
+object RunnerX {
 
     const val PREFS_DEVICE_ID = "deviceId"
     const val PREFS_USER_ID = "userId"
@@ -30,49 +30,29 @@ object RunnerLib {
     const val BUS_SEARCH_RESULT = 102
     const val BUS_VIDEO_UPDATE = 103
 
-    @Deprecated(
-            "AndroidX.myApp",
-            ReplaceWith(
-                    "AndroidX.myApp",
-                    "com.mobile.guava.android.mvvm.AndroidX"
-            )
-    )
-    @get:JvmName("myApp")
-    val myApp: Application
-        get() = AndroidX.myApp
-
-    @get:JvmName("component")
     lateinit var component: RunnerComponent
         private set
 
     fun setup(app: Application, isDebug: Boolean) {
-        AndroidX.setup(app)
-        Guava.isDebug = isDebug
-        Guava.timber = AppTimber()
+        AndroidX.setup(app, isDebug)
 
-        DataLib.setup(AppContext(), createRoomDatabase(), PrefsManager)
-        component = DaggerRunnerComponent.factory().create(DataLib.component, app)
-        initializeTimber()
+        DataX.setup(AppContext(), createRoomDatabase(), PrefsManager)
+
+        component = DaggerRunnerComponent.factory().create(DataX.component, app)
+
         AppManager.initialize()
 
         if (isDebug) {
-//            enableStrictMode()
+            enableStrictMode()
         }
     }
 
     private fun createRoomDatabase(): RoomAppDatabase {
-        return Room.databaseBuilder(myApp, RoomAppDatabase::class.java, AndroidX.SQL_DB3)
+        return Room.databaseBuilder(
+                AndroidX.myApp, RoomAppDatabase::class.java, "app_bomber.db3")
                 .addCallback(RoomAppDatabase.DbCallback())
                 .addMigrations()
                 .build()
-    }
-
-    private fun initializeTimber() {
-        if (Guava.isDebug) {
-            Timber.plant(Timber.DebugTree())
-        } else {
-            Timber.plant(BugTree())
-        }
     }
 
     private fun enableStrictMode() {

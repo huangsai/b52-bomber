@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mobile.app.bomber.common.base.MyBaseFragment
-import com.mobile.app.bomber.movie.MovieLib
+import com.mobile.app.bomber.movie.MovieX
 import com.mobile.app.bomber.movie.MovieViewModel
 import com.mobile.app.bomber.movie.databinding.MovieFragmentCommonListBinding
 import com.mobile.app.bomber.movie.top.BannerPresenter
@@ -17,7 +17,7 @@ import java.util.*
 
 class CommonListFragment : MyBaseFragment() {
 
-    private val model: MovieViewModel by viewModels { MovieLib.component.viewModelFactory() }
+    private val model: MovieViewModel by viewModels { MovieX.component.viewModelFactory() }
     private var _binding: MovieFragmentCommonListBinding? = null
     private val binding get() = _binding!!
     private val adapter = RecyclerAdapter()

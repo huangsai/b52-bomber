@@ -21,13 +21,13 @@ import com.google.android.exoplayer2.ExoPlaybackException
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
-import com.mobile.app.bomber.common.base.GlideApp
+import com.mobile.ext.glide.GlideApp
 import com.mobile.app.bomber.common.base.Msg
 import com.mobile.app.bomber.common.base.MyBaseFragment
 import com.mobile.app.bomber.common.base.tool.SingleClick
 import com.mobile.app.bomber.data.http.entities.ApiVideo
 import com.mobile.guava.https.Values
-import com.mobile.app.bomber.runner.RunnerLib
+import com.mobile.app.bomber.runner.RunnerX
 import com.mobile.app.bomber.tik.R
 import com.mobile.app.bomber.tik.base.*
 import com.mobile.app.bomber.tik.databinding.FragmentPlayBinding
@@ -473,7 +473,7 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
     }
 
     override fun onBusEvent(event: Pair<Int, Any>) {
-        if (event.first == RunnerLib.BUS_VIDEO_UPDATE) {
+        if (event.first == RunnerX.BUS_VIDEO_UPDATE) {
             updateVideo()
             return
         }

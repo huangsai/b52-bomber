@@ -15,7 +15,7 @@ import com.mobile.app.bomber.common.base.MyBaseFragment;
 import com.mobile.app.bomber.common.base.RecyclerAdapterEmpty;
 import com.mobile.app.bomber.data.http.entities.ApiVideo;
 import com.mobile.app.bomber.data.http.entities.Pager;
-import com.mobile.app.bomber.runner.RunnerLib;
+import com.mobile.app.bomber.runner.RunnerX;
 import com.mobile.app.bomber.tik.R;
 import com.mobile.app.bomber.tik.base.AppRouterUtils;
 import com.mobile.app.bomber.tik.databinding.FragmentSearchVideoBinding;
@@ -27,7 +27,6 @@ import com.mobile.guava.android.ui.view.recyclerview.TestedGridItemDecoration;
 import com.mobile.guava.jvm.domain.Source;
 import com.pacific.adapter.AdapterUtils;
 import com.pacific.adapter.AdapterViewHolder;
-import com.pacific.adapter.RecyclerAdapter;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -105,7 +104,7 @@ public class FragmentSearchVideo extends MyBaseFragment implements SwipeRefreshL
     @Override
     public void onBusEvent(@NotNull Pair<Integer, ?> event) {
         super.onBusEvent(event);
-        if (event.getFirst() == RunnerLib.INSTANCE.BUS_SEARCH_RESULT) {
+        if (event.getFirst() == RunnerX.INSTANCE.BUS_SEARCH_RESULT) {
             Bundle bundle = getArguments();
             result = bundle.getString("keyword");
             refreshData();

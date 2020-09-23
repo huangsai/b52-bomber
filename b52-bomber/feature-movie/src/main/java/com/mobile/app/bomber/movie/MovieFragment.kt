@@ -31,7 +31,7 @@ class MovieFragment : MyBaseFragment(), ApiMovieFragment, View.OnClickListener {
         }
     }
 
-    private val model: MovieViewModel by viewModels { MovieLib.component.viewModelFactory() }
+    private val model: MovieViewModel by viewModels { MovieX.component.viewModelFactory() }
 
     private var _binding: MovieFragmentMovieBinding? = null
     private val binding: MovieFragmentMovieBinding get() = _binding!!

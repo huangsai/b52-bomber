@@ -59,8 +59,9 @@ buildscript {
             'flexbox'          : '2.0.1',
             'fabric'           : '1.4.8',
             'store'            : '4.0.0-alpha07',
-            'theGuava'         : '0.0.9',
+            'theGuava'         : '0.1.6',
             'theExt'           : '0.0.1',
+            'theSdk'           : '0.0.1',
             'pacificAdapter'   : '3.0.3',
             'exoplayer'        : '2.12.0',
 
@@ -255,7 +256,9 @@ buildscript {
                     'guavaHttps'    : "com.mobile.guava:guava-https:${versions.theGuava}",
                     'guavaMvvm'     : "com.mobile.guava:guava-android-mvvm:${versions.theGuava}",
                     'extGlide'      : "com.mobile.ext:ext-glide:${versions.theExt}",
-                    'extRxjava3'    : "com.mobile.ext:ext-rxjava3:${versions.theExt}"
+                    'extRxjava3'    : "com.mobile.ext:ext-rxjava3:${versions.theExt}",
+                    'sdkIpv6'       : "com.mobile.sdk:sdk-ipv6:${versions.theSdk}",
+                    'sdkSister'       : "com.mobile.sdk:sdk-sister:${versions.theSdk}"
             ],
             'androidX'         : [
                     'activity'           : [

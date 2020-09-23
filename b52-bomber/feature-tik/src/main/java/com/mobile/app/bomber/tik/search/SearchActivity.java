@@ -16,8 +16,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.mobile.app.bomber.common.base.Msg;
-import com.mobile.app.bomber.runner.RunnerLib;
-import com.mobile.guava.android.mvvm.AndroidX;
+import com.mobile.app.bomber.runner.RunnerX;
 import com.mobile.guava.jvm.domain.Source;
 import com.pacific.adapter.AdapterUtils;
 import com.pacific.adapter.AdapterViewHolder;
@@ -151,7 +150,7 @@ public class SearchActivity extends MyBaseActivity
         Bundle bundle = new Bundle();
         bundle.putString("keyword", keyword);
         fragmentSearchVideo.setArguments(bundle);
-        Bus.INSTANCE.offer(RunnerLib.BUS_SEARCH_RESULT);
+        Bus.INSTANCE.offer(RunnerX.BUS_SEARCH_RESULT);
         binding.layoutResultView.setVisibility(View.VISIBLE);
         binding.layoutSearchView.setVisibility(View.INVISIBLE);
         model.addKey(keyword).observe(

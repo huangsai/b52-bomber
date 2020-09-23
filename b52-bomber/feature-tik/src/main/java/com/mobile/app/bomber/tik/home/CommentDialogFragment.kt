@@ -24,7 +24,7 @@ import com.mobile.app.bomber.common.base.tool.SingleClick
 import com.mobile.app.bomber.data.http.entities.ApiComment
 import com.mobile.app.bomber.data.http.entities.ApiVideo
 import com.mobile.guava.https.Values
-import com.mobile.app.bomber.runner.RunnerLib
+import com.mobile.app.bomber.runner.RunnerX
 import com.mobile.guava.android.mvvm.BaseBottomSheetDialogFragment
 import com.mobile.guava.android.mvvm.showDialogFragment
 import com.mobile.app.bomber.tik.R
@@ -144,7 +144,7 @@ class CommentDialogFragment : BaseBottomSheetDialogFragment(), View.OnClickListe
 
     override fun onDestroy() {
         super.onDestroy()
-        Bus.offer(RunnerLib.BUS_VIDEO_UPDATE)
+        Bus.offer(RunnerX.BUS_VIDEO_UPDATE)
     }
 
     @SingleClick

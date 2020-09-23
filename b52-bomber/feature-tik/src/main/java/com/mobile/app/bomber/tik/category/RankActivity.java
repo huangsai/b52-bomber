@@ -27,7 +27,7 @@ import com.mobile.guava.jvm.domain.Source;
 
 import com.mobile.app.bomber.tik.R;
 import com.mobile.app.bomber.tik.base.AppRouterUtils;
-import com.mobile.app.bomber.common.base.GlideApp;
+import com.mobile.ext.glide.GlideApp;
 import com.mobile.app.bomber.tik.base.GlideExtKt;
 import com.mobile.app.bomber.common.base.Msg;
 import com.mobile.app.bomber.common.base.MyBaseActivity;

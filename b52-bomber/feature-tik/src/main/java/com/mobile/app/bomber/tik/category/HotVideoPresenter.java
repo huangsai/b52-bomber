@@ -11,7 +11,7 @@ import com.pacific.adapter.AdapterViewHolder;
 import com.mobile.guava.jvm.domain.Source;
 
 import com.mobile.app.bomber.tik.R;
-import com.mobile.app.bomber.common.base.GlideApp;
+import com.mobile.ext.glide.GlideApp;
 import com.mobile.app.bomber.tik.base.GlideExtKt;
 import com.mobile.app.bomber.common.base.tool.SingleClick;
 import com.mobile.app.bomber.tik.category.items.HotVideoItem;

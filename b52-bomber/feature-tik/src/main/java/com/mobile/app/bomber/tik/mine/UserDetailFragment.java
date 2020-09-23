@@ -15,8 +15,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
-import com.mobile.app.bomber.runner.RunnerLib;
-import com.mobile.guava.android.mvvm.AndroidX;
+import com.mobile.app.bomber.runner.RunnerX;
 import com.mobile.app.bomber.runner.base.PrefsManager;
 import com.mobile.app.bomber.data.http.entities.ApiUser;
 import com.mobile.app.bomber.data.http.entities.ApiUserCount;
@@ -182,7 +181,7 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
 
     @Override
     public void onRefresh() {
-        Bus.INSTANCE.offer(RunnerLib.BUS_FRAGMENT_ME_REFRESH);
+        Bus.INSTANCE.offer(RunnerX.BUS_FRAGMENT_ME_REFRESH);
         loadData();
     }
 

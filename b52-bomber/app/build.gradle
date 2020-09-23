@@ -30,4 +30,5 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation project(':feature-tik')
     implementation project(':feature-movie')
+    implementation dep.company.sdkIpv6
 }

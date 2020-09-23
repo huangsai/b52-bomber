@@ -18,7 +18,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 
 import com.mobile.app.bomber.tik.R;
 import com.mobile.app.bomber.tik.base.AppRouterUtils;
-import com.mobile.app.bomber.common.base.GlideApp;
+import com.mobile.ext.glide.GlideApp;
 import com.mobile.app.bomber.common.base.Msg;
 import com.mobile.app.bomber.common.base.MyBaseActivity;
 import com.mobile.app.bomber.common.base.tool.FileUtil;

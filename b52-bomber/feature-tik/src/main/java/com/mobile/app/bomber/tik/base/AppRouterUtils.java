@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 
-import com.mobile.app.bomber.tik.TikLib;
+import com.mobile.app.bomber.tik.TikX;
 
 public class AppRouterUtils {
 
@@ -19,6 +19,6 @@ public class AppRouterUtils {
 
     @NonNull
     public static ViewModelProvider.Factory viewModelFactory() {
-        return TikLib.INSTANCE.getComponent().viewModelFactory();
+        return TikX.INSTANCE.getComponent().viewModelFactory();
     }
 }

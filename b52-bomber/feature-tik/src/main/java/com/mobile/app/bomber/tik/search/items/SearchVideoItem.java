@@ -3,7 +3,7 @@ package com.mobile.app.bomber.tik.search.items;
 import androidx.annotation.NonNull;
 
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-import com.mobile.app.bomber.common.base.GlideApp;
+import com.mobile.ext.glide.GlideApp;
 import com.mobile.app.bomber.tik.base.GlideExtKt;
 import com.pacific.adapter.AdapterViewHolder;
 import com.pacific.adapter.SimpleRecyclerItem;

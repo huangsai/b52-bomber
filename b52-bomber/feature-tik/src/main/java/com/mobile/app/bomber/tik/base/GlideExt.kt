@@ -5,7 +5,7 @@ import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import com.mobile.app.bomber.data.http.entities.DECODE_URL
 import com.bumptech.glide.request.RequestOptions
-import com.mobile.app.bomber.common.base.GlideApp
+import com.mobile.ext.glide.GlideApp
 import com.mobile.app.bomber.tik.R
 
 private val sharedProfileRequestOptions by lazy {

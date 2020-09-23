@@ -9,8 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.mobile.app.bomber.runner.RunnerLib;
-import com.mobile.guava.android.mvvm.AndroidX;
+import com.mobile.app.bomber.runner.RunnerX;
 import com.mobile.guava.android.ui.view.recyclerview.LinearItemDecoration;
 import com.pacific.adapter.RecyclerAdapter;
 
@@ -64,7 +63,7 @@ public class FragmentSearchUser extends MyBaseFragment {
     @Override
     public void onBusEvent(@NotNull Pair<Integer, ?> event) {
         super.onBusEvent(event);
-        if (event.getFirst() == RunnerLib.INSTANCE.BUS_SEARCH_RESULT) {
+        if (event.getFirst() == RunnerX.INSTANCE.BUS_SEARCH_RESULT) {
             refreshData();
         }
     }

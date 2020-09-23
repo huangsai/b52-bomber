@@ -18,7 +18,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.gyf.immersionbar.ImmersionBar
-import com.mobile.app.bomber.common.base.GlideApp
+import com.mobile.ext.glide.GlideApp
 import com.mobile.app.bomber.tik.MainActivity
 import com.mobile.app.bomber.tik.R
 import com.mobile.app.bomber.tik.base.chrome

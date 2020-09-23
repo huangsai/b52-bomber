@@ -4,9 +4,8 @@ import com.mobile.app.bomber.data.db.AppDatabase
 import com.mobile.app.bomber.data.files.AppPrefsManager
 import com.mobile.guava.https.PlatformContext
 
-object DataLib {
+object DataX {
 
-    @get:JvmName("component")
     lateinit var component: DataComponent
         private set
 

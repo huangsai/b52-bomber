@@ -4,7 +4,7 @@ import android.content.Context
 import android.view.View
 import android.widget.ImageView
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.mobile.app.bomber.common.base.GlideApp
+import com.mobile.ext.glide.GlideApp
 import com.mobile.app.bomber.common.base.Msg
 import com.mobile.app.bomber.data.http.entities.ApiMovie
 import com.mobile.app.bomber.movie.R

@@ -5,7 +5,7 @@ import android.view.View
 import android.widget.ImageView
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.mobile.app.bomber.common.base.GlideApp
+import com.mobile.ext.glide.GlideApp
 import com.mobile.app.bomber.common.base.tool.shareToSystem
 import com.mobile.app.bomber.data.http.entities.Pager
 import com.mobile.app.bomber.movie.R

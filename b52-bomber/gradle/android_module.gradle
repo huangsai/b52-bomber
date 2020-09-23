@@ -164,4 +164,6 @@ dependencies {
     implementation dep.company.guavaAndroidUi
     implementation dep.company.guavaHttps
     implementation dep.company.guavaMvvm
+
+    implementation dep.company.extGlide
 }

@@ -15,7 +15,7 @@ import com.mobile.app.bomber.data.http.entities.ApiVideo;
 import com.mobile.guava.android.ui.view.recyclerview.LinearItemDecoration;
 
 import com.mobile.app.bomber.tik.R;
-import com.mobile.app.bomber.common.base.GlideApp;
+import com.mobile.ext.glide.GlideApp;
 import com.mobile.app.bomber.tik.base.GlideExtKt;
 import com.mobile.app.bomber.common.base.tool.SingleClick;
 import com.mobile.app.bomber.tik.databinding.ItemLikeAtBinding;
