@@ -19,7 +19,7 @@ class VersionRepository @Inject constructor(
 
     suspend fun checkVersion(): Source<ApiVersion.Version> {
         return try {
-            dataService.getVersion(1).execute().toSource()
+            dataService.getVersion(1).toSource()
         } catch (e: Exception) {
             errorSource(e)
         }

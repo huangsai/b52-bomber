@@ -184,4 +184,21 @@ public class AppUtil {
         return null;
     }
 
+
+    /**
+     * 获取当前app version name
+     */
+    public static String getAppVersionName(Context context) {
+        String appVersionName = "";
+        try {
+            PackageInfo packageInfo = context.getApplicationContext()
+                    .getPackageManager()
+                    .getPackageInfo(context.getPackageName(), 0);
+            appVersionName = packageInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+//            Logger.e("CommonTools", e.getMessage());
+        }
+        return appVersionName;
+    }
+
 }

@@ -12,7 +12,7 @@ private const val HOST_SearchAVersion_TEST = "http://192.168.2.120:"
 
 const val HOST_USER = "${HOST_TEST}8000"
 const val HOST_VIDEO = "${HOST_TEST}8001"
-const val HOST_SearchAVersion = "${HOST_SearchAVersion_TEST}8001"
+const val HOST_SearchAVersion = "${HOST_TEST}8001"
 
 const val HOST_SYS = "${HOST_TEST}8003"
 const val HOST_UPLOAD = "${HOST_UPLOAD_TEST}8080"
@@ -564,16 +564,17 @@ data class ApitHotKey(
 data class ApiVersion(
         @Json(name = "RetCode") val code: Int,
         @Json(name = "Desc") val desc: String,
-        @Json(name = "Versions") val version: Version
+        @Json(name = "Versions") val versions: Version,
 ) {
     @JsonClass(generateAdapter = true)
     data class Version(
-            @Json(name = "Id") val id: Int,
-            @Json(name = "Type") val type: String,
+            @Json(name = "Id") val Id: Int,
+            @Json(name = "Type") val type: Int,
             @Json(name = "VersionName") val versionName: String,
+            @Json(name = "Force") val force: Int,
             @Json(name = "VersionCode") val versionCode: String,
             @Json(name = "DownloadUrl") val downloadUrl: String,
             @Json(name = "Desc") val desc: String,
-            @Json(name = "AddTime") val addTime: Long?
+            @Json(name = "AddTime") val addTime: Long
     )
 }

@@ -8,6 +8,7 @@ import com.mobile.guava.jvm.domain.PlatformTimber
 import okhttp3.Interceptor
 import okhttp3.Response
 import java.io.IOException
+import kotlin.jvm.Throws
 
 class CheckResponseInterceptor : Interceptor {
 
