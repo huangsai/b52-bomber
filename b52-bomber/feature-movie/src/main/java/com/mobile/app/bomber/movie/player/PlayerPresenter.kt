@@ -17,11 +17,10 @@ import com.mobile.app.bomber.common.base.tool.isLandscape
 import com.mobile.app.bomber.common.base.tool.requestFullScreenWithLandscape
 import com.mobile.app.bomber.movie.R
 import com.mobile.app.bomber.movie.databinding.MovieActivityPlayerBinding
-import com.mobile.app.bomber.movie.player.exo.ExoPlayerMediaSourceBuilder
+import com.mobile.app.bomber.movie.player.exo.ExoUtils
 import com.mobile.app.bomber.movie.player.exo.GlideThumbnailTransformation
 import com.mobile.guava.android.mvvm.AndroidX
 import com.mobile.guava.https.safeToFloat
-import com.mobile.guava.jvm.io.ensureFileSeparator
 import com.pacific.adapter.AdapterViewHolder
 import com.skydoves.balloon.Balloon
 import com.skydoves.balloon.BalloonAnimation
@@ -34,8 +33,6 @@ class PlayerPresenter(
 ) : BasePlayerPresenter(binding, playerActivity, model), Player.EventListener, PreviewLoader,
         PreviewBar.OnScrubListener, CompoundButton.OnCheckedChangeListener, PlaybackPreparer {
 
-    private val controlDispatcher = DefaultControlDispatcher()
-    private val mediaSourceBuilder = ExoPlayerMediaSourceBuilder(AndroidX.myApp)
     private val trackSelector = DefaultTrackSelector(AndroidX.myApp)
     private val trackSelectorParameters = DefaultTrackSelector.ParametersBuilder(AndroidX.myApp)
             .setTunnelingAudioSessionId(C.generateAudioSessionIdV21(AndroidX.myApp))
@@ -100,11 +97,11 @@ class PlayerPresenter(
     }
 
     override fun onResume() {
-        controlDispatcher.dispatchSetPlayWhenReady(player, true)
+        ExoUtils.controlDispatcher.dispatchSetPlayWhenReady(player, true)
     }
 
     override fun onPause() {
-        controlDispatcher.dispatchSetPlayWhenReady(player, false)
+        ExoUtils.controlDispatcher.dispatchSetPlayWhenReady(player, false)
     }
 
     override fun onDestroy() {
@@ -115,11 +112,12 @@ class PlayerPresenter(
     }
 
     private fun createMediaSource(): MediaSource {
-        AndroidX.myApp.getExternalFilesDir(null)!!.absolutePath.also {
-            // mediaSourceBuilder.uri = (ensureFileSeparator(it) + "trailer.mp4").toUri()
-            mediaSourceBuilder.uri = "http://192.168.2.121:8080/3,033b01890a".toUri()
-        }
-        return mediaSourceBuilder.getMediaSource(true)
+        // AndroidX.myApp.getExternalFilesDir(null)!!.absolutePath
+        return ExoUtils.buildMediaSource(
+                AndroidX.myApp,
+                "http://192.168.2.121:8080/3,0c56160b6a".toUri(),
+                true
+        )
     }
 
     override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
@@ -142,7 +140,7 @@ class PlayerPresenter(
     }
 
     override fun onPlayerError(error: ExoPlaybackException) {
-        Timber.tag("ExoPlayer").d(error)
+        Timber.tag(ExoUtils.TAG).d(error)
     }
 
     override fun preparePlayback() {
