@@ -62,6 +62,8 @@ public class SearchActivity extends MyBaseActivity
                         .bottomMargin(R.dimen.size_2dp)
                         .build()
         );
+        fragmentSearchVideo = new FragmentSearchVideo();
+        fragmentSearchUser = new FragmentSearchUser();
 
         binding.searchHistoryRecycler.setLayoutManager(new LinearLayoutManager(this));
         searchTitleBarPresenter = new SearchTitleBarPresenter(binding.toolbar, this);
