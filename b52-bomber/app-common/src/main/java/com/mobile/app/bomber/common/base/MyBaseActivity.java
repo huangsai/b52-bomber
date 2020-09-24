@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment;
 
 import com.mobile.app.bomber.common.R;
 import com.mobile.guava.android.mvvm.AndroidX;
-import com.mobile.guava.android.mvvm.AndroidX;
 import com.mobile.guava.android.mvvm.BaseActivity;
 import com.mobile.guava.jvm.coroutines.Bus;
 
@@ -57,6 +56,13 @@ public abstract class MyBaseActivity extends BaseActivity {
         }
     }
 
+    /**
+     * 不建议使用
+     *
+     * @param containerViewId
+     * @param fragment
+     */
+    @Deprecated
     public void addFragment(int containerViewId, Fragment fragment) {
         getSupportFragmentManager().beginTransaction()
                 .disallowAddToBackStack()

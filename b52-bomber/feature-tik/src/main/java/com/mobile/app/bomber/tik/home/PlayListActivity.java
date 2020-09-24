@@ -10,22 +10,25 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.gyf.immersionbar.ImmersionBar;
-import com.mobile.guava.android.mvvm.RouterKt;
-import com.mobile.app.bomber.data.http.entities.ApiVideo;
-import com.mobile.guava.https.Values;
-import com.mobile.guava.jvm.domain.Source;
-
-import com.mobile.app.bomber.tik.base.AppRouterUtils;
-import com.mobile.app.bomber.common.base.MyBaseActivity;
 import com.mobile.app.bomber.common.base.Msg;
+import com.mobile.app.bomber.common.base.MyBaseActivity;
+import com.mobile.app.bomber.data.http.entities.ApiVideo;
+import com.mobile.app.bomber.tik.base.AppRouterUtils;
 import com.mobile.app.bomber.tik.databinding.ActivityPlayListBinding;
 import com.mobile.app.bomber.tik.message.MsgViewModel;
+import com.mobile.guava.android.mvvm.AndroidX;
+import com.mobile.guava.android.mvvm.RouterKt;
+import com.mobile.guava.https.Values;
+import com.mobile.guava.jvm.coroutines.Bus;
+import com.mobile.guava.jvm.domain.Source;
 
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import timber.log.Timber;
 
 public class PlayListActivity extends MyBaseActivity implements View.OnClickListener {
 
@@ -42,21 +45,34 @@ public class PlayListActivity extends MyBaseActivity implements View.OnClickList
         binding = ActivityPlayListBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         final long videoId = Values.INSTANCE.take("PlayListActivity_videoId");
+        final String videoJson = Values.INSTANCE.take("PlayListActivity_videoJson");
         if (videoId > 0) {
             binding.progress.setVisibility(View.VISIBLE);
             playPosition = 0;
             model = AppRouterUtils.viewModels(this, MsgViewModel.class);
             getVideoById(videoId);
+        } else if (videoJson != null && !videoJson.isEmpty()) {
+            playPosition = 0;
+            model = AppRouterUtils.viewModels(this, MsgViewModel.class);
+            parseVideoByJson(videoJson);
         } else {
             playPosition = Values.INSTANCE.take("PlayListActivity_playPosition");
             videos = Values.INSTANCE.take("PlayListActivity");
             bindData();
         }
+
+        Bus.INSTANCE.offer(AndroidX.BUS_DIALOG_CLOSE);
     }
 
     @Override
     public void onClick(View v) {
         finish();
+    }
+
+    private void parseVideoByJson(String videoJson) {
+        Timber.e(videoJson);
+        videos = Collections.singletonList(model.parseVideo(videoJson));
+        bindData();
     }
 
     private void getVideoById(long videoId) {
@@ -106,6 +122,12 @@ public class PlayListActivity extends MyBaseActivity implements View.OnClickList
 
     public static void start(Activity activity, long videoId) {
         Values.INSTANCE.put("PlayListActivity_videoId", videoId);
+        RouterKt.newStartActivity(activity, PlayListActivity.class);
+    }
+
+    public static void start(Activity activity, String videoJson) {
+        Values.INSTANCE.put("PlayListActivity_videoId", 0L);
+        Values.INSTANCE.put("PlayListActivity_videoJson", videoJson);
         RouterKt.newStartActivity(activity, PlayListActivity.class);
     }
 }

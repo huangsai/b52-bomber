@@ -131,15 +131,14 @@ data class ApiVideo(
         }
 
         fun decodeVideoUrl(): String {
-//            return "${DECODE_URL}/videodecode?videourl=${videoURL}&download=0"
-
+            // return "${DECODE_URL}/videodecode?videourl=${videoURL}&download=0"
             return videoURL
 
         }
 
         fun downloadVideoUrl(): String {
-//            return "${DECODE_URL}/videodecode?videourl=${videoURL}"
-            return null!!
+            // return "${DECODE_URL}/videodecode?videourl=${videoURL}"
+            return ""
         }
     }
 }

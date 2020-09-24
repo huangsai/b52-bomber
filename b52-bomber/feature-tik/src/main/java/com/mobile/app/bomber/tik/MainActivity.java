@@ -1,10 +1,10 @@
 package com.mobile.app.bomber.tik;
 
 import android.app.Activity;
-import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.RadioButton;
@@ -28,10 +28,8 @@ import com.mobile.app.bomber.data.http.entities.ApiAd;
 import com.mobile.app.bomber.data.http.entities.ApiToken;
 import com.mobile.app.bomber.data.http.entities.ApiVersion;
 import com.mobile.app.bomber.data.repository.SourceExtKt;
-import com.mobile.guava.android.mvvm.AndroidX;
 import com.mobile.app.bomber.runner.base.PrefsManager;
 import com.mobile.app.bomber.runner.features.FeatureRouter;
-import com.mobile.guava.android.mvvm.RouterKt;
 import com.mobile.app.bomber.tik.ad.PopupAdDialogFragment;
 import com.mobile.app.bomber.tik.ad.SplashDialogFragment;
 import com.mobile.app.bomber.tik.base.AppRouterKt;
@@ -39,6 +37,7 @@ import com.mobile.app.bomber.tik.base.AppRouterUtils;
 import com.mobile.app.bomber.tik.databinding.ActivityMainBinding;
 import com.mobile.app.bomber.tik.home.HomeFragment;
 import com.mobile.app.bomber.tik.home.LocationLiveData;
+import com.mobile.app.bomber.tik.home.PlayListActivity;
 import com.mobile.app.bomber.tik.home.TestDialogFragment;
 import com.mobile.app.bomber.tik.home.TopMainFragment;
 import com.mobile.app.bomber.tik.login.LoginActivity;
@@ -46,12 +45,13 @@ import com.mobile.app.bomber.tik.login.LoginViewModel;
 import com.mobile.app.bomber.tik.message.MsgFragment;
 import com.mobile.app.bomber.tik.mine.FragmentMe;
 import com.mobile.app.bomber.tik.video.VideoRecordActivity;
+import com.mobile.guava.android.mvvm.AndroidX;
+import com.mobile.guava.android.mvvm.RouterKt;
 import com.mobile.guava.jvm.domain.Source;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import kotlin.Pair;
@@ -79,6 +79,20 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
         requestPermission();
     }
 
+    @Override
+    public void handleIntent(@NotNull Intent intent) {
+        super.handleIntent(intent);
+        try {
+            Uri schemeData = intent.getData();
+            String videoJson = schemeData.getQueryParameter("videoJson");
+            if (!TextUtils.isEmpty(videoJson)) {
+                PlayListActivity.start(this, videoJson);
+            }
+        } catch (Exception e) {
+            Timber.d(e);
+        }
+    }
+
     private void onCreate() {
         binding.mainRg.setOnCheckedChangeListener(this);
         binding.viewPager.setOffscreenPageLimit(2);
@@ -87,6 +101,7 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
         binding.viewPager.setCurrentItem(0);
         binding.imgAdd.setOnClickListener(this);
         binding.imgAdd.setOnLongClickListener(this);
+        handleIntent(getIntent());
     }
 
     private void requestPermission() {
@@ -158,13 +173,13 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
                 ApiAd ad = source.requireData();
                 if (TextUtils.isEmpty(ad.getUrl())) {
                     requestPopupAd();
-//                    requestCheckVersion();
+                    // requestCheckVersion();
                 } else {
                     RouterKt.showDialogFragment(this, SplashDialogFragment.newInstance(ad));
                 }
             } else {
                 requestPopupAd();
-//                requestCheckVersion();
+                // requestCheckVersion();
             }
         });
     }
@@ -200,19 +215,18 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
     }
 
     public void requestCheckVersion() {
-        Log.e("sss", "55555555");
-        int currentversion = AppUtil.getVersionCode(getApplicationContext());
+        int currentVersion = AppUtil.getVersionCode(getApplicationContext());
         model.ckVersino().observe(this, source -> {
             if (source instanceof Source.Success) {
                 ApiVersion.Version version = source.requireData();
                 String vn = version.getVersionCode();
                 Msg.INSTANCE.toast("444");
-                if (!(vn.equals(String.valueOf(currentversion)))) {
+                if (!(vn.equals(String.valueOf(currentVersion)))) {
                     Msg.INSTANCE.toast("333");
                     UpdateManger updateManger = new UpdateManger(getApplicationContext(),
                             version.getDownloadUrl(), true,
-                            version.getVersionCode(), String.valueOf(currentversion));
-                    updateManger.showNoticeDialog(version.getVersionCode(), String.valueOf(currentversion));
+                            version.getVersionCode(), String.valueOf(currentVersion));
+                    updateManger.showNoticeDialog(version.getVersionCode(), String.valueOf(currentVersion));
                 }
             } else {
                 Msg.INSTANCE.handleSourceException(source.requireError());
@@ -307,7 +321,6 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
         public Fragment createFragment(int position) {
             switch (position) {
                 case 1:
-                    // return CategoryFragment.newInstance(position);
                     return FeatureRouter.INSTANCE.newMovieFragment(position);
                 case 2:
                     return MsgFragment.newInstance(position);
