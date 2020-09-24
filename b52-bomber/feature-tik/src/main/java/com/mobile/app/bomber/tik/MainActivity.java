@@ -205,10 +205,10 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
             if (source instanceof Source.Success) {
                 ApiVersion version = source.requireData();
                 ApiVersion.Version vCode = version.getVersions();
-                if (!(vCode.equals(currentversion))) {
+                if (!(vCode.getVersionName().equals(currentversion))) {
                     UpdateManger updateManger = new UpdateManger(getApplicationContext(),
                             vCode.getDownloadUrl(), true,
-                            vCode.getVersionName(), String.valueOf(currentversion), this);
+                            vCode.getVersionName(), currentversion, this);
                     updateManger.showNoticeDialog(vCode.getVersionName(),  currentversion);
                 }
             } else {
