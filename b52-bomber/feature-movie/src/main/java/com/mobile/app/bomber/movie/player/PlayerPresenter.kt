@@ -112,10 +112,9 @@ class PlayerPresenter(
     }
 
     private fun createMediaSource(): MediaSource {
-        // AndroidX.myApp.getExternalFilesDir(null)!!.absolutePath
         return ExoUtils.buildMediaSource(
                 AndroidX.myApp,
-                "http://192.168.2.121:8080/3,0c56160b6a".toUri(),
+                "http://192.168.2.120/group1/M00/00/00/wKgCeF9r9vaAYBc0AE1k-lWCChA674.mp4".toUri(),
                 true
         )
     }

@@ -44,5 +44,7 @@
     <color name="msg_desc">#848388</color>
     <color name="rank_divider">#403e4b</color>
     <color name="transparent_gray_light">#89000000</color>
+    <color name="tik_home_pop_divider">#95a5a6</color>
+    <color name="tik_home_pop">#3498db</color>
 
 </resources>

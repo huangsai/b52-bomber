@@ -16,7 +16,7 @@ class NearByActivity : MyBaseActivity() {
         setContentView(binding.root)
 
         addFragment(
-                R.id.fragment_container_view,
+                R.id.fragment_nearby_container_view,
                 NearbyFragment.newInstance(0)
         )
      }

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tik_home_pop_menu"
+    android:layout_width="@dimen/size_96dp"
+    android:layout_height="wrap_content"
+    android:background="@color/tik_home_pop"
+    android:divider="@drawable/tik_home_pop_divider"
+    android:orientation="vertical"
+    android:showDividers="middle">
+
+    <TextView
+        android:id="@+id/txt_category"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_44dp"
+        android:gravity="center_vertical"
+        android:text="@string/recycle_cate"
+        android:paddingLeft="@dimen/size_12dp"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/font_15sp" />
+
+    <TextView
+        android:id="@+id/txt_nearby"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_44dp"
+        android:gravity="center_vertical"
+        android:text="@string/local"
+        android:paddingLeft="@dimen/size_12dp"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/font_15sp" />
+
+</LinearLayout>

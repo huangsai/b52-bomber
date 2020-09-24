@@ -6,8 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.PopupWindow
-import android.widget.Toast
 import androidx.activity.result.ActivityResultCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -27,21 +25,20 @@ import com.mobile.app.bomber.tik.databinding.FragmentHomeBinding
 import com.mobile.app.bomber.tik.login.LoginActivity
 import com.mobile.app.bomber.tik.search.SearchActivity
 import com.mobile.app.bomber.tik.video.VideoRecordActivity
-import com.wanglu.lib.WPopup
-import com.wanglu.lib.WPopupModel
-import kotlinx.android.synthetic.main.fragment_home.*
+import com.mobile.guava.android.mvvm.AndroidX
+import com.skydoves.balloon.Balloon
+import com.skydoves.balloon.BalloonAnimation
 
 class HomeFragment : TopMainFragment(), View.OnClickListener {
 
     private val tabTitles = arrayOf("关注", "推荐")
-    private val data = mutableListOf(WPopupModel("分类"), WPopupModel("同城"))
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private lateinit var mediator: TabLayoutMediator
     private lateinit var adapter: MyAdapter
 
-    private var menu_pop: WPopup? = null
+    private var balloon: Balloon?= null
 
     private var currentPosition = -1
     private var ignoreOnPageChangeCallback = false
@@ -91,8 +88,6 @@ class HomeFragment : TopMainFragment(), View.OnClickListener {
         binding.viewPager.recyclerView.enforceSingleScrollDirection()
         binding.viewPager.offscreenPageLimit = 2
         binding.viewPager.adapter = adapter
-        initPop()
-
 
         currentPosition = 1
         binding.viewPager.setCurrentItem(currentPosition, false)
@@ -105,24 +100,29 @@ class HomeFragment : TopMainFragment(), View.OnClickListener {
         return binding.root
     }
 
-    private fun initPop() {
-
-        menu_pop = WPopup.Builder(pActivity)
-                .setData(data)
-                .setTextColor(Color.WHITE)
-                .setIsDim(true)
-                .setPopupBgColor(Color.parseColor("#3498db"))
-                .setDividerColor(Color.parseColor("#95a5a6"))
-                .setOnItemClickListener(object : WPopup.Builder.OnItemClickListener {
-                    override fun onItemClick(view: View, position: Int) {
-                        if (position == 0) {
+    private fun showPopupOptions(anchor: View) {
+        balloon = Balloon.Builder(AndroidX.myApp)
+                .setLayout(R.layout.tik_home_pop_menu)
+                .setArrowVisible(false)
+                .setBackgroundColor(Color.TRANSPARENT)
+                .setBalloonAnimation(BalloonAnimation.FADE)
+                .setLifecycleOwner(this)
+                .setMarginRight(40)
+                .setMarginBottom(24)
+                .setCornerRadius(0f)
+                .setAutoDismissDuration(3000)
+                .build()
+                .apply {
+                    with(getContentView()) {
+                        findViewById<View>(R.id.txt_category).setOnClickListener {
                             newStartActivity(CategoryActivity::class.java)
-                        } else {
+                        }
+                        findViewById<View>(R.id.txt_nearby).setOnClickListener {
                             newStartActivity(NearByActivity::class.java)
                         }
                     }
-                })
-                .create()
+                    show(anchor)
+                }
     }
 
     @SingleClick
@@ -138,7 +138,7 @@ class HomeFragment : TopMainFragment(), View.OnClickListener {
                 }
             }
             R.id.img_down -> {
-                menu_pop!!.showAtView(img_down)
+                showPopupOptions(v)
             }
         }
     }
