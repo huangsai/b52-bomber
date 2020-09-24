@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.view.LayoutInflater;
@@ -13,6 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 
 import com.mobile.app.bomber.common.R;
 
@@ -27,7 +30,7 @@ public class UpdateManger {
 
     private String apkUrl = ""; //apk下载地址
     private static final String savePath = "/sdcard/updateAPK/"; //apk保存到SD卡的路径
-    private static final String saveFileName = savePath + "apkName.apk"; //完整路径名
+    private static final String saveFileName = savePath + "微瑟.apk"; //完整路径名
 
     private ProgressBar mProgress; //下载进度条控件
     private TextView tv_progress;//下载进度百分比
@@ -43,16 +46,20 @@ public class UpdateManger {
     private boolean forceUpdate = true; //是否强制更新
 
     private AlertDialog alertDialog1, alertDialog2; //表示提示对话框、进度条对话框
+    private AppCompatActivity appCompatActivity; //取消下载标志位
+
 
     /**
      * 构造函数
      */
-    public UpdateManger(Context context, String downUrl, Boolean isForce, String clientVersion,String serverVersion) {
+    public UpdateManger(Context context, String downUrl, Boolean isForce, String clientVersion, String serverVersion, AppCompatActivity appCompatActivity) {
         this.mContext = context;
         this.apkUrl = downUrl;
         this.forceUpdate = isForce;
         this.clientVersion = clientVersion;
         this.serverVersion = serverVersion;
+        this.appCompatActivity = appCompatActivity;
+
     }
 
     /**
@@ -62,7 +69,7 @@ public class UpdateManger {
         //如果版本最新，则不需要更新
         if (serverVersion.equals(clientVersion))
             return;
-        AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this.appCompatActivity);
         dialog.setTitle("发现新版本 ：" + serverVersion);
         dialog.setMessage(updateDescription + AppUtil.getAppName(mContext));
         dialog.setPositiveButton("现在更新", new DialogInterface.OnClickListener() {
@@ -90,7 +97,7 @@ public class UpdateManger {
      * 显示进度条对话框
      */
     public void showDownloadDialog() {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this.appCompatActivity);
         dialog.setTitle("正在更新");
         final LayoutInflater inflater = LayoutInflater.from(mContext);
         View v = inflater.inflate(R.layout.update_progress, null);
@@ -200,8 +207,14 @@ public class UpdateManger {
         }
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setDataAndType(Uri.parse("file://" + apkFile.toString()), "application/vnd.android.package-archive");
-        mContext.startActivity(intent);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            Uri uri = FileProvider.getUriForFile(this.mContext, this.appCompatActivity.getPackageName() + ".provider", apkFile);
+            intent.setDataAndType(uri, "application/vnd.android.package-archive");
+        } else {
+            intent.setDataAndType(Uri.fromFile(apkFile), "application/vnd.android.package-archive");
+        }
+        this.appCompatActivity.startActivity(intent);
     }
 
 
