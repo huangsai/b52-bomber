@@ -42,10 +42,6 @@ object RunnerX {
         component = DaggerRunnerComponent.factory().create(DataX.component, app)
 
         AppManager.initialize()
-
-        if (isDebug) {
-            enableStrictMode()
-        }
     }
 
     private fun createRoomDatabase(): RoomAppDatabase {
@@ -54,21 +50,6 @@ object RunnerX {
                 .addCallback(RoomAppDatabase.DbCallback())
                 .addMigrations()
                 .build()
-    }
-
-    private fun enableStrictMode() {
-        StrictMode.setThreadPolicy(
-                StrictMode.ThreadPolicy.Builder()
-                        .detectAll()
-                        .penaltyLog()
-                        .build()
-        )
-        StrictMode.setVmPolicy(
-                StrictMode.VmPolicy.Builder()
-                        .detectAll()
-                        .penaltyLog()
-                        .build()
-        )
     }
 }
 
