@@ -200,16 +200,16 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
     }
 
     public void requestCheckVersion() {
-         int currentversion = AppUtil.getVersionCode(getApplicationContext());
+        String currentversion = AppUtil.getAppVersionName(getApplicationContext());
         model.ckVersino().observe(this, source -> {
             if (source instanceof Source.Success) {
                 ApiVersion version = source.requireData();
                 ApiVersion.Version vCode = version.getVersions();
-                 if (!(vCode.equals(String.valueOf(currentversion)))) {
-//                     UpdateManger updateManger = new UpdateManger(getApplicationContext(),
-//                             vCode.getDownloadUrl(), true,
-//                             vCode.getVersionName(), String.valueOf(currentversion),this);
-//                    updateManger.showNoticeDialog(vCode.getVersionName(), String.valueOf(currentversion));
+                if (!(vCode.equals(currentversion))) {
+                    UpdateManger updateManger = new UpdateManger(getApplicationContext(),
+                            vCode.getDownloadUrl(), true,
+                            vCode.getVersionName(), String.valueOf(currentversion), this);
+                    updateManger.showNoticeDialog(vCode.getVersionName(),  currentversion);
                 }
             } else {
                 Msg.INSTANCE.handleSourceException(source.requireError());
