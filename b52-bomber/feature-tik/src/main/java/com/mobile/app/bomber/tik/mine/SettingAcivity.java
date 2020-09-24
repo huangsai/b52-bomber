@@ -6,6 +6,8 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
+import com.mobile.app.bomber.data.http.entities.ApiDownLoadUrl;
+import com.mobile.app.bomber.tik.home.ShareDialogFragment;
 import com.mobile.guava.android.mvvm.RouterKt;
 import com.mobile.guava.https.Values;
 
@@ -18,13 +20,14 @@ import com.mobile.app.bomber.common.base.tool.SingleClick;
 import com.mobile.app.bomber.tik.databinding.ActivitySettingEditinfoBinding;
 import com.mobile.app.bomber.tik.login.LoginActivity;
 import com.mobile.app.bomber.tik.login.LoginViewModel;
+import com.mobile.guava.jvm.domain.Source;
 
 
 public class SettingAcivity extends MyBaseActivity implements View.OnClickListener {
 
     private LoginViewModel model;
     private ActivitySettingEditinfoBinding binding;
-
+    private String shareUrl;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +52,16 @@ public class SettingAcivity extends MyBaseActivity implements View.OnClickListen
         binding.settingItem.clearcache.setOnClickListener(this);
         binding.settingItem.loginOut.setOnClickListener(this);
         binding.settingItem.checkUpate.setOnClickListener(this);
+        binding.settingItem.share.setOnClickListener(this);
+
+        model.shareAppUrl().observe(this, source -> {
+            if (source instanceof Source.Success) {
+                ApiDownLoadUrl url = source.requireData();
+                shareUrl = url.getDownloadUrl();
+            } else {
+                Msg.INSTANCE.handleSourceException(source.requireError());
+            }
+        });
     }
 
     @SingleClick
@@ -67,6 +80,8 @@ public class SettingAcivity extends MyBaseActivity implements View.OnClickListen
             model.logout();
             RouterKt.newStartActivity(this, LoginActivity.class);
             finish();
+        } else if (id == R.id.share) {
+            ShareDialogFragment.goSystemShareSheet(this, shareUrl);
         }
     }
 }

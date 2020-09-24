@@ -577,3 +577,10 @@ data class ApiVersion(
             @Json(name = "AddTime") val addTime: Long
     )
 }
+
+@JsonClass(generateAdapter = true)
+data class ApiDownLoadUrl(
+        @Json(name = "RetCode") val code: Int,
+        @Json(name = "desc") val desc: String,
+        @Json(name = "shareUrl") val downloadUrl: String
+)
