@@ -12,7 +12,9 @@ private const val HOST_SearchAVersion_TEST = "http://192.168.2.120:"
 
 const val HOST_USER = "${HOST_TEST}8000"
 const val HOST_VIDEO = "${HOST_TEST}8001"
-const val HOST_SearchAVersion = "${HOST_TEST}8001"
+const val HOST_Search = "${HOST_TEST}8001"
+const val HOST_ShareURl = "${HOST_SearchAVersion_TEST}8003"
+const val HOST_GetVersion = "${HOST_TEST}8001"
 
 const val HOST_SYS = "${HOST_TEST}8003"
 const val HOST_UPLOAD = "${HOST_UPLOAD_TEST}8080"
