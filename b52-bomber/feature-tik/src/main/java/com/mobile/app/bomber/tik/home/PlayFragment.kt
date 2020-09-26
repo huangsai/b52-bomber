@@ -25,6 +25,7 @@ import com.mobile.ext.glide.GlideApp
 import com.mobile.app.bomber.common.base.Msg
 import com.mobile.app.bomber.common.base.MyBaseFragment
 import com.mobile.app.bomber.common.base.tool.SingleClick
+import com.mobile.app.bomber.data.http.entities.ApiDownLoadUrl
 import com.mobile.app.bomber.data.http.entities.ApiVideo
 import com.mobile.guava.https.Values
 import com.mobile.app.bomber.runner.RunnerX
@@ -57,6 +58,7 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
     private lateinit var thumbDrawable: Drawable
 
     private var currentWindow = 0
+    private var shareURl: String = ""
     private var playbackPosition: Long = 0
     private var isPlayerPlaying = false
     private var markedPlayCount = false
@@ -212,8 +214,9 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
         when (v!!.id) {
             R.id.layout_link -> chrome(video.adUrl)
             R.id.txt_share -> {
-                shareVideo(video.videoId)
-                ShareDialogFragment.goSystemShareSheet(requireActivity(), video.decodeVideoUrl())
+//                shareVideo(video.videoId)  //分享视频
+                shareAppURl()  //分享App下载地址
+                ShareDialogFragment.goSystemShareSheet(requireActivity(), shareURl)
             }
             R.id.txt_liked -> requireActivity().requireLogin(ActivityResultCallback {
                 if (it.resultCode == Activity.RESULT_OK) {
@@ -456,6 +459,24 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
             GoogleExo.controlDispatcher.dispatchSetPlayWhenReady(it, !it.playWhenReady)
         }
     }
+
+    private fun shareAppURl() {
+        lifecycleScope.launch(Dispatchers.IO) {
+            val source = model.shareAppUrl()
+            withContext(Dispatchers.Main) {
+                when (source) {
+                    is Source.Success -> {
+                        var downurl = source.requireData()
+                        shareURl = downurl.downloadUrl
+                    }
+                    is Source.Error -> {
+                        Msg.handleSourceException(source.requireError())
+                    }
+                }.exhaustive
+            }
+        }
+    }
+
 
     private fun shareVideo(videoId: Long) {
         lifecycleScope.launch(Dispatchers.IO) {

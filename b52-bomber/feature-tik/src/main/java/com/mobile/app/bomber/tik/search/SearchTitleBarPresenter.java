@@ -39,6 +39,7 @@ public class SearchTitleBarPresenter implements View.OnClickListener, TextWatche
      */
     public void selectKeyword(String keyword) {
         binding.etSearch.setText(keyword);
+
         binding.etSearch.setSelection(keyword.length());
         if (callback != null) callback.doSearch(keyword);
     }

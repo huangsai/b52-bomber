@@ -1,10 +1,14 @@
 package com.mobile.app.bomber.tik.home
 
 import androidx.annotation.WorkerThread
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.asLiveData
 import com.mobile.app.bomber.data.http.entities.*
 import com.mobile.guava.android.ensureWorkThread
 import com.mobile.guava.jvm.domain.Source
 import com.mobile.app.bomber.common.base.MyBaseViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class HomeViewModel @Inject constructor() : MyBaseViewModel() {
@@ -97,5 +101,11 @@ class HomeViewModel @Inject constructor() : MyBaseViewModel() {
     suspend fun videoById(videoId: Long): Source<ApiVideo.Video> {
         ensureWorkThread()
         return videoRepository.videoById(videoId)
+    }
+
+    @WorkerThread
+    suspend fun shareAppUrl(): Source<ApiDownLoadUrl> {
+        ensureWorkThread()
+        return shareRepository.getDownloadUrl()
     }
 }

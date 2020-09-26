@@ -28,7 +28,8 @@ class HostSelectionInterceptor : Interceptor {
             isAboutUser(original) -> HOST_USER
             isAboutUpload(original) -> HOST_UPLOAD
             isAboutAd(original) -> HOST_SYS
-            isAboutSearchAVersion(original) -> HOST_SearchAVersion
+            isAboutgetShareUrl(original) -> HOST_ShareURl
+            isAboutSearchVideoUser(original)->HOST_Search
             else -> HOST_VIDEO
         }.toHttpUrl()
     }
@@ -49,11 +50,19 @@ class HostSelectionInterceptor : Interceptor {
         if (original.contains("isfollowed")) return true
         return false
     }
-    private fun isAboutSearchAVersion(original: String): Boolean {
+
+    private fun isAboutSearchVideoUser(original: String): Boolean {
+        if (original.contains("postSearchVideoUser")) return true
+        return false
+    }
+    private fun isAboutGetVersion(original: String): Boolean {
         if (original.contains("getVersion")) return true
         return false
     }
-
+    private fun isAboutgetShareUrl(original: String): Boolean {
+        if (original.contains("getShareUrl")) return true
+        return false
+    }
     private fun isAboutUpload(original: String): Boolean {
         if (original.contains("group1/upload")) return true
         return false

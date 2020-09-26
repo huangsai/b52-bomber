@@ -26,6 +26,8 @@ interface DataComponent : HttpsComponent {
 
     fun uploadRepository(): UploadRepository
 
+    fun shareRepository(): ShareRepository
+
     fun msgRepository(): MsgRepository
 
     fun tikSearchRepository(): TikSearchRepository
