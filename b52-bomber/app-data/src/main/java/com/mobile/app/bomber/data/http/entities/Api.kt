@@ -6,10 +6,10 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import java.io.Serializable
 
-private const val HOST_TEST = "http://119.28.18.135:"
-private const val HOST_UPLOAD_TEST = "http://119.28.54.13:"
-private const val HOST_SearchAVersion_TEST = "http://192.168.2.120:"
-
+private const val HOST_TEST = "http://117.50.119.233:" //http://119.28.18.135:
+private const val HOST_UPLOAD_TEST = "http://117.50.119.220:" //http://119.28.54.13:
+private const val HOST_SearchAVersion_TEST = "http://117.50.119.233:" //http://192.168.2.120:
+//117.50.119.233
 const val HOST_USER = "${HOST_TEST}8000"
 const val HOST_VIDEO = "${HOST_TEST}8001"
 const val HOST_Search = "${HOST_TEST}8001"

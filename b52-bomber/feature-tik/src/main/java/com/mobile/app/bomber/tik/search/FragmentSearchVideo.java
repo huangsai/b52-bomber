@@ -37,7 +37,7 @@ import java.util.List;
 
 import kotlin.Pair;
 
-public class FragmentSearchVideo extends MyBaseFragment implements SwipeRefreshLayout.OnRefreshListener {
+public class FragmentSearchVideo extends MyBaseFragment implements SwipeRefreshLayout.OnRefreshListener{
 
     private FragmentSearchVideoBinding binding;
     private RecyclerAdapterEmpty recyclerAdapter;
@@ -58,7 +58,6 @@ public class FragmentSearchVideo extends MyBaseFragment implements SwipeRefreshL
     }
 
     private void initRecyclerView() {
-        Msg.INSTANCE.toast("init ");
         recyclerAdapter = new RecyclerAdapterEmpty();
         GridLayoutManager layoutManager = new GridLayoutManager(requireContext(), 2);
         binding.videoRecycle.addItemDecoration(new TestedGridItemDecoration(requireActivity(), R.dimen.size_1dp));
@@ -91,7 +90,11 @@ public class FragmentSearchVideo extends MyBaseFragment implements SwipeRefreshL
     }
 
     private void refreshData() {
+//        if (!pager.isAvailable()) return;
+        Bundle bundle = getArguments();
+        result = bundle.getString("keyword");
         model.search(result, pager).observe(getViewLifecycleOwner(), source -> {
+//            if (binding.layoutRefresh.isRefreshing()) binding.layoutRefresh.setRefreshing(false);
             if (source instanceof Source.Success) {
                 List<ApiVideo.Video> videos = source.requireData();
                 List<SearchVideoItem> items = new ArrayList<>();
@@ -103,11 +106,11 @@ public class FragmentSearchVideo extends MyBaseFragment implements SwipeRefreshL
                     Msg.INSTANCE.toast("已经加载完数据");
                 }
                 if (pager.isFirstPage(2)) {
-                     recyclerAdapter.replaceAll(items);
-                 } else {
+                    recyclerAdapter.replaceAll(items);
+                } else {
                     recyclerAdapter.addAll(items);
-                 }
-             } else {
+                }
+            } else {
                 Msg.INSTANCE.handleSourceException(source.requireError());
             }
             RecyclerViewUtilsKt.cancelRefreshing(binding.layoutRefresh, 500L);
@@ -117,11 +120,9 @@ public class FragmentSearchVideo extends MyBaseFragment implements SwipeRefreshL
     @Override
     public void onBusEvent(@NotNull Pair<Integer, ?> event) {
         super.onBusEvent(event);
-         if (event.getFirst() == RunnerX.INSTANCE.BUS_SEARCH_RESULT) {
-            Bundle bundle = getArguments();
-            result = bundle.getString("keyword");
-            refreshData();
-        }
+//        if (event.getFirst() == RunnerX.INSTANCE.BUS_SEARCH_RESULT) {
+//            refreshData();
+//        }
     }
 
     @Override

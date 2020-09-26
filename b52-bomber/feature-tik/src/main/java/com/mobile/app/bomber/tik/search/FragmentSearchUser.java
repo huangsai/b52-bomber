@@ -43,6 +43,7 @@ public class FragmentSearchUser extends MyBaseFragment {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         binding.userRecycle.addItemDecoration(LinearItemDecoration.builder(requireContext()).bottomMargin(R.dimen.size_1dp).build());
         binding.userRecycle.setLayoutManager(layoutManager);
+        binding.layoutEmptyView.NoData.setVisibility(View.VISIBLE);
         recyclerAdapter = new RecyclerAdapter();
         recyclerAdapter.setOnClickListener(v -> {
             if (v.getId() == R.id.layout_user_item) {
@@ -57,6 +58,7 @@ public class FragmentSearchUser extends MyBaseFragment {
         for (int i = 0; i < 5; i++) {
             items.add(new SearchUserItem(null));
         }
+
         recyclerAdapter.replaceAll(items);
     }
 

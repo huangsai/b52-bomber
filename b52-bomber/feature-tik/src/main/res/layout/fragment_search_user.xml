@@ -14,4 +14,7 @@
 
 
     </androidx.recyclerview.widget.RecyclerView>
+    <include
+        android:id="@+id/layout_empty_view"
+        layout="@layout/item_empty" />
  </RelativeLayout>

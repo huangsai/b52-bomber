@@ -74,10 +74,11 @@ public class ShareDialogFragment extends BaseBottomSheetDialogFragment
         return fragment;
     }
 
-    public static void goSystemShareSheet(Activity activity, String data) {
+    public static void goSystemShareSheet(Activity activity, String data,String Subtitle) {
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, data);
+        sendIntent.putExtra(Intent.EXTRA_SUBJECT, Subtitle);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, data + "\n"+ Subtitle);
         sendIntent.setType("text/plain");
         Intent shareIntent = Intent.createChooser(sendIntent, null);
         activity.startActivity(shareIntent);

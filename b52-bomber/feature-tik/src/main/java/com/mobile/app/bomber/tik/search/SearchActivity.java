@@ -50,6 +50,7 @@ public class SearchActivity extends MyBaseActivity
     private SearchViewModel model;
     private FragmentSearchVideo fragmentSearchVideo;
     private FragmentSearchUser fragmentSearchUser;
+    private Bundle bundle;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +66,7 @@ public class SearchActivity extends MyBaseActivity
         );
         fragmentSearchVideo = new FragmentSearchVideo();
         fragmentSearchUser = new FragmentSearchUser();
+        bundle = new Bundle();
 
         binding.searchHistoryRecycler.setLayoutManager(new LinearLayoutManager(this));
         searchTitleBarPresenter = new SearchTitleBarPresenter(binding.toolbar, this);
@@ -156,10 +158,9 @@ public class SearchActivity extends MyBaseActivity
     public void handleSearchResult(String keyword) {
         //后期把data传过去,刷新搜索结果Fragment
         binding.swipeRefreshSearch.setEnabled(false);
-        Bundle bundle = new Bundle();
         bundle.putString("keyword", keyword);
         fragmentSearchVideo.setArguments(bundle);
-        Bus.INSTANCE.offer(RunnerX.BUS_SEARCH_RESULT);
+//        Bus.INSTANCE.offer(RunnerX.BUS_SEARCH_RESULT);
         fragmentSearchVideo.onRefresh();
         binding.layoutResultView.setVisibility(View.VISIBLE);
         binding.layoutSearchView.setVisibility(View.INVISIBLE);

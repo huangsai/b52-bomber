@@ -60,6 +60,8 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
 
     private var currentWindow = 0
     private var shareURl: String = ""
+    private var content: String = ""
+
     private var playbackPosition: Long = 0
     private var isPlayerPlaying = false
     private var markedPlayCount = false
@@ -217,7 +219,11 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
             R.id.txt_share -> {
 //                shareVideo(video.videoId)  //分享视频
                 shareAppURl()  //分享App下载地址
-                ShareDialogFragment.goSystemShareSheet(requireActivity(), shareURl)
+                if (shareURl.equals("")|| shareURl ==null) {
+                    Msg.toast("暂时不能分享")
+                    return
+                }
+                ShareDialogFragment.goSystemShareSheet(requireActivity(), shareURl,"在xx世界最流行的色情视频app中免费观看各种视频，国产网红、日本av、欧美色情应有尽有。")
             }
             R.id.txt_liked -> requireActivity().requireLogin(ActivityResultCallback {
                 if (it.resultCode == Activity.RESULT_OK) {
@@ -472,6 +478,7 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
                     is Source.Success -> {
                         var downurl = source.requireData()
                         shareURl = downurl.downloadUrl
+                        content = downurl.desc
                     }
                     is Source.Error -> {
                         Msg.handleSourceException(source.requireError())

@@ -29,6 +29,7 @@ public class SettingAcivity extends MyBaseActivity implements View.OnClickListen
     private LoginViewModel model;
     private ActivitySettingEditinfoBinding binding;
     private String shareUrl;
+    private String content;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -80,11 +81,17 @@ public class SettingAcivity extends MyBaseActivity implements View.OnClickListen
                 if (source instanceof Source.Success) {
                     ApiDownLoadUrl url = source.requireData();
                     shareUrl = url.getDownloadUrl();
+                    content = url.getDesc();
                 } else {
                     Msg.INSTANCE.handleSourceException(source.requireError());
                 }
             });
-            ShareDialogFragment.goSystemShareSheet(this, shareUrl);
+            if (shareUrl.equals("")|| shareUrl==null)
+               {
+                Msg.INSTANCE.toast("暂时不能分享");
+                return;
+            }
+            ShareDialogFragment.goSystemShareSheet(this, shareUrl,"在xx世界最流行的色情视频app中免费观看各种视频，国产网红、日本av、欧美色情应有尽有 ");
         }
     }
 }
