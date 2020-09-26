@@ -20,6 +20,7 @@ import com.daimajia.androidanimations.library.YoYo
 import com.google.android.exoplayer2.ExoPlaybackException
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.mobile.ext.glide.GlideApp
 import com.mobile.app.bomber.common.base.Msg
@@ -321,15 +322,18 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
                     it.addListener(this)
                     it.playWhenReady = true
                     it.repeatMode = Player.REPEAT_MODE_ALL
-                    it.seekTo(currentWindow, playbackPosition);
-                    it.prepare(createMediaSource(), false, false)
+                    it.seekTo(currentWindow, playbackPosition)
+                    it.setMediaSource(createMediaSource(),false)
+                    it.prepare()
                 }
     }
 
-    private fun createMediaSource(): ProgressiveMediaSource {
-        return ProgressiveMediaSource.Factory(GoogleExo.cacheDataSourceFactory)
-                .setTag(video.decodeVideoUrl())
-                .createMediaSource(Uri.parse(video.decodeVideoUrl()))
+    private fun createMediaSource(): MediaSource {
+        return GoogleExo.buildMediaSource(
+                AndroidX.myApp,
+                Uri.parse(video.decodeVideoUrl()),
+                true
+        )
     }
 
     private fun releasePlayer() {

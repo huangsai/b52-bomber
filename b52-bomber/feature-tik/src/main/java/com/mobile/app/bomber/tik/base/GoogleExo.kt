@@ -1,10 +1,19 @@
 package com.mobile.app.bomber.tik.base
 
+import android.content.Context
 import android.net.Uri
+import com.google.android.exoplayer2.C
 import com.google.android.exoplayer2.DefaultControlDispatcher
+import com.google.android.exoplayer2.ExoPlayerLibraryInfo
+import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.database.ExoDatabaseProvider
 import com.google.android.exoplayer2.ext.okhttp.OkHttpDataSourceFactory
-import com.google.android.exoplayer2.upstream.DataSpec
+import com.google.android.exoplayer2.source.MediaSource
+import com.google.android.exoplayer2.source.ProgressiveMediaSource
+import com.google.android.exoplayer2.source.dash.DashMediaSource
+import com.google.android.exoplayer2.source.hls.HlsMediaSource
+import com.google.android.exoplayer2.source.smoothstreaming.SsMediaSource
+import com.google.android.exoplayer2.upstream.*
 import com.google.android.exoplayer2.upstream.cache.CacheDataSource
 import com.google.android.exoplayer2.upstream.cache.CacheWriter
 import com.google.android.exoplayer2.upstream.cache.LeastRecentlyUsedCacheEvictor
@@ -74,6 +83,45 @@ object GoogleExo : CacheWriter.ProgressListener {
                 requestLength,
                 bytesCached,
                 newBytesCached
+        )
+    }
+
+    fun buildMediaSource(context: Context, uri: Uri, supportPreview: Boolean): MediaSource {
+        var streamType = Util.inferContentType(uri.lastPathSegment!!)
+        if (streamType == C.TYPE_OTHER) {
+            streamType = Util.inferContentType(uri)
+        }
+        val mediaItem = MediaItem.Builder()
+                .setUri(uri)
+                .setTag(uri.toString())
+                .build()
+
+        val bandwidthMeter: DefaultBandwidthMeter? = if (supportPreview) {
+            null
+        } else {
+            DefaultBandwidthMeter.Builder(context).build()
+        }
+        return when (streamType) {
+            C.TYPE_DASH -> DashMediaSource.Factory(buildDataSourceFactory(context, null))
+                    .createMediaSource(mediaItem)
+            C.TYPE_SS -> SsMediaSource.Factory(buildDataSourceFactory(context, null))
+                    .createMediaSource(mediaItem)
+            C.TYPE_HLS -> HlsMediaSource.Factory(buildDataSourceFactory(context, bandwidthMeter))
+                    .createMediaSource(mediaItem)
+            C.TYPE_OTHER -> ProgressiveMediaSource.Factory(buildDataSourceFactory(context, bandwidthMeter))
+                    .createMediaSource(mediaItem)
+            else -> throw UnsupportedOperationException("Unknown stream type")
+        }
+    }
+
+    private fun buildDataSourceFactory(
+            context: Context,
+            bandwidthMeter: DefaultBandwidthMeter?
+    ): DataSource.Factory {
+        return DefaultDataSourceFactory(
+                context,
+                bandwidthMeter,
+                cacheDataSourceFactory
         )
     }
 }
