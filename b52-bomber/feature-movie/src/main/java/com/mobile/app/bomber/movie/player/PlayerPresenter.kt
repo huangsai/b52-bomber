@@ -206,6 +206,7 @@ class PlayerPresenter(
                 .setMarginRight(40)
                 .setMarginBottom(24)
                 .setCornerRadius(0f)
+                .setElevation(0)
                 .setAutoDismissDuration(3000)
                 .build()
 

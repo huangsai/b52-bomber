@@ -1,8 +1,6 @@
 package com.mobile.app.bomber.tik;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -37,7 +35,6 @@ import com.mobile.app.bomber.tik.base.AppRouterUtils;
 import com.mobile.app.bomber.tik.databinding.ActivityMainBinding;
 import com.mobile.app.bomber.tik.home.HomeFragment;
 import com.mobile.app.bomber.tik.home.LocationLiveData;
-import com.mobile.app.bomber.tik.home.PlayListActivity;
 import com.mobile.app.bomber.tik.home.TestDialogFragment;
 import com.mobile.app.bomber.tik.home.TopMainFragment;
 import com.mobile.app.bomber.tik.login.LoginActivity;
@@ -77,20 +74,6 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
         setContentView(binding.getRoot());
         model = AppRouterUtils.viewModels(this, LoginViewModel.class);
         requestPermission();
-    }
-
-    @Override
-    public void handleIntent(@NotNull Intent intent) {
-        super.handleIntent(intent);
-        try {
-            Uri schemeData = intent.getData();
-            String videoJson = schemeData.getQueryParameter("videoJson");
-            if (!TextUtils.isEmpty(videoJson)) {
-                PlayListActivity.start(this, videoJson);
-            }
-        } catch (Exception e) {
-            Timber.d(e);
-        }
     }
 
     private void onCreate() {
@@ -224,7 +207,7 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
                     UpdateManger updateManger = new UpdateManger(getApplicationContext(),
                             vCode.getDownloadUrl(), true,
                             vCode.getVersionName(), curVersion, this);
-                    updateManger.showNoticeDialog(vCode.getVersionName(),  curVersion);
+                    updateManger.showNoticeDialog(vCode.getVersionName(), curVersion);
                 }
             } else {
                 Msg.INSTANCE.handleSourceException(source.requireError());

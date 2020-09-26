@@ -21,21 +21,17 @@
 
         <activity
             android:name=".MainActivity"
+            android:launchMode="singleInstance"
             android:screenOrientation="portrait"
             android:theme="@style/ZygoteTheme"
-            android:launchMode="singleInstance"
             android:windowSoftInputMode="adjustNothing">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.BROWSABLE" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
                 <category android:name="android.intent.category.DEFAULT" />
-
-                <data android:host="wes888.com" android:scheme="http" />
-                <data android:host="wes888.com" android:scheme="https" />
-
             </intent-filter>
 
         </activity>
