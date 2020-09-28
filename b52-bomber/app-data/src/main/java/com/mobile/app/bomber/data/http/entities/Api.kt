@@ -6,14 +6,25 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import java.io.Serializable
 
-private const val HOST_TEST = "http://117.50.119.233:" //http://119.28.18.135:
+
+//测试环境
+private const val HOST_TEST = "http://weiseapi.zkangcn.com:" //http://119.28.18.135:
 private const val HOST_UPLOAD_TEST = "http://117.50.119.220:" //http://119.28.54.13:
-private const val HOST_SearchAVersion_TEST = "http://117.50.119.233:" //http://192.168.2.120:
+//private const val HOST_SearchAVersion_TEST = "http://weiseapi.zkangcn.com:" //http://192.168.2.120:
+
+//开发环境
+private const val HOST_Developer_TEST = "http://117.50.119.233:" //http://119.28.18.135:
+private const val HOST_Developer_UPLOAD_TEST = "http://117.50.119.220:" //http://119.28.54.13:
+private const val HOST_Developer_SearchAVersion_TEST = "http://117.50.119.233:" //http://192.168.2.120:
+//生成环境
+private const val HOST_Release_TEST = "http://117.50.119.233:" //http://119.28.18.135:
+private const val HOST_Releaser_UPLOAD_TEST = "http://117.50.119.220:" //http://119.28.54.13:
+private const val HOST_Release_SearchAVersion_TEST = "http://117.50.119.233:" //http://192.168.2.120:
 //117.50.119.233
 const val HOST_USER = "${HOST_TEST}8000"
 const val HOST_VIDEO = "${HOST_TEST}8001"
 const val HOST_Search = "${HOST_TEST}8001"
-const val HOST_ShareURl = "${HOST_SearchAVersion_TEST}8003"
+const val HOST_ShareURl = "${HOST_TEST}8003"
 const val HOST_GetVersion = "${HOST_TEST}8001"
 
 const val HOST_SYS = "${HOST_TEST}8003"

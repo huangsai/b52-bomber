@@ -86,7 +86,7 @@ public class SettingAcivity extends MyBaseActivity implements View.OnClickListen
                     Msg.INSTANCE.handleSourceException(source.requireError());
                 }
             });
-            if (shareUrl.equals("")|| shareUrl==null)
+            if (TextUtils.isEmpty(shareUrl))
                {
                 Msg.INSTANCE.toast("暂时不能分享");
                 return;

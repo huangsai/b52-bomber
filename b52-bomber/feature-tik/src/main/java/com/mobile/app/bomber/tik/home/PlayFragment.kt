@@ -5,6 +5,7 @@ import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
+import android.text.TextUtils
 import android.text.style.StyleSpan
 import android.view.*
 import android.widget.SeekBar
@@ -219,7 +220,7 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
             R.id.txt_share -> {
 //                shareVideo(video.videoId)  //分享视频
                 shareAppURl()  //分享App下载地址
-                if (shareURl.equals("")|| shareURl ==null) {
+                if (TextUtils.isEmpty(shareURl)) {
                     Msg.toast("暂时不能分享")
                     return
                 }
@@ -337,7 +338,7 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
     private fun createMediaSource(): MediaSource {
         return GoogleExo.buildMediaSource(
                 AndroidX.myApp,
-                Uri.parse(video.decodeVideoUrl()),
+                Uri.parse("http://weisesp.pumiaox2.com/group1/M00/00/00/dTJ33F9txbKAQ3khAE1k-rVl3yI138.mp4"),
                 true
         )
     }

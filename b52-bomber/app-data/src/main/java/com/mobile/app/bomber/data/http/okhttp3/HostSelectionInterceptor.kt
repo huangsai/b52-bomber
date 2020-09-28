@@ -64,7 +64,7 @@ class HostSelectionInterceptor : Interceptor {
         return false
     }
     private fun isAboutUpload(original: String): Boolean {
-        if (original.contains("group1/upload")) return true
+        if (original.contains("upload")) return true
         return false
     }
 

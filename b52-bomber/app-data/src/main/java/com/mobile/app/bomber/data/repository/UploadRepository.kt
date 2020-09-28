@@ -52,7 +52,7 @@ class UploadRepository @Inject constructor(
             label: String,
             latitude: Double,
             longitude: Double
-    ): Source<Pair<ApiFile, ApiFile>> = supervisorScope {
+    ): Source<Pair<ApiFile,ApiFile>> = supervisorScope {
         val bodyVideo = createRequestBody(video, "video", "video")
         val bodyImage = createRequestBody(image, "cover", "cover")
         return@supervisorScope try {
@@ -73,7 +73,7 @@ class UploadRepository @Inject constructor(
                 Pair(apiFileVideo, apiFileImage)
             }
         } catch (e: Exception) {
-            errorSource<Pair<ApiFile, ApiFile>>(e)
+            errorSource<Pair<ApiFile,ApiFile>>(e)
         }
     }
 
