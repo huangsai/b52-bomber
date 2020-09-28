@@ -15,6 +15,7 @@ import com.mobile.app.bomber.common.base.tool.SingleClick
 import com.mobile.app.bomber.movie.common.CommonListFragment
 import com.mobile.app.bomber.movie.databinding.MovieFragmentMovieBinding
 import com.mobile.app.bomber.movie.search.SearchActivity
+import com.mobile.app.bomber.movie.top.BannerPresenter
 import com.mobile.app.bomber.movie.top.TopListFragment
 import com.mobile.app.bomber.runner.features.ApiMovieFragment
 import com.mobile.guava.android.mvvm.newStartActivity
@@ -52,6 +53,7 @@ class MovieFragment : MyBaseFragment(), ApiMovieFragment, View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initTab()
+        BannerPresenter(this, model, binding)
     }
 
     private fun initTab() {
@@ -65,7 +67,6 @@ class MovieFragment : MyBaseFragment(), ApiMovieFragment, View.OnClickListener {
         labels.add("精彩港剧")
         labels.add("精彩韩剧")
         binding.viewPager.adapter = MyAdapter(requireActivity(), labels.size)
-        binding.viewPager.offscreenPageLimit = 2
         val tabLayoutMediator = TabLayoutMediator(binding.layoutTab, binding.viewPager, TabConfigurationStrategy { tab, position -> tab.text = labels[position] })
         tabLayoutMediator.attach()
     }

@@ -65,13 +65,13 @@ class TikSearchRepository @Inject constructor(
         } as Source<List<String>>
     }
 
-    suspend fun SearchTikVideoList(keyword: String, pager: Pager): Source<List<ApiVideo.Video>> {
+    suspend fun searchTikVideoList(keyword: String, pager: Pager): Source<List<ApiVideo.Video>> {
         if (!appPrefsManager.isLogin()) {
             return Source.Error(sourceException403)
         }
         if (pager.isReachedTheEnd) return Source.Success(emptyList())
         pager.isBusy = true
-        val call = dataService.SearchVideo(userId, keyword, pager.requestPage, pager.pageSize)
+        val call = dataService.searchVideo(userId, keyword, pager.requestPage, pager.pageSize)
         return callApiVideo(call, pager)
     }
 

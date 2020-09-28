@@ -32,9 +32,11 @@ interface DataComponent : HttpsComponent {
 
     fun tikSearchRepository(): TikSearchRepository
 
+    fun commentRepository(): CommentRepository
+
     fun movieSearchRepository(): MovieSearchRepository
 
-    fun commentRepository(): CommentRepository
+    fun movieRepository(): MovieRepository
 
     fun appDatabase(): AppDatabase
 

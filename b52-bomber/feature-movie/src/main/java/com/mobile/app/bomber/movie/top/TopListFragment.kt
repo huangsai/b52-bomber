@@ -8,8 +8,8 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mobile.app.bomber.common.base.MyBaseFragment
 import com.mobile.app.bomber.common.base.tool.SingleClick
-import com.mobile.app.bomber.movie.MovieX
 import com.mobile.app.bomber.movie.MovieViewModel
+import com.mobile.app.bomber.movie.MovieX
 import com.mobile.app.bomber.movie.R
 import com.mobile.app.bomber.movie.databinding.MovieFragmentTopListBinding
 import com.mobile.app.bomber.movie.top.like.TopLikeActivity
@@ -35,22 +35,20 @@ class TopListFragment : MyBaseFragment(), View.OnClickListener {
             savedInstanceState: Bundle?
     ): View? {
         _binding = MovieFragmentTopListBinding.inflate(inflater, container, false)
-        initRecycler()
-        return binding.root
-    }
-
-    private fun initRecycler() {
-        binding.recycler.setHasFixedSize(true)
         val layoutManager = LinearLayoutManager(requireContext())
         binding.recycler.layoutManager = layoutManager
         binding.recycler.adapter = adapter
         adapter.onClickListener = this
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         load()
     }
 
     private fun load() {
         val list: MutableList<RecyclerItem> = ArrayList()
-        list.add(BannerPresenter(this))
         list.add(TopTitlePresenter("${getString(R.string.movie_text_top_like_label)}>"))
         list.add(TopListLikePresenter(requireContext()))
         list.add(TopTitlePresenter("${getString(R.string.movie_text_top_recommend_label)}>"))
@@ -74,6 +72,7 @@ class TopListFragment : MyBaseFragment(), View.OnClickListener {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        binding.recycler.layoutManager = null
         binding.recycler.adapter = null
         _binding = null
     }
@@ -86,5 +85,6 @@ class TopListFragment : MyBaseFragment(), View.OnClickListener {
             }
         }
     }
+
 
 }
