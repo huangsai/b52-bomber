@@ -59,4 +59,6 @@ abstract class BaseTopMoviePresenter(protected val context: Context, private val
     }
 
     protected abstract fun load()
+
+//    protected abstract fun onRefresh()
 }

@@ -194,7 +194,7 @@ interface DataService {
     fun playDuration(@Body body: ApiDurationReq): Call<Nope>
 
     @POST("${API_VIDEO}/postSearchVideoUser/{uid}/{keyword}/{page}/{size}")
-    fun SearchVideo(
+    fun searchVideo(
             @Path("uid") uId: Long,
             @Path("keyword") keyword: String,
             @Path("page") page: Int,
@@ -202,14 +202,7 @@ interface DataService {
     ): Call<ApiVideo>
 
     @GET("${API_VIDEO}/getHotKeyTopN")
-    fun getHotKey(): Call<ApitHotKey>
-
-    @POST("${API_VIDEO}/postSearchMovie/{keyword}/{page}/{size}")
-    fun searchMovie(
-            @Path("keyword") keyword: String,
-            @Path("page") page: Int,
-            @Path("size") pageSize: Int
-    ): Call<ApiMovie.Movie>
+    fun getHotKey(): Call<ApiHotKey>
 
     @GET("${API_VIDEO}/getVersion/{platform}")
     fun getVersion(@Path("platform") platform: Int): Call<ApiVersion>
@@ -217,4 +210,12 @@ interface DataService {
     @GET("${API_VIDEO}/getShareUrl")
     fun getDownLoadUrl(): Call<ApiDownLoadUrl>
 
+    //-------------------长视频相关接口-------------------//
+
+    @GET("${API_MOVIE}/getRotationChart/{platform}/")
+    fun getBanner(
+            @Path("platform") platform: Int,
+    ): Call<ApiMovieBanner>
+
+    //-------------------长视频相关接口-------------------//
 }

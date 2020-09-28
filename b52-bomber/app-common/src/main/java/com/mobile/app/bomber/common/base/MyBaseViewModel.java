@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.mobile.app.bomber.data.repository.AdRepository;
 import com.mobile.app.bomber.data.repository.CommentRepository;
+import com.mobile.app.bomber.data.repository.MovieRepository;
 import com.mobile.app.bomber.data.repository.MovieSearchRepository;
 import com.mobile.app.bomber.data.repository.MsgRepository;
 import com.mobile.app.bomber.data.repository.ShareRepository;
@@ -39,11 +40,15 @@ public abstract class MyBaseViewModel extends ViewModel {
     protected TikSearchRepository tikSearchRepository;
 
     @Inject
-    protected MovieSearchRepository movieSearchRepository;
-
-    @Inject
     protected VersionRepository versionRepository;
 
     @Inject
     protected ShareRepository shareRepository;
+
+    @Inject
+    protected MovieSearchRepository movieSearchRepository;
+
+    @Inject
+    protected MovieRepository movieRepository;
+
 }

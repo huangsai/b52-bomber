@@ -30,9 +30,11 @@
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
 
-
                 <category android:name="android.intent.category.LAUNCHER" />
                 <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <intent-filter>
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
@@ -41,8 +43,6 @@
                 <data
                     android:host="wes888.com"
                     android:scheme="https" />
-
-
             </intent-filter>
 
         </activity>

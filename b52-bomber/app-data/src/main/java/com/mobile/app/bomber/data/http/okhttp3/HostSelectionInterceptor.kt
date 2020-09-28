@@ -6,7 +6,6 @@ import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.Interceptor
 import okhttp3.Response
 import java.io.IOException
-import kotlin.jvm.Throws
 
 class HostSelectionInterceptor : Interceptor {
 
@@ -28,9 +27,9 @@ class HostSelectionInterceptor : Interceptor {
             isAboutUser(original) -> HOST_USER
             isAboutUpload(original) -> HOST_UPLOAD
             isAboutAd(original) -> HOST_SYS
-            isAboutgetShareUrl(original) -> HOST_ShareURl
-            isAboutSearchVideoUser(original)->HOST_Search
-            else -> HOST_VIDEO
+            isAboutgetShareUrl(original) -> HOST_SHARE
+            isAboutSearchVideoUser(original) -> HOST_SEARCH
+            else -> HOST_TIK_MOVIE
         }.toHttpUrl()
     }
 
@@ -55,14 +54,17 @@ class HostSelectionInterceptor : Interceptor {
         if (original.contains("postSearchVideoUser")) return true
         return false
     }
+
     private fun isAboutGetVersion(original: String): Boolean {
         if (original.contains("getVersion")) return true
         return false
     }
+
     private fun isAboutgetShareUrl(original: String): Boolean {
         if (original.contains("getShareUrl")) return true
         return false
     }
+
     private fun isAboutUpload(original: String): Boolean {
         if (original.contains("upload")) return true
         return false
