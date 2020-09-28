@@ -335,10 +335,11 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
                 }
     }
 
+    // Uri.parse("http://weisesp.pumiaox2.com/group1/M00/00/00/dTJ33F9txbKAQ3khAE1k-rVl3yI138.mp4")
     private fun createMediaSource(): MediaSource {
         return GoogleExo.buildMediaSource(
                 AndroidX.myApp,
-                Uri.parse("http://weisesp.pumiaox2.com/group1/M00/00/00/dTJ33F9txbKAQ3khAE1k-rVl3yI138.mp4"),
+                Uri.parse(video.videoURL),
                 true
         )
     }
