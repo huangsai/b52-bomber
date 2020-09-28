@@ -14,7 +14,7 @@ private const val HOST_UPLOAD_TEST = "http://117.50.119.220:"
 private const val HOST_RELEASE = "http://weiseapi.zkangcn.com:"
 private const val HOST_UPLOAD_RELEASE = "http://weisesp.pumiaox2.com:"
 
-//发布环境-不要修改
+//发布环境
 private const val HOST_PRODUCT = HOST_RELEASE
 private const val HOST_UPLOAD_PRODUCT = HOST_UPLOAD_RELEASE
 
