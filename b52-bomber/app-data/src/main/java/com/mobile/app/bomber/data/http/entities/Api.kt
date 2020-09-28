@@ -11,20 +11,18 @@ private const val HOST_TEST = "http://119.28.18.135:"
 private const val HOST_UPLOAD_TEST = "http://117.50.119.220:"
 
 //正式环境
-private const val HOST_RELEASE = "http://117.50.119.233:"
-private const val HOST_UPLOAD_RELEASE = "http://117.50.119.220:"
+private const val HOST_RELEASE = "http://weiseapi.zkangcn.com:"
+private const val HOST_UPLOAD_RELEASE = "http://weisesp.pumiaox2.com:"
 
 //发布环境-不要修改
-private const val HOST_PRODUCT = HOST_TEST
-private const val HOST_UPLOAD_PRODUCT = HOST_UPLOAD_TEST
+private const val HOST_PRODUCT = HOST_RELEASE
+private const val HOST_UPLOAD_PRODUCT = HOST_UPLOAD_RELEASE
 
 const val HOST_USER = "${HOST_PRODUCT}8000"
 const val HOST_TIK_MOVIE = "${HOST_PRODUCT}8001"
-const val HOST_SEARCH = "${HOST_PRODUCT}8001"
-const val HOST_SHARE = "${HOST_PRODUCT}8003"
 const val HOST_SYS = "${HOST_PRODUCT}8003"
 const val HOST_UPLOAD = "${HOST_UPLOAD_PRODUCT}8080"
-const val DECODE_URL = "${HOST_UPLOAD_PRODUCT}8000"
+const val DECODE_URL = HOST_UPLOAD
 
 const val API_USER = ""
 const val API_VIDEO = ""
