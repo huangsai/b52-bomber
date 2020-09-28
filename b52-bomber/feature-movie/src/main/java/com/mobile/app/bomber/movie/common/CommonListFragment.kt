@@ -87,6 +87,11 @@ class CommonListFragment : MyBaseFragment(), AdapterImageLoader, View.OnClickLis
                 .into(imageView)
     }
 
+    override fun onResume() {
+        super.onResume()
+        binding.root.requestLayout()
+    }
+
     override fun onClick(v: View) {
         Msg.toast("点击了视频")
     }

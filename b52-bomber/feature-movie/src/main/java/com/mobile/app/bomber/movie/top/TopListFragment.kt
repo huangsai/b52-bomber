@@ -77,6 +77,11 @@ class TopListFragment : MyBaseFragment(), View.OnClickListener {
         _binding = null
     }
 
+    override fun onResume() {
+        super.onResume()
+        binding.root.requestLayout()
+    }
+
     companion object {
         @JvmStatic
         fun newInstance(position: Int): TopListFragment = TopListFragment().apply {

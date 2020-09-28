@@ -10,7 +10,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler"
         style="@style/MatchWrap"
-        android:nestedScrollingEnabled="false"
+        android:nestedScrollingEnabled="true"
         android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
