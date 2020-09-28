@@ -2,10 +2,8 @@ package com.mobile.app.bomber.tik.base
 
 import android.content.Context
 import android.net.Uri
-import android.text.TextUtils
 import com.google.android.exoplayer2.C
 import com.google.android.exoplayer2.DefaultControlDispatcher
-import com.google.android.exoplayer2.ExoPlayerLibraryInfo
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.database.ExoDatabaseProvider
 import com.google.android.exoplayer2.ext.okhttp.OkHttpDataSourceFactory
@@ -14,7 +12,10 @@ import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.source.dash.DashMediaSource
 import com.google.android.exoplayer2.source.hls.HlsMediaSource
 import com.google.android.exoplayer2.source.smoothstreaming.SsMediaSource
-import com.google.android.exoplayer2.upstream.*
+import com.google.android.exoplayer2.upstream.DataSource
+import com.google.android.exoplayer2.upstream.DataSpec
+import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.upstream.cache.CacheDataSource
 import com.google.android.exoplayer2.upstream.cache.CacheWriter
 import com.google.android.exoplayer2.upstream.cache.LeastRecentlyUsedCacheEvictor
@@ -88,7 +89,6 @@ object GoogleExo : CacheWriter.ProgressListener {
     }
 
     fun buildMediaSource(context: Context, uri: Uri, supportPreview: Boolean): MediaSource {
-
         var streamType = Util.inferContentType(uri.lastPathSegment ?: "")
         if (streamType == C.TYPE_OTHER) {
             streamType = Util.inferContentType(uri)

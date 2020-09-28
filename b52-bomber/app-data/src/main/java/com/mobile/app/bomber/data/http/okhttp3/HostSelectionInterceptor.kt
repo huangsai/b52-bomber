@@ -1,12 +1,14 @@
 package com.mobile.app.bomber.data.http.okhttp3
 
-import com.mobile.app.bomber.data.http.entities.*
+import com.mobile.app.bomber.data.http.entities.HOST_SYS
+import com.mobile.app.bomber.data.http.entities.HOST_TIK_MOVIE
+import com.mobile.app.bomber.data.http.entities.HOST_UPLOAD
+import com.mobile.app.bomber.data.http.entities.HOST_USER
 import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.Interceptor
 import okhttp3.Response
 import java.io.IOException
-import kotlin.jvm.Throws
 
 class HostSelectionInterceptor : Interceptor {
 
@@ -26,12 +28,9 @@ class HostSelectionInterceptor : Interceptor {
     private fun createHttpUrl(original: String): HttpUrl {
         return when {
             isAboutUser(original) -> HOST_USER
-            isAboutUploadFileSys(original) -> HOST_VIDEO_FileSys
-            isAboutUpload(original) -> HOST_VIDEO
-            isAboutAd(original) -> HOST_SYS
-            isAboutgetShareUrl(original) -> HOST_ShareURl
-            isAboutSearchVideoUser(original)->HOST_Search
-            else -> HOST_VIDEO
+            isAboutUpload(original) -> HOST_UPLOAD
+            isAboutSystem(original) -> HOST_SYS
+            else -> HOST_TIK_MOVIE
         }.toHttpUrl()
     }
 
@@ -52,31 +51,15 @@ class HostSelectionInterceptor : Interceptor {
         return false
     }
 
-    private fun isAboutSearchVideoUser(original: String): Boolean {
-        if (original.contains("postSearchVideoUser")) return true
-        return false
-    }
-    private fun isAboutGetVersion(original: String): Boolean {
-        if (original.contains("getVersion")) return true
-        return false
-    }
-    private fun isAboutgetShareUrl(original: String): Boolean {
-        if (original.contains("getShareUrl")) return true
-        return false
-    }
-
-    private fun isAboutUploadFileSys(original: String): Boolean {
-        if (original.contains("group1/upload")) return true
-        return false
-    }
     private fun isAboutUpload(original: String): Boolean {
-        if (original.contains("videoupoload")) return true
+        if (original.contains("upload")) return true
         return false
     }
 
-    private fun isAboutAd(original: String): Boolean {
+    private fun isAboutSystem(original: String): Boolean {
         if (original.contains("getindexmessage")) return true
         if (original.contains("getadconfig")) return true
+        if (original.contains("getShareUrl")) return true
         return false
     }
 }
