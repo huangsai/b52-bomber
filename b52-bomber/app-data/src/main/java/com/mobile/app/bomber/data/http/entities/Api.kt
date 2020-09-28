@@ -6,30 +6,34 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import java.io.Serializable
 
+
 //测试环境
-private const val HOST_TEST = "http://119.28.18.135:"
-private const val HOST_UPLOAD_TEST = "http://117.50.119.220:"
+private const val HOST_TEST = "http://weiseapi.zkangcn.com:" //http://119.28.18.135:
+private const val HOST_UPLOAD_TEST = "http://117.50.119.220:" //http://119.28.54.13:
+//private const val HOST_SearchAVersion_TEST = "http://weiseapi.zkangcn.com:" //http://192.168.2.120:
 
-//正式环境
-private const val HOST_RELEASE = "http://117.50.119.233:"
-private const val HOST_UPLOAD_RELEASE = "http://117.50.119.220:"
+//开发环境
+private const val HOST_Developer_TEST = "http://117.50.119.233:" //http://119.28.18.135:
+private const val HOST_Developer_UPLOAD_TEST = "http://117.50.119.220:" //http://119.28.54.13:
+private const val HOST_Developer_SearchAVersion_TEST = "http://117.50.119.233:" //http://192.168.2.120:
+//生成环境
+private const val HOST_Release_TEST = "http://117.50.119.233:" //http://119.28.18.135:
+private const val HOST_Releaser_UPLOAD_TEST = "http://117.50.119.220:" //http://119.28.54.13:
+private const val HOST_Release_SearchAVersion_TEST = "http://117.50.119.233:" //http://192.168.2.120:
+//117.50.119.233
+const val HOST_USER = "${HOST_TEST}8000"
+const val HOST_VIDEO = "${HOST_TEST}8001"
+const val HOST_Search = "${HOST_TEST}8001"
+const val HOST_ShareURl = "${HOST_TEST}8003"
+const val HOST_GetVersion = "${HOST_TEST}8001"
 
-//发布环境-不要修改
-private const val HOST_PRODUCT = HOST_TEST
-private const val HOST_UPLOAD_PRODUCT = HOST_UPLOAD_TEST
-
-const val HOST_USER = "${HOST_PRODUCT}8000"
-const val HOST_TIK_MOVIE = "${HOST_PRODUCT}8001"
-const val HOST_SEARCH = "${HOST_PRODUCT}8001"
-const val HOST_SHARE = "${HOST_PRODUCT}8003"
-const val HOST_SYS = "${HOST_PRODUCT}8003"
-const val HOST_UPLOAD = "${HOST_UPLOAD_PRODUCT}8080"
-const val DECODE_URL = "${HOST_UPLOAD_PRODUCT}8000"
+const val HOST_SYS = "${HOST_TEST}8003"
+const val HOST_UPLOAD = "${HOST_UPLOAD_TEST}8080"
+const val DECODE_URL = "${HOST_UPLOAD_TEST}8000"
 
 const val API_USER = ""
 const val API_VIDEO = ""
 const val API_SYS = ""
-const val API_MOVIE = ""
 
 
 @JsonClass(generateAdapter = true)
@@ -525,7 +529,44 @@ data class ApiDurationReq(
 )
 
 @JsonClass(generateAdapter = true)
-data class ApiHotKey(
+data class ApiMovie(
+        @Json(name = "RetCode") val code: Int,
+        @Json(name = "MovieList") val movies: List<Movie>?
+) {
+
+    @JsonClass(generateAdapter = true)
+    data class Movie(
+            @Json(name = "movieId") val movieId: Long
+    )
+}
+
+
+@JsonClass(generateAdapter = true)
+data class ApiSearch(
+        @Json(name = "RetCode") val code: Int,
+        @Json(name = "TodayLabels") val todayLabels: List<TodayLabels>?,
+        @Json(name = "RecommendLabels") val recommendLabels: List<String>?,
+) {
+
+    @JsonClass(generateAdapter = true)
+    data class TodayLabels(
+            @Json(name = "title") val title: String,
+            @Json(name = "rank") val rankDesc: String
+    )
+}
+
+@JsonClass(generateAdapter = true)
+data class ApiSearchVideo(
+        @Json(name = "RetCode") val code: Int,
+        @Json(name = "Desc") val desc: String,
+        @Json(name = "totalcount") val totalCount: Int,
+        @Json(name = "next") val nextPage: Int,
+        @Json(name = "totalpage") val totalPage: Int,
+        @Json(name = "VideoList") val Videos: List<ApiVideo.Video>?
+)
+
+@JsonClass(generateAdapter = true)
+data class ApitHotKey(
         @Json(name = "RetCode") val code: Int,
         @Json(name = "Desc") val desc: String,
         @Json(name = "KeyWords") val KeyWords: List<String>?
@@ -556,52 +597,3 @@ data class ApiDownLoadUrl(
         @Json(name = "desc") val desc: String,
         @Json(name = "shareUrl") val downloadUrl: String
 )
-
-
-//-----------------长视频相关---------------------//
-
-@JsonClass(generateAdapter = true)
-data class ApiMovieBanner(
-        @Json(name = "RetCode") val code: Int,
-        @Json(name = "Desc") val desc: String,
-        @Json(name = "RotationCharts") val banner: List<Banner>?
-) {
-    @JsonClass(generateAdapter = true)
-    data class Banner(
-            @Json(name = "Id") val code: Long,
-            @Json(name = "Title") val title: String,
-            @Json(name = "ImgUrl") val imgUrl: String,
-            @Json(name = "MovieId") val movieId: Long,
-            @Json(name = "MovieUrl") val movieUrl: String,
-            @Json(name = "Tag") val tag: Int,
-            @Json(name = "Platform") val platform: Int
-    )
-}
-
-@JsonClass(generateAdapter = true)
-data class ApiMovie(
-        @Json(name = "RetCode") val code: Int,
-        @Json(name = "MovieList") val movies: List<Movie>?
-) {
-
-    @JsonClass(generateAdapter = true)
-    data class Movie(
-            @Json(name = "MovieId") val movieId: Long
-    )
-}
-
-@JsonClass(generateAdapter = true)
-data class ApiSearch(
-        @Json(name = "RetCode") val code: Int,
-        @Json(name = "TodayLabels") val todayLabels: List<TodayLabels>?,
-        @Json(name = "RecommendLabels") val recommendLabels: List<String>?,
-) {
-
-    @JsonClass(generateAdapter = true)
-    data class TodayLabels(
-            @Json(name = "title") val title: String,
-            @Json(name = "rank") val rankDesc: String
-    )
-}
-
-//-----------------长视频相关---------------------//
