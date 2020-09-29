@@ -4,12 +4,10 @@ import android.content.Context
 import android.view.View
 import android.widget.ImageView
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.mobile.ext.glide.GlideApp
 import com.mobile.app.bomber.common.base.Msg
-import com.mobile.app.bomber.data.http.entities.ApiMovie
 import com.mobile.app.bomber.movie.R
 import com.mobile.app.bomber.movie.top.BaseTopMoviePresenter
-import com.mobile.app.bomber.movie.top.items.TopMovieVerItem
+import com.mobile.ext.glide.GlideApp
 import com.pacific.adapter.AdapterViewHolder
 
 /**
@@ -18,18 +16,6 @@ import com.pacific.adapter.AdapterViewHolder
 class RecommendListPresenter(context: Context) : BaseTopMoviePresenter(context, true) {
 
     override fun load() {
-        val items = ArrayList<TopMovieVerItem>()
-        items.add(TopMovieVerItem(ApiMovie.Movie(1)))
-        items.add(TopMovieVerItem(ApiMovie.Movie(1)))
-        items.add(TopMovieVerItem(ApiMovie.Movie(1)))
-        items.add(TopMovieVerItem(ApiMovie.Movie(1)))
-        items.add(TopMovieVerItem(ApiMovie.Movie(1)))
-        items.add(TopMovieVerItem(ApiMovie.Movie(1)))
-        items.add(TopMovieVerItem(ApiMovie.Movie(1)))
-        items.add(TopMovieVerItem(ApiMovie.Movie(1)))
-        items.add(TopMovieVerItem(ApiMovie.Movie(1)))
-        items.add(TopMovieVerItem(ApiMovie.Movie(1)))
-        adapter.addAll(items)
     }
 
     override fun load(imageView: ImageView, holder: AdapterViewHolder) {

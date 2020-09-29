@@ -1,33 +1,23 @@
-package com.mobile.app.bomber.movie.top.items;
+package com.mobile.app.bomber.movie.top.items
 
-import androidx.annotation.NonNull;
+import android.view.View
+import com.mobile.app.bomber.data.http.entities.ApiMovie
+import com.mobile.app.bomber.movie.R
+import com.mobile.app.bomber.movie.databinding.MovieItemTopVerBinding
+import com.pacific.adapter.AdapterViewHolder
+import com.pacific.adapter.SimpleRecyclerItem
 
-import com.mobile.app.bomber.data.http.entities.ApiMovie;
-import com.mobile.app.bomber.movie.R;
-import com.mobile.app.bomber.movie.databinding.MovieItemTopVerBinding;
-import com.pacific.adapter.AdapterViewHolder;
-import com.pacific.adapter.SimpleRecyclerItem;
+class TopMovieVerItem(val data: ApiMovie.Movie) : SimpleRecyclerItem() {
 
-import org.jetbrains.annotations.NotNull;
-
-public class TopMovieVerItem extends SimpleRecyclerItem {
-
-    @NonNull
-    public final ApiMovie.Movie data;
-
-    public TopMovieVerItem(@NonNull ApiMovie.Movie data) {
-        this.data = data;
+    override fun bind(holder: AdapterViewHolder) {
+        val binding = holder.binding { view: View? -> MovieItemTopVerBinding.bind(view!!) }
+        binding.txtLabel.text = data.name
+        binding.txtDesc.text = data.desc
+        holder.attachOnClickListener(R.id.item_top_movie_ver)
+        holder.attachImageLoader(R.id.img_cover)
     }
 
-    @Override
-    public void bind(@NotNull AdapterViewHolder holder) {
-        MovieItemTopVerBinding binding = holder.binding(MovieItemTopVerBinding::bind);
-        holder.attachOnClickListener(R.id.item_top_movie_ver);
-        holder.attachImageLoader(R.id.img_cover);
-    }
-
-    @Override
-    public int getLayout() {
-        return R.layout.movie_item_top_ver;
+    override fun getLayout(): Int {
+        return R.layout.movie_item_top_ver
     }
 }

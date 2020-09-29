@@ -21,6 +21,7 @@
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_5dp"
         android:scrollbars="none"
         app:layout_constraintTop_toBottomOf="@id/today_label" />
 </androidx.constraintlayout.widget.ConstraintLayout>

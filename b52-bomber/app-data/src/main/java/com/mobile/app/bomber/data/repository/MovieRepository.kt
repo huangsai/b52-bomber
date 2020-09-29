@@ -3,6 +3,7 @@ package com.mobile.app.bomber.data.repository
 import com.mobile.app.bomber.data.db.AppDatabase
 import com.mobile.app.bomber.data.files.AppPrefsManager
 import com.mobile.app.bomber.data.http.entities.ApiMovieBanner
+import com.mobile.app.bomber.data.http.entities.Nope
 import com.mobile.app.bomber.data.http.service.DataService
 import com.mobile.guava.https.toSource
 import com.mobile.guava.jvm.domain.Source
