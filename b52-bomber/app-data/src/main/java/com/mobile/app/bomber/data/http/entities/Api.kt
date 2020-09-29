@@ -591,7 +591,6 @@ data class ApiMovieHotKey(
     )
 }
 
-
 @JsonClass(generateAdapter = true)
 data class ApiMovie(
         @Json(name = "RetCode") val code: Int,
@@ -629,20 +628,6 @@ data class ApiMovie(
             @Json(name = "Cover") val cover: String,
             @Json(name = "Isportait") val isPortait: Int,
             @Json(name = "Byuid") val byUid: Long,
-    )
-}
-
-@JsonClass(generateAdapter = true)
-data class ApiSearch(
-        @Json(name = "RetCode") val code: Int,
-        @Json(name = "TodayLabels") val todayLabels: List<TodayLabels>?,
-        @Json(name = "RecommendLabels") val recommendLabels: List<String>?,
-) {
-
-    @JsonClass(generateAdapter = true)
-    data class TodayLabels(
-            @Json(name = "title") val title: String,
-            @Json(name = "rank") val rankDesc: String
     )
 }
 
