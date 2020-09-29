@@ -26,6 +26,10 @@ class HistoryVisitPresenter(context: Context) : BaseTopMoviePresenter(context, t
                 .into(imageView)
     }
 
+    override fun onRefresh() {
+        TODO("Not yet implemented")
+    }
+
     override fun onClick(v: View) {
         Msg.toast("点击了视频")
     }

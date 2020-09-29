@@ -67,6 +67,12 @@ class CommonListFragment : MyBaseFragment(), AdapterImageLoader, View.OnClickLis
     private fun load() {
     }
 
+    override fun onBusEvent(event: Pair<Int, Any>) {
+        if (event.first == MovieX.BUS_MOVIE_REFRESH) {
+            load()
+        }
+    }
+
     override fun load(imageView: ImageView, holder: AdapterViewHolder) {
         GlideApp.with(requireContext())
                 .load("")

@@ -26,6 +26,10 @@ class TopListLikePresenter(context: Context) : BaseTopMoviePresenter(context, fa
                 .into(imageView)
     }
 
+    override fun onRefresh() {
+        TODO("Not yet implemented")
+    }
+
     override fun onClick(v: View) {
         Msg.toast("点击了视频")
     }

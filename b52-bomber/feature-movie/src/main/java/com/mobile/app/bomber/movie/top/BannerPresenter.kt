@@ -29,15 +29,29 @@ class BannerPresenter(
 ) : SimplePresenter(), OnBannerListener<ApiMovieBanner.Banner>, OnPageChangeListener {
 
     private var mData: List<ApiMovieBanner.Banner>? = null
+    private var adapter: BannerImageAdapter<ApiMovieBanner.Banner>? = null
 
     init {
+        load(false)
+    }
+
+    fun onRefresh() {
+        load(true)
+    }
+
+    private fun load(isRefresh: Boolean) {
         fragment.lifecycleScope.launch(Dispatchers.IO) {
             val source = model.getBanner()
             withContext(Dispatchers.Main) {
                 when (source) {
                     is Source.Success -> {
                         mData = source.requireData()
-                        bindData(source.requireData())
+                        if (isRefresh) {
+                            adapter?.setDatas(source.requireData())
+                            adapter?.notifyDataSetChanged()
+                        } else {
+                            bindData(source.requireData())
+                        }
                     }
                     is Source.Error -> {
                         Msg.handleSourceException(source.requireError())
@@ -49,7 +63,7 @@ class BannerPresenter(
 
     private fun bindData(data: List<ApiMovieBanner.Banner>) {
         binding.bannerImg.addOnPageChangeListener(this)
-        binding.bannerImg.adapter = object : BannerImageAdapter<ApiMovieBanner.Banner>(data) {
+        adapter = object : BannerImageAdapter<ApiMovieBanner.Banner>(data) {
             override fun onBindView(holder: BannerImageHolder, data: ApiMovieBanner.Banner, position: Int, size: Int) {
                 //图片加载自己实现
                 Glide.with(holder.itemView)
@@ -59,6 +73,7 @@ class BannerPresenter(
                         .into(holder.imageView)
             }
         }
+        binding.bannerImg.adapter = adapter
         binding.bannerImg
                 .setBannerGalleryEffect(20, 10, 1.0f)
                 .setOnBannerListener(this@BannerPresenter)
