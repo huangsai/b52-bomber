@@ -1,19 +1,29 @@
 package com.mobile.app.bomber.movie.search
 
 import android.view.View
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.mobile.app.bomber.common.base.Msg
 import com.mobile.app.bomber.common.base.tool.SingleClick
-import com.mobile.app.bomber.data.http.entities.ApiSearch
 import com.mobile.app.bomber.movie.R
 import com.mobile.app.bomber.movie.databinding.MovieItemSearchTodayBinding
 import com.mobile.app.bomber.movie.search.items.SearchTodayItem
 import com.mobile.guava.android.ui.view.recyclerview.LinearItemDecoration
+import com.mobile.guava.jvm.domain.Source
+import com.mobile.guava.jvm.extension.exhaustive
 import com.pacific.adapter.AdapterUtils
 import com.pacific.adapter.AdapterViewHolder
 import com.pacific.adapter.RecyclerAdapter
 import com.pacific.adapter.SimpleRecyclerItem
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class SearchTodayPresenter(private var activity: SearchActivity) : SimpleRecyclerItem(), View.OnClickListener {
+class SearchTodayPresenter(
+        private var activity: SearchActivity,
+        private val model: SearchViewModel
+) : SimpleRecyclerItem(), View.OnClickListener {
+
     private var _binding: MovieItemSearchTodayBinding? = null
     private val binding get() = _binding!!
 
@@ -32,20 +42,22 @@ class SearchTodayPresenter(private var activity: SearchActivity) : SimpleRecycle
     }
 
     private fun requestData() {
-        val labels = listOf(
-                ApiSearch.TodayLabels("奔跑吧，少年", "上升"),
-                ApiSearch.TodayLabels("西红柿首富", "上升"),
-                ApiSearch.TodayLabels("八百", "持平"),
-                ApiSearch.TodayLabels("肖申克救赎", "上升"),
-                ApiSearch.TodayLabels("做一个好人", "持平"),
-                ApiSearch.TodayLabels("狼狈为奸", "上升"),
-                ApiSearch.TodayLabels("狼狈为奸", "上升"),
-                ApiSearch.TodayLabels("狼狈为奸", "上升"),
-                ApiSearch.TodayLabels("狼狈为奸", "上升"),
-                ApiSearch.TodayLabels("狼狈为奸", "上升")
-        )
-        val items = labels.map { SearchTodayItem(it) }
-        adapter.addAll(items)
+        activity.lifecycleScope.launch(Dispatchers.IO) {
+            val source = model.getHotKeys()
+            withContext(Dispatchers.Main) {
+                when (source) {
+                    is Source.Success -> {
+                        val items = source.requireData().map {
+                            SearchTodayItem(it)
+                        }
+                        adapter.addAll(items)
+                    }
+                    is Source.Error -> {
+                        Msg.handleSourceException(source.requireError())
+                    }
+                }.exhaustive
+            }
+        }
     }
 
     override fun unbind(holder: AdapterViewHolder) {
@@ -65,7 +77,7 @@ class SearchTodayPresenter(private var activity: SearchActivity) : SimpleRecycle
         when (v!!.id) {
             R.id.item_today_label -> {
                 val pos = AdapterUtils.getHolder(v).bindingAdapterPosition
-                val title = adapter.get<SearchTodayItem>(pos).data.title
+                val title = adapter.get<SearchTodayItem>(pos).data.name
                 activity.setInputContent(title)
             }
         }

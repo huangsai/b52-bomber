@@ -4,15 +4,13 @@ import android.view.View
 import android.widget.ImageView
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.mobile.ext.glide.GlideApp
 import com.mobile.app.bomber.common.base.Msg
 import com.mobile.app.bomber.common.base.tool.SingleClick
-import com.mobile.app.bomber.data.http.entities.ApiMovie
 import com.mobile.app.bomber.movie.R
 import com.mobile.app.bomber.movie.base.views.MiddleGridItemDecoration
 import com.mobile.app.bomber.movie.databinding.MovieItemSearchResultRecommendBinding
 import com.mobile.app.bomber.movie.search.SearchActivity
-import com.mobile.app.bomber.movie.top.items.TopMovieVerItem
+import com.mobile.ext.glide.GlideApp
 import com.pacific.adapter.AdapterImageLoader
 import com.pacific.adapter.AdapterViewHolder
 import com.pacific.adapter.RecyclerAdapter
@@ -37,13 +35,6 @@ class SearchResultRecommendPresenter(private var activity: SearchActivity) : Sim
     }
 
     private fun requestData() {
-        val items = listOf(
-                ApiMovie.Movie(1),
-                ApiMovie.Movie(1),
-                ApiMovie.Movie(1),
-                ApiMovie.Movie(1)
-        ).map { TopMovieVerItem(it) }
-        adapter.addAll(items)
     }
 
     override fun unbind(holder: AdapterViewHolder) {
