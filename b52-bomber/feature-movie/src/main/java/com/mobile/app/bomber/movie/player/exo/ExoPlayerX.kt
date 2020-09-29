@@ -60,7 +60,7 @@ object ExoPlayerX : Player.EventListener, CacheWriter.ProgressListener {
 
         databaseProvider = ExoDatabaseProvider(AndroidX.myApp)
         cache = SimpleCache(
-            File(AndroidX.myApp.externalCacheDir, "video_manager_disk_cache"),
+            File(AndroidX.myApp.externalCacheDir, "video_manager_disk_cache2"),
             LeastRecentlyUsedCacheEvictor(256 * 1024 * 1024),
             databaseProvider
         )
