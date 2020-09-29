@@ -29,6 +29,7 @@ class SearchActivity : MyBaseActivity(), TextWatcher, View.OnClickListener {
 
     private val adapter = RecyclerAdapter()
     private lateinit var mainItems: ArrayList<SimpleRecyclerItem>
+    private var isMainView: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +59,7 @@ class SearchActivity : MyBaseActivity(), TextWatcher, View.OnClickListener {
         binding.recycler.adapter = null
         binding.recycler.adapter = adapter
         adapter.replaceAll(mainItems)
+        isMainView = true
     }
 
     /**
@@ -92,6 +94,7 @@ class SearchActivity : MyBaseActivity(), TextWatcher, View.OnClickListener {
         binding.recycler.adapter = null
         binding.recycler.adapter = adapter
         adapter.replaceAll(items)
+        isMainView = false
     }
 
     fun setInputContent(inputContent: String) {
@@ -101,7 +104,7 @@ class SearchActivity : MyBaseActivity(), TextWatcher, View.OnClickListener {
 
     override fun afterTextChanged(s: Editable?) {
         val keyword = binding.etSearch.text.toString().trim()
-        if (keyword.isEmpty()) {
+        if (keyword.isEmpty() && !isMainView) {
             replaceMainView()
         } else {
 //            replaceInputView()

@@ -7,6 +7,7 @@ import com.mobile.app.bomber.common.base.Msg
 import com.mobile.app.bomber.common.base.tool.SingleClick
 import com.mobile.app.bomber.movie.R
 import com.mobile.app.bomber.movie.databinding.MovieItemSearchTodayBinding
+import com.mobile.app.bomber.movie.player.PlayerActivity
 import com.mobile.app.bomber.movie.search.items.SearchTodayItem
 import com.mobile.guava.android.ui.view.recyclerview.LinearItemDecoration
 import com.mobile.guava.jvm.domain.Source
@@ -76,9 +77,8 @@ class SearchTodayPresenter(
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.item_today_label -> {
-                val pos = AdapterUtils.getHolder(v).bindingAdapterPosition
-                val title = adapter.get<SearchTodayItem>(pos).data.name
-                activity.setInputContent(title)
+                val movie = AdapterUtils.getHolder(v).item<SearchTodayItem>().data.movie
+                PlayerActivity.start(activity, movie)
             }
         }
     }

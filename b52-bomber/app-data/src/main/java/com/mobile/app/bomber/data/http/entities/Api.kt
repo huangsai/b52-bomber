@@ -587,7 +587,8 @@ data class ApiMovieHotKey(
             @Json(name = "movieId") val movieId: Long,
             @Json(name = "name") val name: String,
             @Json(name = "searchCount") val searchCount: Int,
-            @Json(name = "hotType") val hotType: Int
+            @Json(name = "hotType") val hotType: Int,
+            @Json(name = "MovieObj") val movie: ApiMovie.Movie
     )
 }
 
@@ -615,7 +616,7 @@ data class ApiMovie(
             @Json(name = "Comments") val comments: Long,
             @Json(name = "Share") val share: Int,
             @Json(name = "Follow") val follow: Int,
-            @Json(name = "Download") val download: Int,
+            @Json(name = "Download") val download: String,
             @Json(name = "Country") val country: Int,
             @Json(name = "Year") val year: Long,
             @Json(name = "Mosaic") val mosaic: Int,
@@ -628,6 +629,13 @@ data class ApiMovie(
             @Json(name = "Cover") val cover: String,
             @Json(name = "Isportait") val isPortait: Int,
             @Json(name = "Byuid") val byUid: Long,
+    )
+
+    @JsonClass(generateAdapter = true)
+    data class ReqSearch(
+            @Json(name = "keyword") val keyword: String,
+            @Json(name = "page") val page: Int,
+            @Json(name = "size") val size: Int
     )
 }
 

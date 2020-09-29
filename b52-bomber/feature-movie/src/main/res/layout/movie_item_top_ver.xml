@@ -33,7 +33,6 @@
         style="@style/WrapWrap"
         android:layout_marginTop="@dimen/size_5dp"
         android:gravity="center"
-        android:maxLines="1"
         android:text="影片描述"
         android:textColor="@color/color_text_919095"
         android:textSize="@dimen/font_10sp"
