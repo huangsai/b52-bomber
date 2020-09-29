@@ -11,17 +11,14 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.mobile.app.bomber.common.base.Msg
 import com.mobile.app.bomber.common.base.MyBaseFragment
 import com.mobile.app.bomber.common.base.RecyclerAdapterEmpty
-import com.mobile.app.bomber.data.http.entities.ApiMovie
 import com.mobile.app.bomber.movie.MovieViewModel
 import com.mobile.app.bomber.movie.MovieX
 import com.mobile.app.bomber.movie.R
-import com.mobile.app.bomber.movie.common.items.CommonMovieItem
 import com.mobile.app.bomber.movie.databinding.MovieFragmentCommonListBinding
 import com.mobile.ext.glide.GlideApp
 import com.mobile.guava.android.ui.view.recyclerview.LinearItemDecoration
 import com.pacific.adapter.AdapterImageLoader
 import com.pacific.adapter.AdapterViewHolder
-import java.util.*
 
 class CommonListFragment : MyBaseFragment(), AdapterImageLoader, View.OnClickListener {
 
@@ -68,15 +65,12 @@ class CommonListFragment : MyBaseFragment(), AdapterImageLoader, View.OnClickLis
     }
 
     private fun load() {
-        val items = ArrayList<CommonMovieItem>()
-        items.add(CommonMovieItem(ApiMovie.Movie(1)))
-        items.add(CommonMovieItem(ApiMovie.Movie(1)))
-        items.add(CommonMovieItem(ApiMovie.Movie(1)))
-        items.add(CommonMovieItem(ApiMovie.Movie(1)))
-        items.add(CommonMovieItem(ApiMovie.Movie(1)))
-        items.add(CommonMovieItem(ApiMovie.Movie(1)))
-        items.add(CommonMovieItem(ApiMovie.Movie(1)))
-        adapter.addAll(items)
+    }
+
+    override fun onBusEvent(event: Pair<Int, Any>) {
+        if (event.first == MovieX.BUS_MOVIE_REFRESH) {
+            load()
+        }
     }
 
     override fun load(imageView: ImageView, holder: AdapterViewHolder) {

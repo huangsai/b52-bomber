@@ -11,20 +11,18 @@ private const val HOST_TEST = "http://119.28.18.135:"
 private const val HOST_UPLOAD_TEST = "http://117.50.119.220:"
 
 //正式环境
-private const val HOST_RELEASE = "http://117.50.119.233:"
-private const val HOST_UPLOAD_RELEASE = "http://117.50.119.220:"
+private const val HOST_RELEASE = "http://weiseapi.zkangcn.com:"
+private const val HOST_UPLOAD_RELEASE = "http://weisesp.pumiaox2.com:"
 
-//发布环境-不要修改
+//发布环境
 private const val HOST_PRODUCT = HOST_TEST
 private const val HOST_UPLOAD_PRODUCT = HOST_UPLOAD_TEST
 
 const val HOST_USER = "${HOST_PRODUCT}8000"
 const val HOST_TIK_MOVIE = "${HOST_PRODUCT}8001"
-const val HOST_SEARCH = "${HOST_PRODUCT}8001"
-const val HOST_SHARE = "${HOST_PRODUCT}8003"
 const val HOST_SYS = "${HOST_PRODUCT}8003"
 const val HOST_UPLOAD = "${HOST_UPLOAD_PRODUCT}8080"
-const val DECODE_URL = "${HOST_UPLOAD_PRODUCT}8000"
+const val DECODE_URL = HOST_UPLOAD
 
 const val API_USER = ""
 const val API_VIDEO = ""
@@ -558,7 +556,7 @@ data class ApiDownLoadUrl(
 )
 
 
-//-----------------长视频相关---------------------//
+//-------⬇⬇⬇⬇⬇⬇⬇⬇---长视频相关-----⬇⬇⬇⬇⬇⬇⬇-----//
 
 @JsonClass(generateAdapter = true)
 data class ApiMovieBanner(
@@ -579,29 +577,66 @@ data class ApiMovieBanner(
 }
 
 @JsonClass(generateAdapter = true)
+data class ApiMovieHotKey(
+        @Json(name = "RetCode") val code: Int,
+        @Json(name = "Desc") val desc: String,
+        @Json(name = "MovieHotKey") val hotKeys: List<MovieHotKey>?
+) {
+    @JsonClass(generateAdapter = true)
+    data class MovieHotKey(
+            @Json(name = "movieId") val movieId: Long,
+            @Json(name = "name") val name: String,
+            @Json(name = "searchCount") val searchCount: Int,
+            @Json(name = "hotType") val hotType: Int,
+            @Json(name = "MovieObj") val movie: ApiMovie.Movie
+    )
+}
+
+@JsonClass(generateAdapter = true)
 data class ApiMovie(
         @Json(name = "RetCode") val code: Int,
+        @Json(name = "Desc") val desc: String,
+        @Json(name = "totalpage") val totalPage: Int,
+        @Json(name = "totalcount") val totalCount: Int,
+        @Json(name = "next") val nextPage: Int,
         @Json(name = "MovieList") val movies: List<Movie>?
 ) {
 
     @JsonClass(generateAdapter = true)
     data class Movie(
-            @Json(name = "MovieId") val movieId: Long
+            @Json(name = "Id") val id: Long,
+            @Json(name = "MovieId") val movieId: Int,
+            @Json(name = "MovieUrl") val movieUrl: String,
+            @Json(name = "Downloadurl") val downloadUrl: String,
+            @Json(name = "Uploadtm") val uploadTime: Long,
+            @Json(name = "Duration") val duration: Long,
+            @Json(name = "Recommend") val recommend: Int,
+            @Json(name = "Like") val like: Int,
+            @Json(name = "Playnum") val playNum: Long,
+            @Json(name = "Comments") val comments: Long,
+            @Json(name = "Share") val share: Int,
+            @Json(name = "Follow") val follow: Int,
+            @Json(name = "Download") val download: String,
+            @Json(name = "Country") val country: Int,
+            @Json(name = "Year") val year: Long,
+            @Json(name = "Mosaic") val mosaic: Int,
+            @Json(name = "Captions") val captions: Int,
+            @Json(name = "Score") val score: Int,
+            @Json(name = "Category") val category: String,
+            @Json(name = "Desc") val desc: String,
+            @Json(name = "Propaganda") val propaganda: String,
+            @Json(name = "Name") val name: String,
+            @Json(name = "Cover") val cover: String,
+            @Json(name = "Isportait") val isPortait: Int,
+            @Json(name = "Byuid") val byUid: Long,
     )
-}
-
-@JsonClass(generateAdapter = true)
-data class ApiSearch(
-        @Json(name = "RetCode") val code: Int,
-        @Json(name = "TodayLabels") val todayLabels: List<TodayLabels>?,
-        @Json(name = "RecommendLabels") val recommendLabels: List<String>?,
-) {
 
     @JsonClass(generateAdapter = true)
-    data class TodayLabels(
-            @Json(name = "title") val title: String,
-            @Json(name = "rank") val rankDesc: String
+    data class ReqSearch(
+            @Json(name = "keyword") val keyword: String,
+            @Json(name = "page") val page: Int,
+            @Json(name = "size") val size: Int
     )
 }
 
-//-----------------长视频相关---------------------//
+//-------⬆⬆⬆⬆⬆⬆⬆⬆----长视频相关----⬆⬆⬆⬆⬆⬆⬆-----//

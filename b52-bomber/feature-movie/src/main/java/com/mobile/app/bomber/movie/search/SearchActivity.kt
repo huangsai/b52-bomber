@@ -15,7 +15,6 @@ import com.mobile.app.bomber.movie.R
 import com.mobile.app.bomber.movie.databinding.MovieActivitySearchBinding
 import com.mobile.app.bomber.movie.search.items.SearchInputItem
 import com.mobile.app.bomber.movie.search.result.SearchResultListPresenter
-import com.mobile.app.bomber.movie.search.result.SearchResultRecommendPresenter
 import com.pacific.adapter.AdapterUtils
 import com.pacific.adapter.RecyclerAdapter
 import com.pacific.adapter.SimpleRecyclerItem
@@ -30,6 +29,7 @@ class SearchActivity : MyBaseActivity(), TextWatcher, View.OnClickListener {
 
     private val adapter = RecyclerAdapter()
     private lateinit var mainItems: ArrayList<SimpleRecyclerItem>
+    private var isMainView: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,8 +47,8 @@ class SearchActivity : MyBaseActivity(), TextWatcher, View.OnClickListener {
 
         mainItems = ArrayList()
         mainItems.add(SearchHistoryPresenter(this))
-        mainItems.add(SearchRecommendPresenter(this))
-        mainItems.add(SearchTodayPresenter(this))
+//        mainItems.add(SearchRecommendPresenter(this))
+        mainItems.add(SearchTodayPresenter(this, model))
         adapter.addAll(mainItems)
     }
 
@@ -59,6 +59,7 @@ class SearchActivity : MyBaseActivity(), TextWatcher, View.OnClickListener {
         binding.recycler.adapter = null
         binding.recycler.adapter = adapter
         adapter.replaceAll(mainItems)
+        isMainView = true
     }
 
     /**
@@ -87,12 +88,13 @@ class SearchActivity : MyBaseActivity(), TextWatcher, View.OnClickListener {
      */
     private fun replaceResultView(keyword: String) {
         val items = listOf<SimpleRecyclerItem>(
-                SearchResultListPresenter(this),
-                SearchResultRecommendPresenter(this)
+                SearchResultListPresenter(this, model, keyword),
+//                SearchResultRecommendPresenter(this)
         )
         binding.recycler.adapter = null
         binding.recycler.adapter = adapter
         adapter.replaceAll(items)
+        isMainView = false
     }
 
     fun setInputContent(inputContent: String) {
@@ -102,10 +104,10 @@ class SearchActivity : MyBaseActivity(), TextWatcher, View.OnClickListener {
 
     override fun afterTextChanged(s: Editable?) {
         val keyword = binding.etSearch.text.toString().trim()
-        if (keyword.isEmpty()) {
+        if (keyword.isEmpty() && !isMainView) {
             replaceMainView()
         } else {
-            replaceInputView()
+//            replaceInputView()
         }
     }
 
@@ -127,7 +129,8 @@ class SearchActivity : MyBaseActivity(), TextWatcher, View.OnClickListener {
                 setInputContent(content)
             }
             R.id.clear_text -> {
-                binding.etSearch.text = null
+                if (binding.etSearch.text.isNotEmpty())
+                    binding.etSearch.text = null
             }
         }
     }

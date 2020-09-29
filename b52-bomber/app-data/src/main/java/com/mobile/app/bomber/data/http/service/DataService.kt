@@ -210,12 +210,23 @@ interface DataService {
     @GET("${API_VIDEO}/getShareUrl")
     fun getDownLoadUrl(): Call<ApiDownLoadUrl>
 
-    //-------------------长视频相关接口-------------------//
+    //-------⬇⬇⬇⬇⬇⬇⬇⬇---长视频相关接口-----⬇⬇⬇⬇⬇⬇⬇-----//
 
     @GET("${API_MOVIE}/getRotationChart/{platform}/")
     fun getBanner(
             @Path("platform") platform: Int,
     ): Call<ApiMovieBanner>
 
-    //-------------------长视频相关接口-------------------//
+    @GET("${API_MOVIE}/getMovieHotKeyTopN/")
+    fun getMovieHotKey(): Call<ApiMovieHotKey>
+
+    @POST("${API_MOVIE}/postSearchMovie/")
+    fun searchMovie(@Body bode: ApiMovie.ReqSearch): Call<ApiMovie>
+
+    @POST("${API_MOVIE}/postRecordMovieHotKey/{mid}/")
+    fun playSearchMovie(
+            @Path("mid") mid: Int
+    ): Call<Nope>
+
+    //-------⬆⬆⬆⬆⬆⬆⬆⬆----长视频相关接口----⬆⬆⬆⬆⬆⬆⬆-----//
 }
