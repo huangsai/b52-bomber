@@ -85,9 +85,6 @@ class BannerPresenter(
 
     override fun OnBannerClick(data: ApiMovieBanner.Banner?, position: Int) {
         Msg.toast("点击了轮播图 movieId: ${data?.movieId}$")
-        PlayerActivity.start(
-                fragment.requireActivity()
-        )
     }
 
     override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
