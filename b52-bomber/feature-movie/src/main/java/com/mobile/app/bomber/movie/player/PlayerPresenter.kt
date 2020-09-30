@@ -9,16 +9,17 @@ import com.bumptech.glide.request.target.Target
 import com.github.rubensousa.previewseekbar.PreviewBar
 import com.github.rubensousa.previewseekbar.PreviewLoader
 import com.github.rubensousa.previewseekbar.exoplayer.PreviewTimeBar
-import com.google.android.exoplayer2.*
-import com.google.android.exoplayer2.source.MediaSource
-import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
-import com.mobile.ext.glide.GlideApp
+import com.google.android.exoplayer2.ExoPlaybackException
+import com.google.android.exoplayer2.PlaybackParameters
+import com.google.android.exoplayer2.Player
 import com.mobile.app.bomber.common.base.tool.isLandscape
 import com.mobile.app.bomber.common.base.tool.requestFullScreenWithLandscape
 import com.mobile.app.bomber.movie.R
 import com.mobile.app.bomber.movie.databinding.MovieActivityPlayerBinding
-import com.mobile.app.bomber.movie.player.exo.ExoUtils
+import com.mobile.app.bomber.movie.player.exo.ExoPlayerX
 import com.mobile.app.bomber.movie.player.exo.GlideThumbnailTransformation
+import com.mobile.app.bomber.movie.player.exo.TAG_EXO_PLAYER
+import com.mobile.ext.glide.GlideApp
 import com.mobile.guava.android.mvvm.AndroidX
 import com.mobile.guava.https.safeToFloat
 import com.pacific.adapter.AdapterViewHolder
@@ -31,12 +32,7 @@ class PlayerPresenter(
         playerActivity: PlayerActivity,
         model: PlayerViewModel
 ) : BasePlayerPresenter(binding, playerActivity, model), Player.EventListener, PreviewLoader,
-        PreviewBar.OnScrubListener, CompoundButton.OnCheckedChangeListener, PlaybackPreparer {
-
-    private val trackSelector = DefaultTrackSelector(AndroidX.myApp)
-    private val trackSelectorParameters = DefaultTrackSelector.ParametersBuilder(AndroidX.myApp)
-            .setTunnelingAudioSessionId(C.generateAudioSessionIdV21(AndroidX.myApp))
-            .build()
+        PreviewBar.OnScrubListener, CompoundButton.OnCheckedChangeListener {
 
     private val btnFullScreen: ImageButton = binding.viewPlayer.findViewById(R.id.btn_fullscreen)
     private val btnSpeed: TextView = binding.viewPlayer.findViewById(R.id.btn_speed)
@@ -46,8 +42,6 @@ class PlayerPresenter(
 
     private var thumbnailsUrl = ""
 
-    private var isOnPlaying = false
-    private lateinit var player: SimpleExoPlayer
     private lateinit var balloon: Balloon
 
     private val speeds = arrayOf("0.75x", "1.0x", "1.25x", "1.5x", "1.75x", "2.0x")
@@ -58,7 +52,6 @@ class PlayerPresenter(
     private var optionFlag = 0
 
     init {
-        trackSelector.parameters = trackSelectorParameters
         binding.progress.setOnClickListener(this)
         binding.imgBack.setOnClickListener(this)
         btnFullScreen.setOnClickListener(this)
@@ -70,85 +63,60 @@ class PlayerPresenter(
         btnSpeed.text = speeds[currentSpeed]
         btnRate.text = bitRates[currentBitRate]
         AndroidX.appDialogCount.observe(playerActivity, { dialogCount ->
-            if (::player.isInitialized) {
-                if (dialogCount > 0) {
-                    onPause()
-                } else {
-                    onResume()
-                }
+            if (dialogCount > 0) {
+                onPause()
+            } else {
+                onResume()
             }
         })
     }
 
     override fun onCreate() {
-        player = SimpleExoPlayer.Builder(playerActivity.application)
-                .setUseLazyPreparation(false)
-                .setTrackSelector(trackSelector)
-                .build()
-
-        binding.viewPlayer.player = player
-        binding.viewPlayer.setPlaybackPreparer(this)
-
-        player.addListener(this)
-        player.playWhenReady = true
-        player.repeatMode = Player.REPEAT_MODE_ALL
-        player.setMediaSource(createMediaSource(), false)
-        player.prepare()
+        ExoPlayerX.addEventListener(this)
+        binding.viewPlayer.player = ExoPlayerX.requirePlayer()
+        // val sdCard = ensureFileSeparator(AndroidX.myApp.getExternalFilesDir(null)!!.absolutePath!!)
+        // ExoPlayerX.play((sdCard + "trailer.mp4").toUri())
+        ExoPlayerX.play(
+                "http://192.168.2.120/group1/M00/00/00/wKgCeF9r9vaAYBc0AE1k-lWCChA674.mp4".toUri()
+        )
     }
 
     override fun onResume() {
-        ExoUtils.controlDispatcher.dispatchSetPlayWhenReady(player, true)
+        ExoPlayerX.resume()
     }
 
     override fun onPause() {
-        ExoUtils.controlDispatcher.dispatchSetPlayWhenReady(player, false)
+        ExoPlayerX.pause()
     }
 
     override fun onDestroy() {
-        player.removeListener(this)
-        player.release()
+        ExoPlayerX.removeEventListener(this)
+        ExoPlayerX.stop()
         previewTimeBar.removeOnScrubListener(this)
         previewTimeBar.setPreviewLoader(null)
     }
 
-    private fun createMediaSource(): MediaSource {
-        return ExoUtils.buildMediaSource(
-                AndroidX.myApp,
-                "http://192.168.2.120/group1/M00/00/00/wKgCeF9r9vaAYBc0AE1k-lWCChA674.mp4".toUri(),
-                true
-        )
-    }
-
-    override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
-        when (playbackState) {
-            Player.STATE_IDLE -> {
-            }
-            Player.STATE_BUFFERING -> {
+    override fun onPlayWhenReadyChanged(playWhenReady: Boolean, reason: Int) {
+        Timber.tag("reason==").e(reason.toString())
+        if (playWhenReady) {
+            binding.progress.visibility = View.INVISIBLE
+        } else {
+            if (reason == Player.PLAY_WHEN_READY_CHANGE_REASON_REMOTE) {
                 binding.progress.visibility = View.VISIBLE
-            }
-            Player.STATE_READY -> {
-                binding.progress.visibility = View.INVISIBLE
-            }
-            Player.STATE_ENDED -> {
             }
         }
     }
 
     override fun onIsPlayingChanged(isPlaying: Boolean) {
-        isOnPlaying = isPlaying
     }
 
     override fun onPlayerError(error: ExoPlaybackException) {
-        Timber.tag(ExoUtils.TAG).d(error)
-    }
-
-    override fun preparePlayback() {
-        player.prepare()
+        Timber.tag(TAG_EXO_PLAYER).d(error)
     }
 
     override fun loadPreview(currentPosition: Long, max: Long) {
-        if (player.isPlaying) {
-            player.playWhenReady = false
+        if (ExoPlayerX.isPlaying) {
+            ExoPlayerX.pause()
         }
         GlideApp.with(playerActivity)
                 .load(thumbnailsUrl)
@@ -158,14 +126,14 @@ class PlayerPresenter(
     }
 
     override fun onScrubStart(previewBar: PreviewBar) {
-        player.playWhenReady = false
+        ExoPlayerX.pause()
     }
 
     override fun onScrubMove(previewBar: PreviewBar, progress: Int, fromUser: Boolean) {
     }
 
     override fun onScrubStop(previewBar: PreviewBar) {
-        player.playWhenReady = true
+        ExoPlayerX.resume()
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -247,7 +215,7 @@ class PlayerPresenter(
             if (optionFlag == 1) {
                 currentSpeed = index
                 btnSpeed.text = speeds[index]
-                player.setPlaybackParameters(PlaybackParameters(
+                ExoPlayerX.requirePlayer().setPlaybackParameters(PlaybackParameters(
                         speeds[index].replace("x", "").safeToFloat(),
                         1.0f
                 ))

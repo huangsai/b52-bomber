@@ -22,7 +22,7 @@ class PlayerActivity : BaseActivity() {
     private lateinit var data: ApiMovie.Movie
     private lateinit var commentPresenter: CommentPresenter
     private lateinit var sourcePresenter: SourcePresenter
-    private lateinit var playerPresenter: PlayerPresenter2
+    private lateinit var playerPresenter: PlayerPresenter
 
     private val model: PlayerViewModel by viewModels { MovieX.component.viewModelFactory() }
 
@@ -39,7 +39,7 @@ class PlayerActivity : BaseActivity() {
 
         commentPresenter = CommentPresenter(binding, this, model)
         sourcePresenter = SourcePresenter(binding, this, model)
-        playerPresenter = PlayerPresenter2(binding, this, model)
+        playerPresenter = PlayerPresenter(binding, this, model)
 
         commentPresenter.onCreate()
         sourcePresenter.onCreate()
@@ -97,8 +97,8 @@ class PlayerActivity : BaseActivity() {
     companion object {
 
         @JvmStatic
-        fun start(activity: Activity, data: ApiMovie.Movie? = null) {
-            // Values.put("PlayerActivity", data)
+        fun start(activity: Activity, data: ApiMovie.Movie) {
+            Values.put("PlayerActivity", data)
             activity.newStartActivity(PlayerActivity::class.java)
         }
     }
