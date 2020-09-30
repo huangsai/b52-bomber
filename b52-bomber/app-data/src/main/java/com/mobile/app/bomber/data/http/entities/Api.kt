@@ -10,7 +10,7 @@ const val HOST_TAG_TEST = 0 //测试服
 const val HOST_TAG_DEV = 1 //开发服
 const val HOST_TAG_RELEASE = 2 //正式服
 
-const val HOST_TAG = HOST_TAG_TEST
+const val HOST_TAG = HOST_TAG_RELEASE
 
 //测试环境
 const val HOST_TEST = "http://119.28.18.135:"
@@ -19,8 +19,8 @@ const val HOST_TEST = "http://119.28.18.135:"
 const val HOST_DEV = "http://192.168.2.120:"
 
 //正式环境
-const val HOST_RELEASE = "http://weiseapi.zkangcn.com"
-const val HOST_RELEASE_UPLOAD = "http://weisesp.pumiaox2.com:"
+const val HOST_RELEASE = "https://weiseapi.zkangcn.com"
+const val HOST_RELEASE_UPLOAD = "https://weisesp.pumiaox2.com:8080"
 
 //视频解码地址
 const val DECODE_URL = "${HOST_TEST}8080" //不同环境下需要修改

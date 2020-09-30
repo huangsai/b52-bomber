@@ -13,13 +13,16 @@ class HostSelectionInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
         val dynamicHttpUrl = createHttpUrl(request.url.toString())
-        val newHttpUrl = request.url.newBuilder()
+        val httpUrlBuilder = request.url.newBuilder()
                 .host(dynamicHttpUrl.host)
                 .scheme(dynamicHttpUrl.scheme)
                 .port(dynamicHttpUrl.port)
-                .build()
 
-        return chain.proceed(request.newBuilder().url(newHttpUrl).build())
+        if (HOST_TAG == HOST_TAG_RELEASE && dynamicHttpUrl.port == 80) {
+            httpUrlBuilder.setPathSegment(0, dynamicHttpUrl.toUrl().path.substring(1))
+        }
+
+        return chain.proceed(request.newBuilder().url(httpUrlBuilder.build()).build())
     }
 
     private fun createHttpUrl(original: String): HttpUrl {
@@ -35,7 +38,7 @@ class HostSelectionInterceptor : Interceptor {
             HOST_TAG_RELEASE -> { //正式服
                 when {
                     isAboutUser(original) -> "${HOST_RELEASE}/user"
-                    isAboutUpload(original) -> "${HOST_RELEASE_UPLOAD}8080"
+                    isAboutUpload(original) -> HOST_RELEASE_UPLOAD
                     isAboutSystem(original) -> "${HOST_RELEASE}/sys"
                     else -> "${HOST_RELEASE}/video"
                 }.toHttpUrl()
