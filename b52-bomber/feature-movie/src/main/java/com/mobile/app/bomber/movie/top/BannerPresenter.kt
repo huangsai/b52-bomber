@@ -6,10 +6,12 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.mobile.app.bomber.common.base.Msg
+import com.mobile.app.bomber.data.http.entities.ApiMovie
 import com.mobile.app.bomber.data.http.entities.ApiMovieBanner
 import com.mobile.app.bomber.movie.MovieViewModel
 import com.mobile.app.bomber.movie.R
 import com.mobile.app.bomber.movie.databinding.MovieFragmentMovieBinding
+import com.mobile.app.bomber.movie.player.PlayerActivity
 import com.mobile.guava.android.mvvm.lifecycle.SimplePresenter
 import com.mobile.guava.jvm.domain.Source
 import com.mobile.guava.jvm.extension.exhaustive
@@ -29,15 +31,29 @@ class BannerPresenter(
 ) : SimplePresenter(), OnBannerListener<ApiMovieBanner.Banner>, OnPageChangeListener {
 
     private var mData: List<ApiMovieBanner.Banner>? = null
+    private var adapter: BannerImageAdapter<ApiMovieBanner.Banner>? = null
 
     init {
+        load(false)
+    }
+
+    fun onRefresh() {
+        load(true)
+    }
+
+    private fun load(isRefresh: Boolean) {
         fragment.lifecycleScope.launch(Dispatchers.IO) {
             val source = model.getBanner()
             withContext(Dispatchers.Main) {
                 when (source) {
                     is Source.Success -> {
                         mData = source.requireData()
-                        bindData(source.requireData())
+                        if (isRefresh) {
+                            adapter?.setDatas(source.requireData())
+                            adapter?.notifyDataSetChanged()
+                        } else {
+                            bindData(source.requireData())
+                        }
                     }
                     is Source.Error -> {
                         Msg.handleSourceException(source.requireError())
@@ -49,7 +65,7 @@ class BannerPresenter(
 
     private fun bindData(data: List<ApiMovieBanner.Banner>) {
         binding.bannerImg.addOnPageChangeListener(this)
-        binding.bannerImg.adapter = object : BannerImageAdapter<ApiMovieBanner.Banner>(data) {
+        adapter = object : BannerImageAdapter<ApiMovieBanner.Banner>(data) {
             override fun onBindView(holder: BannerImageHolder, data: ApiMovieBanner.Banner, position: Int, size: Int) {
                 //图片加载自己实现
                 Glide.with(holder.itemView)
@@ -59,6 +75,7 @@ class BannerPresenter(
                         .into(holder.imageView)
             }
         }
+        binding.bannerImg.adapter = adapter
         binding.bannerImg
                 .setBannerGalleryEffect(20, 10, 1.0f)
                 .setOnBannerListener(this@BannerPresenter)
@@ -68,6 +85,9 @@ class BannerPresenter(
 
     override fun OnBannerClick(data: ApiMovieBanner.Banner?, position: Int) {
         Msg.toast("点击了轮播图 movieId: ${data?.movieId}$")
+        PlayerActivity.start(
+                fragment.requireActivity()
+        )
     }
 
     override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {

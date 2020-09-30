@@ -53,12 +53,12 @@ abstract class BaseTopMoviePresenter(protected val context: Context, private val
     @CallSuper
     override fun unbind(holder: AdapterViewHolder) {
         super.unbind(holder)
-        val binding:MovieItemTopListBinding = holder.binding()
+        val binding: MovieItemTopListBinding = holder.binding()
         binding.recycler.layoutManager = null
         binding.recycler.adapter = null
     }
 
     protected abstract fun load()
 
-//    protected abstract fun onRefresh()
+    abstract fun onRefresh()
 }

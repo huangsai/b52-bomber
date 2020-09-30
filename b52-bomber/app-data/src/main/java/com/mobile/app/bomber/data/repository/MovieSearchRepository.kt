@@ -34,7 +34,7 @@ class MovieSearchRepository @Inject constructor(
     suspend fun searchMovie(keyword: String, pager: Pager): Source<List<ApiMovie.Movie>> {
         if (pager.isReachedTheEnd) return Source.Success(emptyList())
         pager.isBusy = true
-        val call = dataService.searchMovie(keyword, pager.requestPage, pager.pageSize)
+        val call = dataService.searchMovie(ApiMovie.ReqSearch(keyword, pager.requestPage, pager.pageSize))
         return try {
             call.execute().toSource {
                 pager.nextPage(it.totalPage)

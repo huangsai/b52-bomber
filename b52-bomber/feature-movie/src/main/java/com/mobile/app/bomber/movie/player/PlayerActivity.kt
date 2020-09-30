@@ -11,6 +11,7 @@ import com.mobile.app.bomber.common.base.tool.requestNormalScreenWithPortrait
 import com.mobile.app.bomber.data.http.entities.ApiMovie
 import com.mobile.app.bomber.movie.MovieX
 import com.mobile.app.bomber.movie.databinding.MovieActivityPlayerBinding
+import com.mobile.app.bomber.movie.player.exo.ExoPlayerX
 import com.mobile.guava.android.mvvm.BaseActivity
 import com.mobile.guava.android.mvvm.newStartActivity
 import com.mobile.guava.https.Values
@@ -21,13 +22,15 @@ class PlayerActivity : BaseActivity() {
     private lateinit var data: ApiMovie.Movie
     private lateinit var commentPresenter: CommentPresenter
     private lateinit var sourcePresenter: SourcePresenter
-    private lateinit var playerPresenter: PlayerPresenter
+    private lateinit var playerPresenter: PlayerPresenter2
 
     private val model: PlayerViewModel by viewModels { MovieX.component.viewModelFactory() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.statusBarColor = Color.BLACK
+
+        ExoPlayerX.initialize()
 
         data = Values.take("PlayerActivity")
         binding = MovieActivityPlayerBinding.inflate(layoutInflater)
@@ -36,7 +39,7 @@ class PlayerActivity : BaseActivity() {
 
         commentPresenter = CommentPresenter(binding, this, model)
         sourcePresenter = SourcePresenter(binding, this, model)
-        playerPresenter = PlayerPresenter(binding, this, model)
+        playerPresenter = PlayerPresenter2(binding, this, model)
 
         commentPresenter.onCreate()
         sourcePresenter.onCreate()
@@ -94,8 +97,8 @@ class PlayerActivity : BaseActivity() {
     companion object {
 
         @JvmStatic
-        fun start(activity: Activity, data: ApiMovie.Movie) {
-            Values.put("PlayerActivity", data)
+        fun start(activity: Activity, data: ApiMovie.Movie? = null) {
+            // Values.put("PlayerActivity", data)
             activity.newStartActivity(PlayerActivity::class.java)
         }
     }

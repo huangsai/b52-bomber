@@ -10,6 +10,7 @@ import com.mobile.app.bomber.common.base.MyBaseFragment
 import com.mobile.app.bomber.common.base.tool.SingleClick
 import com.mobile.app.bomber.movie.MovieViewModel
 import com.mobile.app.bomber.movie.MovieX
+import com.mobile.app.bomber.movie.MovieX.BUS_MOVIE_REFRESH
 import com.mobile.app.bomber.movie.R
 import com.mobile.app.bomber.movie.databinding.MovieFragmentTopListBinding
 import com.mobile.app.bomber.movie.top.like.TopLikeActivity
@@ -28,6 +29,9 @@ class TopListFragment : MyBaseFragment(), View.OnClickListener {
     private val binding get() = _binding!!
 
     private val adapter = RecyclerAdapter()
+
+    private lateinit var listLikePresenter: TopListLikePresenter
+    private lateinit var listRecommendPresenter: TopListRecommendPresenter
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -50,10 +54,19 @@ class TopListFragment : MyBaseFragment(), View.OnClickListener {
     private fun load() {
         val list: MutableList<RecyclerItem> = ArrayList()
         list.add(TopTitlePresenter("${getString(R.string.movie_text_top_like_label)}>"))
-        list.add(TopListLikePresenter(requireContext()))
+        listLikePresenter = TopListLikePresenter(requireContext())
+        list.add(listLikePresenter)
         list.add(TopTitlePresenter("${getString(R.string.movie_text_top_recommend_label)}>"))
-        list.add(TopListRecommendPresenter(requireContext()))
+        listRecommendPresenter = TopListRecommendPresenter(requireContext())
+        list.add(listRecommendPresenter)
         adapter.addAll(list)
+    }
+
+    override fun onBusEvent(event: Pair<Int, Any>) {
+        if (event.first == BUS_MOVIE_REFRESH) {
+            listLikePresenter.onRefresh()
+            listRecommendPresenter.onRefresh()
+        }
     }
 
     @SingleClick

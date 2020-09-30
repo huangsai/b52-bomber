@@ -220,12 +220,8 @@ interface DataService {
     @GET("${API_MOVIE}/getMovieHotKeyTopN/")
     fun getMovieHotKey(): Call<ApiMovieHotKey>
 
-    @POST("${API_MOVIE}/postSearchMovie/{keyword}/{page}/{size}")
-    fun searchMovie(
-            @Path("keyword") keyword: String,
-            @Path("page") page: Int,
-            @Path("size") pageSize: Int
-    ): Call<ApiMovie>
+    @POST("${API_MOVIE}/postSearchMovie/")
+    fun searchMovie(@Body bode: ApiMovie.ReqSearch): Call<ApiMovie>
 
     @POST("${API_MOVIE}/postRecordMovieHotKey/{mid}/")
     fun playSearchMovie(
