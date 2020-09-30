@@ -10,19 +10,19 @@ import retrofit2.http.Path
 
 interface DataService {
 
-    @POST("/login/")
+    @POST("/user/login/")
     fun login(@Body body: ApiToken.AReq): Call<ApiToken>
 
-    @POST("/fastlogin/")
+    @POST("/user/fastlogin/")
     fun fastLogin(@Body body: ApiToken.Req): Call<ApiToken>
 
-    @GET("/getverifycode/{phonenum}/")
+    @GET("/user/getverifycode/{phonenum}/")
     fun verifyCode(@Path("phonenum") telephone: String): Call<Nope>
 
-    @POST("/videolike/")
+    @POST("/video/videolike/")
     fun likeVideo(@Body body: ApiLike.Req): Call<ApiLike>
 
-    @GET("/getdistancevideolist/{uid}/{fastkey}/{lat}/{lng}/{page}/{size}/ ")
+    @GET("/video/getdistancevideolist/{uid}/{fastkey}/{lat}/{lng}/{page}/{size}/ ")
     fun videosOfNearby(
             @Path("uid") uid: Long,
             @Path("fastkey") token: String,
@@ -32,7 +32,7 @@ interface DataService {
             @Path("size") pageSize: Int
     ): Call<ApiVideo>
 
-    @GET("/getfollowvideolist/{uid}/{fastkey}/{page}/{size}/")
+    @GET("/video/getfollowvideolist/{uid}/{fastkey}/{page}/{size}/")
     fun videosOfFollow(
             @Path("uid") uid: Long,
             @Path("fastkey") token: String,
@@ -40,7 +40,7 @@ interface DataService {
             @Path("size") pageSize: Int
     ): Call<ApiVideo>
 
-    @GET("/getvideolist/{uid}/{fastkey}/{label}/{sort}/{page}/{size}/")
+    @GET("/video/getvideolist/{uid}/{fastkey}/{label}/{sort}/{page}/{size}/")
     fun queryVideos(
             @Path("uid") uid: Long,
             @Path("fastkey") token: String,
@@ -50,28 +50,28 @@ interface DataService {
             @Path("size") pageSize: Int
     ): Call<ApiVideo>
 
-    @GET("/getuserinfo/{uid}/")
+    @GET("/user/getuserinfo/{uid}/")
     fun user(@Path("uid") uid: Long): Call<ApiUser>
 
-    @POST("/modifyuserInfo/")
+    @POST("/user/modifyuserInfo/")
     fun updateBirthday(@Body body: ApiUser.BirthdayReq): Call<Nope>
 
-    @POST("/modifyuserInfo/")
+    @POST("/user/modifyuserInfo/")
     fun updateGender(@Body body: ApiUser.GenderReq): Call<Nope>
 
-    @POST("/modifyuserInfo/")
+    @POST("/user/modifyuserInfo/")
     fun updateSign(@Body body: ApiUser.SignReq): Call<Nope>
 
-    @POST("/modifyuserInfo/")
+    @POST("/user/modifyuserInfo/")
     fun updateNickname(@Body body: ApiUser.NicknameReq): Call<Nope>
 
-    @POST("/modifyuserInfo/")
+    @POST("/user/modifyuserInfo/")
     fun updateWechat(@Body body: ApiUser.WechatReq): Call<Nope>
 
-    @POST("/followone/")
+    @POST("/user/followone/")
     fun follow(@Body body: ApiFollow.Req): Call<ApiFollow>
 
-    @GET("/isfollowed/{uid}/{fastkey}/{userid}/")
+    @GET("/user/isfollowed/{uid}/{fastkey}/{userid}/")
     fun isFollowing(
             @Path("uid") uid: Long,
             @Path("fastkey") token: String,
@@ -81,44 +81,44 @@ interface DataService {
     @POST("/group1/upload")
     fun uploadFile(@Body body: RequestBody): Call<ApiFile>
 
-    @POST("/changeheadpic/")
+    @POST("/user/changeheadpic/")
     fun syncPicture(@Body body: ApiFile.ReqPicture): Call<Nope>
 
-    @POST("/videoupoload/")
+    @POST("/video/videoupoload/")
     fun syncVideo(@Body body: ApiFile.ReqVideo): Call<Nope>
 
-    @POST("/videoplay/")
+    @POST("/video/videoplay/")
     fun playVideo(@Body body: ApiVideo.ReqPlay): Call<Nope>
 
-    @POST("/sharevideo/")
+    @POST("/video/sharevideo/")
     fun shareVideo(@Body body: ApiVideo.ReqShare): Call<Nope>
 
-    @GET("/getvideocommentslist/{uid}/{fastkey}/{videoid}/")
+    @GET("/video/getvideocommentslist/{uid}/{fastkey}/{videoid}/")
     fun comments(
             @Path("uid") uid: Long,
             @Path("fastkey") token: String,
             @Path("videoid") videoid: Long
     ): Call<ApiComment>
 
-    @POST("/videocomments/")
+    @POST("/video/videocomments/")
     fun createComment(@Body body: ApiCreateComment.Req): Call<ApiCreateComment>
 
-    @POST("/commentslike/")
+    @POST("/video/commentslike/")
     fun likeComment(@Body body: ApiLike.ReqComment): Call<Nope>
 
-    @GET("/getfollowlist/{uid}/{fastkey}/")
+    @GET("/user/getfollowlist/{uid}/{fastkey}/")
     fun followList(
             @Path("uid") uid: Long,
             @Path("fastkey") token: String
     ): Call<ApiFollow>
 
-    @GET("/getfanslist/{uid}/{fastkey}/")
+    @GET("/user/getfanslist/{uid}/{fastkey}/")
     fun fanList(
             @Path("uid") uid: Long,
             @Path("fastkey") token: String
     ): Call<ApiFans>
 
-    @GET("/getuserrank/{uid}/{fastkey}/{type}/{timestemp}/{page}/{size}/")
+    @GET("/user/getuserrank/{uid}/{fastkey}/{type}/{timestemp}/{page}/{size}/")
     fun ranksOfUser(
             @Path("uid") uid: Long,
             @Path("fastkey") token: String,
@@ -128,32 +128,32 @@ interface DataService {
             @Path("size") pageSize: Int
     ): Call<ApiRank>
 
-    @GET("/getusercount/{uid}/")
+    @GET("/user/getusercount/{uid}/")
     fun getUserCount(
             @Path("uid") uid: Long
     ): Call<ApiUserCount>
 
-    @GET("/getuservideolist/{uid}/{page}/{size}/")
+    @GET("/video/getuservideolist/{uid}/{page}/{size}/")
     fun videosOfUser(
             @Path("uid") uid: Long,
             @Path("page") page: Int,
             @Path("size") pageSize: Int
     ): Call<ApiVideo>
 
-    @GET("/getuserlikevideolist/{uid}/{page}/{size}/")
+    @GET("/video/getuserlikevideolist/{uid}/{page}/{size}/")
     fun videosOfLike(
             @Path("uid") uid: Long,
             @Path("page") page: Int,
             @Path("size") pageSize: Int
     ): Call<ApiVideo>
 
-    @GET("/getindexmessage/{type}/")
+    @GET("/sys/getindexmessage/{type}/")
     fun adMsg(@Path("type") type: Int): Call<ApiAdMsg>
 
-    @GET("/getadconfig/{type}/")
+    @GET("/sys/getadconfig/{type}/")
     fun ad(@Path("type") type: Int): Call<ApiAd>
 
-    @GET("/commentstouser/{uid}/{fastkey}/{page}/{size}/")
+    @GET("/video/commentstouser/{uid}/{fastkey}/{page}/{size}/")
     fun commentList(
             @Path("uid") uid: Long,
             @Path("fastkey") token: String,
@@ -161,7 +161,7 @@ interface DataService {
             @Path("size") pageSize: Int
     ): Call<ApiCommentList>
 
-    @GET("/commentsatuser/{uid}/{fastkey}/{page}/{size}/")
+    @GET("/video/commentsatuser/{uid}/{fastkey}/{page}/{size}/")
     fun atList(
             @Path("uid") uid: Long,
             @Path("fastkey") token: String,
@@ -169,7 +169,7 @@ interface DataService {
             @Path("size") pageSize: Int
     ): Call<ApiAtList>
 
-    @GET("/userlikeme/{uid}/{fastkey}/{page}/{size}/")
+    @GET("/video/userlikeme/{uid}/{fastkey}/{page}/{size}/")
     fun likeList(
             @Path("uid") uid: Long,
             @Path("fastkey") token: String,
@@ -177,7 +177,7 @@ interface DataService {
             @Path("size") pageSize: Int
     ): Call<ApiLikeList>
 
-    @POST("/deletevideocomments/")
+    @POST("/video/deletevideocomments/")
     fun deleteComment(@Body body: ApiComment.ReqDelete): Call<Nope>
 
     @GET("/getvideobyid/{uid}/{fastkey}/{videoid}/")
@@ -187,13 +187,13 @@ interface DataService {
             @Path("videoid") videoId: Long
     ): Call<ApiVideoById>
 
-    @GET("/searchuser/{keyword}/")
+    @GET("/video/user/searchuser/{keyword}/")
     fun searchUsers(@Path("keyword") keyword: String): Call<ApiAtUser>
 
-    @POST("/postvideoplayduration/")
+    @POST("/video/postvideoplayduration/")
     fun playDuration(@Body body: ApiDurationReq): Call<Nope>
 
-    @POST("/postSearchVideoUser/{uid}/{keyword}/{page}/{size}")
+    @POST("/video/postSearchVideoUser/{uid}/{keyword}/{page}/{size}")
     fun searchVideo(
             @Path("uid") uId: Long,
             @Path("keyword") keyword: String,
@@ -201,13 +201,13 @@ interface DataService {
             @Path("size") pageSize: Int
     ): Call<ApiVideo>
 
-    @GET("/getHotKeyTopN")
+    @GET("/video/getHotKeyTopN")
     fun getHotKey(): Call<ApiHotKey>
 
-    @GET("/getVersion/{platform}")
+    @GET("/sys/getVersion/{platform}")
     fun getVersion(@Path("platform") platform: Int): Call<ApiVersion>
 
-    @GET("/getShareUrl")
+    @GET("/sys/getShareUrl")
     fun getDownLoadUrl(): Call<ApiDownLoadUrl>
 
     //-------⬇⬇⬇⬇⬇⬇⬇⬇---长视频相关接口-----⬇⬇⬇⬇⬇⬇⬇-----//
