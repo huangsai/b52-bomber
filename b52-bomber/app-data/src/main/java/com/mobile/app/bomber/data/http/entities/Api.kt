@@ -6,29 +6,24 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import java.io.Serializable
 
+const val HOST_TAG_TEST = 0 //测试服
+const val HOST_TAG_DEV = 1 //开发服
+const val HOST_TAG_RELEASE = 2 //正式服
+
+const val HOST_TAG = HOST_TAG_TEST
+
 //测试环境
-private const val HOST_TEST = "http://119.28.18.135:"
-private const val HOST_UPLOAD_TEST = "http://117.50.119.220:"
+const val HOST_TEST = "http://119.28.18.135:"
+
+//开发环境
+const val HOST_DEV = "http://192.168.2.120:"
 
 //正式环境
-private const val HOST_RELEASE = "http://weiseapi.zkangcn.com:"
-private const val HOST_UPLOAD_RELEASE = "http://weisesp.pumiaox2.com:"
+const val HOST_RELEASE = "http://weiseapi.zkangcn.com"
+const val HOST_RELEASE_UPLOAD = "http://weisesp.pumiaox2.com:"
 
-//发布环境
-private const val HOST_PRODUCT = HOST_TEST
-private const val HOST_UPLOAD_PRODUCT = HOST_UPLOAD_TEST
-
-const val HOST_USER = "${HOST_PRODUCT}8000"
-const val HOST_TIK_MOVIE = "${HOST_PRODUCT}8001"
-const val HOST_SYS = "${HOST_PRODUCT}8003"
-const val HOST_UPLOAD = "${HOST_UPLOAD_PRODUCT}8080"
-const val DECODE_URL = HOST_UPLOAD
-
-const val API_USER = ""
-const val API_VIDEO = ""
-const val API_SYS = ""
-const val API_MOVIE = ""
-
+//视频解码地址
+const val DECODE_URL = "${HOST_TEST}8080" //不同环境下需要修改
 
 @JsonClass(generateAdapter = true)
 data class Nope(@Json(name = "RetCode") val code: Int)
