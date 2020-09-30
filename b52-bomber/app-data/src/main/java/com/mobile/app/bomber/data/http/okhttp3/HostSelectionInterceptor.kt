@@ -1,9 +1,6 @@
 package com.mobile.app.bomber.data.http.okhttp3
 
-import com.mobile.app.bomber.data.http.entities.HOST_SYS
-import com.mobile.app.bomber.data.http.entities.HOST_TIK_MOVIE
-import com.mobile.app.bomber.data.http.entities.HOST_UPLOAD
-import com.mobile.app.bomber.data.http.entities.HOST_USER
+import com.mobile.app.bomber.data.http.entities.*
 import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.Interceptor
@@ -16,22 +13,45 @@ class HostSelectionInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
         val dynamicHttpUrl = createHttpUrl(request.url.toString())
-        val newHttpUrl = request.url.newBuilder()
+        val httpUrlBuilder = request.url.newBuilder()
                 .host(dynamicHttpUrl.host)
                 .scheme(dynamicHttpUrl.scheme)
                 .port(dynamicHttpUrl.port)
-                .build()
 
-        return chain.proceed(request.newBuilder().url(newHttpUrl).build())
+        if (HOST_TAG == HOST_TAG_RELEASE && dynamicHttpUrl.port == 80) {
+            httpUrlBuilder.setPathSegment(0, dynamicHttpUrl.toUrl().path.substring(1))
+        }
+
+        return chain.proceed(request.newBuilder().url(httpUrlBuilder.build()).build())
     }
 
     private fun createHttpUrl(original: String): HttpUrl {
-        return when {
-            isAboutUser(original) -> HOST_USER
-            isAboutUpload(original) -> HOST_UPLOAD
-            isAboutSystem(original) -> HOST_SYS
-            else -> HOST_TIK_MOVIE
-        }.toHttpUrl()
+        return when (HOST_TAG) {
+            HOST_TAG_TEST -> { //测试服
+                when {
+                    isAboutUser(original) -> "${HOST_TEST}8000"
+                    isAboutUpload(original) -> "${HOST_TEST}8080"
+                    isAboutSystem(original) -> "${HOST_TEST}8003"
+                    else -> "${HOST_TEST}8001"
+                }.toHttpUrl()
+            }
+            HOST_TAG_RELEASE -> { //正式服
+                when {
+                    isAboutUser(original) -> "${HOST_RELEASE}/user"
+                    isAboutUpload(original) -> HOST_RELEASE_UPLOAD
+                    isAboutSystem(original) -> "${HOST_RELEASE}/sys"
+                    else -> "${HOST_RELEASE}/video"
+                }.toHttpUrl()
+            }
+            else -> { //开发服
+                when {
+                    isAboutUser(original) -> "${HOST_DEV}8000"
+                    isAboutUpload(original) -> "${HOST_DEV}8080"
+                    isAboutSystem(original) -> "${HOST_DEV}8003"
+                    else -> "${HOST_DEV}8001"
+                }.toHttpUrl()
+            }
+        }
     }
 
     private fun isAboutUser(original: String): Boolean {
