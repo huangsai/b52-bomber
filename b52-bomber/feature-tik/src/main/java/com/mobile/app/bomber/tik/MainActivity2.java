@@ -27,11 +27,12 @@ import com.mobile.app.bomber.data.http.entities.ApiToken;
 import com.mobile.app.bomber.data.http.entities.ApiVersion;
 import com.mobile.app.bomber.data.repository.SourceExtKt;
 import com.mobile.app.bomber.runner.base.PrefsManager;
+import com.mobile.app.bomber.runner.features.FeatureRouter;
 import com.mobile.app.bomber.tik.ad.PopupAdDialogFragment;
 import com.mobile.app.bomber.tik.ad.SplashDialogFragment;
 import com.mobile.app.bomber.tik.base.AppRouterKt;
 import com.mobile.app.bomber.tik.base.AppRouterUtils;
-import com.mobile.app.bomber.tik.databinding.ActivityMainBinding;
+import com.mobile.app.bomber.tik.databinding.ActivityMain2Binding;
 import com.mobile.app.bomber.tik.home.HomeFragment;
 import com.mobile.app.bomber.tik.home.LocationLiveData;
 import com.mobile.app.bomber.tik.home.TestDialogFragment;
@@ -53,14 +54,14 @@ import java.util.Map;
 import kotlin.Pair;
 import timber.log.Timber;
 
-public class MainActivity extends MyBaseActivity implements View.OnClickListener,
+public class MainActivity2 extends MyBaseActivity implements View.OnClickListener,
         View.OnLongClickListener, ActivityResultCallback<Map<String, Boolean>>,
         RadioGroup.OnCheckedChangeListener {
 
     private long longClickNano = 0;
     private long firstTime = 0;
     private int mLastCheckedViewID = R.id.main_home_rb;
-    private ActivityMainBinding binding;
+    private ActivityMain2Binding binding;
     private LoginViewModel model;
 
     public TopMainFragment currentFragment;
@@ -69,7 +70,7 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         ImmersionBar.with(this).init();
         super.onCreate(savedInstanceState);
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        binding = ActivityMain2Binding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         model = AppRouterUtils.viewModels(this, LoginViewModel.class);
         requestPermission();
@@ -109,19 +110,19 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
             if (!entry.getValue()) {
                 if (key.equals(android.Manifest.permission.CAMERA)) {
                     hasNeededPermission = false;
-                    MainActivity.this.alertPermission(R.string.alert_msg_permission_camera, true);
+                    MainActivity2.this.alertPermission(R.string.alert_msg_permission_camera, true);
                 } else if (key.equals(android.Manifest.permission.READ_PHONE_STATE)) {
                     hasNeededPermission = false;
-                    MainActivity.this.alertPermission(R.string.alert_msg_permission_phone_state, true);
+                    MainActivity2.this.alertPermission(R.string.alert_msg_permission_phone_state, true);
                 } else if (key.equals(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                     hasNeededPermission = false;
-                    MainActivity.this.alertPermission(R.string.alert_msg_permission_storage, true);
+                    MainActivity2.this.alertPermission(R.string.alert_msg_permission_storage, true);
                 } else if (key.equals(android.Manifest.permission.RECORD_AUDIO)) {
                     hasNeededPermission = false;
-                    MainActivity.this.alertPermission(R.string.alert_msg_permission_record, true);
+                    MainActivity2.this.alertPermission(R.string.alert_msg_permission_record, true);
                 } else {
                     hasLocationPermission = false;
-                    MainActivity.this.alertPermission(R.string.alert_msg_permission_location, false);
+                    MainActivity2.this.alertPermission(R.string.alert_msg_permission_location, false);
                 }
             }
         }
@@ -220,7 +221,7 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
         if (v.getId() == R.id.img_add) {
             AppRouterKt.requireLogin(this, result -> {
                         if (result.getResultCode() == Activity.RESULT_OK) {
-                            RouterKt.newStartActivity(MainActivity.this, VideoRecordActivity.class);
+                            RouterKt.newStartActivity(MainActivity2.this, VideoRecordActivity.class);
                         }
                     }
             );
@@ -261,15 +262,17 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
         int vpSelectPosition = 0;
         if (checkedId == R.id.main_home_rb) {
             vpSelectPosition = 0;
-        } else if (checkedId == R.id.main_msg_rb) {
+        } else if (checkedId == R.id.main_movie_rb) {
             vpSelectPosition = 1;
-        } else if (checkedId == R.id.main_mine_rb) {
+        } else if (checkedId == R.id.main_msg_rb) {
             vpSelectPosition = 2;
+        } else if (checkedId == R.id.main_mine_rb) {
+            vpSelectPosition = 3;
         }
         // 选中我的页面
-        if (vpSelectPosition == 2 && radioButton.isChecked() && !PrefsManager.INSTANCE.isLogin()) {
+        if (vpSelectPosition == 3 && radioButton.isChecked() && !PrefsManager.INSTANCE.isLogin()) {
             binding.mainRg.check(mLastCheckedViewID);
-            RouterKt.newStartActivity(MainActivity.this, LoginActivity.class);
+            RouterKt.newStartActivity(MainActivity2.this, LoginActivity.class);
             return;
         }
         binding.viewPager.setCurrentItem(vpSelectPosition, false);
@@ -287,9 +290,9 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
 
     private static class MyAdapter extends FragmentStateAdapter {
 
-        private final MainActivity activity;
+        private final MainActivity2 activity;
 
-        public MyAdapter(@NonNull MainActivity activity) {
+        public MyAdapter(@NonNull MainActivity2 activity) {
             super(activity);
             this.activity = activity;
         }
@@ -299,8 +302,10 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
         public Fragment createFragment(int position) {
             switch (position) {
                 case 1:
-                    return MsgFragment.newInstance(position);
+                    return FeatureRouter.INSTANCE.newMovieFragment(position);
                 case 2:
+                    return MsgFragment.newInstance(position);
+                case 3:
                     return FragmentMe.newInstance(position);
                 default:
                     return HomeFragment.newInstance(position);
@@ -309,7 +314,7 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
 
         @Override
         public int getItemCount() {
-            return 3;
+            return 4;
         }
     }
 }
