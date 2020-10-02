@@ -113,7 +113,7 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
 
     private void getUserInfo() {
         if (PrefsManager.INSTANCE.isLogin()) {
-            meViewModel.getUserInfo(userId).observe(getViewLifecycleOwner(), apiUserSource -> {
+            meViewModel.getUserInfo(PrefsManager.INSTANCE.getUserId()).observe(getViewLifecycleOwner(), apiUserSource -> {
                 if (binding.swipeRefresh.isRefreshing()) binding.swipeRefresh.setRefreshing(false);
                 if (apiUserSource instanceof Source.Success) {
                     ApiUser apiUser = apiUserSource.requireData();
@@ -151,7 +151,7 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
 
     private void getUserCount() {
         if (PrefsManager.INSTANCE.isLogin()) {
-            meViewModel.getUserCount(userId).observe(getViewLifecycleOwner(), apiUserCountSource -> {
+            meViewModel.getUserCount(PrefsManager.INSTANCE.getUserId()).observe(getViewLifecycleOwner(), apiUserCountSource -> {
                 if (binding.swipeRefresh.isRefreshing()) binding.swipeRefresh.setRefreshing(false);
                 if (apiUserCountSource instanceof Source.Success) {
                     ApiUserCount apiUserCount = apiUserCountSource.requireData();

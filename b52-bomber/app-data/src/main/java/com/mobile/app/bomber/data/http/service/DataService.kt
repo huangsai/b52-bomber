@@ -204,10 +204,10 @@ interface DataService {
     @GET("/video/getHotKeyTopN")
     fun getHotKey(): Call<ApiHotKey>
 
-    @GET("/sys/getVersion/{platform}")
+    @GET("/sys/getVersion/{platform}/")
     fun getVersion(@Path("platform") platform: Int): Call<ApiVersion>
 
-    @GET("/sys/getShareUrl")
+    @GET("/sys/getShareUrl/")
     fun getDownLoadUrl(): Call<ApiDownLoadUrl>
 
     //-------⬇⬇⬇⬇⬇⬇⬇⬇---长视频相关接口-----⬇⬇⬇⬇⬇⬇⬇-----//
