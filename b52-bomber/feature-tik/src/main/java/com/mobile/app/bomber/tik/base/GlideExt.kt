@@ -1,6 +1,7 @@
 package com.mobile.app.bomber.tik.base
 
 import android.app.Activity
+import android.util.Log
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import com.mobile.app.bomber.data.http.entities.DECODE_URL
@@ -29,7 +30,9 @@ fun Fragment.loadProfile(url: String?, imageView: ImageView) {
 }
 
 fun decodeImgUrl(url: String?): String {
-    return "${DECODE_URL}/videodecode?videourl=${url}&download=0"
+    return url.toString()
+
+//    return "${DECODE_URL}/videodecode?videourl=${url}&download=0"
 }
 
 
