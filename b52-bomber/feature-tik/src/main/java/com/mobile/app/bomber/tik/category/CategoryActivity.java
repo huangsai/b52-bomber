@@ -1,7 +1,8 @@
 package com.mobile.app.bomber.tik.category;
 
 import android.os.Bundle;
-import android.view.View;
+
+import androidx.fragment.app.Fragment;
 
 import com.mobile.app.bomber.common.base.MyBaseActivity;
 import com.mobile.app.bomber.tik.R;
@@ -19,17 +20,14 @@ public class CategoryActivity extends MyBaseActivity {
         binding = ActivityCategroyFragBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        addFragment(
-                R.id.fragment_container_view,
-                CategoryFragment.newInstance(0));
- 
+        Fragment fragment = CategoryFragment.newInstance(0);
+        getSupportFragmentManager().beginTransaction()
+                .disallowAddToBackStack()
+                .add(R.id.fragment_container_view, fragment, fragment.getClass().getSimpleName())
+                .commit();
 
-        binding.backRoot.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+
+        binding.imgBack.setOnClickListener(v -> finish());
     }
 
 }

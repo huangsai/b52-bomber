@@ -45,12 +45,17 @@
             android:layout_weight="1"
             android:background="@null"
             android:button="@null"
-            android:visibility="gone"
             android:drawableTop="@drawable/main_tab_category"
             android:drawablePadding="@dimen/size_5dp"
             android:gravity="center"
             android:text="@string/main_tab_movie"
             android:textColor="@color/color_home_tab_text" />
+
+        <View
+            android:layout_width="@dimen/size_0dp"
+            android:layout_height="@dimen/size_0dp"
+            android:visibility="gone"
+            android:layout_weight="1" />
 
         <RadioButton
             android:id="@+id/main_msg_rb"

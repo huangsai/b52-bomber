@@ -20,7 +20,10 @@ class CheckResponseInterceptor : Interceptor {
             if (json.contains("retcode", true)) {
                 json = json.replace("retcode", "RetCode", true)
             }
-            val code = DataX.component.json().adapter(Nope::class.java).fromJson(json)!!.code
+            val code = DataX.component.json()
+                    .adapter(Nope::class.java)
+                    .lenient()
+                    .fromJson(json)!!.code
             if (code != 0) {
                 when (code) {
                     5 -> {
