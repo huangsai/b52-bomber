@@ -191,7 +191,7 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
             binding.layoutLink.visibility = View.GONE
             this.loadProfile(video.profile, binding.imgProfile)
         }
-
+        binding.imgOnlineGame.setImageResource(R.drawable.sy_online)
         GlideApp.with(this)
                 .load(decodeImgUrl(video.coverImageUrl))
                 .transition(DrawableTransitionOptions.withCrossFade())
@@ -224,7 +224,7 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
                     Msg.toast("暂时不能分享")
                     return
                 }
-                ShareDialogFragment.goSystemShareSheet(requireActivity(), shareURl,"在xx世界最流行的色情视频app中免费观看各种视频，国产网红、日本av、欧美色情应有尽有。")
+                ShareDialogFragment.goSystemShareSheet(requireActivity(), shareURl, "在xx世界最流行的色情视频app中免费观看各种视频，国产网红、日本av、欧美色情应有尽有。")
             }
             R.id.txt_liked -> requireActivity().requireLogin(ActivityResultCallback {
                 if (it.resultCode == Activity.RESULT_OK) {
@@ -234,6 +234,9 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
             R.id.txt_comment -> {
                 Values.put("CommentDialogFragment", video)
                 showDialogFragment(CommentDialogFragment.newInstance())
+            }
+            R.id.img_onlineGame -> {
+                chrome(video.adUrl)
             }
             R.id.img_add -> {
                 if (isAdVideo) {
@@ -330,7 +333,7 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
                     it.playWhenReady = true
                     it.repeatMode = Player.REPEAT_MODE_ALL
                     it.seekTo(currentWindow, playbackPosition)
-                    it.setMediaSource(createMediaSource(),false)
+                    it.setMediaSource(createMediaSource(), false)
                     it.prepare()
                 }
     }
