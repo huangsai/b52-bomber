@@ -21,6 +21,8 @@ class VideoRepository @Inject constructor(
 
     suspend fun videosOfNew(pager: Pager) = queryVideos(pager, "blank", "new")
 
+    suspend fun videosOfCommend(pager: Pager) = queryCommendVideos(pager)
+
     suspend fun videosOfLabel(pager: Pager, label: String) = queryVideos(pager, label, "blank")
 
     suspend fun videosOfFollow(pager: Pager): Source<List<ApiVideo.Video>> {
@@ -52,6 +54,15 @@ class VideoRepository @Inject constructor(
         return callApiVideo(call, pager)
     }
 
+    private suspend fun queryCommendVideos(
+            pager: Pager
+    ): Source<List<ApiVideo.Video>> {
+        if (pager.isReachedTheEnd) return Source.Success(emptyList())
+        val call = dataService.queryCommendVideos(
+                userId, orBlankToken, pager.requestPage, pager.pageSize
+        )
+        return callApiVideo(call, pager)
+    }
     private suspend fun queryVideos(
             pager: Pager, label: String, sort: String
     ): Source<List<ApiVideo.Video>> {

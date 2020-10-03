@@ -7,6 +7,7 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
+import com.mobile.app.bomber.data.http.entities.ApiToken;
 import com.mobile.app.bomber.runner.base.PrefsManager;
 import com.mobile.app.bomber.data.repository.SourceExtKt;
 import com.mobile.guava.jvm.domain.Source;
@@ -83,6 +84,10 @@ public class LoginActivity extends MyBaseActivity implements View.OnClickListene
                 if (SourceExtKt.is403(source.requireError()))
                     initLoginPhoneView();
                 return;
+            } else {
+//                ApiToken token = source.requireData();
+//                PrefsManager.INSTANCE.setToken(token.getToken());
+//                PrefsManager.INSTANCE.setUserId(token.getUid());
             }
             Msg.INSTANCE.toast("登录成功");
             setResult(Activity.RESULT_OK);

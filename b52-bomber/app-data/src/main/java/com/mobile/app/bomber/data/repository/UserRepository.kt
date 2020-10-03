@@ -69,6 +69,10 @@ class UserRepository @Inject constructor(
                         appPrefsManager.setToken(data.token.nullSafe())
                         appPrefsManager.setIsLogin(true)
                         aboutUsers()
+                    }else if (loginType == 1) {
+                        appPrefsManager.setUserId(data.uid.nullSafe())
+                        appPrefsManager.setToken(data.token.nullSafe())
+                        appPrefsManager.setIsLogin(false)
                     }
                 }
             }

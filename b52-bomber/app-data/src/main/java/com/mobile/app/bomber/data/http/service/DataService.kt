@@ -50,6 +50,14 @@ interface DataService {
             @Path("size") pageSize: Int
     ): Call<ApiVideo>
 
+    @GET("/video/getvideorecommend/{uid}/{fastkey}/{page}/{size}/")
+    fun queryCommendVideos(
+            @Path("uid") uid: Long,
+            @Path("fastkey") token: String,
+            @Path("page") page: Int,
+            @Path("size") pageSize: Int
+    ): Call<ApiVideo>
+
     @GET("/user/getuserinfo/{uid}/")
     fun user(@Path("uid") uid: Long): Call<ApiUser>
 

@@ -28,7 +28,11 @@ class HomeViewModel @Inject constructor() : MyBaseViewModel() {
         ensureWorkThread()
         return videoRepository.videosOfNew(pager)
     }
-
+    @WorkerThread
+    suspend fun videosOfCommend(pager: Pager): Source<List<ApiVideo.Video>> {
+        ensureWorkThread()
+        return videoRepository.videosOfCommend(pager)
+    }
     @WorkerThread
     suspend fun videosOfFollow(pager: Pager): Source<List<ApiVideo.Video>> {
         ensureWorkThread()

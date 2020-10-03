@@ -81,7 +81,7 @@ abstract class BaseRecommendFragment : TopHomeFragment() {
             val source = if (isFollowingFragment) {
                 model.videosOfFollow(pager)
             } else {
-                model.videosOfNew(pager)
+                model.videosOfCommend(pager)
             }
             withContext(Dispatchers.Main) {
                 when (source) {
