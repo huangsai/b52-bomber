@@ -104,6 +104,7 @@ data class ApiVideo(
             @Json(name = "Comments") val commentCount: Int,
             @Json(name = "Share") val shareCount: Int,
             @Json(name = "Desc") val desc: String?,
+            @Json(name = "Title") val title: String?,
             @Json(name = "Cover") val coverImageUrl: String?,
             @Json(name = "Like") var likeCount: Int,
             @Json(name = "Isfollowed") var isFollowing: Boolean,
@@ -129,7 +130,7 @@ data class ApiVideo(
         }
 
         fun moment(): String {
-            return desc.nullSafe() + label.nullSafe()
+            return title.nullSafe() + label.nullSafe()
         }
 
         fun decodeVideoUrl(): String {

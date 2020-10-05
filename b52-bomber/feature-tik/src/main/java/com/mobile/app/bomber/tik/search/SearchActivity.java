@@ -141,7 +141,7 @@ public class SearchActivity extends MyBaseActivity
                     textView.setTag(i);
                     textView.setOnClickListener(view -> {
                         String keyword = hotKeys.get((Integer) view.getTag()).toString();
-                        Msg.INSTANCE.toast("当前的下标索引值：" + view.getTag().toString());
+//                        Msg.INSTANCE.toast("当前的下标索引值：" + view.getTag().toString());
                         searchTitleBarPresenter.selectKeyword(keyword);
                     });
                     binding.mShowBtnLayout.addView(textView);

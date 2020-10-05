@@ -17,7 +17,7 @@
     <string name="bind_wechat_num">绑定微信号</string>
     <string name="setting_activity_info">设置</string>
     <string name="save_activity_info">保存</string>
-    <string name="person_info">标题</string>
+    <string name="person_info">详情</string>
 
     <string name="person_dianzan">点赞</string>
     <string name="aite_me">@我的</string>

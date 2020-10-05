@@ -43,10 +43,10 @@ public class AtFragment extends BaseLikingFragment {
             holder = AdapterUtils.INSTANCE.getHolder(v);
             int index = holder.getBindingAdapterPosition();
             item = holder.item();
-            Bundle bundle = new Bundle();
-            video = new ApiVideo.Video(1, "111", item.data.getUId(), 1, 1, 1, null, null, 1, true, true, 1, null, null, "null", null, null, null);
-            bundle.putSerializable("video", video);
-            RouterKt.newStartActivity(requireActivity(), UserDetailActivity.class, bundle);
+//            Bundle bundle = new Bundle();
+//            video = new ApiVideo.Video(1, "111", item.data.getUId(), 1, 1, 1, null, null, 1, true, true, 1, null, null, "null", null, null, null);
+//            bundle.putSerializable("video", video);
+            UserDetailActivity.start(getActivity(), item.data.getVideoId());
         }
     }
 

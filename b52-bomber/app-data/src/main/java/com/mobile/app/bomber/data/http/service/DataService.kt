@@ -201,7 +201,7 @@ interface DataService {
     @POST("/video/postvideoplayduration/")
     fun playDuration(@Body body: ApiDurationReq): Call<Nope>
 
-    @POST("/video/postSearchVideoUser/{uid}/{keyword}/{page}/{size}/")
+    @POST("/video/postSearchVideoUser/{uid}/{keyword}/{page}/{size}")
     fun searchVideo(
             @Path("uid") uId: Long,
             @Path("keyword") keyword: String,
@@ -209,7 +209,7 @@ interface DataService {
             @Path("size") pageSize: Int
     ): Call<ApiVideo>
 
-    @GET("/video/getHotKeyTopN/")
+    @GET("/video/getHotKeyTopN")
     fun getHotKey(): Call<ApiHotKey>
 
     @GET("/sys/getVersion/{platform}/")

@@ -79,6 +79,7 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
         binding.viewPager.setAdapter(adapter);
         binding.viewPager.setOffscreenPageLimit(2);
         binding.swipeRefresh.setOnRefreshListener(this);
+        binding.swipeRefresh.setRefreshing(true);
         TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(binding.layoutTab, binding.viewPager, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
@@ -144,6 +145,10 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
                     }
                     GlideExtKt.loadProfile(this, apiUser.getPic(), binding.userProfile);
                     binding.userSign.setText(apiUser.getSign());
+                }else{
+                    binding.userId.setText("ID:" + 0);
+                    binding.userGender.setText("女");
+                    binding.userAge.setText("19");
                 }
             });
         }

@@ -57,11 +57,10 @@ class VideoRepository @Inject constructor(
     private suspend fun queryCommendVideos(
             pager: Pager
     ): Source<List<ApiVideo.Video>> {
-        if (pager.isReachedTheEnd) return Source.Success(emptyList())
         val call = dataService.queryCommendVideos(
-                userId, orBlankToken, pager.requestPage, pager.pageSize
+                userId, orBlankToken,pager.requestPage,pager.pageSize
         )
-        return callApiVideo(call, pager)
+        return callCommendApiVideo(call)
     }
     private suspend fun queryVideos(
             pager: Pager, label: String, sort: String
@@ -71,6 +70,18 @@ class VideoRepository @Inject constructor(
                 userId, orBlankToken, label, sort, pager.requestPage, pager.pageSize
         )
         return callApiVideo(call, pager)
+    }
+
+    private suspend fun callCommendApiVideo(
+            call: Call<ApiVideo>
+    ): Source<List<ApiVideo.Video>> {
+         return try {
+             call.execute().toSource{
+                 it.videos.orEmpty()
+             }
+         } catch (e: Exception) {
+             errorSource(e)
+         }
     }
 
     private suspend fun callApiVideo(
