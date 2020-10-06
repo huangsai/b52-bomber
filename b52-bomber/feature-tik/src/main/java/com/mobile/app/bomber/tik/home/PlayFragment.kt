@@ -29,7 +29,7 @@ import com.mobile.app.bomber.common.base.MyBaseFragment
 import com.mobile.app.bomber.common.base.tool.SingleClick
 import com.mobile.app.bomber.data.http.entities.ApiDownLoadUrl
 import com.mobile.app.bomber.data.http.entities.ApiVideo
-import com.mobile.guava.https.Values
+import com.mobile.guava.data.Values
 import com.mobile.app.bomber.runner.RunnerX
 import com.mobile.app.bomber.tik.R
 import com.mobile.app.bomber.tik.base.*
@@ -38,7 +38,7 @@ import com.mobile.app.bomber.tik.mine.UserDetailActivity
 import com.mobile.guava.android.mvvm.AndroidX
 import com.mobile.guava.android.mvvm.showDialogFragment
 import com.mobile.guava.android.ui.view.text.MySpannable
-import com.mobile.guava.https.nullSafe
+import com.mobile.guava.data.nullSafe
 import com.mobile.guava.jvm.domain.Source
 import com.mobile.guava.jvm.extension.exhaustive
 import com.mobile.guava.jvm.math.MathUtils

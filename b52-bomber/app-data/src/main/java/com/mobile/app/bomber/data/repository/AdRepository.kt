@@ -4,7 +4,7 @@ import com.mobile.app.bomber.data.db.AppDatabase
 import com.mobile.app.bomber.data.files.AppPrefsManager
 import com.mobile.app.bomber.data.http.entities.ApiAd
 import com.mobile.app.bomber.data.http.entities.ApiAdMsg
-import com.mobile.guava.https.toSource
+import com.mobile.guava.data.toSource
 import com.mobile.app.bomber.data.http.service.DataService
 import com.mobile.guava.jvm.domain.Source
 import javax.inject.Inject

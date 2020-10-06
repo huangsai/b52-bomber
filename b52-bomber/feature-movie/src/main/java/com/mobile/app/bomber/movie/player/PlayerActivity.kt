@@ -14,7 +14,7 @@ import com.mobile.app.bomber.movie.databinding.MovieActivityPlayerBinding
 import com.mobile.app.bomber.movie.player.exo.ExoPlayerX
 import com.mobile.guava.android.mvvm.BaseActivity
 import com.mobile.guava.android.mvvm.newStartActivity
-import com.mobile.guava.https.Values
+import com.mobile.guava.data.Values
 
 class PlayerActivity : BaseActivity() {
 

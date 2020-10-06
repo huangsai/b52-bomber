@@ -1,6 +1,6 @@
 package com.mobile.app.bomber.data.http.entities
 
-import com.mobile.guava.https.nullSafe
+import com.mobile.guava.data.nullSafe
 import com.mobile.guava.jvm.math.MathUtils
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass

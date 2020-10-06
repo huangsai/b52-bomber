@@ -21,7 +21,7 @@ import com.mobile.app.bomber.movie.player.exo.GlideThumbnailTransformation
 import com.mobile.app.bomber.movie.player.exo.TAG_EXO_PLAYER
 import com.mobile.ext.glide.GlideApp
 import com.mobile.guava.android.mvvm.AndroidX
-import com.mobile.guava.https.safeToFloat
+import com.mobile.guava.data.safeToFloat
 import com.pacific.adapter.AdapterViewHolder
 import com.skydoves.balloon.Balloon
 import com.skydoves.balloon.BalloonAnimation

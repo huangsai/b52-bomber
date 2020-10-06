@@ -6,7 +6,7 @@ import com.mobile.app.bomber.data.http.entities.ApiComment
 import com.mobile.app.bomber.data.http.entities.ApiCreateComment
 import com.mobile.app.bomber.data.http.entities.ApiLike
 import com.mobile.app.bomber.data.http.entities.Nope
-import com.mobile.guava.https.toSource
+import com.mobile.guava.data.toSource
 import com.mobile.app.bomber.data.http.service.DataService
 import com.mobile.guava.jvm.domain.Source
 import javax.inject.Inject

@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.mobile.guava.android.mvvm.BaseAppCompatDialogFragment
 import com.mobile.app.bomber.data.http.entities.ApiAd
-import com.mobile.guava.https.Values
+import com.mobile.guava.data.Values
 import com.mobile.guava.jvm.Guava
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy

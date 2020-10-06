@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 
 import com.mobile.guava.android.mvvm.RouterKt;
 import com.mobile.app.bomber.runner.base.PrefsManager;
-import com.mobile.guava.https.Values;
+import com.mobile.guava.data.Values;
 
 import com.mobile.app.bomber.tik.R;
 import com.mobile.app.bomber.tik.base.AppRouterKt;

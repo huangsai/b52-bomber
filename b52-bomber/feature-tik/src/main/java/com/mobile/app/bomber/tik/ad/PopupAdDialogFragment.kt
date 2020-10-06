@@ -5,10 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import com.mobile.app.bomber.common.base.tool.AppUtil
 import com.mobile.guava.android.mvvm.BaseAppCompatDialogFragment
 import com.mobile.app.bomber.data.http.entities.ApiAdMsg
-import com.mobile.guava.https.Values
+import com.mobile.guava.data.Values
 import com.mobile.app.bomber.tik.R
 import com.mobile.app.bomber.tik.base.chrome
 import com.mobile.app.bomber.common.base.tool.SingleClick
@@ -53,26 +52,6 @@ class PopupAdDialogFragment : BaseAppCompatDialogFragment(), View.OnClickListene
         _binding = null
     }
 
-    fun requestCheckVersion(){
-
-    }
-//    public void requestCheckVersion() {
-//        int currentversion = AppUtil.getVersionCode(getApplicationContext());
-//        model.ckVersino().observe(this, source -> {
-//            if (source instanceof Source.Success) {
-//                ApiVersion.Version version = source.requireData();
-//                String vn = version.getVersionCode();
-//                if (!(vn.equals(String.valueOf(currentversion)))) {
-//                    UpdateManger updateManger = new UpdateManger(getApplicationContext(),
-//                            version.getDownloadUrl(),true,
-//                            version.getVersionCode(),String.valueOf(currentversion));
-//                    updateManger.showNoticeDialog(version.getVersionCode(), String.valueOf(currentversion));
-//                }
-//            } else {
-//                Msg.INSTANCE.handleSourceException(source.requireError());
-//            }
-//        });
-//    }
     @SingleClick
     override fun onClick(v: View?) {
         when (v!!.id) {

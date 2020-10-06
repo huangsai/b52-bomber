@@ -19,7 +19,7 @@ import com.pacific.adapter.RecyclerAdapter;
 import com.mobile.guava.android.mvvm.RouterKt;
 import com.mobile.app.bomber.data.http.entities.ApiRank;
 import com.mobile.app.bomber.data.http.entities.Pager;
-import com.mobile.guava.https.Values;
+import com.mobile.guava.data.Values;
 import com.mobile.guava.android.ui.view.recyclerview.EndlessRecyclerViewScrollListener;
 import com.mobile.guava.android.ui.view.recyclerview.RecyclerViewUtilsKt;
 import com.mobile.guava.jvm.date.Java8TimeKt;

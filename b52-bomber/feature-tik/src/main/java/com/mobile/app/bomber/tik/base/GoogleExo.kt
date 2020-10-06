@@ -22,8 +22,8 @@ import com.google.android.exoplayer2.upstream.cache.LeastRecentlyUsedCacheEvicto
 import com.google.android.exoplayer2.upstream.cache.SimpleCache
 import com.google.android.exoplayer2.util.Util
 import com.mobile.guava.android.mvvm.AndroidX
-import com.mobile.guava.https.createPoorSSLOkHttpClient
-import com.mobile.guava.https.nullSafe
+import com.mobile.guava.data.createPoorSSLOkHttpClient
+import com.mobile.guava.data.nullSafe
 import com.mobile.guava.jvm.Guava
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope

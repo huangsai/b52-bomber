@@ -3,8 +3,7 @@ package com.mobile.app.bomber.data
 import com.mobile.app.bomber.data.http.okhttp3.CheckResponseInterceptor
 import com.mobile.app.bomber.data.http.okhttp3.HostSelectionInterceptor
 import com.mobile.app.bomber.data.http.service.DataService
-import com.mobile.guava.https.HttpsModule
-import com.mobile.guava.https.SimpleHttpsModule
+import com.mobile.guava.data.SimpleDataModule
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
@@ -19,9 +18,9 @@ import javax.net.ssl.SSLContext
 import javax.net.ssl.X509TrustManager
 
 @Module
-class DataModule : HttpsModule {
+class DataModule : com.mobile.guava.data.DataModule {
 
-    private val delegate = SimpleHttpsModule()
+    private val delegate = SimpleDataModule()
 
     @Provides
     @Singleton

@@ -13,7 +13,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.mobile.guava.android.mvvm.RouterKt;
 import com.mobile.app.bomber.data.http.entities.ApiUserCount;
-import com.mobile.guava.https.Values;
+import com.mobile.guava.data.Values;
 
 import com.mobile.app.bomber.common.base.MyBaseActivity;
 import com.mobile.app.bomber.tik.databinding.ActivityAttentionFansBinding;

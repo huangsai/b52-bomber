@@ -3,10 +3,10 @@ package com.mobile.app.bomber.data.repository
 import com.mobile.app.bomber.data.db.AppDatabase
 import com.mobile.app.bomber.data.files.AppPrefsManager
 import com.mobile.app.bomber.data.http.entities.*
-import com.mobile.guava.https.nullSafe
-import com.mobile.guava.https.toSource
+import com.mobile.guava.data.nullSafe
+import com.mobile.guava.data.toSource
 import com.mobile.app.bomber.data.http.service.DataService
-import com.mobile.guava.https.bodyOrThrowException
+import com.mobile.guava.data.bodyOrThrowException
 import com.mobile.guava.jvm.domain.Source
 import kotlinx.coroutines.async
 import kotlinx.coroutines.supervisorScope

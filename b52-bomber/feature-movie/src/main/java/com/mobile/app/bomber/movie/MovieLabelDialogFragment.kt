@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mobile.app.bomber.common.base.tool.SingleClick
-import com.mobile.guava.https.Values
+import com.mobile.guava.data.Values
 import com.mobile.app.bomber.movie.base.views.MiddleGridItemDecoration
 import com.mobile.app.bomber.movie.databinding.MovieDialogLabelBinding
 import com.mobile.guava.android.mvvm.BaseAppCompatDialogFragment

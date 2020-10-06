@@ -10,7 +10,7 @@ import com.mobile.app.bomber.common.base.tool.AppUtil;
 import com.mobile.app.bomber.data.http.entities.ApiDownLoadUrl;
 import com.mobile.app.bomber.tik.home.ShareDialogFragment;
 import com.mobile.guava.android.mvvm.RouterKt;
-import com.mobile.guava.https.Values;
+import com.mobile.guava.data.Values;
 
 import com.mobile.app.bomber.tik.R;
 import com.mobile.app.bomber.tik.base.AppRouterUtils;

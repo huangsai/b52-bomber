@@ -17,7 +17,7 @@ import com.pacific.adapter.AdapterViewHolder;
 import com.mobile.app.bomber.runner.base.PrefsManager;
 import com.mobile.app.bomber.data.http.entities.ApiFollow;
 import com.mobile.app.bomber.data.http.entities.ApiUserCount;
-import com.mobile.guava.https.Values;
+import com.mobile.guava.data.Values;
 import com.mobile.guava.jvm.domain.Source;
 
 import com.mobile.app.bomber.tik.R;

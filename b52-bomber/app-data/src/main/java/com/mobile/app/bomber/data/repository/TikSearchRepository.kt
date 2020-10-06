@@ -6,7 +6,7 @@ import com.mobile.app.bomber.data.files.AppPrefsManager
 import com.mobile.app.bomber.data.http.entities.ApiVideo
 import com.mobile.app.bomber.data.http.entities.Pager
 import com.mobile.app.bomber.data.http.service.DataService
-import com.mobile.guava.https.toSource
+import com.mobile.guava.data.toSource
 import com.mobile.guava.jvm.domain.Source
 import kotlinx.coroutines.flow.Flow
 import retrofit2.Call

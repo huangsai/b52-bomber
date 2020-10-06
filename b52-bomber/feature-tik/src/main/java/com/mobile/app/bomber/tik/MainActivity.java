@@ -23,6 +23,7 @@ import com.mobile.app.bomber.common.base.tool.AppUtil;
 import com.mobile.app.bomber.common.base.tool.SingleClick;
 import com.mobile.app.bomber.common.base.tool.UpdateManger;
 import com.mobile.app.bomber.data.http.entities.ApiAd;
+import com.mobile.app.bomber.data.http.entities.ApiAdMsg;
 import com.mobile.app.bomber.data.http.entities.ApiToken;
 import com.mobile.app.bomber.data.http.entities.ApiVersion;
 import com.mobile.app.bomber.data.repository.SourceExtKt;
@@ -155,13 +156,11 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
                 ApiAd ad = source.requireData();
                 if (TextUtils.isEmpty(ad.getUrl())) {
                     requestPopupAd();
-                    // requestCheckVersion();
                 } else {
                     RouterKt.showDialogFragment(this, SplashDialogFragment.newInstance(ad));
                 }
             } else {
                 requestPopupAd();
-                // requestCheckVersion();
             }
         });
     }
@@ -188,10 +187,11 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
         model.adMsg().observe(this, source -> {
             login();
             if (source instanceof Source.Success) {
-                RouterKt.showDialogFragment(
-                        this,
-                        PopupAdDialogFragment.newInstance(source.requireData())
-                );
+                ApiAdMsg data = source.requireData();
+                // 1 表示禁用，0 表示启用
+                if (data.getOnlineStatus() == 0) {
+                    RouterKt.showDialogFragment(this, PopupAdDialogFragment.newInstance(data));
+                }
             }
         });
 

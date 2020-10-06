@@ -8,7 +8,7 @@ import com.mobile.app.bomber.data.http.entities.ApiMovieHotKey
 import com.mobile.app.bomber.data.http.entities.Nope
 import com.mobile.app.bomber.data.http.entities.Pager
 import com.mobile.app.bomber.data.http.service.DataService
-import com.mobile.guava.https.toSource
+import com.mobile.guava.data.toSource
 import com.mobile.guava.jvm.domain.Source
 import javax.inject.Inject
 import javax.inject.Singleton

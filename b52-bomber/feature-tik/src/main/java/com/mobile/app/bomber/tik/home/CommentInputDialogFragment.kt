@@ -24,7 +24,7 @@ import com.mobile.app.bomber.common.base.rxbinding.RxView
 import com.mobile.app.bomber.common.base.tool.SingleClick
 import com.mobile.app.bomber.data.http.entities.ApiComment
 import com.mobile.app.bomber.data.http.entities.ApiVideo
-import com.mobile.guava.https.Values
+import com.mobile.guava.data.Values
 import com.mobile.app.bomber.runner.base.PrefsManager
 import com.mobile.guava.android.mvvm.BaseBottomSheetDialogFragment
 import com.mobile.app.bomber.tik.R

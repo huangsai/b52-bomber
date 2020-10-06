@@ -3,7 +3,7 @@ package com.mobile.app.bomber.data.db
 import androidx.room.Dao
 import androidx.room.Query
 import com.mobile.app.bomber.data.db.entities.DbMovieSearchKey
-import com.mobile.guava.https.SqlDao
+import com.mobile.guava.data.SqlDao
 
 @Dao
 interface MovieSearchKeyDao : SqlDao<DbMovieSearchKey> {
