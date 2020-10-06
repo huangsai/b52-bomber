@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.mobile.app.bomber.common.base.MyBaseFragment;
+import com.mobile.app.bomber.tik.login.LoginViewModel;
 import com.pacific.adapter.RecyclerAdapter;
 import com.pacific.adapter.RecyclerItem;
 import com.mobile.guava.android.mvvm.RouterKt;
@@ -35,13 +36,17 @@ public class CategoryFragment extends MyBaseFragment implements View.OnClickList
     private HotVideoPresenter hotVideoPresenter;
     private DiscoveryVideoPresenter discoveryPresenter;
     private RankPresenter rankPresenter;
+    private TitleVideoPresenter titleVideoPresenter;
 
     public CategoryViewModel model;
+    public LoginViewModel loginViewModel;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         model = AppRouterUtils.viewModels(this, CategoryViewModel.class);
+        loginViewModel = AppRouterUtils.viewModels(this, LoginViewModel.class);
+
     }
 
     @Nullable
@@ -83,7 +88,9 @@ public class CategoryFragment extends MyBaseFragment implements View.OnClickList
         RecyclerViewUtilsKt.cancelRefreshing(binding.layoutRefresh, 1000);
         newVideoPresenter.onRefresh();
         hotVideoPresenter.onRefresh();
-        discoveryPresenter.onRefresh();
+        titleVideoPresenter.onRefresh();
+
+//        discoveryPresenter.onRefresh();
         rankPresenter.onRefresh();
     }
 
@@ -101,10 +108,12 @@ public class CategoryFragment extends MyBaseFragment implements View.OnClickList
     private void load() {
         List<RecyclerItem> list = new ArrayList<>();
         list.add(new TitlePresenter("火爆活动", R.drawable.fl_huobaohuodong));
+        titleVideoPresenter = new TitleVideoPresenter(this);
+        list.add(titleVideoPresenter);
 
-        list.add(new TitlePresenter("发现精彩", R.drawable.fl_faxianjingcai));
-        discoveryPresenter = new DiscoveryVideoPresenter(this);
-        list.add(discoveryPresenter);
+//        list.add(new TitlePresenter("发现精彩", R.drawable.fl_faxianjingcai));
+//        discoveryPresenter = new DiscoveryVideoPresenter(this);
+//        list.add(discoveryPresenter);
 
         list.add(new TitlePresenter("人气榜", R.drawable.fl_renqibang));
         rankPresenter = new RankPresenter(this);

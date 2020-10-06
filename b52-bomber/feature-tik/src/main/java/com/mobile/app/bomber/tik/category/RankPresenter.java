@@ -7,6 +7,9 @@ import androidx.annotation.Nullable;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.util.Preconditions;
+import com.mobile.app.bomber.runner.base.PrefsManager;
+import com.mobile.app.bomber.tik.login.LoginActivity;
+import com.mobile.guava.android.mvvm.RouterKt;
 import com.pacific.adapter.AdapterViewHolder;
 import com.pacific.adapter.SimpleRecyclerItem;
 import com.mobile.app.bomber.data.http.entities.ApiRank;
@@ -60,12 +63,20 @@ public class RankPresenter extends SimpleRecyclerItem implements View.OnClickLis
     public void onClick(View v) {
         final int id = v.getId();
         if (id == R.id.layout_play_count) {
-            RankActivity.start(fragment.requireActivity(), 1);
+            if (PrefsManager.INSTANCE.isLogin()) {
+                RankActivity.start(fragment.requireActivity(), 1);
+            }else {
+                RouterKt.newStartActivity(fragment, LoginActivity.class);
+            }
             return;
         }
 
         if (id == R.id.layout_like_count) {
-            RankActivity.start(fragment.requireActivity(), 2);
+            if (PrefsManager.INSTANCE.isLogin()) {
+                RankActivity.start(fragment.requireActivity(), 2);
+            }else{
+                RouterKt.newStartActivity(fragment, LoginActivity.class);
+            }
             return;
         }
     }
