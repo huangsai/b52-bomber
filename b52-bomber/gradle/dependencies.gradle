@@ -85,7 +85,7 @@ buildscript {
                         'cardview'                  : '1.0.0',
                         'collection'                : '1.1.0',
                         'concurrent'                : '1.1.0',
-                        'constraintlayout'          : '2.0.0',
+                        'constraintlayout'          : '2.0.1',
                         'contentpager'              : '1.0.0',
                         'coordinatorlayout'         : '1.1.0',
                         // core diff

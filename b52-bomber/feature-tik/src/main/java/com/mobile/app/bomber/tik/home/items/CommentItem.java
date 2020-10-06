@@ -1,25 +1,27 @@
 package com.mobile.app.bomber.tik.home.items;
 
+import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.util.Preconditions;
 import com.mobile.app.bomber.data.http.entities.ApiComment;
 import com.mobile.app.bomber.data.repository.MappersKt;
-import com.mobile.guava.android.mvvm.AndroidX;
 import com.mobile.app.bomber.runner.base.PrefsManager;
-import com.mobile.guava.android.ui.view.text.MySpannable;
-import com.mobile.guava.jvm.date.Java8TimeKt;
-import com.pacific.adapter.AdapterViewHolder;
-import com.pacific.adapter.SimpleRecyclerItem;
-
 import com.mobile.app.bomber.tik.R;
 import com.mobile.app.bomber.tik.databinding.ItemCommentABinding;
 import com.mobile.app.bomber.tik.databinding.ItemCommentBBinding;
 import com.mobile.app.bomber.tik.databinding.ItemCommentCBinding;
+import com.mobile.guava.android.mvvm.AndroidX;
+import com.mobile.guava.android.ui.screen.ScreenUtilsKt;
+import com.mobile.guava.android.ui.view.text.MySpannable;
+import com.mobile.guava.jvm.date.Java8TimeKt;
+import com.pacific.adapter.AdapterViewHolder;
+import com.pacific.adapter.SimpleRecyclerItem;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -78,13 +80,21 @@ public abstract class CommentItem extends SimpleRecyclerItem {
             } else {
                 binding.txtLabel.setVisibility(View.INVISIBLE);
             }
-            binding.txtComment.setText(buildComment());
+            if (TextUtils.isEmpty(data.getContent())) {
+                binding.txtComment.setText("");
+            } else {
+                binding.txtComment.setText(buildComment());
+            }
             binding.txtLike.setSelected(data.isLiking());
             binding.txtLike.setText(String.valueOf(data.getLikeCount()));
             holder.attachImageLoader(R.id.img_profile);
             holder.attachOnClickListener(R.id.txt_like);
             holder.attachOnClickListener(R.id.item_comment_a);
             holder.attachOnLongClickListener(R.id.item_comment_a);
+
+            RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) binding.getRoot().getLayoutParams();
+            params.width = ScreenUtilsKt.getScreen().x;
+            binding.getRoot().setLayoutParams(params);
         }
 
         @Override
@@ -115,13 +125,21 @@ public abstract class CommentItem extends SimpleRecyclerItem {
             } else {
                 binding.txtLabel.setVisibility(View.INVISIBLE);
             }
-            binding.txtComment.setText(buildComment());
+            if (TextUtils.isEmpty(data.getContent())) {
+                binding.txtComment.setText("");
+            } else {
+                binding.txtComment.setText(buildComment());
+            }
             binding.txtLike.setSelected(data.isLiking());
             binding.txtLike.setText(String.valueOf(data.getLikeCount()));
             holder.attachImageLoader(R.id.img_profile);
             holder.attachOnClickListener(R.id.txt_like);
             holder.attachOnClickListener(R.id.item_comment_b);
             holder.attachOnLongClickListener(R.id.item_comment_b);
+
+            RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) binding.getRoot().getLayoutParams();
+            params.width = ScreenUtilsKt.getScreen().x;
+            binding.getRoot().setLayoutParams(params);
         }
 
         @Override
