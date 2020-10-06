@@ -4,8 +4,8 @@ import com.mobile.app.bomber.data.db.AppDatabase
 import com.mobile.app.bomber.data.files.AppPrefsManager
 import com.mobile.app.bomber.data.http.entities.ApiAd
 import com.mobile.app.bomber.data.http.entities.ApiAdMsg
-import com.mobile.guava.data.toSource
 import com.mobile.app.bomber.data.http.service.DataService
+import com.mobile.guava.https.toSource
 import com.mobile.guava.jvm.domain.Source
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -17,17 +17,17 @@ class AdRepository @Inject constructor(
         appPrefsManager: AppPrefsManager
 ) : BaseRepository(dataService, db, appPrefsManager) {
 
-    suspend fun adMsg(): Source<ApiAdMsg> {
+    suspend fun adMsg(type:Int): Source<ApiAdMsg> {
         return try {
-            dataService.adMsg(1).execute().toSource()
+            dataService.adMsg(type).execute().toSource()
         } catch (e: Exception) {
             errorSource(e)
         }
     }
 
-    suspend fun ad(): Source<ApiAd> {
+    suspend fun ad(type:Int): Source<ApiAd> {
         return try {
-            dataService.ad(1).execute().toSource()
+            dataService.ad(type).execute().toSource()
         } catch (e: Exception) {
             errorSource(e)
         }
