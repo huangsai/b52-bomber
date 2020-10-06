@@ -151,7 +151,7 @@ public class MainActivity2 extends MyBaseActivity implements View.OnClickListene
     }
 
     private void requestSplashAd() {
-        model.ad().observe(this, source -> {
+        model.ad(1).observe(this, source -> {
             if (source instanceof Source.Success) {
                 ApiAd ad = source.requireData();
                 if (TextUtils.isEmpty(ad.getUrl())) {
@@ -185,7 +185,7 @@ public class MainActivity2 extends MyBaseActivity implements View.OnClickListene
     }
 
     public void requestPopupAd() {
-        model.adMsg().observe(this, source -> {
+        model.adMsg(1).observe(this, source -> {
             login();
             if (source instanceof Source.Success) {
                 RouterKt.showDialogFragment(

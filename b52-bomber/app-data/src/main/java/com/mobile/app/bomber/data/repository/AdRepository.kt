@@ -17,9 +17,9 @@ class AdRepository @Inject constructor(
         appPrefsManager: AppPrefsManager
 ) : BaseRepository(dataService, db, appPrefsManager) {
 
-    suspend fun adMsg(type: Int): Source<ApiAdMsg> {
+    suspend fun adMsg(typeMsg: Int): Source<ApiAdMsg> {
         return try {
-            dataService.adMsg(type).execute().toSource()
+            dataService.adMsg(typeMsg).execute().toSource()
         } catch (e: Exception) {
             errorSource(e)
         }
