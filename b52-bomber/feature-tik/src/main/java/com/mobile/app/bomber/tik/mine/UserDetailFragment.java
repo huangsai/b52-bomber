@@ -15,22 +15,21 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
-import com.mobile.app.bomber.runner.RunnerX;
-import com.mobile.app.bomber.runner.base.PrefsManager;
-import com.mobile.app.bomber.data.http.entities.ApiUser;
-import com.mobile.app.bomber.data.http.entities.ApiUserCount;
-import com.mobile.guava.data.Values;
-import com.mobile.guava.android.ui.view.text.TextViewUtilsKt;
-import com.mobile.guava.jvm.coroutines.Bus;
-import com.mobile.guava.jvm.domain.Source;
-
-import com.mobile.app.bomber.tik.R;
-import com.mobile.app.bomber.tik.base.AppRouterUtils;
-import com.mobile.app.bomber.tik.base.GlideExtKt;
 import com.mobile.app.bomber.common.base.MyBaseFragment;
 import com.mobile.app.bomber.common.base.tool.AppUtil;
 import com.mobile.app.bomber.common.base.tool.SingleClick;
+import com.mobile.app.bomber.data.http.entities.ApiUser;
+import com.mobile.app.bomber.data.http.entities.ApiUserCount;
+import com.mobile.app.bomber.runner.RunnerX;
+import com.mobile.app.bomber.runner.base.PrefsManager;
+import com.mobile.app.bomber.tik.R;
+import com.mobile.app.bomber.tik.base.AppRouterUtils;
+import com.mobile.app.bomber.tik.base.GlideExtKt;
 import com.mobile.app.bomber.tik.databinding.FragmentUserDetailBinding;
+import com.mobile.guava.android.ui.view.text.TextViewUtilsKt;
+import com.mobile.guava.data.Values;
+import com.mobile.guava.jvm.coroutines.Bus;
+import com.mobile.guava.jvm.domain.Source;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -114,7 +113,7 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
 
     private void getUserInfo() {
         if (PrefsManager.INSTANCE.isLogin()) {
-            meViewModel.getUserInfo(PrefsManager.INSTANCE.getUserId()).observe(getViewLifecycleOwner(), apiUserSource -> {
+            meViewModel.getUserInfo(userId).observe(getViewLifecycleOwner(), apiUserSource -> {
                 if (binding.swipeRefresh.isRefreshing()) binding.swipeRefresh.setRefreshing(false);
                 if (apiUserSource instanceof Source.Success) {
                     ApiUser apiUser = apiUserSource.requireData();
@@ -130,9 +129,11 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
                     }
                     binding.userName.setText(apiUser.getUsername());
                     binding.userId.setText("ID:" + apiUser.getUid());
-                    if (apiUser.getWechat().equals("") ||apiUser.getWechat().isEmpty()){
+                    if (apiUser.getWechat().equals("") ||
+                            apiUser.getWechat().isEmpty() ||
+                            userId == PrefsManager.INSTANCE.getUserId()) {
                         binding.userCopyWechat.setVisibility(View.GONE);
-                    }else{
+                    } else {
                         binding.userCopyWechat.setVisibility(View.VISIBLE);
                     }
                     binding.userWechat.setText("微信号:" + apiUser.getWechat());
@@ -145,7 +146,7 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
                     }
                     GlideExtKt.loadProfile(this, apiUser.getPic(), binding.userProfile);
                     binding.userSign.setText(apiUser.getSign());
-                }else{
+                } else {
                     binding.userId.setText("ID:" + 0);
                     binding.userGender.setText("女");
                     binding.userAge.setText("19");
