@@ -34,7 +34,7 @@ class LoginViewModel @Inject constructor() : MyBaseViewModel() {
     }
 
     fun adMsg(): LiveData<Source<ApiAdMsg>> {
-        return flow { emit(adRepository.adMsg()) }
+        return flow { emit(adRepository.adMsg(1)) }
                 .asLiveData(Dispatchers.IO)
     }
 
@@ -43,7 +43,7 @@ class LoginViewModel @Inject constructor() : MyBaseViewModel() {
                 .asLiveData(Dispatchers.IO)
     }
     fun ad(): LiveData<Source<ApiAd>> {
-        return flow { emit(adRepository.ad()) }
+        return flow { emit(adRepository.ad(1)) }
                 .asLiveData(Dispatchers.IO)
     }
     fun shareAppUrl(): LiveData<Source<ApiDownLoadUrl>> {

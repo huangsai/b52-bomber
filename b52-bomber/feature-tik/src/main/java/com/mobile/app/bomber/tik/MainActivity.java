@@ -151,7 +151,7 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
     }
 
     private void requestSplashAd() {
-        model.ad(1).observe(this, source -> {
+        model.ad().observe(this, source -> {
             if (source instanceof Source.Success) {
                 ApiAd ad = source.requireData();
                 if (TextUtils.isEmpty(ad.getUrl())) {
@@ -184,7 +184,7 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
     }
 
     public void requestPopupAd() {
-        model.adMsg(1).observe(this, source -> {
+        model.adMsg().observe(this, source -> {
             login();
             if (source instanceof Source.Success) {
                 ApiAdMsg data = source.requireData();
