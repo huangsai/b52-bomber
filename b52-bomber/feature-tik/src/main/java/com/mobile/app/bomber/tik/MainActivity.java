@@ -188,8 +188,7 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
             login();
             if (source instanceof Source.Success) {
                 ApiAdMsg data = source.requireData();
-                // 1 表示禁用，0 表示启用
-                if (data.getOnlineStatus() == 0) {
+                if (!TextUtils.isEmpty(data.getContent())) {
                     RouterKt.showDialogFragment(this, PopupAdDialogFragment.newInstance(data));
                 }
             }
