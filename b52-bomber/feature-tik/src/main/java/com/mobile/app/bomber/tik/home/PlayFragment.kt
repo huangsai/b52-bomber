@@ -92,7 +92,7 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
             position = it.getInt("position")
         }
         video = Values.take("PlayFragment_$position")
-        isAdVideo = video.adId.nullSafe() > 0
+        isAdVideo = true
         gestureDetector = GestureDetectorCompat(requireContext(), onGestureListener)
         Timber.d("videoUrl : " + video.decodeVideoUrl())
         GoogleExo.preload(Uri.parse(video.decodeVideoUrl()))
@@ -151,7 +151,6 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
     override fun onDestroyView() {
         super.onDestroyView()
         binding.layoutContent.setOnTouchListener(null)
-        binding.marquee.stop()
         _binding = null
     }
 
@@ -218,8 +217,7 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
         when (v!!.id) {
             R.id.layout_link -> chrome(video.adUrl)
             R.id.txt_share -> {
-//                shareVideo(video.videoId)  //分享视频
-                shareAppURl()  //分享App下载地址
+                shareAppURl()
                 if (TextUtils.isEmpty(shareURl)) {
                     Msg.toast("暂时不能分享")
                     return
@@ -338,7 +336,6 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
                 }
     }
 
-    // Uri.parse("http://weisesp.pumiaox2.com/group1/M00/00/00/dTJ33F9txbKAQ3khAE1k-rVl3yI138.mp4")
     private fun createMediaSource(): MediaSource {
 
         return GoogleExo.buildMediaSource(
@@ -375,10 +372,8 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
                 }
                 binding.progress.visibility = View.INVISIBLE
                 if (playWhenReady) {
-                    binding.marquee.start()
                     binding.imgCover.visibility = View.INVISIBLE
                 } else {
-                    binding.marquee.pause()
                 }
                 binding.imgPlay.isVisible = !playWhenReady
             }

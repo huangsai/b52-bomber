@@ -108,6 +108,7 @@
 
         <ImageView
             android:id="@+id/img_music"
+            android:visibility="invisible"
             android:layout_width="@dimen/size_40dp"
             android:layout_height="@dimen/size_40dp"
             android:layout_marginRight="@dimen/size_20dp"
@@ -138,16 +139,6 @@
                 android:textSize="@dimen/font_15sp" />
         </FrameLayout>
 
-        <ImageView
-            android:id="@+id/img_music_source"
-            style="@style/CommonImage"
-            android:layout_marginLeft="@dimen/size_20dp"
-            android:layout_marginBottom="@dimen/size_12dp"
-            app:layout_constraintBottom_toTopOf="@+id/layout_link"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_goneMarginBottom="@dimen/size_32dp"
-            app:srcCompat="@drawable/sy_yinyuefu" />
-
         <TextView
             android:id="@+id/txt_name"
             style="@style/WrapWrap"
@@ -157,7 +148,7 @@
             android:textSize="@dimen/font_16sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/txt_desc"
-            app:layout_constraintLeft_toLeftOf="@+id/img_music_source"
+            app:layout_constraintLeft_toLeftOf="@+id/txt_desc"
             tools:text="@string/abc" />
 
         <com.borjabravo.readmoretextview.ReadMoreTextView
@@ -171,8 +162,10 @@
             android:textColor="@android:color/white"
             android:textSize="@dimen/font_16sp"
             app:colorClickableText="@android:color/white"
-            app:layout_constraintBottom_toTopOf="@+id/img_music_source"
-            app:layout_constraintLeft_toLeftOf="@+id/img_music_source"
+            android:layout_marginLeft="@dimen/size_20dp"
+            app:layout_constraintBottom_toTopOf="@+id/layout_link"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_goneMarginBottom="@dimen/size_32dp"
             app:layout_constraintWidth_max="@dimen/size_164dp"
             app:layout_constraintWidth_min="@dimen/size_24dp"
             app:showTrimExpandedText="true"
@@ -188,29 +181,6 @@
             android:src="@drawable/sy_ad_label"
             app:layout_constraintLeft_toRightOf="@+id/txt_desc"
             app:layout_constraintTop_toTopOf="@+id/txt_desc" />
-
-        <FrameLayout
-            android:layout_width="@dimen/size_144dp"
-            android:layout_height="@dimen/size_30dp"
-            android:paddingLeft="@dimen/size_2dp"
-            app:layout_constraintBottom_toBottomOf="@+id/img_music_source"
-            app:layout_constraintLeft_toRightOf="@+id/img_music_source"
-            app:layout_constraintTop_toTopOf="@+id/img_music_source">
-
-            <com.mobile.app.bomber.tik.base.views.MarqueeView
-                android:id="@+id/marquee"
-                style="@style/MatchMatch"
-                android:layout_gravity="center_vertical"
-                app:speed="@dimen/size_16dp"
-                app:text_color="@android:color/white"
-                app:text_shadowColor="@color/home_background"
-                app:text_size="@dimen/font_16sp"
-                app:txt_dx="1.0"
-                app:txt_dy="1.0"
-                app:txt_radius="1.0"
-                app:txt_spacing="@dimen/size_16dp" />
-
-        </FrameLayout>
 
         <ImageView
             android:id="@+id/img_play"
