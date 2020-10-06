@@ -92,7 +92,7 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
             position = it.getInt("position")
         }
         video = Values.take("PlayFragment_$position")
-        isAdVideo = true
+        isAdVideo = video.adId.nullSafe() > 0
         gestureDetector = GestureDetectorCompat(requireContext(), onGestureListener)
         Timber.d("videoUrl : " + video.decodeVideoUrl())
         GoogleExo.preload(Uri.parse(video.decodeVideoUrl()))
