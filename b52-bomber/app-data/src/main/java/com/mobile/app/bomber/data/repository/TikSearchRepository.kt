@@ -71,7 +71,7 @@ class TikSearchRepository @Inject constructor(
         }
         if (pager.isReachedTheEnd) return Source.Success(emptyList())
         pager.isBusy = true
-        val call = dataService.searchVideo(userId, keyword, pager.requestPage, pager.pageSize)
+        val call = dataService.searchVideo(userId, keyword, pager.requestPage, pager.pageSize, Any())
         return callApiVideo(call, pager)
     }
 

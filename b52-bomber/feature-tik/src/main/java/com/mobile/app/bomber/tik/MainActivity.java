@@ -43,6 +43,7 @@ import com.mobile.app.bomber.tik.mine.FragmentMe;
 import com.mobile.app.bomber.tik.video.VideoRecordActivity;
 import com.mobile.guava.android.mvvm.AndroidX;
 import com.mobile.guava.android.mvvm.RouterKt;
+import com.mobile.guava.jvm.Guava;
 import com.mobile.guava.jvm.domain.Source;
 
 import org.jetbrains.annotations.NotNull;
@@ -94,7 +95,6 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
                 android.Manifest.permission.ACCESS_FINE_LOCATION,
                 android.Manifest.permission.ACCESS_COARSE_LOCATION,
                 android.Manifest.permission.RECORD_AUDIO
-
         };
         registerForActivityResult(permissionsContract, this).launch(permissions);
     }
@@ -179,8 +179,7 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
                 if (SourceExtKt.is403(source.requireError())) {
                     RouterKt.newStartActivity(this, LoginActivity.class);
                 }
-            }else{
-
+            } else {
             }
         });
     }
@@ -195,10 +194,13 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
                 );
             }
         });
-        requestCheckVersion();
+
+        if (!Guava.INSTANCE.isDebug()) {
+            requestCheckVersion();
+        }
     }
 
-    public void requestCheckVersion() {
+    private void requestCheckVersion() {
         String curVersion = AppUtil.getAppVersionName(getApplicationContext());
         model.ckVersino().observe(this, source -> {
             if (source instanceof Source.Success) {

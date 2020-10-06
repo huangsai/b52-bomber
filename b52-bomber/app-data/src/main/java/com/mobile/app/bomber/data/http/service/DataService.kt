@@ -206,7 +206,8 @@ interface DataService {
             @Path("uid") uId: Long,
             @Path("keyword") keyword: String,
             @Path("page") page: Int,
-            @Path("size") pageSize: Int
+            @Path("size") pageSize: Int,
+            @Body body: Any
     ): Call<ApiVideo>
 
     @GET("/video/getHotKeyTopN")
