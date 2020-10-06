@@ -26,8 +26,6 @@ public class CategoryActivity extends MyBaseActivity {
                 .add(R.id.fragment_container_view, fragment, fragment.getClass().getSimpleName())
                 .commit();
 
-
         binding.imgBack.setOnClickListener(v -> finish());
     }
-
 }

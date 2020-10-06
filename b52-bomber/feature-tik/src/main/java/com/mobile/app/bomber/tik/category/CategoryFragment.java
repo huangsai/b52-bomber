@@ -20,7 +20,6 @@ import com.mobile.app.bomber.tik.R;
 import com.mobile.app.bomber.tik.base.AppRouterUtils;
 import com.mobile.app.bomber.common.base.tool.SingleClick;
 import com.mobile.app.bomber.tik.databinding.FragmentCatetoryBinding;
-import com.mobile.app.bomber.tik.home.TopMainFragment;
 import com.mobile.app.bomber.tik.search.SearchActivity;
 
 import java.util.ArrayList;

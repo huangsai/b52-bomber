@@ -70,7 +70,7 @@ public class DiscoveryVideoPresenter extends BaseVideoPresenter {
     protected void load() {
         if (!pager.isAvailable()) return;
 
-        fragment.model.videosOfLabel(pager, "独家原创").observe(fragment, source -> {
+        fragment.model.videosOfLabel(pager, "blank").observe(fragment, source -> {
             if (source instanceof Source.Success) {
                 List<DiscoveryVideoItem> items = source.requireData()
                         .stream()
