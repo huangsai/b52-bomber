@@ -78,11 +78,11 @@ public class TitleVideoPresenter extends BaseVideoPresenter {
         fragment.loginViewModel.ad(5).observe(fragment, source -> {
             if (source instanceof Source.Success) {
                 ApiAd ad = source.requireData();
-                List<TitleVideoItem> adItem = new LinkedList<TitleVideoItem>();
-                TitleVideoItem adItem1 = new TitleVideoItem(ad);
-                adItem.add(adItem1);
+                List<TitleVideoItem> videoItem = new LinkedList<TitleVideoItem>();
+                TitleVideoItem adItem = new TitleVideoItem(ad);
+                videoItem.add(adItem);
                 if (ad.getCode() == 0) {
-                    adapter.replaceAll(adItem);
+                    adapter.replaceAll(videoItem);
                 }
             }
         });
