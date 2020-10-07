@@ -26,6 +26,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler"
             style="@style/MatchMatch"
+            android:paddingBottom="@dimen/size_10dp"
             android:scrollbars="none" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
