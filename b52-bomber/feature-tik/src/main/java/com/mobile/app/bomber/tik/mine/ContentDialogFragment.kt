@@ -1,53 +1,45 @@
-package com.mobile.app.bomber.tik.mine;
+package com.mobile.app.bomber.tik.mine
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import com.mobile.app.bomber.common.base.tool.SingleClick
+import com.mobile.app.bomber.tik.databinding.FragmentCommonDialogBinding
+import com.mobile.guava.android.mvvm.BaseAppCompatDialogFragment
 
-import androidx.annotation.NonNull;
-
-import com.mobile.guava.android.mvvm.BaseAppCompatDialogFragment;
-
-import com.mobile.app.bomber.common.base.tool.SingleClick;
-import com.mobile.app.bomber.tik.databinding.FragmentCommonDialogBinding;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-public class ContentDialogFragment extends BaseAppCompatDialogFragment implements View.OnClickListener {
-
-    private FragmentCommonDialogBinding binding;
-    private String content;
-
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        binding = FragmentCommonDialogBinding.inflate(inflater, container, false);
-        binding.confirm.setOnClickListener(this);
-        return binding.getRoot();
+class ContentDialogFragment : BaseAppCompatDialogFragment(), View.OnClickListener {
+    private var _binding: FragmentCommonDialogBinding? = null
+    private val binding get() = _binding!!
+    private var content: String? = null
+    override fun onCreateView(inflater: LayoutInflater,
+                              container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
+        dialog?.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        _binding = FragmentCommonDialogBinding.inflate(inflater, container, false)
+        binding.confirm.setOnClickListener(this)
+        return binding.root
     }
 
-    @Override
-    public void onViewCreated(@NotNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        content = getArguments().getString("content");
-        binding.contentTv.setText(content);
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        content = arguments?.getString("content")
+        binding.contentTv.text = content
     }
 
     @SingleClick
-    @Override
-    public void onClick(View v) {
-        dismissAllowingStateLoss();
+    override fun onClick(v: View) {
+        dismissAllowingStateLoss()
     }
 
-    public static ContentDialogFragment newInstance(String content) {
-        ContentDialogFragment fragment = new ContentDialogFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("content", content);
-        fragment.setArguments(bundle);
-        return fragment;
+    companion object {
+        @JvmStatic
+        fun newInstance(content: String?): ContentDialogFragment {
+            val fragment = ContentDialogFragment()
+            val bundle = Bundle()
+            bundle.putString("content", content)
+            fragment.arguments = bundle
+            return fragment
+        }
     }
 }

@@ -3,8 +3,8 @@
     android:id="@+id/root_search"
     android:layout_width="match_parent"
     android:layout_height="@dimen/size_40dp"
-    android:background="@color/black"
     android:gravity="center_vertical"
+    android:background="@color/main_background"
     android:orientation="horizontal">
 
     <ImageView
@@ -25,17 +25,12 @@
         android:paddingLeft="@dimen/size_5dp"
         android:paddingRight="@dimen/size_5dp">
 
-        <ImageView
-            android:layout_width="@dimen/size_24dp"
-            android:layout_height="@dimen/size_24dp"
-            android:src="@drawable/search_icon" />
-
         <EditText
             android:id="@+id/et_search"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/size_5dp"
-            android:layout_marginRight="@dimen/size_5dp"
+            android:paddingLeft="@dimen/size_8dp"
+            android:paddingRight="@dimen/size_8dp"
             android:layout_weight="1"
             android:background="@null"
             android:hint="@string/search_input_hint"

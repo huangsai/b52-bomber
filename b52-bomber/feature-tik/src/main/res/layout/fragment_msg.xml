@@ -61,7 +61,7 @@
         android:layout_marginLeft="@dimen/size_12dp"
         android:layout_marginTop="@dimen/size_12dp"
         android:layout_marginRight="@dimen/size_12dp"
-        android:background="#222236"
+        android:background="@color/tik_line_color"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layout_action" />

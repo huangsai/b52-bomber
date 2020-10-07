@@ -3,16 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
+    android:background="@color/main_background"
     android:fitsSystemWindows="true"
     android:focusableInTouchMode="true"
+    android:paddingTop="@dimen/size_10dp"
     android:orientation="vertical">
 
     <!--    顶部搜索框-->
-
     <include
         android:id="@+id/toolbar"
         layout="@layout/layout_search_toolbar" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_05dp"
+        android:layout_marginTop="@dimen/size_5dp"
+        android:background="@color/tik_line_color" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_search"
@@ -144,7 +150,7 @@
                     android:id="@+id/search_history_recycler"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:divider="#222236"
+                    android:divider="@color/tik_line_color"
                     android:dividerHeight="@dimen/size_1dp" />
 
             </LinearLayout>

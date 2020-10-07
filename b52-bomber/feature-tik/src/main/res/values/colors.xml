@@ -46,5 +46,6 @@
     <color name="transparent_gray_light">#89000000</color>
     <color name="tik_home_pop_divider">#212128</color>
     <color name="tik_home_pop">#212128</color>
+    <color name="tik_line_color">#222236</color>
 
 </resources>
