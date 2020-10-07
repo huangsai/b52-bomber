@@ -14,7 +14,6 @@
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_marginTop="0dp"
-        android:background="#000000"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -38,11 +37,18 @@
             android:textSize="17sp" />
     </LinearLayout>
 
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_05dp"
+        android:layout_below="@+id/back_root"
+        android:background="#222236" />
+
     <LinearLayout
         android:id="@+id/topView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/back_root"
+        android:layout_below="@+id/line"
         android:gravity="center"
         android:orientation="horizontal">
 

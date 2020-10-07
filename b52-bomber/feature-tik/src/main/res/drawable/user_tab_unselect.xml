@@ -5,11 +5,11 @@
     <!--    <item android:color="#848388" android:state_checked="false"/>-->
 
     <!-- 填充的颜色 -->
-    <solid android:color="#5b5b5b" />
+    <solid android:color="#1b192d" />
     <!--设置渐变-->
     <gradient
-        android:startColor="#5b5b5b"
-        android:endColor="#5b5b5b"
+        android:startColor="#1b192d"
+        android:endColor="#1b192d"
         android:angle="90" />
     <!--angle控制渐变的方向-->
     <!-- 设置按钮的四个角为弧形 -->
