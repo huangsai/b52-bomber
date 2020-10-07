@@ -14,6 +14,6 @@
         android:layout_centerVertical="true"
         android:text="暂无数据"
         android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="@dimen/size_20dp" />
+        android:textColor="@color/color_text_848388"
+        android:textSize="@dimen/font_16sp" />
 </RelativeLayout>

@@ -156,6 +156,12 @@
 
         </LinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/size_5dp"
+            android:layout_height="@dimen/size_05dp"
+            android:background="@color/tik_line_color" />
+
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/layout_tab"
             android:layout_width="match_parent"
