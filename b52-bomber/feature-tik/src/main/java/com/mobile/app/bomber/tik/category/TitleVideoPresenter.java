@@ -75,7 +75,7 @@ public class TitleVideoPresenter extends BaseVideoPresenter {
     @Override
     protected void load() {
         if (!pager.isAvailable()) return;
-        fragment.loginViewModel.ad(2).observe(fragment, source -> {
+        fragment.loginViewModel.ad(5).observe(fragment, source -> {
             if (source instanceof Source.Success) {
                 ApiAd ad = source.requireData();
                 List<TitleVideoItem> adItem = new LinkedList<TitleVideoItem>();

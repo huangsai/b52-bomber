@@ -11,6 +11,7 @@
         android:id="@+id/layout_play_count"
         android:layout_width="@dimen/size_0dp"
         android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/font_23sp"
         android:layout_weight="1">
 
         <com.google.android.material.imageview.ShapeableImageView
@@ -62,7 +63,8 @@
         android:id="@+id/layout_like_count"
         android:layout_width="@dimen/size_0dp"
         android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/size_10dp"
+        android:layout_marginLeft="@dimen/size_7dp"
+        android:layout_marginRight="@dimen/font_23sp"
         android:layout_weight="1">
 
         <com.google.android.material.imageview.ShapeableImageView

@@ -59,7 +59,7 @@ public class CategoryFragment extends MyBaseFragment implements View.OnClickList
         binding.recycler.setHasFixedSize(true);
         binding.recycler.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.recycler.setAdapter(adapter);
-        binding.imgSearch.setOnClickListener(this);
+//        binding.imgSearch.setOnClickListener(this);
         binding.layoutRefresh.setOnRefreshListener(this);
         return binding.getRoot();
     }

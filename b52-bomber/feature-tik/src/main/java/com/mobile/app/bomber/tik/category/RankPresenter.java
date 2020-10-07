@@ -93,6 +93,7 @@ public class RankPresenter extends SimpleRecyclerItem implements View.OnClickLis
             List<ApiRank.Rank> list = source.dataOrNull();
             if (list == null || list.isEmpty()) {
                 binding.txtPlayName.setText("暂无排行榜");
+                binding.imgPlayProfile.setImageResource(R.drawable.default_profile);
             } else {
                 ApiRank.Rank obj = list.get(0);
                 binding.txtPlayName.setText(obj.getUsername() + "\n" + "Top.1");
@@ -106,6 +107,7 @@ public class RankPresenter extends SimpleRecyclerItem implements View.OnClickLis
             List<ApiRank.Rank> list = source.dataOrNull();
             if (list == null || list.isEmpty()) {
                 binding.txtLikeName.setText("暂无排行榜");
+                binding.imgLikeProfile.setImageResource(R.drawable.default_profile);
             } else {
                 ApiRank.Rank obj = list.get(0);
                 binding.txtLikeName.setText(obj.getUsername() + "\n" + "Top.1");
