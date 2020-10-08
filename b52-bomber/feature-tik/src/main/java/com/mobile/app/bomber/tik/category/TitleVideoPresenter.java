@@ -86,8 +86,10 @@ public class TitleVideoPresenter extends BaseVideoPresenter {
                 List<TitleVideoItem> videoItem = new LinkedList<TitleVideoItem>();
                 TitleVideoItem adItem = new TitleVideoItem(obj);
                 videoItem.add(adItem);
-                if (ad.getCode() == 0) {
+                if (ad.getCode() == 0 && videoItem.size()>=1) {
                     adapter.replaceAll(videoItem);
+                }else {
+                    adapter.replaceAll(null);
                 }
             }
         });
