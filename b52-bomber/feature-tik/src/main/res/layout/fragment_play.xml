@@ -123,6 +123,7 @@
             android:layout_height="@dimen/font_23sp"
             android:layout_marginLeft="@dimen/size_20dp"
             android:layout_marginBottom="@dimen/size_16dp"
+            android:alpha="0.8"
             android:background="@color/play_ad_view_detail"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent">
