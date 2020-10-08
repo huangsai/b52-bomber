@@ -111,7 +111,7 @@ public class CategoryFragment extends MyBaseFragment implements View.OnClickList
         titleVideoPresenter = new TitleVideoPresenter(this);
         list.add(titleVideoPresenter);
 
-        list.add(new TitlePresenter("发现精彩", R.drawable.fl_faxianjingcai));
+//        list.add(new TitlePresenter("发现精彩", R.drawable.fl_faxianjingcai));
 //        discoveryPresenter = new DiscoveryVideoPresenter(this);
 //        list.add(discoveryPresenter);
 

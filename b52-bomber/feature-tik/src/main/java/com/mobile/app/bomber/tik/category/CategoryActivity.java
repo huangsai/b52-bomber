@@ -29,6 +29,7 @@ public class CategoryActivity extends MyBaseActivity {
                 .disallowAddToBackStack()
                 .add(R.id.fragment_container_view, fragment, fragment.getClass().getSimpleName())
                 .commit();
+
         binding.imgCateSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
