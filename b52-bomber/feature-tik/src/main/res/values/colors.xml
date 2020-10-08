@@ -38,13 +38,13 @@
 
     <color name="date_picker_confirm">#3478F6</color>
     <color name="date_picker_switch">#999999</color>
-    <color name="play_ad_view_detail">#9e0bea</color>
+    <color name="play_ad_view_detail">#CC9e0bea</color>
     <color name="ad_timer">#33848388</color>
     <color name="search_view">#0D0D1E</color>
     <color name="msg_desc">#848388</color>
     <color name="rank_divider">#403e4b</color>
     <color name="transparent_gray_light">#89000000</color>
-    <color name="tik_home_pop_divider">#212128</color>
-    <color name="tik_home_pop">#212128</color>
+    <color name="tik_home_pop_divider">#95a5a6</color>
+    <color name="tik_home_pop">#CC212128</color>
 
 </resources>
