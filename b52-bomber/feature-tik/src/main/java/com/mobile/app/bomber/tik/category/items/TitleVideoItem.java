@@ -26,6 +26,7 @@ public class TitleVideoItem extends SimpleRecyclerItem {
     public void bind(@NotNull AdapterViewHolder holder) {
         ItemCategoryTitleVideoitemBinding binding = holder.binding(ItemCategoryTitleVideoitemBinding::bind);
 //        holder.attachOnClickListener(R.id.item_category_discovery_video);
+
         holder.attachImageLoader(R.id.img_title);
         holder.attachOnClickListener(R.id.img_title);
     }

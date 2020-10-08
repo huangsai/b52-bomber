@@ -61,7 +61,6 @@ public class TitleVideoPresenter extends BaseVideoPresenter {
         }
     }
 
-    //
     @Override
     protected RecyclerView getRecyclerView() {
         return viewHolder.binding(ItemCategoryTitleVideoBinding::bind).recycler;
