@@ -2,14 +2,11 @@ package com.mobile.app.bomber.tik.category
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
-import com.mobile.app.bomber.data.http.entities.ApiFollow
-import com.mobile.app.bomber.data.http.entities.ApiRank
-import com.mobile.app.bomber.data.http.entities.ApiVideo
-import com.mobile.app.bomber.data.http.entities.Pager
 import com.mobile.guava.jvm.domain.Source
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
 import com.mobile.app.bomber.common.base.MyBaseViewModel
+import com.mobile.app.bomber.data.http.entities.*
 import javax.inject.Inject
 
 class CategoryViewModel @Inject constructor() : MyBaseViewModel() {
@@ -41,6 +38,11 @@ class CategoryViewModel @Inject constructor() : MyBaseViewModel() {
 
     fun follow(targetUserId: Long, notFollowing: Boolean): LiveData<Source<ApiFollow>> {
         return flow { emit(userRepository.follow(targetUserId, notFollowing)) }
+                .asLiveData(Dispatchers.IO)
+    }
+
+    fun fixedAd(platform: Int): LiveData<Source<ApiFixedad>> {
+        return flow { emit(videoRepository.fixedAd(platform)) }
                 .asLiveData(Dispatchers.IO)
     }
 }

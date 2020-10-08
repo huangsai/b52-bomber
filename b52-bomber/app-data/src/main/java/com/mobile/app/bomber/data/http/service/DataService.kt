@@ -219,6 +219,9 @@ interface DataService {
     @GET("/sys/getShareUrl/")
     fun getDownLoadUrl(): Call<ApiDownLoadUrl>
 
+    @GET("/sys/getFixedad/{platform}/")
+    fun getFixedad(@Path("platform") platform: Int): Call<ApiFixedad>
+
     //-------⬇⬇⬇⬇⬇⬇⬇⬇---长视频相关接口-----⬇⬇⬇⬇⬇⬇⬇-----//
 
     @GET("/getRotationChart/{platform}/")

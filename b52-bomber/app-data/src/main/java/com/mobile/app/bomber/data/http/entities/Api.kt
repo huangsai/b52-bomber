@@ -552,6 +552,29 @@ data class ApiDownLoadUrl(
 )
 
 
+@JsonClass(generateAdapter = true)
+data class ApiFixedad(
+        @Json(name = "RetCode") val code: Int,
+        @Json(name = "desc") val desc: String,
+        @Json(name = "FixedadObj") val fixedadObj: FixedadObj
+){
+    @JsonClass(generateAdapter = true)
+    data class FixedadObj(
+            @Json(name = "title") val Id: Int,
+            @Json(name = "platForm") val type: Int,
+            @Json(name = "url") val url: String,
+            @Json(name = "resolutionData") val resolutionData: ResolutionData
+
+    )
+    @JsonClass(generateAdapter = true)
+    data class ResolutionData(
+            @Json(name = "sixteen") val sixteen: String,
+            @Json(name = "eighteen") val eighteen: String,
+            @Json(name = "twentyOne") val twentyOne: String
+    )
+}
+
+
 //-------⬇⬇⬇⬇⬇⬇⬇⬇---长视频相关-----⬇⬇⬇⬇⬇⬇⬇-----//
 
 @JsonClass(generateAdapter = true)

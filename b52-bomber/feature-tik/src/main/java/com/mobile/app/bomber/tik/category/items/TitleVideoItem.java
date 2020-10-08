@@ -3,6 +3,7 @@ package com.mobile.app.bomber.tik.category.items;
 import androidx.annotation.NonNull;
 
 import com.mobile.app.bomber.data.http.entities.ApiAd;
+import com.mobile.app.bomber.data.http.entities.ApiFixedad;
 import com.mobile.app.bomber.data.http.entities.ApiVideo;
 import com.mobile.app.bomber.tik.R;
 import com.mobile.app.bomber.tik.databinding.ItemCategoryDiscoveryVideoBinding;
@@ -16,9 +17,9 @@ import org.jetbrains.annotations.NotNull;
 public class TitleVideoItem extends SimpleRecyclerItem {
 
     @NonNull
-    public ApiAd data;
+    public ApiFixedad.FixedadObj data;
 
-    public TitleVideoItem(@NonNull ApiAd data) {
+    public TitleVideoItem(@NonNull ApiFixedad.FixedadObj data) {
         this.data = data;
     }
 

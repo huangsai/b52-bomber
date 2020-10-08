@@ -41,6 +41,14 @@ class VideoRepository @Inject constructor(
         )
         return callApiVideo(call, pager)
     }
+    suspend fun fixedAd(platform: Int): Source<ApiFixedad> {
+        val call = dataService.getFixedad(platform)
+        return try {
+            call.execute().toSource()
+        } catch (e: Exception) {
+            errorSource(e)
+        }
+    }
 
     suspend fun videosOfUser(pager: Pager, _userId: Long): Source<List<ApiVideo.Video>> {
         if (pager.isReachedTheEnd) return Source.Success(emptyList())
