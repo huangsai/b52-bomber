@@ -3,7 +3,9 @@ package com.mobile.app.bomber.tik.category;
 import android.graphics.Point;
 import android.view.View;
 import android.widget.ImageView;
+
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.mobile.app.bomber.common.base.Msg;
 import com.mobile.app.bomber.common.base.tool.SingleClick;
@@ -22,7 +24,9 @@ import com.mobile.guava.android.ui.screen.ScreenUtilsKt;
 import com.mobile.guava.jvm.domain.Source;
 import com.pacific.adapter.AdapterUtils;
 import com.pacific.adapter.AdapterViewHolder;
+
 import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -44,8 +48,18 @@ public class TitleVideoPresenter extends BaseVideoPresenter {
     public void load(@NotNull ImageView imageView, @NotNull AdapterViewHolder holder) {
         TitleVideoItem item = holder.item();
         videoItem = item;
+        Point a = ScreenUtilsKt.getScreen();
+        int result = a.x / a.y;
+        String imgeUrl = "";
+        if (result == 9 / 18) { // 9:18分辨率
+            imgeUrl = item.data.getResolutionData().getEighteen();
+        } else if (result == 9 / 21) { //9:21分辨率
+            imgeUrl = item.data.getResolutionData().getTwentyOne();
+        } else {
+            imgeUrl = item.data.getResolutionData().getSixteen();
+        }
         GlideApp.with(fragment)
-                .load(GlideExtKt.decodeImgUrl(item.data.getResolutionData().getEighteen()))
+                .load(GlideExtKt.decodeImgUrl(imgeUrl))
                 .placeholder(R.drawable.nearby_absent)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(imageView);
@@ -75,20 +89,22 @@ public class TitleVideoPresenter extends BaseVideoPresenter {
     protected void load() {
         if (!pager.isAvailable()) return;
         // 1920*1080==16:9的比例
-        Point a = ScreenUtilsKt.getScreen();
-        Msg.INSTANCE.toast("=="+String.valueOf(a.x));
-        int result  = a.x/a.y;
+//        Point a = ScreenUtilsKt.getScreen();
+//        int result = a.x / a.y;
+//        int result1 = 9 / 16;
+//        Msg.INSTANCE.toast("==" + String.valueOf(result));
+
         fragment.model.fixedAd(1).observe(fragment, source -> {
             if (source instanceof Source.Success) {
                 ApiFixedad ad = source.requireData();
                 ApiFixedad.FixedadObj obj = ad.getFixedadObj();
-                ApiFixedad.ResolutionData data =  obj.getResolutionData();
+                ApiFixedad.ResolutionData data = obj.getResolutionData();
                 List<TitleVideoItem> videoItem = new LinkedList<TitleVideoItem>();
                 TitleVideoItem adItem = new TitleVideoItem(obj);
                 videoItem.add(adItem);
-                if (ad.getCode() == 0 && videoItem.size()>=1) {
+                if (ad.getCode() == 0 && videoItem.size() >= 1) {
                     adapter.replaceAll(videoItem);
-                }else {
+                } else {
                     adapter.replaceAll(null);
                 }
             }
