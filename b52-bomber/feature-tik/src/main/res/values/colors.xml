@@ -22,7 +22,7 @@
 100%=00（全透明）
 -->
 <resources>
-    <color name="home_tab_text_normal">#848388</color>
+    <color name="home_tab_text_normal">#d1d8e3</color>
     <color name="home_tab_text_pressed">#FFFFFF</color>
     <color name="main_background">#060612</color>
     <color name="home_background">#030312</color>
@@ -46,6 +46,6 @@
     <color name="transparent_gray_light">#89000000</color>
     <color name="tik_home_pop_divider">#95a5a6</color>
     <color name="tik_home_pop">#CC212128</color>
-    <color name="tik_line_color">#222236</color>
+    <color name="tik_line_color">#0d0d1e</color>
 
 </resources>

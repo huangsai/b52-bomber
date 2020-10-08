@@ -68,7 +68,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="15dp"
-                    android:background="@color/black"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -101,7 +100,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/size_10dp"
                         android:layout_marginBottom="@dimen/size_10dp"
-                        android:background="@color/black"
                         android:minHeight="@dimen/size_100dp" />
 
                 </LinearLayout>
@@ -111,6 +109,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/size_40dp"
                     android:gravity="center_vertical"
+                    android:background="#0d0d1e"
                     android:orientation="horizontal">
 
                     <ImageView
@@ -144,6 +143,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="1px"
                     android:layout_marginTop="1dp"
+                    android:alpha="0.6"
                     android:background="#979ca0" />
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -152,6 +152,9 @@
                     android:layout_height="wrap_content"
                     android:divider="@color/tik_line_color"
                     android:dividerHeight="@dimen/size_1dp" />
+                <include
+                    android:id="@+id/layout_empty_view"
+                    layout="@layout/item_empty" />
 
             </LinearLayout>
         </RelativeLayout>
