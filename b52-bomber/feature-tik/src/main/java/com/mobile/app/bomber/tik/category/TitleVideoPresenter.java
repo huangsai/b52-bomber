@@ -99,7 +99,7 @@ public class TitleVideoPresenter extends BaseVideoPresenter {
                 ApiFixedad ad = source.requireData();
                 ApiFixedad.FixedadObj obj = ad.getFixedadObj();
                 ApiFixedad.ResolutionData data = obj.getResolutionData();
-                List<TitleVideoItem> videoItem = new LinkedList<TitleVideoItem>();
+                List<TitleVideoItem> videoItem = new ArrayList<TitleVideoItem>();
                 TitleVideoItem adItem = new TitleVideoItem(obj);
                 videoItem.add(adItem);
                 if (ad.getCode() == 0 && videoItem.size() >= 1) {

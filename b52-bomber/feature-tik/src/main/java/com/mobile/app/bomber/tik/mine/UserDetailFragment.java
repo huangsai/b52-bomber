@@ -2,6 +2,7 @@ package com.mobile.app.bomber.tik.mine;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +50,10 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
         return new UserDetailFragment();
     }
 
+    public void setUserId(long userId) {
+        Values.INSTANCE.put("UserDetailFragment_userId", userId);
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -61,6 +66,7 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
     @Override
     public void onResume() {
         super.onResume();
+        userId = Values.INSTANCE.take("UserDetailFragment_userId");
         loadData();
     }
 
@@ -113,7 +119,7 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
 
     private void getUserInfo() {
         if (PrefsManager.INSTANCE.isLogin()) {
-            meViewModel.getUserInfo(PrefsManager.INSTANCE.getUserId()).observe(getViewLifecycleOwner(), apiUserSource -> {
+            meViewModel.getUserInfo(userId).observe(getViewLifecycleOwner(), apiUserSource -> {
                 if (binding.swipeRefresh.isRefreshing()) binding.swipeRefresh.setRefreshing(false);
                 if (apiUserSource instanceof Source.Success) {
                     ApiUser apiUser = apiUserSource.requireData();
@@ -157,7 +163,7 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
 
     private void getUserCount() {
         if (PrefsManager.INSTANCE.isLogin()) {
-            meViewModel.getUserCount(PrefsManager.INSTANCE.getUserId()).observe(getViewLifecycleOwner(), apiUserCountSource -> {
+            meViewModel.getUserCount(userId).observe(getViewLifecycleOwner(), apiUserCountSource -> {
                 if (binding.swipeRefresh.isRefreshing()) binding.swipeRefresh.setRefreshing(false);
                 if (apiUserCountSource instanceof Source.Success) {
                     ApiUserCount apiUserCount = apiUserCountSource.requireData();
