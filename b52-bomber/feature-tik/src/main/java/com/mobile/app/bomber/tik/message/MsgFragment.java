@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.mobile.app.bomber.common.base.Msg;
+import com.mobile.app.bomber.data.db.TikSearchKeyDao;
 import com.pacific.adapter.AdapterImageLoader;
 import com.pacific.adapter.AdapterViewHolder;
 import com.pacific.adapter.OnDataSetChanged;
@@ -154,6 +155,9 @@ public class MsgFragment extends TopMainFragment implements View.OnClickListener
         MsgItem item1 = new MsgItem("1111");
         item.add(item1);
         adapter.replaceAll(item);
+
+       //消息提醒不需要分页加载
+       // 调用接口 -》获取数据 -》存入数据库-》
         binding.layoutRefresh.setRefreshing(false);
     }
 

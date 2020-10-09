@@ -6,6 +6,7 @@ import androidx.lifecycle.liveData
 import com.mobile.app.bomber.data.db.entities.DbTikSearchKey
 import kotlinx.coroutines.Dispatchers
 import com.mobile.app.bomber.common.base.MyBaseViewModel
+import com.mobile.app.bomber.data.http.entities.ApiAtUser
 import com.mobile.app.bomber.data.http.entities.ApiVideo
 import com.mobile.app.bomber.data.http.entities.Pager
 import com.mobile.guava.jvm.domain.Source
@@ -55,6 +56,8 @@ class SearchViewModel @Inject constructor() : MyBaseViewModel() {
 //        }
     }
 
-    suspend fun search(key: String) {
+    fun searchUserList(key: String): LiveData<Source<List<ApiAtUser>>> {
+        return flow { emit(tikSearchRepository.searchTikUserList(key)) }
+                .asLiveData(Dispatchers.IO)
     }
 }
