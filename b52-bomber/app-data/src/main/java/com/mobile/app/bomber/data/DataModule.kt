@@ -64,8 +64,8 @@ class DataModule : com.mobile.guava.data.DataModule {
                 .sslSocketFactory(sslContext.socketFactory, x509TrustManager)
                 .hostnameVerifier(HostnameVerifier { _, _ -> true })
                 .connectTimeout(10, TimeUnit.SECONDS)
-                .readTimeout(30, TimeUnit.SECONDS)
-                .writeTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(50, TimeUnit.SECONDS)
+                .writeTimeout(50, TimeUnit.SECONDS)
                 .build()
     }
 

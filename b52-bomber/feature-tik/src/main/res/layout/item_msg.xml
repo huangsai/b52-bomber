@@ -5,7 +5,7 @@
     android:id="@+id/item_msg"
     android:layout_width="match_parent"
     android:layout_height="@dimen/size_56dp"
-    android:background="@android:color/black">
+    android:background="@color/main_background">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline1"
@@ -31,7 +31,7 @@
         android:layout_marginLeft="@dimen/size_8dp"
         android:gravity="center_vertical"
         android:textColor="@android:color/white"
-        android:textSize="@dimen/font_15sp"
+        android:textSize="@dimen/font_14sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline1"
         app:layout_constraintLeft_toRightOf="@+id/img_profile"
         tools:text="系统通知" />
@@ -41,7 +41,7 @@
         style="@style/WrapWrap"
         android:gravity="center_vertical"
         android:textColor="@color/msg_desc"
-        android:textSize="@dimen/font_14sp"
+        android:textSize="@dimen/font_12sp"
         app:layout_constraintLeft_toLeftOf="@+id/txt_title"
         app:layout_constraintTop_toBottomOf="@+id/guideline1"
         tools:text="动漫合计，不容错过" />
@@ -57,5 +57,27 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="2020-08-28" />
+
+    <!--    <View-->
+    <!--        android:id="@+id/message_status"-->
+    <!--        android:layout_width="8dp"-->
+    <!--        android:layout_height="@dimen/size_8dp"-->
+    <!--        android:layout_marginRight="@dimen/size_20dp"-->
+    <!--        android:layout_marginTop="@dimen/size_5dp"-->
+    <!--        android:background="@color/color_text_ffcc00"-->
+    <!--        app:layout_constraintRight_toRightOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/txt_time"-->
+    <!--        />-->
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/message_status"
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:layout_marginTop="@dimen/size_5dp"
+        android:layout_marginRight="@dimen/size_20dp"
+        android:background="@color/color_text_ffcc00"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_time"
+        app:shapeAppearanceOverlay="@style/CircleImageView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

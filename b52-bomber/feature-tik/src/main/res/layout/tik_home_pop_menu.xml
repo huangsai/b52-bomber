@@ -14,6 +14,7 @@
         android:layout_height="@dimen/size_44dp"
         android:gravity="center_vertical"
         android:text="@string/recycle_cate"
+        android:background="@color/tik_home_pop"
         android:paddingLeft="@dimen/size_12dp"
         android:textColor="@android:color/white"
         android:textSize="@dimen/font_15sp" />
@@ -23,7 +24,8 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_44dp"
         android:gravity="center_vertical"
-         android:text="@string/local"
+        android:background="@color/tik_home_pop"
+        android:text="@string/local"
         android:paddingLeft="@dimen/size_12dp"
         android:textColor="@android:color/white"
         android:textSize="@dimen/font_15sp" />

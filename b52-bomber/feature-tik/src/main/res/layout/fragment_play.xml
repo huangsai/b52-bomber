@@ -115,14 +115,15 @@
             android:layout_marginBottom="@dimen/size_32dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:srcCompat="@drawable/sy_yinyueneipan" />
+            app:srcCompat="@drawable/default_profile" />
 
         <FrameLayout
             android:id="@+id/layout_link"
-            android:layout_width="@dimen/size_108dp"
-            android:layout_height="@dimen/size_30dp"
+            android:layout_width="188sp"
+            android:layout_height="@dimen/font_23sp"
             android:layout_marginLeft="@dimen/size_20dp"
             android:layout_marginBottom="@dimen/size_16dp"
+            android:alpha="0.8"
             android:background="@color/play_ad_view_detail"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent">

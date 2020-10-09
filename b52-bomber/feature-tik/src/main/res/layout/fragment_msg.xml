@@ -2,7 +2,35 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/MatchMatch"
-    android:background="@color/main_background">
+    android:background="@color/main_background"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:id="@+id/layout_navtion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_10dp"
+        android:orientation="vertical"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/message_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="消息"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_17sp" />
+
+        <View
+            android:id="@+id/message_line"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/size_10dp"
+            android:layout_height="0.5dp"
+            android:background="#33334f" />
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/img_search"
@@ -12,6 +40,7 @@
         android:layout_marginTop="@dimen/size_36dp"
         android:layout_marginRight="@dimen/size_24dp"
         android:src="@drawable/gg_sousuo"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/layout_tab"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -20,11 +49,11 @@
         android:id="@+id/layout_action"
         android:layout_width="@dimen/size_0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_20dp"
+        android:layout_marginTop="@dimen/size_30dp"
         android:gravity="center"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/img_search">
+        app:layout_constraintTop_toBottomOf="@+id/layout_navtion">
 
         <TextView
             android:id="@+id/txt_fans"
@@ -35,22 +64,23 @@
         <TextView
             android:id="@+id/txt_like"
             style="@style/MsgAction"
-            android:layout_marginLeft="@dimen/size_30dp"
+            android:layout_marginLeft="@dimen/size_42dp"
             android:drawableTop="@drawable/xx_dianzan"
             android:text="@string/msg_like" />
 
         <TextView
             android:id="@+id/txt_at"
             style="@style/MsgAction"
-            android:layout_marginLeft="@dimen/size_30dp"
+            android:layout_marginLeft="@dimen/size_42dp"
             android:drawableTop="@drawable/xx_aite"
             android:text="@string/msg_at" />
 
         <TextView
             android:id="@+id/txt_comment"
             style="@style/MsgAction"
-            android:layout_marginLeft="@dimen/size_30dp"
+            android:layout_marginLeft="@dimen/size_42dp"
             android:drawableTop="@drawable/xx_wode"
+
             android:text="@string/msg_comment" />
     </LinearLayout>
 
@@ -61,7 +91,8 @@
         android:layout_marginLeft="@dimen/size_12dp"
         android:layout_marginTop="@dimen/size_12dp"
         android:layout_marginRight="@dimen/size_12dp"
-        android:background="@android:color/white"
+        android:background="#222236"
+        android:visibility="gone"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layout_action" />
@@ -71,14 +102,16 @@
         style="@style/ConCon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="@dimen/size_18dp"
+
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view_divider">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler"
-            android:clipToPadding="false"
-            android:layout_marginTop="@dimen/size_12dp"
-            style="@style/MatchMatch" />
+            style="@style/MatchMatch"
+            android:layout_marginTop="@dimen/size_18dp"
+            android:clipToPadding="false" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <TextView

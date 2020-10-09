@@ -7,6 +7,9 @@ import androidx.annotation.Nullable;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.util.Preconditions;
+import com.mobile.app.bomber.runner.base.PrefsManager;
+import com.mobile.app.bomber.tik.login.LoginActivity;
+import com.mobile.guava.android.mvvm.RouterKt;
 import com.pacific.adapter.AdapterViewHolder;
 import com.pacific.adapter.SimpleRecyclerItem;
 import com.mobile.app.bomber.data.http.entities.ApiRank;
@@ -60,12 +63,20 @@ public class RankPresenter extends SimpleRecyclerItem implements View.OnClickLis
     public void onClick(View v) {
         final int id = v.getId();
         if (id == R.id.layout_play_count) {
-            RankActivity.start(fragment.requireActivity(), 1);
+            if (PrefsManager.INSTANCE.isLogin()) {
+                RankActivity.start(fragment.requireActivity(), 1);
+            }else {
+                RouterKt.newStartActivity(fragment, LoginActivity.class);
+            }
             return;
         }
 
         if (id == R.id.layout_like_count) {
-            RankActivity.start(fragment.requireActivity(), 2);
+            if (PrefsManager.INSTANCE.isLogin()) {
+                RankActivity.start(fragment.requireActivity(), 2);
+            }else{
+                RouterKt.newStartActivity(fragment, LoginActivity.class);
+            }
             return;
         }
     }
@@ -82,6 +93,7 @@ public class RankPresenter extends SimpleRecyclerItem implements View.OnClickLis
             List<ApiRank.Rank> list = source.dataOrNull();
             if (list == null || list.isEmpty()) {
                 binding.txtPlayName.setText("暂无排行榜");
+                binding.imgPlayProfile.setImageResource(R.drawable.default_profile);
             } else {
                 ApiRank.Rank obj = list.get(0);
                 binding.txtPlayName.setText(obj.getUsername() + "\n" + "Top.1");
@@ -95,6 +107,7 @@ public class RankPresenter extends SimpleRecyclerItem implements View.OnClickLis
             List<ApiRank.Rank> list = source.dataOrNull();
             if (list == null || list.isEmpty()) {
                 binding.txtLikeName.setText("暂无排行榜");
+                binding.imgLikeProfile.setImageResource(R.drawable.default_profile);
             } else {
                 ApiRank.Rank obj = list.get(0);
                 binding.txtLikeName.setText(obj.getUsername() + "\n" + "Top.1");

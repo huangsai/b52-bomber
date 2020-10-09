@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/MatchMatch"
-    android:background="@color/black"
+    android:background="@color/main_background"
     android:orientation="vertical">
 
     <LinearLayout
@@ -30,15 +30,32 @@
             android:textSize="@dimen/font_17sp" />
     </LinearLayout>
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/layout_tab"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/toolbar_height"
-        app:tabIndicatorColor="@android:color/white"
-        app:tabIndicatorFullWidth="true"
-        app:tabIndicatorHeight="@dimen/size_2dp"
-        app:tabMode="fixed"
-        app:tabTextAppearance="@style/HomeTabTextAppearance" />
+        android:layout_height="@dimen/size_05dp"
+        android:layout_marginTop="@dimen/size_5dp"
+        android:background="@color/tik_line_color" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_44dp">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/layout_tab"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:tabIndicatorColor="@android:color/white"
+            app:tabIndicatorFullWidth="true"
+            app:tabIndicatorHeight="@dimen/size_1dp"
+            app:tabMode="fixed"
+            app:tabTextAppearance="@style/MainTabTextAppearance" />
+
+        <View
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_05dp"
+            android:background="@color/tik_line_color" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/view_pager"

@@ -99,6 +99,8 @@ public class SearchActivity extends MyBaseActivity
         binding.searchViewpager.setOffscreenPageLimit(2);
         binding.searchViewpager.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
         binding.searchViewpager.setCurrentItem(0, false);
+//        recyclerAdapter.setEmptyView(binding.layoutEmptyView.NoData, binding.);
+
         TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(binding.searchLayoutTab, binding.searchViewpager, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
@@ -116,6 +118,7 @@ public class SearchActivity extends MyBaseActivity
         model.getKeys().observe(this, dbSearchKeys -> {
             if (dbSearchKeys.size() > 0) {
                 binding.tvHistoryClear.setVisibility(View.VISIBLE);
+                binding.layoutEmptyView.NoData.setVisibility(View.GONE);
                 List<SearchHistoryItem> items = new ArrayList();
                 for (int i = 0; i < dbSearchKeys.size(); i++) {
                     Timber.tag("db").d(dbSearchKeys.get(i).getName());
@@ -123,6 +126,8 @@ public class SearchActivity extends MyBaseActivity
                     items.add(searchHistoryItem);
                 }
                 recyclerAdapter.replaceAll(items);
+            }else {
+                binding.layoutEmptyView.NoData.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -184,6 +189,11 @@ public class SearchActivity extends MyBaseActivity
             position = holder.getBindingAdapterPosition();
             item = holder.item();
             recyclerAdapter.remove(position);
+            if (recyclerAdapter.getAll().size()<1){
+                binding.layoutEmptyView.NoData.setVisibility(View.VISIBLE);
+            }else {
+                binding.layoutEmptyView.NoData.setVisibility(View.GONE);
+            }
             model.deleteKey(item.data).observe(
                     this,
                     count -> Timber.tag("db").d("删除成功%s", item.data.getName())
@@ -202,7 +212,9 @@ public class SearchActivity extends MyBaseActivity
         model.clearKeys().observe(this, integer -> {
             binding.tvHistoryClear.setVisibility(View.INVISIBLE);
             if (recyclerAdapter != null)
+                binding.layoutEmptyView.NoData.setVisibility(View.VISIBLE);
                 recyclerAdapter.clear();
+
         });
     }
 

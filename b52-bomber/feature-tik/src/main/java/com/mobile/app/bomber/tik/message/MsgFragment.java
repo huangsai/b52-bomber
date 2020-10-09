@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.mobile.app.bomber.common.base.Msg;
 import com.pacific.adapter.AdapterImageLoader;
 import com.pacific.adapter.AdapterViewHolder;
 import com.pacific.adapter.OnDataSetChanged;
@@ -136,6 +137,10 @@ public class MsgFragment extends TopMainFragment implements View.OnClickListener
             RouterKt.newStartActivity(this, SearchActivity.class);
             return;
         }
+        if (id == R.id.item_msg) {
+            Msg.INSTANCE.toast("点击了");
+            return;
+        }
     }
 
     @Override
@@ -146,6 +151,8 @@ public class MsgFragment extends TopMainFragment implements View.OnClickListener
 
     private void load() {
         List<MsgItem> item = new ArrayList<>();
+        MsgItem item1 = new MsgItem("1111");
+        item.add(item1);
         adapter.replaceAll(item);
         binding.layoutRefresh.setRefreshing(false);
     }

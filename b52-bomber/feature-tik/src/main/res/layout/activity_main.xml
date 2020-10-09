@@ -16,6 +16,7 @@
         android:id="@+id/main_rg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/black"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingTop="@dimen/size_10dp"
@@ -45,12 +46,12 @@
             android:layout_weight="1"
             android:background="@null"
             android:button="@null"
-            android:visibility="gone"
             android:drawableTop="@drawable/main_tab_category"
             android:drawablePadding="@dimen/size_5dp"
             android:gravity="center"
             android:text="@string/main_tab_movie"
-            android:textColor="@color/color_home_tab_text" />
+            android:textColor="@color/color_home_tab_text"
+            android:visibility="gone" />
 
         <RadioButton
             android:id="@+id/main_msg_rb"

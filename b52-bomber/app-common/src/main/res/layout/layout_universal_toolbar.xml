@@ -28,4 +28,5 @@
         android:layout_gravity="center_vertical|right"
         android:paddingRight="@dimen/size_24dp"
         tools:text="abc" />
+
 </androidx.appcompat.widget.Toolbar>

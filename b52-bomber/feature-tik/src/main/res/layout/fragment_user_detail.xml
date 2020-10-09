@@ -8,7 +8,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/black"
         android:orientation="vertical"
         android:paddingLeft="@dimen/size_14dp"
         android:paddingRight="@dimen/size_14dp">
@@ -39,7 +38,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_14sp" />
 
                 <TextView
                     android:id="@+id/user_id"
@@ -48,7 +48,8 @@
                     android:layout_marginTop="@dimen/size_10dp"
                     android:layout_marginBottom="@dimen/size_10dp"
                     android:text=""
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_12sp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -118,10 +119,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_10dp"
             android:hint="这家伙很烂，什么都没留下"
-            android:textColor="#9a9a9a"
-            android:textColorHint="#9a9a9a"
-
-            />
+            android:textColor="#605d69" />
         <!--   点赞、粉丝、关注 -->
         <LinearLayout
             android:layout_width="wrap_content"
@@ -141,7 +139,7 @@
                 android:id="@+id/user_fans"
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="@dimen/size_40dp"
                 android:gravity="center"
                 android:text=""
                 android:textColor="#848388"
@@ -151,12 +149,18 @@
                 android:id="@+id/user_follow"
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
-                android:layout_marginStart="@dimen/size_20dp"
+                android:layout_marginStart="@dimen/size_60dp"
                 android:text=""
                 android:textColor="#848388"
                 android:textSize="@dimen/font_17sp" />
 
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/size_5dp"
+            android:layout_height="@dimen/size_05dp"
+            android:background="@color/tik_line_color" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/layout_tab"

@@ -3,9 +3,9 @@
     android:id="@+id/layout_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#181D27"
+    android:background="#0d0d1e"
     android:gravity="center_vertical"
-    android:minHeight="@dimen/size_50dp"
+    android:minHeight="@dimen/size_40dp"
     android:orientation="horizontal"
     android:paddingLeft="@dimen/size_16dp"
     android:paddingTop="@dimen/size_5dp"
@@ -19,13 +19,13 @@
         android:layout_weight="1"
         android:text="#c++"
         android:textColor="@color/white"
-        android:textSize="20dp" />
+        android:textSize="18dp" />
 
     <ImageView
         android:id="@+id/delete"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:src="@drawable/search_clear"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:src="@drawable/sy_quxiaochacha_bai"
 
         />
 </LinearLayout>
