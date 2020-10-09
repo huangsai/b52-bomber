@@ -2,6 +2,7 @@ package com.mobile.app.bomber.tik.mine;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +41,13 @@ public class FragmentMe extends MyBaseFragment implements View.OnClickListener {
         userDetailFragment = UserDetailFragment.newInstance(PrefsManager.INSTANCE.getUserId());
         addFragment(R.id.layout_container, userDetailFragment);
         return binding.getRoot();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        userDetailFragment.setUserId(PrefsManager.INSTANCE.getUserId());
+
     }
 
     @Override

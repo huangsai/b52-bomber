@@ -10,6 +10,7 @@ import com.mobile.guava.data.bodyOrThrowException
 import com.mobile.guava.jvm.domain.Source
 import kotlinx.coroutines.async
 import kotlinx.coroutines.supervisorScope
+import sun.rmi.runtime.Log
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -64,14 +65,12 @@ class UserRepository @Inject constructor(
         return try {
             call.execute().toSource().apply {
                 if (this is Source.Success && data.code == 0) {
+                    appPrefsManager.setUserId(data.uid.nullSafe())
+                    appPrefsManager.setToken(data.token.nullSafe())
                     if (loginType == 2) {
-                        appPrefsManager.setUserId(data.uid.nullSafe())
-                        appPrefsManager.setToken(data.token.nullSafe())
                         appPrefsManager.setIsLogin(true)
                         aboutUsers()
                     } else if (loginType == 1) {
-                        appPrefsManager.setUserId(data.uid.nullSafe())
-                        appPrefsManager.setToken(data.token.nullSafe())
                         appPrefsManager.setIsLogin(false)
                     }
                 }
