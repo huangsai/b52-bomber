@@ -9,8 +9,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.mobile.app.bomber.data.http.entities.ApiAtUser;
+import com.mobile.app.bomber.data.http.entities.ApiVideo;
 import com.mobile.app.bomber.runner.RunnerX;
+import com.mobile.app.bomber.tik.base.AppRouterUtils;
+import com.mobile.app.bomber.tik.search.items.SearchVideoItem;
 import com.mobile.guava.android.ui.view.recyclerview.LinearItemDecoration;
+import com.mobile.guava.android.ui.view.recyclerview.RecyclerViewUtilsKt;
+import com.mobile.guava.jvm.domain.Source;
 import com.pacific.adapter.RecyclerAdapter;
 
 import com.mobile.app.bomber.tik.R;
@@ -29,6 +35,8 @@ import kotlin.Pair;
 public class FragmentSearchUser extends MyBaseFragment {
     private FragmentSearchUserBinding binding;
     private RecyclerAdapter recyclerAdapter;
+    private String result;
+    private SearchViewModel model;
 
     @Nullable
     @Override
@@ -43,6 +51,7 @@ public class FragmentSearchUser extends MyBaseFragment {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         binding.userRecycle.addItemDecoration(LinearItemDecoration.builder(requireContext()).bottomMargin(R.dimen.size_1dp).build());
         binding.userRecycle.setLayoutManager(layoutManager);
+        model = AppRouterUtils.viewModels(this, SearchViewModel.class);
         binding.layoutEmptyView.NoData.setVisibility(View.VISIBLE);
         recyclerAdapter = new RecyclerAdapter();
         recyclerAdapter.setOnClickListener(v -> {
@@ -54,12 +63,26 @@ public class FragmentSearchUser extends MyBaseFragment {
     }
 
     private void refreshData() {
-        List<SearchUserItem> items = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            items.add(new SearchUserItem(null));
-        }
-
-        recyclerAdapter.replaceAll(items);
+//        List<SearchUserItem> items = new ArrayList<>();
+//        for (int i = 0; i < 5; i++) {
+//            items.add(new SearchUserItem(null));
+//        }
+//
+//        recyclerAdapter.replaceAll(items);
+        Bundle bundle = getArguments();
+        result = bundle.getString("keyword");
+        model.searchUserList(result).observe(this, source -> {
+            if (source instanceof Source.Success) {
+                List<ApiAtUser> users = source.requireData();
+                List<SearchUserItem> items = new ArrayList<>();
+                for (ApiAtUser user : users) {
+                    SearchUserItem searchVideoItem = new SearchUserItem(user);
+                    items.add(searchVideoItem);
+                }
+            } else {
+                Msg.INSTANCE.handleSourceException(source.requireError());
+            }
+        });
     }
 
     @Override

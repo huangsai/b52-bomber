@@ -3,6 +3,8 @@ package com.mobile.app.bomber.data.repository
 import com.mobile.app.bomber.data.db.AppDatabase
 import com.mobile.app.bomber.data.db.entities.DbTikSearchKey
 import com.mobile.app.bomber.data.files.AppPrefsManager
+import com.mobile.app.bomber.data.http.entities.ApiAtUser
+import com.mobile.app.bomber.data.http.entities.ApiUser
 import com.mobile.app.bomber.data.http.entities.ApiVideo
 import com.mobile.app.bomber.data.http.entities.Pager
 import com.mobile.app.bomber.data.http.service.DataService
@@ -73,6 +75,23 @@ class TikSearchRepository @Inject constructor(
         pager.isBusy = true
         val call = dataService.searchVideo(userId, keyword, pager.requestPage, pager.pageSize, Any())
         return callApiVideo(call, pager)
+    }
+
+
+    suspend fun searchTikUserList(keyword: String): Source<List<ApiAtUser>> {
+        if (!appPrefsManager.isLogin()) {
+            return Source.Error(sourceException403)
+        }
+//        if (pager.isReachedTheEnd) return Source.Success(emptyList())
+//        pager.isBusy = true
+        val call = dataService.searchUsers(keyword)
+        return try {
+            call.execute().toSource() {
+                it.users
+            }
+        } catch (e: Exception) {
+            errorSource(e)
+        } as Source<List<ApiAtUser>>
     }
 
     private suspend fun callApiVideo(call: Call<ApiVideo>, pager: Pager): Source<List<ApiVideo.Video>> {

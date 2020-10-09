@@ -38,7 +38,7 @@ public class FragmentMe extends MyBaseFragment implements View.OnClickListener {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentMeBinding.inflate(inflater, container, false);
-        userDetailFragment = UserDetailFragment.newInstance(PrefsManager.INSTANCE.getUserId());
+        userDetailFragment = UserDetailFragment.newInstance(PrefsManager.INSTANCE.getUserId(),2);
         addFragment(R.id.layout_container, userDetailFragment);
         return binding.getRoot();
     }

@@ -41,7 +41,7 @@ public class UserDetailActivity extends MyBaseActivity implements View.OnClickLi
         setContentView(binding.getRoot());
         userId = Values.INSTANCE.take("UserDetailActivity_userId");
         followStatus(userId);
-        UserDetailFragment userDetailFragment = UserDetailFragment.newInstance(userId);
+        UserDetailFragment userDetailFragment = UserDetailFragment.newInstance(userId,0);
         addFragment(R.id.layout_container, userDetailFragment);
         binding.ibBack.setOnClickListener(this);
         binding.ibMore.setOnClickListener(this);

@@ -2,6 +2,7 @@ package com.mobile.app.bomber.tik.search.items;
 
 import androidx.annotation.NonNull;
 
+import com.mobile.app.bomber.data.http.entities.ApiAtUser;
 import com.pacific.adapter.AdapterViewHolder;
 import com.pacific.adapter.SimpleRecyclerItem;
 import com.mobile.app.bomber.data.http.entities.ApiFollow;
@@ -13,10 +14,10 @@ import org.jetbrains.annotations.NotNull;
 
 public class SearchUserItem extends SimpleRecyclerItem {
     @NonNull
-    public final ApiFollow.Follow data;
+    public final ApiAtUser data;
 
-    public SearchUserItem(@NonNull ApiFollow.Follow data) {
-        this.data = data;
+    public SearchUserItem(@NonNull ApiAtUser user) {
+        this.data = user;
     }
 
     @Override

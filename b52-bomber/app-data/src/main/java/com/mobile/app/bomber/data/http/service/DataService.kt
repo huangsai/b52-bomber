@@ -195,11 +195,15 @@ interface DataService {
             @Path("videoid") videoId: Long
     ): Call<ApiVideoById>
 
-    @GET("/video/user/searchuser/{keyword}/")
-    fun searchUsers(@Path("keyword") keyword: String): Call<ApiAtUser>
+    @GET("/user/searchuser/{keyword}/")
+    fun searchTikUsers(@Path("keyword") keyword: String): Call<ApiAtUser>
 
     @POST("/video/postvideoplayduration/")
     fun playDuration(@Body body: ApiDurationReq): Call<Nope>
+
+    @GET("/video/user/searchuser/{keyword}/")
+    fun searchUsers(@Path("keyword") keyword: String): Call<ApiAtUser>
+
 
     @POST("/video/postSearchVideoUser/{uid}/{keyword}/{page}/{size}")
     fun searchVideo(
