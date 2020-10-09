@@ -32,6 +32,7 @@ buildscript {
 allprojects { project ->
 
     repositories {
+        mavenLocal()
         google()
         jcenter()
         mavenCentral()
@@ -41,7 +42,6 @@ allprojects { project ->
         maven { url "https://jitpack.io" }
         maven { url "http://192.168.2.126:8081/repository/maven-releases/" }
         maven { url "http://192.168.2.126:8081/repository/maven-snapshots/" }
-        mavenLocal()
 
         flatDir {
             dirs 'libs'
