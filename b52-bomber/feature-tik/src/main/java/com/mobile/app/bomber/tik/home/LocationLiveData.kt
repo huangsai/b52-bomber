@@ -2,15 +2,17 @@ package com.mobile.app.bomber.tik.home
 
 import android.Manifest.permission
 import android.content.Context
+import android.content.pm.PackageManager
 import android.location.*
 import android.os.Bundle
 import androidx.annotation.RequiresPermission
 import androidx.lifecycle.LiveData
-import com.mobile.guava.android.mvvm.AndroidX
 import com.mobile.app.bomber.runner.base.PrefsManager
+import com.mobile.guava.android.mvvm.AndroidX
 import timber.log.Timber
 import java.io.IOException
 import java.util.*
+
 object LocationLiveData : LiveData<Location>(), LocationListener {
 
     private val manager by lazy {
@@ -38,7 +40,14 @@ object LocationLiveData : LiveData<Location>(), LocationListener {
         if (provider.isEmpty()) {
             Timber.tag("LocationLiveData").d("没有可用的位置提供器")
         } else {
-            manager.requestLocationUpdates(provider, 3600_000L, 5_000.00f, this)
+            if (
+                    AndroidX.myApp.checkCallingOrSelfPermission(permission.ACCESS_FINE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED &&
+                    AndroidX.myApp.checkCallingOrSelfPermission(permission.ACCESS_COARSE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED
+            ) {
+                manager.requestLocationUpdates(provider, 3600_000L, 5_000.00f, this)
+            }
         }
     }
 
