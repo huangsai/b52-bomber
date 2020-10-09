@@ -44,9 +44,11 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
     protected ApiUser mApiUser;
     private List<String> indexTitle = new ArrayList<>();
     private long userId;
+    private static long selfId;
 
-    public static UserDetailFragment newInstance(long userId) {
+    public static UserDetailFragment newInstance(long userId,long selfID) {
         Values.INSTANCE.put("UserDetailFragment_userId", userId);
+        selfId = selfID;
         return new UserDetailFragment();
     }
 
@@ -66,7 +68,6 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
     @Override
     public void onResume() {
         super.onResume();
-        userId = Values.INSTANCE.take("UserDetailFragment_userId");
         loadData();
     }
 
@@ -80,6 +81,9 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
 
         indexTitle.add("作品0");
         indexTitle.add("喜欢0");
+        if (selfId == 2){
+            userId = PrefsManager.INSTANCE.getUserId();
+        }
         MyAdapter adapter = new MyAdapter(requireActivity(), userId, this);
         binding.viewPager.setAdapter(adapter);
         binding.viewPager.setOffscreenPageLimit(2);
@@ -119,6 +123,9 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
 
     private void getUserInfo() {
         if (PrefsManager.INSTANCE.isLogin()) {
+            if (selfId == 2){
+                userId = PrefsManager.INSTANCE.getUserId();
+            }
             meViewModel.getUserInfo(userId).observe(getViewLifecycleOwner(), apiUserSource -> {
                 if (binding.swipeRefresh.isRefreshing()) binding.swipeRefresh.setRefreshing(false);
                 if (apiUserSource instanceof Source.Success) {
@@ -163,6 +170,9 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
 
     private void getUserCount() {
         if (PrefsManager.INSTANCE.isLogin()) {
+            if (selfId == 2){
+                userId = PrefsManager.INSTANCE.getUserId();
+            }
             meViewModel.getUserCount(userId).observe(getViewLifecycleOwner(), apiUserCountSource -> {
                 if (binding.swipeRefresh.isRefreshing()) binding.swipeRefresh.setRefreshing(false);
                 if (apiUserCountSource instanceof Source.Success) {
