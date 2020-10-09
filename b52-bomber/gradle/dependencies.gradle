@@ -60,8 +60,8 @@ buildscript {
                 'fabric'           : '1.4.8',
                 'store'            : '4.0.0-alpha07',
                 'theGuava'         : '0.2.0',
-                'theExt'           : '0.0.1',
-                'theSdk'           : '0.0.1',
+                'theExt'           : '0.0.2',
+                'theSdk'           : '0.0.2',
                 'pacificAdapter'   : '3.0.3',
                 'exoplayer'        : '2.12.0',
 
