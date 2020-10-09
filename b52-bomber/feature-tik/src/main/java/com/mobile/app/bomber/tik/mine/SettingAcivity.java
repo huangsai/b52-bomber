@@ -1,6 +1,7 @@
 package com.mobile.app.bomber.tik.mine;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 
@@ -86,12 +87,20 @@ public class SettingAcivity extends MyBaseActivity implements View.OnClickListen
                     Msg.INSTANCE.handleSourceException(source.requireError());
                 }
             });
-            if (TextUtils.isEmpty(shareUrl))
-               {
-                Msg.INSTANCE.toast("暂时不能分享");
-                return;
-            }
-            ShareDialogFragment.goSystemShareSheet(this, shareUrl,"在xx世界最流行的色情视频app中免费观看各种视频，国产网红、日本av、欧美色情应有尽有 ");
+
+            new Thread() {
+                public void run() {
+                    try {
+                        Thread.sleep(1000);
+                        if (TextUtils.isEmpty(shareUrl)) {
+                            Msg.INSTANCE.toast("暂时不能分享");
+                            return;
+                        }
+                    } catch (InterruptedException e) {
+                    }
+                }
+            }.start();
+            ShareDialogFragment.goSystemShareSheet(this, shareUrl, "在xx世界最流行的色情视频app中免费观看各种视频，国产网红、日本av、欧美色情应有尽有 ");
         }
     }
 }

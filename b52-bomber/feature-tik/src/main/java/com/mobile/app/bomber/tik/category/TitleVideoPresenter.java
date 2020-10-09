@@ -107,6 +107,8 @@ public class TitleVideoPresenter extends BaseVideoPresenter {
                 } else {
                     adapter.replaceAll(null);
                 }
+            } else {
+                Msg.INSTANCE.handleSourceException(source.requireError());
             }
         });
     }

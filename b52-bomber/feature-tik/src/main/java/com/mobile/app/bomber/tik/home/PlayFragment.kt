@@ -5,6 +5,7 @@ import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.text.TextUtils
 import android.text.style.StyleSpan
 import android.view.*
@@ -219,10 +220,14 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
             R.id.layout_link -> chrome(video.adUrl)
             R.id.txt_share -> {
                 shareAppURl()
-                if (TextUtils.isEmpty(shareURl)) {
-                    Msg.toast("暂时不能分享")
-                    return
-                }
+                Handler().postDelayed({
+                    //doSomethingHere()
+                    if (TextUtils.isEmpty(shareURl)) {
+                        Msg.toast("暂时不能分享")
+                        return@postDelayed
+                    }
+                }, 1000)
+
                 ShareDialogFragment.goSystemShareSheet(requireActivity(), shareURl, "在xx世界最流行的色情视频app中免费观看各种视频，国产网红、日本av、欧美色情应有尽有。")
             }
             R.id.txt_liked -> requireActivity().requireLogin(ActivityResultCallback {
