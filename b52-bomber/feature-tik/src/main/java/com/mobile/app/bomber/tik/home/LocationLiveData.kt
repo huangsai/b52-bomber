@@ -11,7 +11,6 @@ import com.mobile.app.bomber.runner.base.PrefsManager
 import timber.log.Timber
 import java.io.IOException
 import java.util.*
-
 object LocationLiveData : LiveData<Location>(), LocationListener {
 
     private val manager by lazy {
@@ -66,7 +65,7 @@ object LocationLiveData : LiveData<Location>(), LocationListener {
         return locationShowStr
     }
 
-    override fun onLocationChanged(location: Location?) {
+    override fun onLocationChanged(location: Location) {
         location?.let {
             PrefsManager.setLocation(it)
             postValue(it)
@@ -77,11 +76,11 @@ object LocationLiveData : LiveData<Location>(), LocationListener {
         Timber.tag("LocationLiveData").d("onStatusChanged")
     }
 
-    override fun onProviderEnabled(provider: String?) {
+    override fun onProviderEnabled(provider: String) {
         Timber.tag("LocationLiveData").d("onProviderEnabled")
     }
 
-    override fun onProviderDisabled(provider: String?) {
+    override fun onProviderDisabled(provider: String) {
         Timber.tag("LocationLiveData").d("onProviderDisabled")
     }
 }

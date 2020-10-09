@@ -1,6 +1,11 @@
 package com.mobile.app.bomber.common.base;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.ActivityResultRegistry;
+import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
@@ -10,7 +15,11 @@ import com.mobile.guava.android.mvvm.AndroidX;
 import com.mobile.guava.android.mvvm.BaseActivity;
 import com.mobile.guava.jvm.coroutines.Bus;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public abstract class MyBaseActivity extends BaseActivity {
+
+    private final AtomicInteger mNextLocalRequestCode = new AtomicInteger();
 
     public final ActivityResultContracts.RequestMultiplePermissions permissionsContract =
             new ActivityResultContracts.RequestMultiplePermissions();
@@ -68,6 +77,17 @@ public abstract class MyBaseActivity extends BaseActivity {
                 .disallowAddToBackStack()
                 .add(containerViewId, fragment, fragment.getClass().getSimpleName())
                 .commit();
+    }
+
+    @NonNull
+    public final <I, O> ActivityResultLauncher<I> registerForActivityResult2(
+            @NonNull final ActivityResultContract<I, O> contract,
+            @NonNull final ActivityResultCallback<O> callback) {
+        return getActivityResultRegistry().register(
+                "activity_rq#" + mNextLocalRequestCode.getAndIncrement(),
+                contract,
+                callback
+        );
     }
 
     @Override

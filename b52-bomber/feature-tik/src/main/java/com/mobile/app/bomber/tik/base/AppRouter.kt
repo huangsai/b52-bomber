@@ -19,7 +19,8 @@ fun FragmentActivity.requireLogin(callback: ActivityResultCallback<ActivityResul
     if (PrefsManager.isLogin()) {
         callback.onActivityResult(okResult)
     } else {
-        registerForActivityResult((this as MyBaseActivity).startActivityContract, callback)
+        (this as MyBaseActivity)
+                .registerForActivityResult2(startActivityContract, callback)
                 .launch(Intent(this, LoginActivity::class.java))
     }
 }
