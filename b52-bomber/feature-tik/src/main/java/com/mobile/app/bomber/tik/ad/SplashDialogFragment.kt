@@ -27,7 +27,8 @@ import com.mobile.app.bomber.common.base.tool.SingleClick
 import com.mobile.app.bomber.tik.databinding.FragmentSplashDialogBinding
 import java.util.concurrent.TimeUnit
 
-class SplashDialogFragment : BaseAppCompatDialogFragment(), View.OnClickListener, RequestListener<Drawable> {
+class SplashDialogFragment : BaseAppCompatDialogFragment(), View.OnClickListener,
+        RequestListener<Drawable> {
     private var _binding: FragmentSplashDialogBinding? = null
     private val binding get() = _binding!!
 

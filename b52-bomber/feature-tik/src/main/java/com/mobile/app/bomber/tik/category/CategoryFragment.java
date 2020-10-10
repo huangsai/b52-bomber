@@ -59,7 +59,7 @@ public class CategoryFragment extends MyBaseFragment implements View.OnClickList
         binding.recycler.setHasFixedSize(true);
         binding.recycler.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.recycler.setAdapter(adapter);
-//        binding.imgSearch.setOnClickListener(this);
+        // binding.imgSearch.setOnClickListener(this);
         binding.layoutRefresh.setOnRefreshListener(this);
         return binding.getRoot();
     }
@@ -90,7 +90,7 @@ public class CategoryFragment extends MyBaseFragment implements View.OnClickList
         hotVideoPresenter.onRefresh();
         titleVideoPresenter.onRefresh();
 
-//        discoveryPresenter.onRefresh();
+        // discoveryPresenter.onRefresh();
         rankPresenter.onRefresh();
     }
 
@@ -111,9 +111,9 @@ public class CategoryFragment extends MyBaseFragment implements View.OnClickList
         titleVideoPresenter = new TitleVideoPresenter(this);
         list.add(titleVideoPresenter);
 
-//        list.add(new TitlePresenter("发现精彩", R.drawable.fl_faxianjingcai));
-//        discoveryPresenter = new DiscoveryVideoPresenter(this);
-//        list.add(discoveryPresenter);
+        // list.add(new TitlePresenter("发现精彩", R.drawable.fl_faxianjingcai));
+        // discoveryPresenter = new DiscoveryVideoPresenter(this);
+        // list.add(discoveryPresenter);
 
         list.add(new TitlePresenter("人气榜", R.drawable.fl_renqibang));
         rankPresenter = new RankPresenter(this);

@@ -1,13 +1,11 @@
 package com.mobile.app.bomber.tik.base
 
 import android.app.Activity
-import android.util.Log
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
-import com.mobile.app.bomber.data.http.entities.DECODE_URL
 import com.bumptech.glide.request.RequestOptions
-import com.mobile.ext.glide.GlideApp
 import com.mobile.app.bomber.tik.R
+import com.mobile.ext.glide.GlideApp
 
 private val sharedProfileRequestOptions by lazy {
     RequestOptions()
@@ -29,10 +27,9 @@ fun Fragment.loadProfile(url: String?, imageView: ImageView) {
             .into(imageView)
 }
 
+@Deprecated("直接使用url本身", ReplaceWith("url"))
 fun decodeImgUrl(url: String?): String {
     return url.toString()
-
-//    return "${DECODE_URL}/videodecode?videourl=${url}&download=0"
 }
 
 
