@@ -166,4 +166,5 @@ dependencies {
     implementation dep.company.guavaMvvm
 
     implementation dep.company.extGlide
+    implementation dep.company.extRxjava3
 }

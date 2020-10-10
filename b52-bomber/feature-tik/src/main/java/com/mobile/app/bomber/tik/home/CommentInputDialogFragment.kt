@@ -20,7 +20,6 @@ import com.linkedin.android.spyglass.tokenization.QueryToken
 import com.linkedin.android.spyglass.tokenization.interfaces.QueryTokenReceiver
 import com.linkedin.android.spyglass.ui.MentionsEditText
 import com.mobile.app.bomber.common.base.Msg
-import com.mobile.app.bomber.common.base.rxbinding.RxView
 import com.mobile.app.bomber.common.base.tool.SingleClick
 import com.mobile.app.bomber.data.http.entities.ApiComment
 import com.mobile.app.bomber.data.http.entities.ApiVideo
@@ -34,6 +33,7 @@ import com.mobile.app.bomber.tik.base.views.MyKeyboardHelper
 import com.mobile.app.bomber.tik.databinding.FragmentCommentInputDialogBinding
 import com.mobile.app.bomber.tik.home.items.AtUserItem
 import com.mobile.app.bomber.tik.home.items.MyAtUser
+import com.mobile.ext.rxjava3.binding.RxView
 import com.mobile.guava.android.ime.ImeUtils
 import com.mobile.guava.android.ui.view.expandable.ExpandableLayout2
 import com.mobile.guava.android.ui.view.text.backspace
@@ -44,7 +44,6 @@ import com.pacific.adapter.AdapterImageLoader
 import com.pacific.adapter.AdapterUtils
 import com.pacific.adapter.AdapterViewHolder
 import com.pacific.adapter.RecyclerAdapter
-import com.pacific.adapter.AdapterUtils.getHolder
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.Disposable
 import kotlinx.coroutines.Dispatchers
@@ -337,7 +336,6 @@ class CommentInputDialogFragment : BaseBottomSheetDialogFragment(), View.OnClick
     }
 
     private fun searchUsers(keyword: String) {
-        Timber.d("searchUsers-----%s", keyword)
         binding.progress.visibility = View.VISIBLE
         lifecycleScope.launch(Dispatchers.IO) {
             val users = atUsers.filter { keyword.contains(it.username) }

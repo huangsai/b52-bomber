@@ -50,5 +50,4 @@ public abstract class MyBaseViewModel extends ViewModel {
 
     @Inject
     protected MovieRepository movieRepository;
-
 }
