@@ -6,12 +6,12 @@ import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.viewModels
 import com.google.android.exoplayer2.util.Util
-import com.mobile.app.bomber.common.base.tool.isLandscape
-import com.mobile.app.bomber.common.base.tool.requestNormalScreenWithPortrait
 import com.mobile.app.bomber.data.http.entities.ApiMovie
 import com.mobile.app.bomber.movie.MovieX
 import com.mobile.app.bomber.movie.databinding.MovieActivityPlayerBinding
 import com.mobile.app.bomber.movie.player.exo.ExoPlayerX
+import com.mobile.guava.android.context.isLandscape
+import com.mobile.guava.android.context.requestNormalScreenWithPortrait
 import com.mobile.guava.android.mvvm.BaseActivity
 import com.mobile.guava.android.mvvm.newStartActivity
 import com.mobile.guava.data.Values

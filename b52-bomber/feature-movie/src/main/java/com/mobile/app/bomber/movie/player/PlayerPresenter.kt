@@ -12,14 +12,14 @@ import com.github.rubensousa.previewseekbar.exoplayer.PreviewTimeBar
 import com.google.android.exoplayer2.ExoPlaybackException
 import com.google.android.exoplayer2.PlaybackParameters
 import com.google.android.exoplayer2.Player
-import com.mobile.app.bomber.common.base.tool.isLandscape
-import com.mobile.app.bomber.common.base.tool.requestFullScreenWithLandscape
 import com.mobile.app.bomber.movie.R
 import com.mobile.app.bomber.movie.databinding.MovieActivityPlayerBinding
 import com.mobile.app.bomber.movie.player.exo.ExoPlayerX
 import com.mobile.app.bomber.movie.player.exo.GlideThumbnailTransformation
 import com.mobile.app.bomber.movie.player.exo.TAG_EXO_PLAYER
 import com.mobile.ext.glide.GlideApp
+import com.mobile.guava.android.context.isLandscape
+import com.mobile.guava.android.context.requestFullScreenWithLandscape
 import com.mobile.guava.android.mvvm.AndroidX
 import com.mobile.guava.data.safeToFloat
 import com.pacific.adapter.AdapterViewHolder
