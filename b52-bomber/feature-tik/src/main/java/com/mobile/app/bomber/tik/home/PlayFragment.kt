@@ -23,12 +23,10 @@ import com.google.android.exoplayer2.ExoPlaybackException
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.source.MediaSource
-import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.mobile.ext.glide.GlideApp
 import com.mobile.app.bomber.common.base.Msg
 import com.mobile.app.bomber.common.base.MyBaseFragment
 import com.mobile.app.bomber.common.base.tool.SingleClick
-import com.mobile.app.bomber.data.http.entities.ApiDownLoadUrl
 import com.mobile.app.bomber.data.http.entities.ApiVideo
 import com.mobile.guava.data.Values
 import com.mobile.app.bomber.runner.RunnerX
@@ -421,7 +419,7 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
         if (!markedPlayDuration) {
             markedPlayDuration = true
             lifecycleScope.launch(Dispatchers.IO) {
-                val source = model.playDuration(video.videoId, duration)
+                val source = model.playDuration(video.videoId, video.adId, duration)
                 Timber.d(source.toString())
             }
         }

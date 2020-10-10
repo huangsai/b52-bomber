@@ -515,7 +515,9 @@ data class ApiDurationReq(
         @Json(name = "deviceId") val deviceId: String,
         @Json(name = "channelId") val channelId: Int,
         @Json(name = "videoId") val videoId: Long,
-        @Json(name = "duration") val duration: Long
+        @Json(name = "duration") val duration: Long?,
+        @Json(name = "aid") val aid: Long
+
 )
 
 @JsonClass(generateAdapter = true)
