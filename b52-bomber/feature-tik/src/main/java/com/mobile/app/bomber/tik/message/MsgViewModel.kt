@@ -1,10 +1,12 @@
 package com.mobile.app.bomber.tik.message
 
+import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import com.mobile.app.bomber.common.base.MyBaseViewModel
 import com.mobile.app.bomber.data.DataX
 import com.mobile.app.bomber.data.http.entities.*
+import com.mobile.guava.android.ensureWorkThread
 import com.mobile.guava.jvm.domain.Source
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
@@ -24,6 +26,11 @@ class MsgViewModel @Inject constructor() : MyBaseViewModel() {
 
     fun commentList(pager: Pager): LiveData<Source<List<ApiCommentList.Item>>> {
         return flow { emit(msgRepository.commentList(pager)) }
+                .asLiveData(Dispatchers.IO)
+    }
+
+    fun postUserMsg(msgtype: Int, timestemp: Int): LiveData<Source<List<ApiUsermsg.Item>>> {
+        return flow { emit(msgRepository.postUserMsg(msgtype, timestemp)) }
                 .asLiveData(Dispatchers.IO)
     }
 

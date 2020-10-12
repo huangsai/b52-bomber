@@ -1,6 +1,7 @@
 package com.mobile.app.bomber.tik.message;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.mobile.app.bomber.common.base.Msg;
 import com.mobile.app.bomber.data.db.TikSearchKeyDao;
+import com.mobile.app.bomber.data.http.entities.ApiUsermsg;
+import com.mobile.app.bomber.tik.base.AppRouterUtils;
+import com.mobile.guava.jvm.domain.Source;
 import com.pacific.adapter.AdapterImageLoader;
 import com.pacific.adapter.AdapterViewHolder;
 import com.pacific.adapter.OnDataSetChanged;
@@ -39,10 +43,12 @@ public class MsgFragment extends TopMainFragment implements View.OnClickListener
     private final Pager pager = new Pager();
     private FragmentMsgBinding binding;
     private EndlessRecyclerViewScrollListener endless;
+    protected MsgViewModel model;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        model = AppRouterUtils.viewModels(this, MsgViewModel.class);
         adapter.setOnClickListener(this);
         adapter.setOnDataSetChanged(this);
         adapter.setImageLoader(this);
@@ -151,14 +157,25 @@ public class MsgFragment extends TopMainFragment implements View.OnClickListener
     }
 
     private void load() {
-        List<MsgItem> item = new ArrayList<>();
-        MsgItem item1 = new MsgItem("1111");
-        item.add(item1);
-        adapter.replaceAll(item);
+//        List<ApiUsermsg.Item> item = new ArrayList<>();
+//        MsgItem item1 = new MsgItem();
+//        item.add(item1);
+//        adapter.replaceAll(item);
 
-       //消息提醒不需要分页加载
-       // 调用接口 -》获取数据 -》存入数据库-》
-        binding.layoutRefresh.setRefreshing(false);
+        //消息提醒不需要分页加载
+        // 调用接口 -》获取数据 -》存入数据库-》
+        model.postUserMsg(1, 0).observe(getViewLifecycleOwner(), source -> {
+            if (source instanceof Source.Success) {
+                List<ApiUsermsg.Item> list = source.requireData();
+                Log.i("list",list.toString());
+                //adapter.addAll(list);
+            } else {
+                Msg.INSTANCE.handleSourceException(source.requireError());
+            }
+            binding.layoutRefresh.setRefreshing(false);
+        });
+
+
     }
 
     public static MsgFragment newInstance(int position) {

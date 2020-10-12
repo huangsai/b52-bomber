@@ -72,6 +72,25 @@ class MsgRepository @Inject constructor(
             errorSource(e)
         }
     }
+
+    suspend fun postUserMsg(msgtype: Int, timestemp: Int): Source<List<ApiUsermsg.Item>> {
+        if (!appPrefsManager.isLogin()) {
+            return Source.Error(sourceException403)
+        }
+        val req = ApipostUserMsg(
+                msgtype,
+                timestemp,
+                15,
+                token,
+        )
+        return try {
+            dataService.postUserMsg(req).toSource(){
+                it.items.orEmpty()
+            }
+        } catch (e: Exception) {
+            errorSource(e)
+        }
+    }
 }
 
 
