@@ -27,7 +27,6 @@ fun Fragment.loadProfile(url: String?, imageView: ImageView) {
             .into(imageView)
 }
 
-@Deprecated("直接使用url本身", ReplaceWith("url"))
 fun decodeImgUrl(url: String?): String {
     return url.toString()
 }
