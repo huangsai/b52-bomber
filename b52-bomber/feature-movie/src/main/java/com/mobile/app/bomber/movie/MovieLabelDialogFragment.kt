@@ -18,7 +18,7 @@ class MovieLabelDialogFragment : BaseAppCompatDialogFragment(), View.OnClickList
 
     companion object {
         @JvmStatic
-        fun newInstance(labels: ArrayList<String>): MovieLabelDialogFragment = MovieLabelDialogFragment().apply {
+        fun newInstance(labels: ArrayList<String>) = MovieLabelDialogFragment().apply {
             Values.put("MovieLabelDialogFragment_labels", labels)
         }
     }

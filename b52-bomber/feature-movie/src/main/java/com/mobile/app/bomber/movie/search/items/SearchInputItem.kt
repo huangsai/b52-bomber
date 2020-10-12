@@ -23,5 +23,4 @@ class SearchInputItem(val data: String) : SimpleRecyclerItem() {
     override fun getLayout(): Int {
         return R.layout.movie_item_search_input
     }
-
 }

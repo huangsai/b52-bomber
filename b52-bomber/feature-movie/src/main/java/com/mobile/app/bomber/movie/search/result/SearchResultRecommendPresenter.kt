@@ -16,11 +16,12 @@ import com.pacific.adapter.AdapterViewHolder
 import com.pacific.adapter.RecyclerAdapter
 import com.pacific.adapter.SimpleRecyclerItem
 
-class SearchResultRecommendPresenter(private var activity: SearchActivity) : SimpleRecyclerItem(), View.OnClickListener, AdapterImageLoader {
+class SearchResultRecommendPresenter(
+        private val activity: SearchActivity
+) : SimpleRecyclerItem(), View.OnClickListener, AdapterImageLoader {
     private var _binding: MovieItemSearchResultRecommendBinding? = null
     private val binding get() = _binding!!
-
-    private var adapter = RecyclerAdapter()
+    private val adapter = RecyclerAdapter()
 
     override fun bind(holder: AdapterViewHolder) {
         _binding = holder.binding(MovieItemSearchResultRecommendBinding::bind)

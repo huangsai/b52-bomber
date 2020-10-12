@@ -6,12 +6,10 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.mobile.app.bomber.common.base.Msg
-import com.mobile.app.bomber.data.http.entities.ApiMovie
 import com.mobile.app.bomber.data.http.entities.ApiMovieBanner
 import com.mobile.app.bomber.movie.MovieViewModel
 import com.mobile.app.bomber.movie.R
 import com.mobile.app.bomber.movie.databinding.MovieFragmentMovieBinding
-import com.mobile.app.bomber.movie.player.PlayerActivity
 import com.mobile.guava.android.mvvm.lifecycle.SimplePresenter
 import com.mobile.guava.jvm.domain.Source
 import com.mobile.guava.jvm.extension.exhaustive
