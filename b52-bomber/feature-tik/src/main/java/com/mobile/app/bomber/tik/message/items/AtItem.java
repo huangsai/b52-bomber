@@ -2,6 +2,7 @@ package com.mobile.app.bomber.tik.message.items;
 
 import androidx.annotation.NonNull;
 
+import com.mobile.app.bomber.data.http.entities.ApiUsermsg;
 import com.pacific.adapter.AdapterViewHolder;
 import com.pacific.adapter.SimpleRecyclerItem;
 import com.mobile.app.bomber.data.http.entities.ApiAtList;
@@ -14,18 +15,18 @@ import org.jetbrains.annotations.NotNull;
 public class AtItem extends SimpleRecyclerItem {
 
     @NonNull
-    public final ApiAtList.Item data;
+    public final ApiUsermsg.Item data;
 
-    public AtItem(@NonNull ApiAtList.Item data) {
+    public AtItem(@NonNull ApiUsermsg.Item data) {
         this.data = data;
     }
 
     @Override
     public void bind(@NotNull AdapterViewHolder holder) {
         ItemAtBinding binding = holder.binding(ItemAtBinding::bind);
-        binding.txtTitle.setText((data.getUsername()));
+        binding.txtTitle.setText((data.getFromuserinfo().get(0).getName()));
         binding.txtContent.setText((data.getContent()));
-        binding.txtTime.setText(String.valueOf(data.getTime()));
+        binding.txtTime.setText(String.valueOf(data.getCreatetime()));
 
         holder.attachImageLoader(R.id.img_profile);
         holder.attachImageLoader(R.id.img_cover);

@@ -685,10 +685,11 @@ data class ApiUsermsg(
             @Json(name = "Fromuserinfo") val fromuserinfo: List<Fromuserinfo>,
             @Json(name = "Giveliketype") val giveliketype: Int,
             @Json(name = "Id") val id: Int,
-            @Json(name = "Isfollow") val isfollow: Int,
+            @Json(name = "Isfollow") var isfollow: Int,
             @Json(name = "Msgtype") val msgtype: Int,
             @Json(name = "Uid") val uid: Int,
-            @Json(name = "Videoid") val videoid: Int
+            @Json(name = "Videoid") val videoid: Int,
+            @Json(name = "Cover") val cover: String
     ) {
 
         @JsonClass(generateAdapter = true)

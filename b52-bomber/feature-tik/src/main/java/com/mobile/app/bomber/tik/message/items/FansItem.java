@@ -4,6 +4,7 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 
+import com.mobile.app.bomber.data.http.entities.ApiUsermsg;
 import com.pacific.adapter.AdapterViewHolder;
 import com.pacific.adapter.SimpleRecyclerItem;
 import com.mobile.app.bomber.data.http.entities.ApiFollow;
@@ -21,24 +22,24 @@ import java.util.List;
 public class FansItem extends SimpleRecyclerItem {
 
     @NonNull
-    public final ApiFollow.Follow data;
+    public final ApiUsermsg.Item data;
     private final String time;
 
-    public FansItem(@NonNull ApiFollow.Follow data) {
+    public FansItem(@NonNull ApiUsermsg.Item data) {
         this.data = data;
-        this.time = new SimpleDateFormat("MM-dd").format(new Date(data.getFollowTime()));
+        this.time = new SimpleDateFormat("MM-dd").format(new Date(data.getCreatetime()));
     }
 
     @Override
     public void bind(@NotNull AdapterViewHolder holder) {
         ItemFansBinding binding = holder.binding(ItemFansBinding::bind);
-        binding.usernameTv.setText(data.getUsername());
+        binding.usernameTv.setText(data.getFromuserinfo().get(0).getName());
         binding.descTv.setVisibility(View.VISIBLE);
         binding.descTv.setText("他关注了你");
         binding.timeTv.setVisibility(View.VISIBLE);
         binding.timeTv.setText(time);
-        binding.statusBtn.setText(data.isFollowing() ? "互相关注" : "回关");
-        binding.statusBtn.setSelected(data.isFollowing());
+        binding.statusBtn.setText(data.getIsfollow()==2 ? "互相关注" : "回关");
+        binding.statusBtn.setSelected(data.getIsfollow()==2);
         holder.attachImageLoader(R.id.img_profile);
         holder.attachOnClickListener(R.id.status_btn);
     }
@@ -46,8 +47,8 @@ public class FansItem extends SimpleRecyclerItem {
     @Override
     public void bindPayloads(@NotNull AdapterViewHolder holder, @Nullable List<?> payloads) {
         ItemFansBinding binding = holder.binding(ItemFansBinding::bind);
-        binding.statusBtn.setText(data.isFollowing() ? "互相关注" : "回关");
-        binding.statusBtn.setSelected(data.isFollowing());
+        binding.statusBtn.setText(data.getIsfollow()==2 ? "互相关注" : "回关");
+        binding.statusBtn.setSelected(data.getIsfollow()==2);
     }
 
     @Override

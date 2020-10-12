@@ -80,7 +80,7 @@ class MsgRepository @Inject constructor(
         val req = ApipostUserMsg(
                 msgtype,
                 timestemp,
-                15,
+                userId,
                 token,
         )
         return try {

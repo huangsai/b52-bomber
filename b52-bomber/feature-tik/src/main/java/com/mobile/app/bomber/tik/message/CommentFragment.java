@@ -36,13 +36,13 @@ public class CommentFragment extends BaseLikingFragment {
         if (id == R.id.img_cover) {
             holder = AdapterUtils.INSTANCE.getHolder(v);
             CommentItem item = holder.item();
-            PlayListActivity.start(getActivity(), item.data.getVideoId());
+            PlayListActivity.start(getActivity(), item.data.getVideoid());
         } else if (id == R.id.img_profile) {
             CommentItem item;
             holder = AdapterUtils.INSTANCE.getHolder(v);
             int index = holder.getBindingAdapterPosition();
             item = holder.item();
-            UserDetailActivity.start(getActivity(), item.data.getVideoId());
+            UserDetailActivity.start(getActivity(), item.data.getVideoid());
 
 //            Bundle bundle = new Bundle();
 //            video = new ApiVideo.Video(1, "111", item.data.getUId(), 1, 1, 1, null, null, 1, true, true, 1, null, null, "null", null, null, null);
@@ -55,13 +55,13 @@ public class CommentFragment extends BaseLikingFragment {
     public void load(@NotNull ImageView imageView, @NotNull AdapterViewHolder holder) {
         CommentItem item = holder.item();
         if (imageView.getId() == R.id.img_profile) {
-            GlideExtKt.loadProfile(this, item.data.getProfile(), imageView);
+            GlideExtKt.loadProfile(this, item.data.getFromuserinfo().get(0).getPic(), imageView);
             return;
         }
 
         if (imageView.getId() == R.id.img_cover) {
             GlideApp.with(this)
-                    .load(GlideExtKt.decodeImgUrl(item.data.getVideoImageUrl()))
+                    .load(GlideExtKt.decodeImgUrl(item.data.getCover()))
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .into(imageView);
             return;
@@ -72,19 +72,14 @@ public class CommentFragment extends BaseLikingFragment {
     protected void load() {
         if (!pager.isAvailable()) return;
 
-        model.commentList(pager).observe(getViewLifecycleOwner(), source -> {
+        model.postUserMsg(4,0).observe(getViewLifecycleOwner(), source -> {
             if (source instanceof Source.Success) {
                 List<CommentItem> list = source.requireData()
                         .stream()
                         .map(o -> new CommentItem(o))
                         .collect(Collectors.toList());
 
-
-                if (pager.isFirstPage(2)) {
-                    adapter.replaceAll(list);
-                } else {
-                    adapter.addAll(list);
-                }
+                adapter.replaceAll(list);
 
             } else {
                 Msg.INSTANCE.handleSourceException(source.requireError());

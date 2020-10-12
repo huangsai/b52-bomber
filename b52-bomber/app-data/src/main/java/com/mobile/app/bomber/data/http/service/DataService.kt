@@ -186,7 +186,7 @@ interface DataService {
     ): Call<ApiLikeList>
 
     //获取用户消息
-    @POST("/user/postusermsg/")
+    @POST("/user/postusermsg")
     fun postUserMsg(@Body body: ApipostUserMsg): Call<ApiUsermsg>
 
     @POST("/video/deletevideocomments/")

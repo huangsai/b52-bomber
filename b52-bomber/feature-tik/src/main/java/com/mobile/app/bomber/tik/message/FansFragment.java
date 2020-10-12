@@ -4,16 +4,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.pacific.adapter.AdapterUtils;
-import com.pacific.adapter.AdapterViewHolder;
-import com.mobile.app.bomber.data.http.entities.ApiFollow;
-import com.mobile.guava.jvm.domain.Source;
-
-import com.mobile.app.bomber.tik.R;
-import com.mobile.app.bomber.tik.base.GlideExtKt;
 import com.mobile.app.bomber.common.base.Msg;
 import com.mobile.app.bomber.common.base.tool.SingleClick;
+import com.mobile.app.bomber.data.http.entities.ApiUsermsg;
+import com.mobile.app.bomber.tik.R;
+import com.mobile.app.bomber.tik.base.GlideExtKt;
 import com.mobile.app.bomber.tik.message.items.FansItem;
+import com.mobile.guava.jvm.domain.Source;
+import com.pacific.adapter.AdapterUtils;
+import com.pacific.adapter.AdapterViewHolder;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -38,7 +37,7 @@ public class FansFragment extends BaseLikingFragment {
 
     @Override
     protected void load() {
-        model.fanList().observe(getViewLifecycleOwner(), source -> {
+        model.postUserMsg(1, 0).observe(getViewLifecycleOwner(), source -> {
             if (source instanceof Source.Success) {
                 List<FansItem> list = source.requireData()
                         .stream()
@@ -55,7 +54,7 @@ public class FansFragment extends BaseLikingFragment {
     @Override
     public void load(@NotNull ImageView imageView, @NotNull AdapterViewHolder holder) {
         FansItem item = holder.item();
-        GlideExtKt.loadProfile(this, item.data.getProfile(), imageView);
+        GlideExtKt.loadProfile(this, item.data.getFromuserinfo().get(0).getPic(), imageView);
     }
 
     @SingleClick
@@ -69,12 +68,16 @@ public class FansFragment extends BaseLikingFragment {
 
     private void followed(View view) {
         AdapterViewHolder holder = AdapterUtils.INSTANCE.getHolder(view);
-        ApiFollow.Follow data = holder.<FansItem>item().data;
+        ApiUsermsg.Item data = holder.<FansItem>item().data;
         final int position = holder.getBindingAdapterPosition();
-        final boolean oldIsFollowing = data.isFollowing();
-        model.follow(data.getFollowUid(), oldIsFollowing).observe(this, source -> {
+        final boolean oldIsFollowing = data.getIsfollow() == 1;
+        model.follow(data.getUid(), oldIsFollowing).observe(this, source -> {
             if (source instanceof Source.Success) {
-                data.setFollowing(!oldIsFollowing);
+                if (oldIsFollowing) {
+                    data.setIsfollow(2);
+                } else {
+                    data.setIsfollow(1);
+                }
                 adapter.notifyItemChanged(position, 0);
             } else {
                 Msg.INSTANCE.handleSourceException(source.requireError());
