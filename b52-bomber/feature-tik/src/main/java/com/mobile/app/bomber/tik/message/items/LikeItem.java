@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.mobile.app.bomber.data.http.entities.ApiUsermsg;
 import com.pacific.adapter.AdapterUtils;
 import com.pacific.adapter.AdapterViewHolder;
 import com.pacific.adapter.RecyclerAdapter;
@@ -37,15 +38,15 @@ public class LikeItem extends SimpleRecyclerItem implements View.OnClickListener
     private ItemLikeBinding binding;
 
     @NonNull
-    public final ApiLikeList.Item data;
+    public final ApiUsermsg.Item data;
 
-    public LikeItem(@NonNull ApiLikeList.Item data) {
+    public LikeItem(@NonNull ApiUsermsg.Item data) {
         this.data = data;
-        List<ApiLikeList.UserLikelist> at = data.getAt();
+        List<ApiUsermsg.Item.Fromuserinfo> at = data.getFromuserinfo();
         if (at == null || at.isEmpty()) {
             this.content = "点赞过你";
         } else {
-            this.content = "等" + data.getAt().size() + "人点赞过你";
+            this.content = "等" + data.getFromuserinfo().size() + "人点赞过你";
             if (at.size() > 3) {
                 at = at.subList(0, 3);
 
@@ -65,7 +66,7 @@ public class LikeItem extends SimpleRecyclerItem implements View.OnClickListener
         if (id == R.id.item_like_at) {
             holder = AdapterUtils.INSTANCE.getHolder(v);
             LikeItem.AtItem atItem = holder.item();
-            long uid = atItem.data.getUId();
+            long uid = atItem.data.getUid();
             UserDetailActivity.start(holder.activity(), uid);
             return;
         }
@@ -97,11 +98,11 @@ public class LikeItem extends SimpleRecyclerItem implements View.OnClickListener
             binding.recycler.setLayoutManager(linearLayoutManager);
             binding.recycler.setAdapter(adapter);
         }
-        ApiLikeList.UserLikelist img = data.getAt().get(0);
-        binding.txtTitle.setText(img.getUsername());
-        GlideExtKt.loadProfile(holder.activity(), img.getProfile(), binding.imgProfile);
+        ApiUsermsg.Item.Fromuserinfo img = data.getFromuserinfo().get(0);
+        binding.txtTitle.setText(img.getName());
+        GlideExtKt.loadProfile(holder.activity(), img.getPic(), binding.imgProfile);
         GlideApp.with(holder.activity())
-                .load(data.getVideoImage())
+                .load(data.getCover())
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(binding.imgCover);
         holder.attachOnClickListener(R.id.img_cover);
@@ -126,16 +127,16 @@ public class LikeItem extends SimpleRecyclerItem implements View.OnClickListener
     public static class AtItem extends SimpleRecyclerItem {
 
         @NonNull
-        public final ApiLikeList.UserLikelist data;
+        public final ApiUsermsg.Item.Fromuserinfo data;
 
-        public AtItem(@NonNull ApiLikeList.UserLikelist data) {
+        public AtItem(@NonNull ApiUsermsg.Item.Fromuserinfo data) {
             this.data = data;
         }
 
         @Override
         public void bind(@NotNull AdapterViewHolder holder) {
             ItemLikeAtBinding binding = holder.binding(ItemLikeAtBinding::bind);
-            GlideExtKt.loadProfile(holder.activity(), data.getProfile(), binding.itemLikeAt);
+            GlideExtKt.loadProfile(holder.activity(), data.getPic(), binding.itemLikeAt);
             holder.attachOnClickListener(R.id.item_like_at);
 
         }

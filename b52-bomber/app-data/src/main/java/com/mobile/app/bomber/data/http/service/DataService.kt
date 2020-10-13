@@ -185,6 +185,10 @@ interface DataService {
             @Path("size") pageSize: Int
     ): Call<ApiLikeList>
 
+    //获取用户消息
+    @POST("/user/postusermsg")
+    fun postUserMsg(@Body body: ApipostUserMsg): Call<ApiUsermsg>
+
     @POST("/video/deletevideocomments/")
     fun deleteComment(@Body body: ApiComment.ReqDelete): Call<Nope>
 

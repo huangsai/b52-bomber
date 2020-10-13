@@ -45,21 +45,25 @@ public class PlayListActivity extends MyBaseActivity implements View.OnClickList
         binding = ActivityPlayListBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         final long videoId = Values.INSTANCE.take("PlayListActivity_videoId");
-        final String videoJson = Values.INSTANCE.take("PlayListActivity_videoJson");
+
         if (videoId > 0) {
             binding.progress.setVisibility(View.VISIBLE);
             playPosition = 0;
             model = AppRouterUtils.viewModels(this, MsgViewModel.class);
             getVideoById(videoId);
-        } else if (videoJson != null && !videoJson.isEmpty()) {
-            playPosition = 0;
-            model = AppRouterUtils.viewModels(this, MsgViewModel.class);
-            parseVideoByJson(videoJson);
         } else {
-            playPosition = Values.INSTANCE.take("PlayListActivity_playPosition");
-            videos = Values.INSTANCE.take("PlayListActivity");
-            bindData();
+            final String videoJson = Values.INSTANCE.get("PlayListActivity_videoJson");
+            if (videoJson != null && !videoJson.isEmpty()) {
+                playPosition = 0;
+                model = AppRouterUtils.viewModels(this, MsgViewModel.class);
+                parseVideoByJson(videoJson);
+            } else {
+                playPosition = Values.INSTANCE.take("PlayListActivity_playPosition");
+                videos = Values.INSTANCE.take("PlayListActivity");
+                bindData();
+            }
         }
+
 
         Bus.INSTANCE.offer(AndroidX.BUS_DIALOG_CLOSE);
     }

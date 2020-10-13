@@ -39,7 +39,7 @@ import java.util.List;
 import timber.log.Timber;
 
 public class SearchActivity extends MyBaseActivity
-        implements View.OnClickListener, SearchTitleBarPresenter.Callback, SwipeRefreshLayout.OnRefreshListener  {
+        implements View.OnClickListener, SearchTitleBarPresenter.Callback, SwipeRefreshLayout.OnRefreshListener {
 
     private ActivitySearchBinding binding;
     private RecyclerAdapter recyclerAdapter = new RecyclerAdapter();
@@ -51,6 +51,7 @@ public class SearchActivity extends MyBaseActivity
     private FragmentSearchVideo fragmentSearchVideo;
     private FragmentSearchUser fragmentSearchUser;
     private Bundle bundle;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,7 +127,7 @@ public class SearchActivity extends MyBaseActivity
                     items.add(searchHistoryItem);
                 }
                 recyclerAdapter.replaceAll(items);
-            }else {
+            } else {
                 binding.layoutEmptyView.NoData.setVisibility(View.VISIBLE);
             }
         });
@@ -137,7 +138,8 @@ public class SearchActivity extends MyBaseActivity
      */
     private void initHotSearchData() {
         model.getHotKeyTop().observe(this, source -> {
-            if (binding.swipeRefreshSearch.isRefreshing()) binding.swipeRefreshSearch.setRefreshing(false);
+            if (binding.swipeRefreshSearch.isRefreshing())
+                binding.swipeRefreshSearch.setRefreshing(false);
             if (source instanceof Source.Success) {
                 List<String> hotKeys = source.requireData();
                 for (int i = 0; i < hotKeys.size(); i++) {
@@ -165,8 +167,12 @@ public class SearchActivity extends MyBaseActivity
         binding.swipeRefreshSearch.setEnabled(false);
         bundle.putString("keyword", keyword);
         fragmentSearchVideo.setArguments(bundle);
+        fragmentSearchUser.setArguments(bundle);
+
 //        Bus.INSTANCE.offer(RunnerX.BUS_SEARCH_RESULT);
         fragmentSearchVideo.onRefresh();
+        fragmentSearchUser.onRefresh();
+
         binding.layoutResultView.setVisibility(View.VISIBLE);
         binding.layoutSearchView.setVisibility(View.INVISIBLE);
         model.addKey(keyword).observe(
@@ -189,9 +195,9 @@ public class SearchActivity extends MyBaseActivity
             position = holder.getBindingAdapterPosition();
             item = holder.item();
             recyclerAdapter.remove(position);
-            if (recyclerAdapter.getAll().size()<1){
+            if (recyclerAdapter.getAll().size() < 1) {
                 binding.layoutEmptyView.NoData.setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 binding.layoutEmptyView.NoData.setVisibility(View.GONE);
             }
             model.deleteKey(item.data).observe(
@@ -213,7 +219,7 @@ public class SearchActivity extends MyBaseActivity
             binding.tvHistoryClear.setVisibility(View.INVISIBLE);
             if (recyclerAdapter != null)
                 binding.layoutEmptyView.NoData.setVisibility(View.VISIBLE);
-                recyclerAdapter.clear();
+            recyclerAdapter.clear();
 
         });
     }
@@ -229,8 +235,8 @@ public class SearchActivity extends MyBaseActivity
         if (binding.layoutResultView.getVisibility() == View.VISIBLE) {
             binding.layoutResultView.setVisibility(View.INVISIBLE);
             binding.layoutSearchView.setVisibility(View.VISIBLE);
-         } else {
-             finish();
+        } else {
+            finish();
         }
     }
 
@@ -242,7 +248,7 @@ public class SearchActivity extends MyBaseActivity
 
     @Override
     public void onRefresh() {
-         initHotSearchData();
+        initHotSearchData();
     }
 
     private static class FragmentTabAdapter extends FragmentStateAdapter {

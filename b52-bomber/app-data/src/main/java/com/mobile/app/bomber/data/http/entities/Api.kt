@@ -517,7 +517,14 @@ data class ApiDurationReq(
         @Json(name = "videoId") val videoId: Long,
         @Json(name = "duration") val duration: Long?,
         @Json(name = "aid") val aid: Long
+)
 
+@JsonClass(generateAdapter = true)
+data class ApipostUserMsg(
+        @Json(name = "msgtype") val msgtype: Int,
+        @Json(name = "timestemp") val timestemp: Int,
+        @Json(name = "uid") val uid: Long,
+        @Json(name = "fastkey") val fastkey: String,
 )
 
 @JsonClass(generateAdapter = true)
@@ -658,6 +665,40 @@ data class ApiMovie(
             @Json(name = "page") val page: Int,
             @Json(name = "size") val size: Int
     )
+}
+
+@JsonClass(generateAdapter = true)
+data class ApiUsermsg(
+        @Json(name = "RetCode") val retCode: Int,
+        @Json(name = "UserMsgObj") val items: List<Item>?
+) {
+
+    @JsonClass(generateAdapter = true)
+    data class Item(
+            @Json(name = "Atid") val atid: Int,
+            @Json(name = "Commentid") val commentid: Int,
+            @Json(name = "Commenttype") val commenttype: Int,
+            @Json(name = "Content") val content: String,
+            @Json(name = "Createtime") val createtime: Long,
+            @Json(name = "Followtype") val followtype: Int,
+            @Json(name = "Fromuid") val fromuid: Int,
+            @Json(name = "Fromuserinfo") val fromuserinfo: List<Fromuserinfo>,
+            @Json(name = "Giveliketype") val giveliketype: Int,
+            @Json(name = "Id") val id: Int,
+            @Json(name = "Isfollow") var isfollow: Int,
+            @Json(name = "Msgtype") val msgtype: Int,
+            @Json(name = "Uid") val uid: Int,
+            @Json(name = "Videoid") val videoid: Int,
+            @Json(name = "Cover") val cover: String
+    ) {
+
+        @JsonClass(generateAdapter = true)
+        data class Fromuserinfo(
+                @Json(name = "Name") val name: String,
+                @Json(name = "Pic") val pic: String,
+                @Json(name = "Uid") val uid: Int
+        )
+    }
 }
 
 //-------⬆⬆⬆⬆⬆⬆⬆⬆----长视频相关----⬆⬆⬆⬆⬆⬆⬆-----//

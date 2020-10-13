@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_user_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/black"
+
     android:orientation="vertical"
 
     >
@@ -11,28 +14,31 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="80dp"
+        android:minHeight="60dp"
         android:orientation="horizontal">
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
+
             android:id="@+id/heartImage"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_alignTop="@+id/line"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/font_20sp"
-            android:src="@drawable/default_profile"
+            app:shapeAppearanceOverlay="@style/CircleImageView"
+            tools:srcCompat="@drawable/default_profile"
 
             />
 
         <TextView
-            android:id="@+id/nofi_bottom"
+            android:id="@+id/nofi_nick"
             android:layout_width="wrap_content"
 
             android:layout_height="wrap_content"
             android:layout_below="@+id/nofi"
             android:layout_alignLeft="@+id/nofi"
-            android:layout_marginLeft="@dimen/font_20sp"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/font_10sp"
             android:layout_marginTop="8dp"
             android:layout_toRightOf="@+id/heartImage"
             android:gravity="left"
@@ -49,11 +55,11 @@
             android:layout_alignLeft="@+id/nofi"
             android:layout_marginLeft="@dimen/font_20sp"
             android:layout_toRightOf="@+id/heartImage"
-
             android:gravity="left"
             android:text="id:88888"
             android:textColor="#ffffff"
-            android:textSize="16dp" />
+            android:textSize="16dp"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/nofi_date"
@@ -68,7 +74,8 @@
             android:text="粉丝1"
             android:textAlignment="center"
             android:textColor="#ffffff"
-            android:textSize="16dp" />
+            android:textSize="16dp"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/fensi_count"
@@ -81,13 +88,14 @@
             android:layout_toRightOf="@+id/ids"
             android:gravity="center"
             android:text="粉丝: 2"
+
             android:textAlignment="center"
             android:textColor="#ffffff"
             android:textSize="14dp"
-            android:visibility="invisible" />
+            android:visibility="gone" />
 
         <TextView
-            android:id="@+id/fensi_image"
+            android:id="@+id/fensi_atten"
 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

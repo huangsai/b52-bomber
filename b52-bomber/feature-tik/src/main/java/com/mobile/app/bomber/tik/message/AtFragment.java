@@ -38,7 +38,7 @@ public class AtFragment extends BaseLikingFragment {
         if (id == R.id.img_cover) {
             holder = AdapterUtils.INSTANCE.getHolder(v);
             item = holder.item();
-            PlayListActivity.start(getActivity(), item.data.getVideoId());
+            PlayListActivity.start(getActivity(), item.data.getVideoid());
         } else if (id == R.id.img_profile) {
             holder = AdapterUtils.INSTANCE.getHolder(v);
             int index = holder.getBindingAdapterPosition();
@@ -46,7 +46,7 @@ public class AtFragment extends BaseLikingFragment {
 //            Bundle bundle = new Bundle();
 //            video = new ApiVideo.Video(1, "111", item.data.getUId(), 1, 1, 1, null, null, 1, true, true, 1, null, null, "null", null, null, null);
 //            bundle.putSerializable("video", video);
-            UserDetailActivity.start(getActivity(), item.data.getVideoId());
+            UserDetailActivity.start(getActivity(), item.data.getVideoid());
         }
     }
 
@@ -54,13 +54,13 @@ public class AtFragment extends BaseLikingFragment {
     public void load(@NotNull ImageView imageView, @NotNull AdapterViewHolder holder) {
         AtItem item = holder.item();
         if (imageView.getId() == R.id.img_profile) {
-            GlideExtKt.loadProfile(this, item.data.getProfile(), imageView);
+            GlideExtKt.loadProfile(this, item.data.getFromuserinfo().get(0).getPic(), imageView);
             return;
         }
 
         if (imageView.getId() == R.id.img_cover) {
             GlideApp.with(this)
-                    .load(GlideExtKt.decodeImgUrl(item.data.getVideoImageUrl()))
+                    .load(GlideExtKt.decodeImgUrl(item.data.getCover()))
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .into(imageView);
             return;
@@ -69,21 +69,15 @@ public class AtFragment extends BaseLikingFragment {
 
     @Override
     protected void load() {
-        if (!pager.isAvailable()) return;
 
-        model.atList(pager).observe(getViewLifecycleOwner(), source -> {
+        model.postUserMsg(3,0).observe(getViewLifecycleOwner(), source -> {
             if (source instanceof Source.Success) {
                 List<AtItem> list = source.requireData()
                         .stream()
                         .map(o -> new AtItem(o))
                         .collect(Collectors.toList());
 
-
-                if (pager.isFirstPage(2)) {
-                    adapter.replaceAll(list);
-                } else {
-                    adapter.addAll(list);
-                }
+                adapter.replaceAll(list);
 
             } else {
                 Msg.INSTANCE.handleSourceException(source.requireError());
