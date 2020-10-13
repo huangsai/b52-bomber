@@ -8,15 +8,22 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.mobile.app.bomber.common.base.RecyclerAdapterEmpty;
 import com.mobile.app.bomber.data.http.entities.ApiAtUser;
 import com.mobile.app.bomber.data.http.entities.ApiVideo;
+import com.mobile.app.bomber.data.http.entities.Pager;
 import com.mobile.app.bomber.runner.RunnerX;
 import com.mobile.app.bomber.tik.base.AppRouterUtils;
+import com.mobile.app.bomber.tik.mine.UserDetailActivity;
 import com.mobile.app.bomber.tik.search.items.SearchVideoItem;
+import com.mobile.guava.android.ui.view.recyclerview.EndlessRecyclerViewScrollListener;
 import com.mobile.guava.android.ui.view.recyclerview.LinearItemDecoration;
 import com.mobile.guava.android.ui.view.recyclerview.RecyclerViewUtilsKt;
 import com.mobile.guava.jvm.domain.Source;
+import com.pacific.adapter.AdapterUtils;
+import com.pacific.adapter.AdapterViewHolder;
 import com.pacific.adapter.RecyclerAdapter;
 
 import com.mobile.app.bomber.tik.R;
@@ -32,11 +39,17 @@ import java.util.List;
 
 import kotlin.Pair;
 
-public class FragmentSearchUser extends MyBaseFragment {
+public class FragmentSearchUser extends MyBaseFragment implements SwipeRefreshLayout.OnRefreshListener {
     private FragmentSearchUserBinding binding;
-    private RecyclerAdapter recyclerAdapter;
+    private RecyclerAdapterEmpty recyclerAdapter;
     private String result;
     private SearchViewModel model;
+    private AdapterViewHolder holder;
+
+    private SearchUserItem item;
+    private EndlessRecyclerViewScrollListener endless;
+
+    protected final Pager pager = new Pager();
 
     @Nullable
     @Override
@@ -52,26 +65,42 @@ public class FragmentSearchUser extends MyBaseFragment {
         binding.userRecycle.addItemDecoration(LinearItemDecoration.builder(requireContext()).bottomMargin(R.dimen.size_1dp).build());
         binding.userRecycle.setLayoutManager(layoutManager);
         model = AppRouterUtils.viewModels(this, SearchViewModel.class);
-        binding.layoutEmptyView.NoData.setVisibility(View.VISIBLE);
-        recyclerAdapter = new RecyclerAdapter();
+//        binding.layoutEmptyView.NoData.setVisibility(View.VISIBLE);
+        recyclerAdapter = new RecyclerAdapterEmpty();
+        recyclerAdapter.setEmptyView(binding.layoutEmptyView.NoData, binding.userRecycle);
         recyclerAdapter.setOnClickListener(v -> {
             if (v.getId() == R.id.layout_user_item) {
-                Msg.INSTANCE.toast("点击了用户条目");
+//                Msg.INSTANCE.toast("点击了用户条目");
+                holder = AdapterUtils.INSTANCE.getHolder(v);
+                item = holder.item();
+//                UserDetailActivity.start(getActivity(), item.data.get());
             }
         });
+
+
+        endless = new EndlessRecyclerViewScrollListener(
+                binding.userRecycle.getLayoutManager(),
+                (count, view) -> {
+                    if (pager.isAvailable()) {
+                        refreshData();
+                    }
+                    return null;
+                }
+        );
+
+
+        binding.userRecycle.addOnScrollListener(endless);
+        binding.layoutRefresh.setRefreshing(true);
+
+        binding.layoutRefresh.setOnRefreshListener(this);
+
         binding.userRecycle.setAdapter(recyclerAdapter);
     }
 
     private void refreshData() {
-//        List<SearchUserItem> items = new ArrayList<>();
-//        for (int i = 0; i < 5; i++) {
-//            items.add(new SearchUserItem(null));
-//        }
-//
-//        recyclerAdapter.replaceAll(items);
         Bundle bundle = getArguments();
         result = bundle.getString("keyword");
-        model.searchUserList(result).observe(this, source -> {
+        model.searchUserList(result).observe(getViewLifecycleOwner(), source -> {
             if (source instanceof Source.Success) {
                 List<ApiAtUser> users = source.requireData();
                 List<SearchUserItem> items = new ArrayList<>();
@@ -79,9 +108,18 @@ public class FragmentSearchUser extends MyBaseFragment {
                     SearchUserItem searchVideoItem = new SearchUserItem(user);
                     items.add(searchVideoItem);
                 }
+                if (pager.isReachedTheEnd()) {
+                    Msg.INSTANCE.toast("已经加载完数据");
+                }
+                if (pager.isFirstPage(2)) {
+                    recyclerAdapter.replaceAll(items);
+                } else {
+                    recyclerAdapter.addAll(items);
+                }
             } else {
                 Msg.INSTANCE.handleSourceException(source.requireError());
             }
+            RecyclerViewUtilsKt.cancelRefreshing(binding.layoutRefresh, 500L);
         });
     }
 
@@ -89,7 +127,16 @@ public class FragmentSearchUser extends MyBaseFragment {
     public void onBusEvent(@NotNull Pair<Integer, ?> event) {
         super.onBusEvent(event);
         if (event.getFirst() == RunnerX.INSTANCE.BUS_SEARCH_RESULT) {
-            refreshData();
+//            refreshData();
         }
+    }
+
+    @Override
+    public void onRefresh() {
+        pager.reset();
+        endless.reset();
+        refreshData();
+        binding.layoutRefresh.setRefreshing(true);
+        recyclerAdapter.setEmptyView(binding.layoutEmptyView.NoData, binding.userRecycle);
     }
 }
