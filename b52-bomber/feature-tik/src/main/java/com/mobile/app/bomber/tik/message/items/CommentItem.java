@@ -28,7 +28,7 @@ public class CommentItem extends SimpleRecyclerItem {
         binding.txtTitle.setText((data.getFromuserinfo().get(0).getName()));
         binding.txtContent.setText((data.getContent()));
 
-        String ago = Java8TimeKt.ago(data.getCreatetime(), System.currentTimeMillis());
+        String ago = Java8TimeKt.ago(data.getCreatetime()*1000L, System.currentTimeMillis());
         binding.txtTime.setText(ago);
 
         holder.attachImageLoader(R.id.img_profile);

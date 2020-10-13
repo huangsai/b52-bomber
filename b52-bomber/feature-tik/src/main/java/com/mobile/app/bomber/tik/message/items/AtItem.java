@@ -3,6 +3,7 @@ package com.mobile.app.bomber.tik.message.items;
 import androidx.annotation.NonNull;
 
 import com.mobile.app.bomber.data.http.entities.ApiUsermsg;
+import com.mobile.guava.jvm.date.Java8TimeKt;
 import com.pacific.adapter.AdapterViewHolder;
 import com.pacific.adapter.SimpleRecyclerItem;
 import com.mobile.app.bomber.data.http.entities.ApiAtList;
@@ -26,7 +27,8 @@ public class AtItem extends SimpleRecyclerItem {
         ItemAtBinding binding = holder.binding(ItemAtBinding::bind);
         binding.txtTitle.setText((data.getFromuserinfo().get(0).getName()));
         binding.txtContent.setText((data.getContent()));
-        binding.txtTime.setText(String.valueOf(data.getCreatetime()));
+        String ago = Java8TimeKt.ago(data.getCreatetime()*1000L, System.currentTimeMillis());
+        binding.txtTime.setText(ago);
 
         holder.attachImageLoader(R.id.img_profile);
         holder.attachImageLoader(R.id.img_cover);

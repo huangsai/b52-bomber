@@ -70,7 +70,6 @@ public class CommentFragment extends BaseLikingFragment {
 
     @Override
     protected void load() {
-        if (!pager.isAvailable()) return;
 
         model.postUserMsg(4,0).observe(getViewLifecycleOwner(), source -> {
             if (source instanceof Source.Success) {
