@@ -10,11 +10,8 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface TikMessageDao : SqlDao<DbTikMessageKey> {
 
-    @Query("SELECT * FROM tik_search_key ORDER BY time DESC")
-    fun get(): Flow<List<DbTikSearchKey>>
-
-    @Query("SELECT * FROM tik_search_key WHERE name =:name")
-    fun get(name: String): DbTikSearchKey?
+    @Query("SELECT * FROM tik_message_key WHERE uid =:uid")
+    fun get(uid: Long): DbTikMessageKey?
 
     @Query("DELETE FROM tik_search_key")
     fun clear(): Int

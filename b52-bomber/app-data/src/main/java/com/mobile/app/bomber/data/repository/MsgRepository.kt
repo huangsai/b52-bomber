@@ -1,12 +1,13 @@
 package com.mobile.app.bomber.data.repository
 
 import com.mobile.app.bomber.data.db.AppDatabase
+import com.mobile.app.bomber.data.db.entities.DbTikMessageKey
 import com.mobile.app.bomber.data.files.AppPrefsManager
 import com.mobile.app.bomber.data.http.entities.*
-import com.mobile.guava.data.toSource
 import com.mobile.app.bomber.data.http.service.DataService
-
+import com.mobile.guava.data.toSource
 import com.mobile.guava.jvm.domain.Source
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -84,12 +85,49 @@ class MsgRepository @Inject constructor(
                 token,
         )
         return try {
-            dataService.postUserMsg(req).toSource(){
+            dataService.postUserMsg(req).toSource() {
                 it.items.orEmpty()
             }
         } catch (e: Exception) {
             errorSource(e)
         }
+    }
+
+
+//    fun getKeys(): Flow<List<DbTikMessageKey>> {
+//        val dao = db.tikMessageDao()
+//        return dao.get()
+//    }
+
+    fun getKey(): DbTikMessageKey? {
+        val dao = db.tikMessageDao()
+        return dao.get(userId)
+    }
+
+    fun addKey(data: String): DbTikMessageKey {
+        val dao = db.tikMessageDao()
+        val db = dao.get(userId)
+        val obj: DbTikMessageKey
+        if (db == null) {
+            dao.insert(DbTikMessageKey(0, userId, data).also {
+                obj = it
+            })
+        } else {
+            dao.update(db.copy(obj = data).also {
+                obj = it
+            })
+        }
+        return obj
+    }
+
+    fun clearKeys(): Int {
+        val dao = db.tikMessageDao()
+        return dao.clear()
+    }
+
+    fun deleteKey(obj: DbTikMessageKey): Int {
+        val dao = db.tikMessageDao()
+        return dao.delete(obj)
     }
 }
 

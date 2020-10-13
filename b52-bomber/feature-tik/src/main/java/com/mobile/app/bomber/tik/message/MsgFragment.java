@@ -1,7 +1,6 @@
 package com.mobile.app.bomber.tik.message;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,32 +11,32 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.mobile.app.bomber.common.base.Msg;
-import com.mobile.app.bomber.data.db.TikSearchKeyDao;
+import com.mobile.app.bomber.common.base.tool.SingleClick;
 import com.mobile.app.bomber.data.http.entities.ApiUsermsg;
+import com.mobile.app.bomber.data.http.entities.Pager;
+import com.mobile.app.bomber.runner.base.PrefsManager;
+import com.mobile.app.bomber.tik.R;
 import com.mobile.app.bomber.tik.base.AppRouterUtils;
+import com.mobile.app.bomber.tik.base.GlideExtKt;
+import com.mobile.app.bomber.tik.databinding.FragmentMsgBinding;
 import com.mobile.app.bomber.tik.home.PlayListActivity;
-import com.mobile.app.bomber.tik.message.items.AtItem;
-import com.mobile.app.bomber.tik.message.items.CommentItem;
+import com.mobile.app.bomber.tik.home.TopMainFragment;
+import com.mobile.app.bomber.tik.message.items.MsgItem;
 import com.mobile.app.bomber.tik.mine.UserDetailActivity;
+import com.mobile.app.bomber.tik.search.SearchActivity;
+import com.mobile.guava.android.mvvm.RouterKt;
+import com.mobile.guava.android.ui.view.recyclerview.EndlessRecyclerViewScrollListener;
 import com.mobile.guava.jvm.domain.Source;
 import com.pacific.adapter.AdapterImageLoader;
 import com.pacific.adapter.AdapterUtils;
 import com.pacific.adapter.AdapterViewHolder;
 import com.pacific.adapter.OnDataSetChanged;
 import com.pacific.adapter.RecyclerAdapter;
-import com.mobile.guava.android.mvvm.RouterKt;
-import com.mobile.app.bomber.data.http.entities.Pager;
-import com.mobile.guava.android.ui.view.recyclerview.EndlessRecyclerViewScrollListener;
 
-import com.mobile.app.bomber.tik.R;
-import com.mobile.app.bomber.tik.base.GlideExtKt;
-import com.mobile.app.bomber.common.base.tool.SingleClick;
-import com.mobile.app.bomber.tik.databinding.FragmentMsgBinding;
-import com.mobile.app.bomber.tik.home.TopMainFragment;
-import com.mobile.app.bomber.tik.message.items.MsgItem;
-import com.mobile.app.bomber.tik.search.SearchActivity;
-
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -154,9 +153,9 @@ public class MsgFragment extends TopMainFragment implements View.OnClickListener
         if (id == R.id.item_msg) {
             AdapterViewHolder holder = AdapterUtils.INSTANCE.getHolder(v);
             MsgItem item = holder.item();
-            if(item.data.getMsgtype()==1){
+            if (item.data.getMsgtype() == 1) {
                 UserDetailActivity.start(getActivity(), item.data.getVideoid());
-            }else {
+            } else {
                 PlayListActivity.start(getActivity(), item.data.getVideoid());
             }
             return;
@@ -170,23 +169,40 @@ public class MsgFragment extends TopMainFragment implements View.OnClickListener
     }
 
     private void load() {
-//        List<ApiUsermsg.Item> item = new ArrayList<>();
+
 //        MsgItem item1 = new MsgItem();
 //        item.add(item1);
 //        adapter.replaceAll(item);
 
         //消息提醒不需要分页加载
         // 调用接口 -》获取数据 -》存入数据库-》
-        model.postUserMsg(0, 0).observe(getViewLifecycleOwner(), source -> {
+
+        //SharedPreferences
+        int time = (int) (System.currentTimeMillis() / 1000);
+        model.postUserMsg(PrefsManager.INSTANCE.getMsgTime(), 0).observe(getViewLifecycleOwner(), source -> {
+            List<ApiUsermsg.Item> items = new ArrayList<>();
             if (source instanceof Source.Success) {
-                List<MsgItem> list = source.requireData()
-                        .stream()
-                        .map(o -> new MsgItem(o))
-                        .collect(Collectors.toList());
-                adapter.replaceAll(list);
+                PrefsManager.INSTANCE.setMsgTime(time);
+                List<ApiUsermsg.Item> list = source.requireData();
+                items.addAll(list);
             } else {
                 Msg.INSTANCE.handleSourceException(source.requireError());
             }
+
+            model.getKey().observe(getActivity(), dbKeys -> {
+                Gson gson = new Gson();
+                Type listType = new TypeToken<List<ApiUsermsg.Item>>() {
+                }.getType();
+                items.addAll(gson.fromJson(dbKeys.getObj(), listType));
+            });
+
+            List<MsgItem> msgItems = items.stream()
+                    .map(o -> new MsgItem(o))
+                    .collect(Collectors.toList());
+            adapter.replaceAll(msgItems);
+            Gson gson = new Gson();
+            String data = gson.toJson(items);
+            model.addKey(data);
             binding.layoutRefresh.setRefreshing(false);
         });
 
