@@ -28,6 +28,7 @@ import com.mobile.app.bomber.data.http.entities.ApiToken;
 import com.mobile.app.bomber.data.http.entities.ApiVersion;
 import com.mobile.app.bomber.data.repository.SourceExtKt;
 import com.mobile.app.bomber.runner.base.PrefsManager;
+import com.mobile.app.bomber.runner.features.FeatureRouter;
 import com.mobile.app.bomber.tik.ad.PopupAdDialogFragment;
 import com.mobile.app.bomber.tik.ad.SplashDialogFragment;
 import com.mobile.app.bomber.tik.base.AppRouterKt;
@@ -264,15 +265,18 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
         int vpSelectPosition = 0;
         if (checkedId == R.id.main_home_rb) {
             vpSelectPosition = 0;
-        } else if (checkedId == R.id.main_msg_rb) {
+        } else if (checkedId == R.id.main_movie_rb) {
             vpSelectPosition = 1;
-        } else if (checkedId == R.id.main_mine_rb) {
+        } else if (checkedId == R.id.main_msg_rb) {
             vpSelectPosition = 2;
+        } else if (checkedId == R.id.main_mine_rb) {
+            vpSelectPosition = 3;
         }
+
         // 选中我的页面
-        if (vpSelectPosition == 2 && radioButton.isChecked() && !PrefsManager.INSTANCE.isLogin()) {
+        if (vpSelectPosition == 3 && radioButton.isChecked() && !PrefsManager.INSTANCE.isLogin()) {
             binding.mainRg.check(mLastCheckedViewID);
-            RouterKt.newStartActivity(MainActivity.this, LoginActivity.class);
+            RouterKt.newStartActivity(this, LoginActivity.class);
             return;
         }
         binding.viewPager.setCurrentItem(vpSelectPosition, false);
@@ -302,8 +306,10 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
         public Fragment createFragment(int position) {
             switch (position) {
                 case 1:
-                    return MsgFragment.newInstance(position);
+                    return FeatureRouter.INSTANCE.newMovieFragment(position);
                 case 2:
+                    return MsgFragment.newInstance(position);
+                case 3:
                     return FragmentMe.newInstance(position);
                 default:
                     return HomeFragment.newInstance(position);

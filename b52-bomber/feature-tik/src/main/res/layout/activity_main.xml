@@ -50,8 +50,7 @@
             android:drawablePadding="@dimen/size_5dp"
             android:gravity="center"
             android:text="@string/main_tab_movie"
-            android:textColor="@color/color_home_tab_text"
-            android:visibility="gone" />
+            android:textColor="@color/color_home_tab_text"/>
 
         <RadioButton
             android:id="@+id/main_msg_rb"
