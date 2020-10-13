@@ -27,10 +27,10 @@ class HostSelectionInterceptor : Interceptor {
         return when (HOST_TAG) {
             HOST_TAG_TEST -> { //测试服
                 when {
-                    isAboutUser(original) -> "${HOST_TEST}8000"
-                    isAboutUpload(original) -> "${HOST_TEST}8080"
-                    isAboutSystem(original) -> "${HOST_TEST}8003"
-                    else -> "${HOST_TEST}8001"
+                    isAboutUser(original) -> "${HOST_TEST}"
+                    isAboutUpload(original) -> "${HOST_TEST}"
+                    isAboutSystem(original) -> "${HOST_TEST}"
+                    else -> "${HOST_TEST}"
                 }.toHttpUrl()
             }
             HOST_TAG_RELEASE -> { //正式服

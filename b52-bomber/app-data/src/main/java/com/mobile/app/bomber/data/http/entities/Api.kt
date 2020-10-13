@@ -10,10 +10,10 @@ const val HOST_TAG_TEST = 0 //测试服
 const val HOST_TAG_DEV = 1 //开发服
 const val HOST_TAG_RELEASE = 2 //正式服
 
-const val HOST_TAG = HOST_TAG_RELEASE
+const val HOST_TAG = HOST_TAG_TEST
 
-//测试环境
-const val HOST_TEST = "http://119.28.18.135:"
+//测试环境  //http://117.50.119.233   |http://119.28.18.13
+const val HOST_TEST = "http://api.zomppga.tokyo:444"
 
 //开发环境
 const val HOST_DEV = "http://192.168.2.120:"
