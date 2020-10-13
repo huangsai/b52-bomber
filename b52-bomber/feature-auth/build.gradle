@@ -1,0 +1,12 @@
+apply plugin: 'com.android.library'
+apply from: '../gradle/android_module.gradle'
+
+android {
+    resourcePrefix "auth_"
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation project(':app-common')
+    implementation 'com.github.thepacific:rx3-timer:1.0.0'
+}

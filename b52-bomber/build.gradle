@@ -6,6 +6,8 @@ buildscript {
 
     ext {
         kotlin_version = '1.4.10'
+        versions.kotlin = '1.4.10'
+        versions.kotlin = '1.4.10'
     }
     repositories {
         google()
@@ -122,7 +124,7 @@ subprojects { project ->
 
                 buildFeatures {
                     viewBinding = true
-                    dataBinding = true
+                    dataBinding = false
                 }
 
                 compileOptions {
@@ -133,6 +135,7 @@ subprojects { project ->
 
                 kotlinOptions {
                     jvmTarget = '1.8'
+                    freeCompilerArgs += ["-Xallow-jvm-ir-dependencies", "-Xskip-prerelease-check"]
                 }
 
                 lintOptions {

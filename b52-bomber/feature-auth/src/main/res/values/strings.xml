@@ -1,0 +1,11 @@
+<resources>
+    <string name="auth_login">立即登录</string>
+    <string name="auth_login_with_key">一键登录</string>
+    <string name="auth_register">注册新用户</string>
+    <string name="auth_input_telephone">输入手机号</string>
+    <string name="auth_input_verify_code">输入验证码</string>
+    <string name="auth_login_with_another">以其他账号\t登录</string>
+    <string name="auth_agreement">登录即表明同意用户协议和隐私政策</string>
+    <string name="auth_login_for_more">登录发现更多精彩</string>
+    <string name="auth_verify_code">获取验证码</string>
+</resources>

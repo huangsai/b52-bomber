@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="auth_login_button_start">#f75295</color>
+    <color name="auth_login_button_end">#ed3b83</color>
+    <color name="auth_login_input">#141421</color>
+    <color name="auth_login_with_another">#848388</color>
+    <color name="auth_login_with_another_highlight">#ee3f86</color>
+    <color name="auth_login_agreement">#848388</color>
+    <color name="auth_login_agreement_highlight">#FF9C00</color>
+</resources>

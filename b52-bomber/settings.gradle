@@ -1,3 +1,4 @@
+include ':feature-auth'
 include ':app'
 include ':app-common'
 include ':app-data'

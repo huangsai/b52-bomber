@@ -1,4 +1,5 @@
 ext {
     isTikApplication = false
     isMovieApplication = false
+    isAuthApplication = false
 }
