@@ -72,8 +72,9 @@ public class FragmentSearchUser extends MyBaseFragment implements SwipeRefreshLa
             if (v.getId() == R.id.layout_user_item) {
 //                Msg.INSTANCE.toast("点击了用户条目");
                 holder = AdapterUtils.INSTANCE.getHolder(v);
+                int index =  holder.getBindingAdapterPosition();
                 item = holder.item();
-//                UserDetailActivity.start(getActivity(), item.data.get());
+                UserDetailActivity.start(getActivity(), item.data.getUsers().get(index).getUid());
             }
         });
 

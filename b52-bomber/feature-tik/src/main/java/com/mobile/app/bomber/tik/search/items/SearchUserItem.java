@@ -27,8 +27,9 @@ public class SearchUserItem extends SimpleRecyclerItem {
     public void bind(@NotNull AdapterViewHolder holder) {
         FragmentSearchUserItemBinding binding = holder.binding(FragmentSearchUserItemBinding::bind);
 //        GlideExtKt.loadProfile(holder.activity(), data.getProfile(), binding.heartImage);
+        int index =  holder.getBindingAdapterPosition();
         GlideApp.with(holder.activity())
-                .load(data.getUsers().get(0).getProfile())
+                .load(data.getUsers().get(index).getProfile())
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(binding.heartImage);
         holder.attachOnClickListener(R.id.layout_user_item);

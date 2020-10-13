@@ -104,6 +104,7 @@
             android:layout_marginRight="20dp"
             android:gravity="center"
             android:text="+关注"
+            android:visibility="gone"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="15dp" />
