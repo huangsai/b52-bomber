@@ -111,7 +111,7 @@ object PrefsManager : AppPrefsManager {
     }
 
     override fun getMsgTime(): Int {
-        return mmvk.decodeInt(getUserId().toString(), 1)
+        return mmvk.decodeInt(getUserId().toString(), 0)
     }
 
     override fun setMsgTime(time: Int): Boolean {
