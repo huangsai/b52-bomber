@@ -13,9 +13,13 @@ class MovieActivity : MyBaseActivity() {
         binding = MovieActivityMovieBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        addFragment(
-                R.id.fragment_container_view,
-                MovieFragment.newInstance(0)
-        )
+        supportFragmentManager.beginTransaction()
+                .disallowAddToBackStack()
+                .add(
+                        R.id.fragment_container_view,
+                        MovieFragment.newInstance(0),
+                        MovieFragment::class.java.simpleName
+                )
+                .commit()
     }
 }

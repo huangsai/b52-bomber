@@ -103,6 +103,4 @@ class TopListFragment : MyBaseFragment(), View.OnClickListener {
             }
         }
     }
-
-
 }
