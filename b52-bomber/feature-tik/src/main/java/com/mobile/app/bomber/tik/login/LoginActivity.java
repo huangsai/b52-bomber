@@ -7,7 +7,6 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
-import com.mobile.app.bomber.data.http.entities.ApiToken;
 import com.mobile.app.bomber.runner.base.PrefsManager;
 import com.mobile.app.bomber.data.repository.SourceExtKt;
 import com.mobile.guava.jvm.domain.Source;

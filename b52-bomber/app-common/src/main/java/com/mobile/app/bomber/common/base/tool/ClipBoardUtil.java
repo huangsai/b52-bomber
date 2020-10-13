@@ -13,21 +13,6 @@ import timber.log.Timber;
 
 public class ClipBoardUtil {
 
-    public static String paste() {
-        ClipboardManager manager = (ClipboardManager) AndroidX.INSTANCE.myApp()
-                .getSystemService(Context.CLIPBOARD_SERVICE);
-        if (manager != null) {
-            if (manager.hasPrimaryClip() && manager.getPrimaryClip().getItemCount() > 0) {
-                CharSequence addedText = manager.getPrimaryClip().getItemAt(0).getText();
-                String addedTextString = String.valueOf(addedText);
-                if (!TextUtils.isEmpty(addedTextString)) {
-                    return addedTextString;
-                }
-            }
-        }
-        return "";
-    }
-
     public static void copy(String text) {
         Timber.tag("Clipboard").d(text);
         ClipboardManager manager = (ClipboardManager) AndroidX.INSTANCE.myApp()

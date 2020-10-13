@@ -4,13 +4,13 @@ import android.view.View
 import android.widget.ImageView
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.mobile.app.bomber.common.base.Msg
 import com.mobile.app.bomber.common.base.tool.SingleClick
 import com.mobile.app.bomber.movie.R
 import com.mobile.app.bomber.movie.base.views.MiddleGridItemDecoration
 import com.mobile.app.bomber.movie.databinding.MovieItemSearchResultRecommendBinding
 import com.mobile.app.bomber.movie.search.SearchActivity
 import com.mobile.ext.glide.GlideApp
+import com.mobile.guava.android.mvvm.Msg
 import com.pacific.adapter.AdapterImageLoader
 import com.pacific.adapter.AdapterViewHolder
 import com.pacific.adapter.RecyclerAdapter
