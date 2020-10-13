@@ -193,10 +193,12 @@ public class MsgFragment extends TopMainFragment implements View.OnClickListener
                     }
 
                     model.getKey().observe(getActivity(), dbKeys -> {
-                        Gson gson = new Gson();
-                        Type listType = new TypeToken<List<ApiUsermsg.Item>>() {
-                        }.getType();
-                        items.addAll(gson.fromJson(dbKeys.getObj(), listType));
+                        if(dbKeys!=null) {
+                            Gson gson = new Gson();
+                            Type listType = new TypeToken<List<ApiUsermsg.Item>>() {
+                            }.getType();
+                            items.addAll(gson.fromJson(dbKeys.getObj(), listType));
+                        }
                     });
 
                     List<MsgItem> msgItems = items.stream()
@@ -208,6 +210,8 @@ public class MsgFragment extends TopMainFragment implements View.OnClickListener
                     model.addKey(data);
                     binding.layoutRefresh.setRefreshing(false);
                 });
+            }else {
+                binding.layoutRefresh.setRefreshing(false);
             }
         });
     }
