@@ -37,6 +37,12 @@ class LoginFragment : NopeAuthFragment() {
             pActivity.onBackPressed()
         }
 
+        binding.txtVerifyCode.setOnClickListener {
+            if (!isCountDown) {
+                getVerifyCode()
+            }
+        }
+
         return binding.root
     }
 
@@ -52,6 +58,10 @@ class LoginFragment : NopeAuthFragment() {
     override fun onDestroy() {
         super.onDestroy()
         myTimer?.cancel()
+    }
+
+    private fun getVerifyCode() {
+        viewModel.getVerifyCode()
     }
 
     private fun buildAgreementSpannable(): MySpannable {
