@@ -2,6 +2,7 @@ package com.mobile.app.bomber.tik.video
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.mobile.app.bomber.data.http.entities.ApiFile
 import com.mobile.guava.jvm.domain.Source
@@ -9,6 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import com.mobile.app.bomber.common.base.MyBaseViewModel
+import kotlinx.coroutines.flow.flow
 import timber.log.Timber
 import java.io.File
 import javax.inject.Inject
@@ -36,6 +38,11 @@ class VideoViewModel @Inject constructor() : MyBaseViewModel() {
             }
         }
         return result
+    }
+
+    fun getVideoTags(): LiveData<Source<List<String>?>> {
+        return flow { emit(uploadRepository.getTags()) }
+                .asLiveData(Dispatchers.IO)
     }
 
     override fun onCleared() {

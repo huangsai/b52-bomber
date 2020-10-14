@@ -24,6 +24,7 @@ import com.mobile.app.bomber.tik.base.GlideExtKt;
 import com.mobile.app.bomber.tik.databinding.FragmentMsgBinding;
 import com.mobile.app.bomber.tik.home.PlayListActivity;
 import com.mobile.app.bomber.tik.home.TopMainFragment;
+import com.mobile.app.bomber.tik.login.LoginActivity;
 import com.mobile.app.bomber.tik.message.items.MsgItem;
 import com.mobile.app.bomber.tik.mine.UserDetailActivity;
 import com.mobile.app.bomber.tik.search.SearchActivity;
@@ -95,9 +96,7 @@ public class MsgFragment extends TopMainFragment implements View.OnClickListener
     @Override
     public void onResume() {
         super.onResume();
-//        if (adapter.isEmpty()) {
-//
-//        }
+
     }
 
     @Override
