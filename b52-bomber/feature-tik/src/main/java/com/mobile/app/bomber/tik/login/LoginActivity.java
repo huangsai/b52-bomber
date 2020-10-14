@@ -67,7 +67,7 @@ public class LoginActivity extends MyBaseActivity implements View.OnClickListene
         binding.loginTypeFastRl.setVisibility(View.GONE);
         binding.loginTypePhoneRl.setVisibility(View.VISIBLE);
         if (BuildConfig.DEBUG) {
-            binding.tilLogin.setText("19965412404");//16776826168
+            binding.tilLogin.setText("17121571006");//16776826168
         }
         binding.loginIvBack.setOnClickListener(this);
         binding.getPasss.setOnClickListener(this);

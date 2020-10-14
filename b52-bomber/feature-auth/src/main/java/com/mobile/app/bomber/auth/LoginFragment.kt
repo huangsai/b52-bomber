@@ -19,7 +19,7 @@ class LoginFragment : NopeAuthFragment() {
 
     private var _binding: AuthFragmentLoginBinding? = null
     private val binding: AuthFragmentLoginBinding get() = _binding!!
-    private var isCountDown = false
+    private var isCountingDown = false
     private var myTimer: MyTimer? = null
 
     override fun onCreateView(
@@ -38,7 +38,7 @@ class LoginFragment : NopeAuthFragment() {
         }
 
         binding.txtVerifyCode.setOnClickListener {
-            if (!isCountDown) {
+            if (!isCountingDown) {
                 getVerifyCode()
             }
         }
@@ -106,7 +106,7 @@ class LoginFragment : NopeAuthFragment() {
     private fun startCountDown() {
         myTimer?.cancel()
         myTimer = MyTimer().also {
-            isCountDown = true
+            isCountingDown = true
             it.start()
         }
     }
@@ -120,7 +120,7 @@ class LoginFragment : NopeAuthFragment() {
         }
 
         override fun onFinish() {
-            isCountDown = false
+            isCountingDown = false
             _binding?.txtVerifyCode?.let {
                 it.text = "重新获取"
             }

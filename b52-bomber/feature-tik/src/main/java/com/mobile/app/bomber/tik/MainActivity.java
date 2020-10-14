@@ -321,7 +321,7 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
 
         @Override
         public int getItemCount() {
-            return 3;
+            return 4;
         }
     }
 }

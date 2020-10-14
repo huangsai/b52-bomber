@@ -1,7 +1,6 @@
 package com.mobile.app.bomber.runner
 
 import android.app.Application
-import android.os.StrictMode
 import androidx.room.Room
 import com.mobile.app.bomber.data.DataX
 import com.mobile.app.bomber.runner.base.PrefsManager
