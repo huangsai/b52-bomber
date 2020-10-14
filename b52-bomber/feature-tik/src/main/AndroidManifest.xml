@@ -21,7 +21,6 @@
 
         <activity
             android:name=".MainActivity"
-            android:launchMode="singleInstance"
             android:screenOrientation="portrait"
             android:theme="@style/ZygoteTheme"
             android:windowSoftInputMode="adjustNothing">
