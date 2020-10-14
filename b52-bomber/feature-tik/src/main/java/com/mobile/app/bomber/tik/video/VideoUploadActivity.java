@@ -207,30 +207,63 @@ public class VideoUploadActivity extends MyBaseActivity implements View.OnClickL
     }
 
     private void initLabelsData() {
-        String[] hotWords = getResources().getStringArray(R.array.upload_labels);
-        for (String hotWord : hotWords) {
-            TextView view = (TextView) LayoutInflater.from(this).inflate(R.layout.item_tag_tv, binding.mShowBtnLayout, false);
-            view.setText("#" + hotWord);
-            view.setTag(hotWord);
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    String keyword = (String) view.getTag();
-                    if (view.isSelected()) {
-                        view.setSelected(false);
-                        labelList.remove(keyword);
-                        return;
-                    }
-                    if (labelList.size() >= 3) {
-                        Msg.INSTANCE.toast("最多只能选择3个");
-                        return;
-                    }
-                    view.setSelected(true);
-                    labelList.add(keyword);
+//        String[] hotWords = getResources().getStringArray(R.array.upload_labels);
+        videoViewModel.getVideoTags().observe(this, source -> {
+            if (source instanceof Source.Success) {
+                List<String> keywords = source.requireData();
+                for (String hotWord : keywords) {
+               TextView view = (TextView) LayoutInflater.from(this).inflate(R.layout.item_tag_tv, binding.mShowBtnLayout, false);
+                    view.setText("#" + hotWord);
+                    view.setTag(hotWord);
+                    view.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            String keyword = (String) view.getTag();
+                            if (view.isSelected()) {
+                                view.setSelected(false);
+                                labelList.remove(keyword);
+                                return;
+                            }
+                            if (labelList.size() >= 3) {
+                                Msg.INSTANCE.toast("最多只能选择3个");
+                                return;
+                            }
+                            view.setSelected(true);
+                            labelList.add(keyword);
+                        }
+                    });
+                    binding.mShowBtnLayout.addView(view);
                 }
-            });
-            binding.mShowBtnLayout.addView(view);
-        }
+
+            } else {
+                Msg.INSTANCE.handleSourceException(source.requireError());
+            }
+        });
+
+//        String[] hotWords = getResources().getStringArray(R.array.upload_labels);
+//        for (String hotWord : hotWords) {
+//                TextView view = (TextView) LayoutInflater.from(this).inflate(R.layout.item_tag_tv, binding.mShowBtnLayout, false);
+//                view.setText("#" + hotWord);
+//                view.setTag(hotWord);
+//                view.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        String keyword = (String) view.getTag();
+//                        if (view.isSelected()) {
+//                            view.setSelected(false);
+//                            labelList.remove(keyword);
+//                            return;
+//                        }
+//                        if (labelList.size() >= 3) {
+//                            Msg.INSTANCE.toast("最多只能选择3个");
+//                            return;
+//                        }
+//                        view.setSelected(true);
+//                        labelList.add(keyword);
+//                    }
+//                });
+//            binding.mShowBtnLayout.addView(view);
+//        }
     }
 
 
