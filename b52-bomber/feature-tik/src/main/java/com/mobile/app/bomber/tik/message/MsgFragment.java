@@ -1,6 +1,5 @@
 package com.mobile.app.bomber.tik.message;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +19,6 @@ import com.mobile.app.bomber.data.http.entities.ApiUsermsg;
 import com.mobile.app.bomber.data.http.entities.Pager;
 import com.mobile.app.bomber.runner.base.PrefsManager;
 import com.mobile.app.bomber.tik.R;
-import com.mobile.app.bomber.tik.base.AppRouterKt;
 import com.mobile.app.bomber.tik.base.AppRouterUtils;
 import com.mobile.app.bomber.tik.base.GlideExtKt;
 import com.mobile.app.bomber.tik.databinding.FragmentMsgBinding;
@@ -178,42 +176,38 @@ public class MsgFragment extends TopMainFragment implements View.OnClickListener
 
         //消息提醒不需要分页加载
         // 调用接口 -》获取数据 -》存入数据库-》
-        AppRouterKt.requireLogin(requireActivity(), result -> {
-            if (result.getResultCode() == Activity.RESULT_OK) {
-                int time = (int) (System.currentTimeMillis() / 1000);
-                binding.layoutRefresh.setRefreshing(true);
-                model.postUserMsg(PrefsManager.INSTANCE.getMsgTime(), 0).observe(getViewLifecycleOwner(), source -> {
-                    List<ApiUsermsg.Item> items = new ArrayList<>();
-                    if (source instanceof Source.Success) {
-                        PrefsManager.INSTANCE.setMsgTime(time);
-                        List<ApiUsermsg.Item> list = source.requireData();
-                        items.addAll(list);
-                    } else {
-                        Msg.INSTANCE.handleSourceException(source.requireError());
-                    }
-
-                    model.getKey().observe(getActivity(), dbKeys -> {
-                        if(dbKeys!=null) {
-                            Gson gson = new Gson();
-                            Type listType = new TypeToken<List<ApiUsermsg.Item>>() {
-                            }.getType();
-                            items.addAll(gson.fromJson(dbKeys.getObj(), listType));
-                        }
-                    });
-
-                    List<MsgItem> msgItems = items.stream()
-                            .map(o -> new MsgItem(o))
-                            .collect(Collectors.toList());
-                    adapter.replaceAll(msgItems);
-                    Gson gson = new Gson();
-                    String data = gson.toJson(items);
-                    model.addKey(data);
-                    binding.layoutRefresh.setRefreshing(false);
-                });
-            }else {
-                binding.layoutRefresh.setRefreshing(false);
+        int time = (int) (System.currentTimeMillis() / 1000);
+        binding.layoutRefresh.setRefreshing(true);
+        model.postUserMsg(PrefsManager.INSTANCE.getMsgTime(), 0).observe(getViewLifecycleOwner(), source -> {
+            List<ApiUsermsg.Item> items = new ArrayList<>();
+            if (source instanceof Source.Success) {
+                PrefsManager.INSTANCE.setMsgTime(time);
+                List<ApiUsermsg.Item> list = source.requireData();
+                items.addAll(list);
+            } else {
+                Msg.INSTANCE.handleSourceException(source.requireError());
             }
+
+            model.getKey().observe(getActivity(), dbKeys -> {
+                if (dbKeys != null) {
+                    Gson gson = new Gson();
+                    Type listType = new TypeToken<List<ApiUsermsg.Item>>() {
+                    }.getType();
+                    items.addAll(gson.fromJson(dbKeys.getObj(), listType));
+                }
+            });
+
+            List<MsgItem> msgItems = items.stream()
+                    .map(o -> new MsgItem(o))
+                    .collect(Collectors.toList());
+            adapter.replaceAll(msgItems);
+            Gson gson = new Gson();
+            String data = gson.toJson(items);
+            model.addKey(data);
+            binding.layoutRefresh.setRefreshing(false);
         });
+
+
     }
 
     public static MsgFragment newInstance(int position) {

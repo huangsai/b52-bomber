@@ -270,7 +270,7 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
             vpSelectPosition = 2;
         }
         // 选中我的页面
-        if (vpSelectPosition == 2 && radioButton.isChecked() && !PrefsManager.INSTANCE.isLogin()) {
+        if ((vpSelectPosition == 2 || vpSelectPosition == 1) && radioButton.isChecked() && !PrefsManager.INSTANCE.isLogin()) {
             binding.mainRg.check(mLastCheckedViewID);
             RouterKt.newStartActivity(MainActivity.this, LoginActivity.class);
             return;
