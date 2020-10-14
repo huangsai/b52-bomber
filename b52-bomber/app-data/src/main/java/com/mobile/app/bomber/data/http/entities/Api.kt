@@ -534,6 +534,15 @@ data class ApiHotKey(
         @Json(name = "KeyWords") val KeyWords: List<String>?
 )
 
+
+@JsonClass(generateAdapter = true)
+data class ApiTags(
+        @Json(name = "RetCode") val code: Int,
+        @Json(name = "Desc") val desc: String,
+        @Json(name = "Data") val data: List<String>?
+)
+
+
 @JsonClass(generateAdapter = true)
 data class ApiVersion(
         @Json(name = "RetCode") val code: Int,

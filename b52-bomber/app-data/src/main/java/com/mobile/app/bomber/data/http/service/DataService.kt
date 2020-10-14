@@ -221,6 +221,9 @@ interface DataService {
     @GET("/video/getHotKeyTopN")
     fun getHotKey(): Call<ApiHotKey>
 
+    @GET("/video/getTags")
+    fun getTags(): Call<ApiTags>
+
     @GET("/sys/getVersion/{platform}/")
     fun getVersion(@Path("platform") platform: Int): Call<ApiVersion>
 

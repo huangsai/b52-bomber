@@ -60,19 +60,19 @@ public class FragmentSearchUser extends MyBaseFragment implements SwipeRefreshLa
     }
 
     private void initRecyclerView() {
+        recyclerAdapter = new RecyclerAdapterEmpty();
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         binding.userRecycle.addItemDecoration(LinearItemDecoration.builder(requireContext()).bottomMargin(R.dimen.size_1dp).build());
         binding.userRecycle.setLayoutManager(layoutManager);
         model = AppRouterUtils.viewModels(this, SearchViewModel.class);
 //        binding.layoutEmptyView.NoData.setVisibility(View.VISIBLE);
-        recyclerAdapter = new RecyclerAdapterEmpty();
         recyclerAdapter.setEmptyView(binding.layoutEmptyView.NoData, binding.userRecycle);
         recyclerAdapter.setOnClickListener(v -> {
             if (v.getId() == R.id.layout_user_item) {
 //                Msg.INSTANCE.toast("点击了用户条目");
                 holder = AdapterUtils.INSTANCE.getHolder(v);
-                int index =  holder.getBindingAdapterPosition();
+                int index = holder.getBindingAdapterPosition();
                 item = holder.item();
                 UserDetailActivity.start(getActivity(), item.data.getUsers().get(index).getUid());
             }
@@ -109,14 +109,11 @@ public class FragmentSearchUser extends MyBaseFragment implements SwipeRefreshLa
                     SearchUserItem searchVideoItem = new SearchUserItem(user);
                     items.add(searchVideoItem);
                 }
-                if (pager.isReachedTheEnd()) {
+                if (items.size() < 1 || items == null) {
                     Msg.INSTANCE.toast("已经加载完数据");
                 }
-                if (pager.isFirstPage(2)) {
-                    recyclerAdapter.replaceAll(items);
-                } else {
-                    recyclerAdapter.addAll(items);
-                }
+                recyclerAdapter.replaceAll(items);
+
             } else {
                 Msg.INSTANCE.handleSourceException(source.requireError());
             }
@@ -127,9 +124,9 @@ public class FragmentSearchUser extends MyBaseFragment implements SwipeRefreshLa
     @Override
     public void onBusEvent(@NotNull Pair<Integer, ?> event) {
         super.onBusEvent(event);
-        if (event.getFirst() == RunnerX.INSTANCE.BUS_SEARCH_RESULT) {
-//            refreshData();
-        }
+//        if (event.getFirst() == RunnerX.INSTANCE.BUS_SEARCH_RESULT) {
+////            refreshData();
+//        }
     }
 
     @Override

@@ -177,7 +177,7 @@ public class MsgFragment extends TopMainFragment implements View.OnClickListener
         model.postUserMsg(0, PrefsManager.INSTANCE.getMsgTime("")).observe(getViewLifecycleOwner(), source -> {
             List<ApiUsermsg.Item> items = new ArrayList<>();
             if (source instanceof Source.Success) {
-                PrefsManager.INSTANCE.setMsgTime(time,"");
+                PrefsManager.INSTANCE.setMsgTime(time, "");
                 List<ApiUsermsg.Item> list = source.requireData();
                 items.addAll(list);
             } else {
@@ -190,7 +190,7 @@ public class MsgFragment extends TopMainFragment implements View.OnClickListener
                     Gson gson = new Gson();
                     Type listType = new TypeToken<List<ApiUsermsg.Item>>() {
                     }.getType();
-                    Log.i("keyObj",dbKeys.getObj());
+                    Log.i("keyObj", dbKeys.getObj());
                     items.addAll(gson.fromJson(dbKeys.getObj(), listType));
                 }
                 List<MsgItem> msgItems = items.stream()
@@ -202,7 +202,8 @@ public class MsgFragment extends TopMainFragment implements View.OnClickListener
                 model.addKey(data).observe(
                         this,
                         obj -> Timber.tag("db").d("增加成功%s", obj)
-                );;
+                );
+                ;
             });
 
 

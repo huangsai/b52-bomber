@@ -3,6 +3,7 @@ package com.mobile.app.bomber.data.repository
 import com.mobile.app.bomber.data.db.AppDatabase
 import com.mobile.app.bomber.data.files.AppPrefsManager
 import com.mobile.app.bomber.data.http.entities.ApiFile
+import com.mobile.app.bomber.data.http.entities.ApiTags
 import com.mobile.guava.data.toSource
 import com.mobile.app.bomber.data.http.service.DataService
 import com.mobile.guava.data.bodyOrThrowException
@@ -43,6 +44,21 @@ class UploadRepository @Inject constructor(
     }
 
     /**
+     * 获取标签接口
+     */
+    suspend fun getTags(): Source<List<String>?> {
+        val call = dataService.getTags()
+        return try {
+            call.execute().toSource {
+                it.data
+            }
+        } catch (e: Exception) {
+            errorSource(e)
+        }
+    }
+
+
+    /**
      * 流程：上传视频文件和封面图片->同步检测是否上传成功
      */
     suspend fun uploadVideo(
@@ -52,7 +68,7 @@ class UploadRepository @Inject constructor(
             label: String,
             latitude: Double,
             longitude: Double
-    ): Source<Pair<ApiFile,ApiFile>> = supervisorScope {
+    ): Source<Pair<ApiFile, ApiFile>> = supervisorScope {
         val bodyVideo = createRequestBody(video, "video", "video")
         val bodyImage = createRequestBody(image, "cover", "cover")
         return@supervisorScope try {
@@ -73,7 +89,7 @@ class UploadRepository @Inject constructor(
                 Pair(apiFileVideo, apiFileImage)
             }
         } catch (e: Exception) {
-            errorSource<Pair<ApiFile,ApiFile>>(e)
+            errorSource<Pair<ApiFile, ApiFile>>(e)
         }
     }
 
