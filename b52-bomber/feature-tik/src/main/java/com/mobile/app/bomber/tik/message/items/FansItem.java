@@ -35,7 +35,12 @@ public class FansItem extends SimpleRecyclerItem {
         ItemFansBinding binding = holder.binding(ItemFansBinding::bind);
         binding.usernameTv.setText(data.getFromuserinfo().get(0).getName());
         binding.descTv.setVisibility(View.VISIBLE);
-        binding.descTv.setText("他关注了你");
+        if(data.getFollowtype()==1){
+            binding.descTv.setText("关注了你");
+        }else {
+            binding.descTv.setText("通过作品关注了你");
+        }
+
         binding.timeTv.setVisibility(View.VISIBLE);
         binding.timeTv.setText(time);
         binding.statusBtn.setText(data.getIsfollow()==2 ? "互相关注" : "回关");

@@ -1,6 +1,7 @@
 package com.mobile.app.bomber.tik.message;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +42,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import timber.log.Timber;
+
 public class MsgFragment extends TopMainFragment implements View.OnClickListener,
         OnDataSetChanged, AdapterImageLoader, SwipeRefreshLayout.OnRefreshListener {
 
@@ -70,7 +73,7 @@ public class MsgFragment extends TopMainFragment implements View.OnClickListener
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireActivity());
         endless = new EndlessRecyclerViewScrollListener(layoutManager, (count, recyclerView) -> {
             if (pager.isAvailable()) {
-                load();
+                //load();
             }
             return null;
         });
@@ -89,15 +92,14 @@ public class MsgFragment extends TopMainFragment implements View.OnClickListener
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        onRefresh();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-//        if (adapter.isEmpty()) {
-//
-//        }
+        if (adapter.isEmpty()) {
+            onRefresh();
+        }
     }
 
     @Override
@@ -164,24 +166,18 @@ public class MsgFragment extends TopMainFragment implements View.OnClickListener
 
     @Override
     public void onRefresh() {
-        //pager.reset();
+        pager.reset();
         load();
     }
 
     private void load() {
-
-//        MsgItem item1 = new MsgItem();
-//        item.add(item1);
-//        adapter.replaceAll(item);
-
         //消息提醒不需要分页加载
         // 调用接口 -》获取数据 -》存入数据库-》
         int time = (int) (System.currentTimeMillis() / 1000);
-        binding.layoutRefresh.setRefreshing(true);
-        model.postUserMsg(PrefsManager.INSTANCE.getMsgTime(), 0).observe(getViewLifecycleOwner(), source -> {
+        model.postUserMsg(0, PrefsManager.INSTANCE.getMsgTime("")).observe(getViewLifecycleOwner(), source -> {
             List<ApiUsermsg.Item> items = new ArrayList<>();
             if (source instanceof Source.Success) {
-                PrefsManager.INSTANCE.setMsgTime(time);
+                PrefsManager.INSTANCE.setMsgTime(time,"");
                 List<ApiUsermsg.Item> list = source.requireData();
                 items.addAll(list);
             } else {
@@ -190,20 +186,26 @@ public class MsgFragment extends TopMainFragment implements View.OnClickListener
 
             model.getKey().observe(getActivity(), dbKeys -> {
                 if (dbKeys != null) {
+
                     Gson gson = new Gson();
                     Type listType = new TypeToken<List<ApiUsermsg.Item>>() {
                     }.getType();
+                    Log.i("keyObj",dbKeys.getObj());
                     items.addAll(gson.fromJson(dbKeys.getObj(), listType));
                 }
+                List<MsgItem> msgItems = items.stream()
+                        .map(o -> new MsgItem(o))
+                        .collect(Collectors.toList());
+                adapter.replaceAll(msgItems);
+                Gson gson = new Gson();
+                String data = gson.toJson(items);
+                model.addKey(data).observe(
+                        this,
+                        obj -> Timber.tag("db").d("增加成功%s", obj)
+                );;
             });
 
-            List<MsgItem> msgItems = items.stream()
-                    .map(o -> new MsgItem(o))
-                    .collect(Collectors.toList());
-            adapter.replaceAll(msgItems);
-            Gson gson = new Gson();
-            String data = gson.toJson(items);
-            model.addKey(data);
+
             binding.layoutRefresh.setRefreshing(false);
         });
 

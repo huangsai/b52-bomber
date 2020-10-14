@@ -29,7 +29,7 @@ public class CommentItem extends SimpleRecyclerItem {
         binding.txtContent.setText((data.getContent()));
 
         String ago = Java8TimeKt.ago(data.getCreatetime()*1000L, System.currentTimeMillis());
-        binding.txtTime.setText(ago);
+        binding.txtTime.setText(("评论了你的作品  " +ago));
 
         holder.attachImageLoader(R.id.img_profile);
         holder.attachImageLoader(R.id.img_cover);

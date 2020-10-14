@@ -40,7 +40,7 @@ public abstract class BaseLikingFragment extends TopMineFragment implements Adap
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireActivity());
         endless = new EndlessRecyclerViewScrollListener(layoutManager, (count, recyclerView) -> {
             if (pager.isAvailable()) {
-                load();
+                //load();
             }
             return null;
         });

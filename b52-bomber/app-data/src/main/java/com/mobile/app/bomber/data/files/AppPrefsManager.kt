@@ -36,7 +36,7 @@ interface AppPrefsManager {
 
     fun setIsLogin(isLogin: Boolean): Boolean
 
-    fun getMsgTime(): Int
+    fun getMsgTime(type: String): Int
 
-    fun setMsgTime(time: Int): Boolean
+    fun setMsgTime(time: Int, type: String): Boolean
 }
