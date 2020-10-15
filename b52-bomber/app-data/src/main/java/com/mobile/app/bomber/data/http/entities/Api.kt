@@ -581,14 +581,8 @@ data class ApiFixedad(
             @Json(name = "title") val Id: String,
             @Json(name = "platForm") val type: Int,
             @Json(name = "url") val url: String,
-            @Json(name = "resolutionData") val resolutionData: ResolutionData
+            @Json(name = "resolutionData") val resolutionData: String
 
-    )
-    @JsonClass(generateAdapter = true)
-    data class ResolutionData(
-            @Json(name = "sixteen") val sixteen: String,
-            @Json(name = "eighteen") val eighteen: String,
-            @Json(name = "twentyOne") val twentyOne: String
     )
 }
 

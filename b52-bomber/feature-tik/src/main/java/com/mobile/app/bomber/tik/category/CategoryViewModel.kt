@@ -41,8 +41,8 @@ class CategoryViewModel @Inject constructor() : MyBaseViewModel() {
                 .asLiveData(Dispatchers.IO)
     }
 
-    fun fixedAd(platform: Int): LiveData<Source<ApiFixedad>> {
-        return flow { emit(videoRepository.fixedAd(platform)) }
+    fun fixedAd(): LiveData<Source<ApiFixedad>> {
+        return flow { emit(videoRepository.fixedAd()) }
                 .asLiveData(Dispatchers.IO)
     }
 }
