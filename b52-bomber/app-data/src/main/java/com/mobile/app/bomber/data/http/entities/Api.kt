@@ -660,7 +660,7 @@ data class ApiMovie(
         @Json(name = "totalpage") val totalPage: Int,
         @Json(name = "totalcount") val totalCount: Int,
         @Json(name = "next") val nextPage: Int,
-        @Json(name = "MoiveList") val movies: List<Movie>?
+        @Json(name = "MovieList") val movies: List<Movie>?
 ) {
 
     @JsonClass(generateAdapter = true)

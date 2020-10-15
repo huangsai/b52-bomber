@@ -251,7 +251,7 @@ interface DataService {
     @GET("/video/getMovieCategory")
     fun getMovieLabel(): Call<ApiMovieLabel>
 
-    @POST("/video/postMoiveListByCategory")
+    @POST("/video/postMovieListByCategory")
     fun getMovieListByLabel(@Body bode: ApiMovie.ReqLabel): Call<ApiMovie>
 
     @GET("/video/getMovieRecomment/{uid}/")
