@@ -91,7 +91,7 @@ class SearchResultListPresenter(
                 activity.lifecycleScope.launch(Dispatchers.IO) {
                     model.playSearchMovie(data.movieId)
                 }
-                PlayerActivity.start(activity, data)
+                PlayerActivity.start(activity, data.movieId.toLong())
             }
         }
     }

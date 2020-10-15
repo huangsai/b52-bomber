@@ -4,6 +4,7 @@ import com.mobile.app.bomber.data.db.AppDatabase
 import com.mobile.app.bomber.data.files.AppPrefsManager
 import com.mobile.app.bomber.data.http.entities.ApiMovie
 import com.mobile.app.bomber.data.http.entities.ApiMovieBanner
+import com.mobile.app.bomber.data.http.entities.ApiMovieDetail
 import com.mobile.app.bomber.data.http.entities.Pager
 import com.mobile.app.bomber.data.http.service.DataService
 import com.mobile.guava.data.toSource
@@ -63,6 +64,15 @@ class MovieRepository @Inject constructor(
             call.execute().toSource {
                 it.movies.orEmpty()
             }
+        } catch (e: Exception) {
+            errorSource(e)
+        }
+    }
+
+    suspend fun getMovieDetail(movieId: Long): Source<ApiMovieDetail> {
+        val call = dataService.getMovieDetail(movieId)
+        return try {
+            call.execute().toSource()
         } catch (e: Exception) {
             errorSource(e)
         }

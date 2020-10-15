@@ -78,7 +78,7 @@ class SearchTodayPresenter(
         when (v!!.id) {
             R.id.item_today_label -> {
                 val movie = AdapterUtils.getHolder(v).item<SearchTodayItem>().data.movie
-                PlayerActivity.start(activity, movie)
+                PlayerActivity.start(activity, movie.movieId.toLong())
             }
         }
     }

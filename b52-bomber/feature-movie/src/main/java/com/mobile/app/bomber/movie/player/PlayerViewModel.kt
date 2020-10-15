@@ -2,9 +2,18 @@ package com.mobile.app.bomber.movie.player
 
 import androidx.lifecycle.ViewModel
 import com.mobile.app.bomber.data.http.entities.ApiComment
+import com.mobile.app.bomber.data.http.entities.ApiMovieDetail
+import com.mobile.app.bomber.data.repository.MovieRepository
+import com.mobile.guava.jvm.domain.Source
 import javax.inject.Inject
 
-class PlayerViewModel @Inject constructor() : ViewModel() {
+class PlayerViewModel @Inject constructor(
+        private val movieRepository: MovieRepository
+) : ViewModel() {
+
+    suspend fun getMovieDetail(movieId: Long): Source<ApiMovieDetail> {
+        return movieRepository.getMovieDetail(movieId)
+    }
 
     fun requestComment(): List<ApiComment.Comment> {
         val children = List<ApiComment.Comment>(10) {
@@ -32,7 +41,9 @@ class PlayerViewModel @Inject constructor() : ViewModel() {
                 System.currentTimeMillis(),
                 "username",
                 "username",
-                "Image Filter is an Android Libary that lets you to Filtering any image. You can report any issue on issues page. Note: If you speak Arabic, you can submit issues with Arabic language and I will check them",
+                "Image Filter is an Android Libary that lets you to Filtering any image." +
+                        " You can report any issue on issues page. Note: If you speak Arabic, " +
+                        "you can submit issues with Arabic language and I will check them",
                 1,
                 1,
                 "targetUsername",

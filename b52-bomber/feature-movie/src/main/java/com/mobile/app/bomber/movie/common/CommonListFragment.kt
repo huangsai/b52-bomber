@@ -131,7 +131,7 @@ class CommonListFragment : MyBaseFragment(), AdapterImageLoader, View.OnClickLis
 
     override fun onClick(v: View) {
         val data = AdapterUtils.getHolder(v).item<CommonMovieItem>().data
-        PlayerActivity.start(requireActivity(), data)
+        PlayerActivity.start(requireActivity(), data.movieId.toLong())
     }
 
     override fun onDestroyView() {

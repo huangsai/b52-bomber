@@ -257,5 +257,8 @@ interface DataService {
     @GET("/video/getMovieRecomment/{uid}/")
     fun getMovieListRecommend(@Path("uid") uid: Long): Call<ApiMovie>
 
+    @POST("/video/getMoviePlayDetailById/{mid}/")
+    fun getMovieDetail(@Path("mid") movieId: Long): Call<ApiMovieDetail>
+
     //-------⬆⬆⬆⬆⬆⬆⬆⬆----长视频相关接口----⬆⬆⬆⬆⬆⬆⬆-----//
 }

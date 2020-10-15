@@ -5,8 +5,10 @@ import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.google.android.exoplayer2.util.Util
-import com.mobile.app.bomber.data.http.entities.ApiMovie
+import com.mobile.app.bomber.common.base.Msg
+import com.mobile.app.bomber.data.http.entities.ApiMovieDetail
 import com.mobile.app.bomber.movie.MovieX
 import com.mobile.app.bomber.movie.databinding.MovieActivityPlayerBinding
 import com.mobile.app.bomber.movie.player.exo.ExoPlayerX
@@ -15,11 +17,21 @@ import com.mobile.guava.android.context.requestNormalScreenWithPortrait
 import com.mobile.guava.android.mvvm.BaseActivity
 import com.mobile.guava.android.mvvm.newStartActivity
 import com.mobile.guava.data.Values
+import com.mobile.guava.jvm.domain.Source
+import com.mobile.guava.jvm.extension.exhaustive
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class PlayerActivity : BaseActivity() {
 
     private lateinit var binding: MovieActivityPlayerBinding
-    private lateinit var data: ApiMovie.Movie
+
+    var data: ApiMovieDetail? = null
+        private set
+
+    private var movieId: Long = 0L
+
     private lateinit var commentPresenter: CommentPresenter
     private lateinit var sourcePresenter: SourcePresenter
     private lateinit var playerPresenter: PlayerPresenter
@@ -29,21 +41,17 @@ class PlayerActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.statusBarColor = Color.BLACK
-
         ExoPlayerX.initialize()
 
-        data = Values.take("PlayerActivity")
         binding = MovieActivityPlayerBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.includeMovieInfo.layoutMovieInfo.collapse(false)
-
         commentPresenter = CommentPresenter(binding, this, model)
         sourcePresenter = SourcePresenter(binding, this, model)
         playerPresenter = PlayerPresenter(binding, this, model)
 
-        commentPresenter.onCreate()
-        sourcePresenter.onCreate()
-        playerPresenter.onCreate()
+        movieId = Values.take("PlayerActivity_movieId")
+        load()
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -94,11 +102,28 @@ class PlayerActivity : BaseActivity() {
         }
     }
 
+    private fun load() {
+        lifecycleScope.launch(Dispatchers.IO) {
+            val source = model.getMovieDetail(movieId)
+            withContext(Dispatchers.Main) {
+                when (source) {
+                    is Source.Success -> {
+                        data = source.requireData()
+                        commentPresenter.onCreate()
+                        sourcePresenter.onCreate()
+                        playerPresenter.onCreate()
+                    }
+                    else -> Msg.handleSourceException(source.requireError())
+                }.exhaustive
+            }
+        }
+    }
+
     companion object {
 
         @JvmStatic
-        fun start(activity: Activity, data: ApiMovie.Movie) {
-            Values.put("PlayerActivity", data)
+        fun start(activity: Activity, movieId: Long) {
+            Values.put("PlayerActivity_movieId", movieId)
             activity.newStartActivity(PlayerActivity::class.java)
         }
     }

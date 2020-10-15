@@ -708,6 +708,12 @@ data class ApiMovie(
             @Json(name = "fastkey") val fastKey: String,
             @Json(name = "label") val label: String,
     )
+
+    @JsonClass(generateAdapter = true)
+    data class Ad(
+            @Json(name = "img") val img: String,
+            @Json(name = "url") val url: String
+    )
 }
 
 @JsonClass(generateAdapter = true)
@@ -715,6 +721,14 @@ data class ApiMovieLabel(
         @Json(name = "RetCode") val code: Int,
         @Json(name = "Desc") val desc: String,
         @Json(name = "Data") val labels: List<String>?
+)
+
+@JsonClass(generateAdapter = true)
+data class ApiMovieDetail(
+        @Json(name = "RetCode") val code: Int,
+        @Json(name = "Desc") val desc: String,
+        @Json(name = "MovieObj") val movie: ApiMovie.Movie,
+        @Json(name = "Ad") val ad: ApiMovie.Ad
 )
 
 //-------⬆⬆⬆⬆⬆⬆⬆⬆----长视频相关----⬆⬆⬆⬆⬆⬆⬆-----//

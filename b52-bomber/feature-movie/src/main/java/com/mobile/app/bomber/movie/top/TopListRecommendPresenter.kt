@@ -58,7 +58,7 @@ class TopListRecommendPresenter(
 
     override fun onClick(v: View) {
         val data = AdapterUtils.getHolder(v).item<TopMovieVerItem>().data
-        PlayerActivity.start(fragment.requireActivity(), data)
+        PlayerActivity.start(fragment.requireActivity(), data.movieId.toLong())
     }
 
 }
