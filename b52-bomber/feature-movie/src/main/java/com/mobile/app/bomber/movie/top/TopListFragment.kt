@@ -10,7 +10,6 @@ import com.mobile.app.bomber.common.base.MyBaseFragment
 import com.mobile.app.bomber.common.base.tool.SingleClick
 import com.mobile.app.bomber.movie.MovieViewModel
 import com.mobile.app.bomber.movie.MovieX
-import com.mobile.app.bomber.movie.MovieX.BUS_MOVIE_REFRESH
 import com.mobile.app.bomber.movie.R
 import com.mobile.app.bomber.movie.databinding.MovieFragmentTopListBinding
 import com.mobile.app.bomber.movie.top.like.TopLikeActivity
@@ -19,6 +18,7 @@ import com.mobile.guava.android.mvvm.newStartActivity
 import com.pacific.adapter.AdapterUtils
 import com.pacific.adapter.RecyclerAdapter
 import com.pacific.adapter.RecyclerItem
+import timber.log.Timber
 import java.util.*
 
 class TopListFragment : MyBaseFragment(), View.OnClickListener {
@@ -57,13 +57,13 @@ class TopListFragment : MyBaseFragment(), View.OnClickListener {
         listLikePresenter = TopListLikePresenter(requireContext())
         list.add(listLikePresenter)
         list.add(TopTitlePresenter("${getString(R.string.movie_text_top_recommend_label)}>"))
-        listRecommendPresenter = TopListRecommendPresenter(requireContext())
+        listRecommendPresenter = TopListRecommendPresenter(this, model)
         list.add(listRecommendPresenter)
         adapter.addAll(list)
     }
 
     override fun onBusEvent(event: Pair<Int, Any>) {
-        if (event.first == BUS_MOVIE_REFRESH) {
+        if (event.first == MovieX.BUS_MOVIE_REFRESH) {
             listLikePresenter.onRefresh()
             listRecommendPresenter.onRefresh()
         }
@@ -74,9 +74,9 @@ class TopListFragment : MyBaseFragment(), View.OnClickListener {
         when (v.id) {
             R.id.item_title -> {
                 val pos = AdapterUtils.getHolder(v).bindingAdapterPosition
-                if (pos == 1) {
+                if (pos == 0) {
                     newStartActivity(TopLikeActivity::class.java)
-                } else if (pos == 3) {
+                } else if (pos == 2) {
                     newStartActivity(TopRecommendActivity::class.java)
                 }
             }

@@ -11,6 +11,8 @@ class CommonMovieItem(val data: ApiMovie.Movie) : SimpleRecyclerItem() {
         val binding: MovieItemCommonMovieBinding = holder.binding(MovieItemCommonMovieBinding::bind)
         holder.attachOnClickListener(R.id.item_common_movie)
         holder.attachImageLoader(R.id.img_cover)
+        binding.txtLabel.text = data.name
+        binding.txtDesc.text = data.desc
     }
 
     override fun getLayout(): Int {

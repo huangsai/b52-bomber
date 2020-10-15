@@ -248,5 +248,14 @@ interface DataService {
             @Path("mid") mid: Int
     ): Call<Nope>
 
+    @GET("/video/getMovieCategory")
+    fun getMovieLabel(): Call<ApiMovieLabel>
+
+    @POST("/video/postMoiveListByCategory")
+    fun getMovieListByLabel(@Body bode: ApiMovie.ReqLabel): Call<ApiMovie>
+
+    @GET("/video/getMovieRecomment/{uid}/")
+    fun getMovieListRecommend(@Path("uid") uid: Long): Call<ApiMovie>
+
     //-------⬆⬆⬆⬆⬆⬆⬆⬆----长视频相关接口----⬆⬆⬆⬆⬆⬆⬆-----//
 }

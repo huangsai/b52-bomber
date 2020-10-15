@@ -3,6 +3,7 @@
     <string name="movie_text_all_label">全部频道</string>
     <string name="movie_search_input_hint">输入电影名称或导演，演员信息</string>
     <string name="movie_text_empty_click_refresh">暂无数据，点击刷新</string>
+    <string name="movie_text_empty_pull_refresh">暂无数据，下拉刷新</string>
     <string name="movie_text_top_like_label">猜你喜欢</string>
     <string name="movie_text_top_recommend_label">为你推荐</string>
     <string name="movie_text_visit_history_label">历史观看</string>

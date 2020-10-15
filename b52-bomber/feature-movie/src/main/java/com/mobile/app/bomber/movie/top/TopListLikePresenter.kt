@@ -27,7 +27,6 @@ class TopListLikePresenter(context: Context) : BaseTopMoviePresenter(context, fa
     }
 
     override fun onRefresh() {
-        TODO("Not yet implemented")
     }
 
     override fun onClick(v: View) {
