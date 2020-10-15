@@ -7,10 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.android.material.tabs.TabLayoutMediator.TabConfigurationStrategy
+import com.mobile.app.bomber.common.base.Msg
 import com.mobile.app.bomber.common.base.MyBaseFragment
 import com.mobile.app.bomber.common.base.tool.SingleClick
 import com.mobile.app.bomber.movie.MovieX.BUS_MOVIE_REFRESH
@@ -24,6 +26,11 @@ import com.mobile.guava.android.mvvm.newStartActivity
 import com.mobile.guava.android.mvvm.showDialogFragment
 import com.mobile.guava.android.ui.view.recyclerview.cancelRefreshing
 import com.mobile.guava.jvm.coroutines.Bus
+import com.mobile.guava.jvm.domain.Source
+import com.mobile.guava.jvm.extension.exhaustive
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MovieFragment : MyBaseFragment(), ApiMovieFragment, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
@@ -58,23 +65,29 @@ class MovieFragment : MyBaseFragment(), ApiMovieFragment, View.OnClickListener, 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initTab()
         bannerPresenter = BannerPresenter(this, model, binding)
+        initTab()
     }
 
     private fun initTab() {
-        labels.add("精彩")
-        labels.add("自制网剧")
-        labels.add("名导大片")
-        labels.add("欧美大片")
-        labels.add("岛国AV")
-        labels.add("丝袜诱惑")
-        labels.add("人兽结合")
-        labels.add("精彩港剧")
-        labels.add("精彩韩剧")
-        binding.viewPager.adapter = MyAdapter(requireActivity(), labels.size)
-        val tabLayoutMediator = TabLayoutMediator(binding.layoutTab, binding.viewPager, TabConfigurationStrategy { tab, position -> tab.text = labels[position] })
-        tabLayoutMediator.attach()
+        labels.add(0, "精彩")
+        lifecycleScope.launch(Dispatchers.IO) {
+            val source = model.getLabel()
+            withContext(Dispatchers.Main) {
+                when (source) {
+                    is Source.Success -> {
+                        labels.addAll(source.data)
+                        binding.viewPager.adapter = MyAdapter(requireActivity(), labels)
+                        binding.viewPager.offscreenPageLimit = 1
+                        val tabLayoutMediator = TabLayoutMediator(binding.layoutTab, binding.viewPager, TabConfigurationStrategy { tab, position -> tab.text = labels[position] })
+                        tabLayoutMediator.attach()
+                    }
+                    is Source.Error -> {
+                        Msg.handleSourceException(source.requireError())
+                    }
+                }.exhaustive
+            }
+        }
     }
 
     fun selectTab(pos: Int) {
@@ -108,19 +121,19 @@ class MovieFragment : MyBaseFragment(), ApiMovieFragment, View.OnClickListener, 
 
     private class MyAdapter(
             activity: FragmentActivity,
-            private val itemCount: Int
+            private val labels: List<String>
     ) : FragmentStateAdapter(activity) {
 
         override fun createFragment(position: Int): Fragment {
             return if (position == 0) {
                 TopListFragment.newInstance(position)
             } else {
-                CommonListFragment.newInstance(position)
+                CommonListFragment.newInstance(position, labels[position])
             }
         }
 
         override fun getItemCount(): Int {
-            return itemCount
+            return labels.size
         }
     }
 

@@ -566,7 +566,7 @@ data class ApiFixedad(
         @Json(name = "RetCode") val code: Int,
         @Json(name = "Desc") val desc: String,
         @Json(name = "FixedadObj") val fixedadObj: FixedadObj
-){
+) {
     @JsonClass(generateAdapter = true)
     data class FixedadObj(
             @Json(name = "title") val Id: String,
@@ -575,6 +575,7 @@ data class ApiFixedad(
             @Json(name = "resolutionData") val resolutionData: ResolutionData
 
     )
+
     @JsonClass(generateAdapter = true)
     data class ResolutionData(
             @Json(name = "sixteen") val sixteen: String,
@@ -583,6 +584,39 @@ data class ApiFixedad(
     )
 }
 
+@JsonClass(generateAdapter = true)
+data class ApiUsermsg(
+        @Json(name = "RetCode") val retCode: Int,
+        @Json(name = "UserMsgObj") val items: List<Item>?
+) {
+
+    @JsonClass(generateAdapter = true)
+    data class Item(
+            @Json(name = "Atid") val atid: Int,
+            @Json(name = "Commentid") val commentid: Int,
+            @Json(name = "Commenttype") val commenttype: Int,
+            @Json(name = "Content") val content: String,
+            @Json(name = "Createtime") val createtime: Long,
+            @Json(name = "Followtype") val followtype: Int,
+            @Json(name = "Fromuid") val fromuid: Int,
+            @Json(name = "Fromuserinfo") val fromuserinfo: List<Fromuserinfo>,
+            @Json(name = "Giveliketype") val giveliketype: Int,
+            @Json(name = "Id") val id: Int,
+            @Json(name = "Isfollow") var isfollow: Int,
+            @Json(name = "Msgtype") val msgtype: Int,
+            @Json(name = "Uid") val uid: Int,
+            @Json(name = "Videoid") val videoid: Int,
+            @Json(name = "Cover") val cover: String
+    ) {
+
+        @JsonClass(generateAdapter = true)
+        data class Fromuserinfo(
+                @Json(name = "Name") val name: String,
+                @Json(name = "Pic") val pic: String,
+                @Json(name = "Uid") val uid: Int
+        )
+    }
+}
 
 //-------⬇⬇⬇⬇⬇⬇⬇⬇---长视频相关-----⬇⬇⬇⬇⬇⬇⬇-----//
 
@@ -623,11 +657,10 @@ data class ApiMovieHotKey(
 @JsonClass(generateAdapter = true)
 data class ApiMovie(
         @Json(name = "RetCode") val code: Int,
-        @Json(name = "Desc") val desc: String,
         @Json(name = "totalpage") val totalPage: Int,
         @Json(name = "totalcount") val totalCount: Int,
         @Json(name = "next") val nextPage: Int,
-        @Json(name = "MovieList") val movies: List<Movie>?
+        @Json(name = "MoiveList") val movies: List<Movie>?
 ) {
 
     @JsonClass(generateAdapter = true)
@@ -665,40 +698,23 @@ data class ApiMovie(
             @Json(name = "page") val page: Int,
             @Json(name = "size") val size: Int
     )
+
+    @JsonClass(generateAdapter = true)
+    data class ReqLabel(
+            @Json(name = "uid") val uid: Long,
+            @Json(name = "page") val page: Int,
+            @Json(name = "size") val size: Int,
+            @Json(name = "sort") val sort: String,
+            @Json(name = "fastkey") val fastKey: String,
+            @Json(name = "label") val label: String,
+    )
 }
 
 @JsonClass(generateAdapter = true)
-data class ApiUsermsg(
-        @Json(name = "RetCode") val retCode: Int,
-        @Json(name = "UserMsgObj") val items: List<Item>?
-) {
-
-    @JsonClass(generateAdapter = true)
-    data class Item(
-            @Json(name = "Atid") val atid: Int,
-            @Json(name = "Commentid") val commentid: Int,
-            @Json(name = "Commenttype") val commenttype: Int,
-            @Json(name = "Content") val content: String,
-            @Json(name = "Createtime") val createtime: Long,
-            @Json(name = "Followtype") val followtype: Int,
-            @Json(name = "Fromuid") val fromuid: Int,
-            @Json(name = "Fromuserinfo") val fromuserinfo: List<Fromuserinfo>,
-            @Json(name = "Giveliketype") val giveliketype: Int,
-            @Json(name = "Id") val id: Int,
-            @Json(name = "Isfollow") var isfollow: Int,
-            @Json(name = "Msgtype") val msgtype: Int,
-            @Json(name = "Uid") val uid: Int,
-            @Json(name = "Videoid") val videoid: Int,
-            @Json(name = "Cover") val cover: String
-    ) {
-
-        @JsonClass(generateAdapter = true)
-        data class Fromuserinfo(
-                @Json(name = "Name") val name: String,
-                @Json(name = "Pic") val pic: String,
-                @Json(name = "Uid") val uid: Int
-        )
-    }
-}
+data class ApiMovieLabel(
+        @Json(name = "RetCode") val code: Int,
+        @Json(name = "Desc") val desc: String,
+        @Json(name = "Data") val labels: List<String>?
+)
 
 //-------⬆⬆⬆⬆⬆⬆⬆⬆----长视频相关----⬆⬆⬆⬆⬆⬆⬆-----//

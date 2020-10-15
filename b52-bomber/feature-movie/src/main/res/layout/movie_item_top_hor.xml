@@ -9,8 +9,7 @@
         android:id="@+id/img_cover"
         android:layout_width="180dp"
         android:layout_height="@dimen/size_100dp"
-        android:adjustViewBounds="true"
-        android:scaleType="fitXY"
+        android:scaleType="centerCrop"
         app:layout_constraintBottom_toTopOf="@id/txt_label"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
