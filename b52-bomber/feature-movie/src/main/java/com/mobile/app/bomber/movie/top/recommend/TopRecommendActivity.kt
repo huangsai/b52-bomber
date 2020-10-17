@@ -38,7 +38,6 @@ class TopRecommendActivity : MyBaseActivity(), View.OnClickListener, SwipeRefres
         binding.layoutToolbar.toolbar.setNavigationIcon(R.drawable.jq_fanhui)
         binding.layoutToolbar.toolbar.setNavigationOnClickListener(this)
         binding.layoutToolbar.txtToolbarTitle.text = getString(R.string.movie_text_top_recommend_label)
-        binding.swipeRefresh.setOnRefreshListener(this)
         initRecycler()
     }
 
@@ -46,6 +45,7 @@ class TopRecommendActivity : MyBaseActivity(), View.OnClickListener, SwipeRefres
         binding.recycler.setHasFixedSize(true)
         binding.recycler.layoutManager = LinearLayoutManager(this)
         binding.recycler.adapter = adapter
+        binding.swipeRefresh.setOnRefreshListener(this)
 
         val list: MutableList<RecyclerItem> = ArrayList()
 //        list.add(TopTitlePresenter(getString(R.string.movie_text_visit_friend_label)))
