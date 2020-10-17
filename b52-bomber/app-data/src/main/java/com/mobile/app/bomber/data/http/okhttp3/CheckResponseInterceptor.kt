@@ -17,8 +17,8 @@ class CheckResponseInterceptor : Interceptor {
         val response = chain.proceed(chain.request())
         if (Guava.timber != PlatformTimber.SYSTEM) {
             var json = response.peekBody(Long.MAX_VALUE).string()
-            if (json.contains("retcode", true)) {
-                json = json.replace("retcode", "RetCode", true)
+            if (json.contains("retCode", true)) {
+                json = json.replace("retCode", "retCode", true)
             }
             val code = DataX.component.json()
                     .adapter(Nope::class.java)
