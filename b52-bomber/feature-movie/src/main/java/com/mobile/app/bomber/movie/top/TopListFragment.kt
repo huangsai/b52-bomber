@@ -18,7 +18,6 @@ import com.mobile.guava.android.mvvm.newStartActivity
 import com.pacific.adapter.AdapterUtils
 import com.pacific.adapter.RecyclerAdapter
 import com.pacific.adapter.RecyclerItem
-import timber.log.Timber
 import java.util.*
 
 class TopListFragment : MyBaseFragment(), View.OnClickListener {
@@ -54,7 +53,7 @@ class TopListFragment : MyBaseFragment(), View.OnClickListener {
     private fun load() {
         val list: MutableList<RecyclerItem> = ArrayList()
         list.add(TopTitlePresenter("${getString(R.string.movie_text_top_like_label)}>"))
-        listLikePresenter = TopListLikePresenter(requireContext())
+        listLikePresenter = TopListLikePresenter(this, model)
         list.add(listLikePresenter)
         list.add(TopTitlePresenter("${getString(R.string.movie_text_top_recommend_label)}>"))
         listRecommendPresenter = TopListRecommendPresenter(this, model)

@@ -2,10 +2,7 @@ package com.mobile.app.bomber.data.repository
 
 import com.mobile.app.bomber.data.db.AppDatabase
 import com.mobile.app.bomber.data.files.AppPrefsManager
-import com.mobile.app.bomber.data.http.entities.ApiMovie
-import com.mobile.app.bomber.data.http.entities.ApiMovieBanner
-import com.mobile.app.bomber.data.http.entities.ApiMovieDetail
-import com.mobile.app.bomber.data.http.entities.Pager
+import com.mobile.app.bomber.data.http.entities.*
 import com.mobile.app.bomber.data.http.service.DataService
 import com.mobile.guava.data.toSource
 import com.mobile.guava.jvm.domain.Source
@@ -73,6 +70,28 @@ class MovieRepository @Inject constructor(
         val call = dataService.getMovieDetail(movieId)
         return try {
             call.execute().toSource()
+        } catch (e: Exception) {
+            errorSource(e)
+        }
+    }
+
+    suspend fun getMovieHistory(): Source<List<ApiMovie.Movie>> {
+        val call = dataService.getMovieHistory(ApiMovieHistory.Req(appPrefsManager.getDeviceId(), appPrefsManager.getUserId()))
+        return try {
+            call.execute().toSource {
+                it.movies.orEmpty()
+            }
+        } catch (e: Exception) {
+            errorSource(e)
+        }
+    }
+
+    suspend fun getGuessULikeMovieList(): Source<List<ApiMovie.Movie>> {
+        val call = dataService.getGuessULikeMovieList(appPrefsManager.getUserId())
+        return try {
+            call.execute().toSource {
+                it.movies.orEmpty()
+            }
         } catch (e: Exception) {
             errorSource(e)
         }

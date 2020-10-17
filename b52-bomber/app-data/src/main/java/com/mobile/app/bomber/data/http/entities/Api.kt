@@ -731,4 +731,16 @@ data class ApiMovieDetail(
         @Json(name = "ad") val ad: ApiMovie.Ad
 )
 
+@JsonClass(generateAdapter = true)
+data class ApiMovieHistory(
+        @Json(name = "retCode") val code: Int,
+        @Json(name = "movieList") val movies: List<ApiMovie.Movie>?,
+) {
+    @JsonClass(generateAdapter = true)
+    data class Req(
+            @Json(name = "deviceid") val deviceid: String,
+            @Json(name = "uid") val uid: Long
+    )
+}
+
 //-------⬆⬆⬆⬆⬆⬆⬆⬆----长视频相关----⬆⬆⬆⬆⬆⬆⬆-----//
