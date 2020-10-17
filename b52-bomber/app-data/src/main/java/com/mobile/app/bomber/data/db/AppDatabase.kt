@@ -7,4 +7,6 @@ interface AppDatabase {
     fun tikSearchKeyDao(): TikSearchKeyDao
 
     fun movieSearchKeyDao(): MovieSearchKeyDao
+
+    fun tikMessageDao(): TikMessageDao
 }

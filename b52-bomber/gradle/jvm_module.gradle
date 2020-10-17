@@ -18,7 +18,6 @@ dependencies {
     testImplementation dep.truth
 
     implementation dep.kotlin.stdlibJdk8
-    implementation dep.kotlin.stdlibJdk7
     implementation dep.kotlin.reflect
     implementation dep.ktSerialization
     implementation dep.ktCoroutines.core

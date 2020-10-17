@@ -8,7 +8,6 @@ import com.mobile.guava.jvm.domain.PlatformTimber
 import okhttp3.Interceptor
 import okhttp3.Response
 import java.io.IOException
-import kotlin.jvm.Throws
 
 class CheckResponseInterceptor : Interceptor {
 
@@ -17,8 +16,16 @@ class CheckResponseInterceptor : Interceptor {
         val response = chain.proceed(chain.request())
         if (Guava.timber != PlatformTimber.SYSTEM) {
             var json = response.peekBody(Long.MAX_VALUE).string()
-            if (json.contains("retCode", true)) {
-                json = json.replace("retCode", "retCode", true)
+            when {
+                json.contains("retcode") -> {
+                    json = json.replace("retcode", "retCode")
+                }
+                json.contains("Retcode") -> {
+                    json = json.replace("Retcode", "retCode")
+                }
+                json.contains("RetCode") -> {
+                    json = json.replace("RetCode", "retCode")
+                }
             }
             val code = DataX.component.json()
                     .adapter(Nope::class.java)

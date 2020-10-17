@@ -221,14 +221,17 @@ interface DataService {
     @GET("/video/getHotKeyTopN")
     fun getHotKey(): Call<ApiHotKey>
 
+    @GET("/video/getTags")
+    fun getTags(): Call<ApiTags>
+
     @GET("/sys/getVersion/{platform}/")
     fun getVersion(@Path("platform") platform: Int): Call<ApiVersion>
 
     @GET("/sys/getShareUrl/")
     fun getDownLoadUrl(): Call<ApiDownLoadUrl>
 
-    @GET("/sys/getFixedad/{platform}/")
-    fun getFixedad(@Path("platform") platform: Int): Call<ApiFixedad>
+    @GET("/sys/getFixedad/")
+    fun getFixedad(): Call<ApiFixedad>
 
     //-------⬇⬇⬇⬇⬇⬇⬇⬇---长视频相关接口-----⬇⬇⬇⬇⬇⬇⬇-----//
 
@@ -268,6 +271,11 @@ interface DataService {
     @POST("/video/submitMovieCollection/")
     fun postMovieCollection(@Body bode: ApiMovieCollection): Call<ApiSubmitCollection>
 
+    @POST("/video/getMovieHistory/")
+    fun getMovieHistory(@Body bode: ApiMovieHistory.Req): Call<ApiMovieHistory>
+
+    @GET("/getGuessULikeMovieList/{uid}/")
+    fun getGuessULikeMovieList(@Path("uid") uid: Long): Call<ApiMovie>
 
     //-------⬆⬆⬆⬆⬆⬆⬆⬆----长视频相关接口----⬆⬆⬆⬆⬆⬆⬆-----//
 }

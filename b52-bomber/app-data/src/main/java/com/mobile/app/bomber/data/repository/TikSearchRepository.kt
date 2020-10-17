@@ -84,7 +84,7 @@ class TikSearchRepository @Inject constructor(
         }
 //        if (pager.isReachedTheEnd) return Source.Success(emptyList())
 //        pager.isBusy = true
-        val call = dataService.searchUsers(keyword)
+        val call = dataService.searchTikUsers(keyword)
         return try {
             call.execute().toSource() {
                 it.users

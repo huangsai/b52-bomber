@@ -96,4 +96,29 @@ class MovieRepository @Inject constructor(
             errorSource(e)
         }
     }
+
+    suspend fun getMovieHistory(): Source<List<ApiMovie.Movie>> {
+        val call = dataService.getMovieHistory(ApiMovieHistory.Req(appPrefsManager.getDeviceId(), appPrefsManager.getUserId()))
+        return try {
+            call.execute().toSource {
+                it.movies.orEmpty()
+            }
+
+        } catch (e: Exception) {
+            errorSource(e)
+        }
+    }
+
+
+    suspend fun getGuessULikeMovieList(): Source<List<ApiMovie.Movie>> {
+        val call = dataService.getGuessULikeMovieList(appPrefsManager.getUserId())
+        return try {
+            call.execute().toSource {
+                it.movies.orEmpty()
+            }
+
+        } catch (e: Exception) {
+            errorSource(e)
+        }
+    }
 }

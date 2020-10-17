@@ -50,14 +50,14 @@ public class TitleVideoPresenter extends BaseVideoPresenter {
         videoItem = item;
         Point a = ScreenUtilsKt.getScreen();
         int result = a.x / a.y;
-        String imgeUrl = "";
-        if (result == 9 / 18) { // 9:18分辨率
-            imgeUrl = item.data.getResolutionData().getEighteen();
-        } else if (result == 9 / 21) { //9:21分辨率
-            imgeUrl = item.data.getResolutionData().getTwentyOne();
-        } else {
-            imgeUrl = item.data.getResolutionData().getSixteen();
-        }
+        String imgeUrl = item.data.getResolutionData();
+//        if (result == 9 / 18) { // 9:18分辨率
+//            imgeUrl = item.data.getResolutionData();
+//        } else if (result == 9 / 21) { //9:21分辨率
+//            imgeUrl = item.data.getResolutionData().getTwentyOne();
+//        } else {
+//            imgeUrl = item.data.getResolutionData().getSixteen();
+//        }
         GlideApp.with(fragment)
                 .load(GlideExtKt.decodeImgUrl(imgeUrl))
                 .placeholder(R.drawable.nearby_absent)
@@ -94,11 +94,10 @@ public class TitleVideoPresenter extends BaseVideoPresenter {
 //        int result1 = 9 / 16;
 //        Msg.INSTANCE.toast("==" + String.valueOf(result));
 
-        fragment.model.fixedAd(1).observe(fragment, source -> {
+        fragment.model.fixedAd().observe(fragment, source -> {
             if (source instanceof Source.Success) {
                 ApiFixedad ad = source.requireData();
                 ApiFixedad.FixedadObj obj = ad.getFixedadObj();
-                ApiFixedad.ResolutionData data = obj.getResolutionData();
                 List<TitleVideoItem> videoItem = new ArrayList<TitleVideoItem>();
                 TitleVideoItem adItem = new TitleVideoItem(obj);
                 videoItem.add(adItem);

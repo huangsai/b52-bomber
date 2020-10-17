@@ -109,4 +109,12 @@ object PrefsManager : AppPrefsManager {
         mmvk.encode(RunnerX.PREFS_LOCATION_LAT, location.latitude)
         mmvk.encode(RunnerX.PREFS_LOCATION_LNG, location.longitude)
     }
+
+    override fun getMsgTime(type: String): Int {
+        return mmvk.decodeInt(getUserId().toString() + type, 0)
+    }
+
+    override fun setMsgTime(time: Int, type: String): Boolean {
+        return mmvk.encode(getUserId().toString() + type, time)
+    }
 }
