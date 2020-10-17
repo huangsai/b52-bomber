@@ -260,5 +260,14 @@ interface DataService {
     @GET("/video/getMoviePlayDetailById/{mid}/")
     fun getMovieDetail(@Path("mid") movieId: Long): Call<ApiMovieDetail>
 
+    //点赞
+    @POST("/video/postMovieLike/")
+    fun postMovieLike(@Body bode: ApiMovieId): Call<Nope>
+
+    //收藏
+    @POST("/video/submitMovieCollection/")
+    fun postMovieCollection(@Body bode: ApiMovieCollection): Call<ApiSubmitCollection>
+
+
     //-------⬆⬆⬆⬆⬆⬆⬆⬆----长视频相关接口----⬆⬆⬆⬆⬆⬆⬆-----//
 }

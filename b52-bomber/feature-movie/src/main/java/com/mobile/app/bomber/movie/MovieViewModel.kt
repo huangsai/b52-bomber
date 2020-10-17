@@ -2,9 +2,7 @@ package com.mobile.app.bomber.movie
 
 import androidx.annotation.WorkerThread
 import com.mobile.app.bomber.common.base.MyBaseViewModel
-import com.mobile.app.bomber.data.http.entities.ApiMovie
-import com.mobile.app.bomber.data.http.entities.ApiMovieBanner
-import com.mobile.app.bomber.data.http.entities.Pager
+import com.mobile.app.bomber.data.http.entities.*
 import com.mobile.guava.android.ensureWorkThread
 import com.mobile.guava.jvm.domain.Source
 import javax.inject.Inject
@@ -33,5 +31,18 @@ class MovieViewModel @Inject constructor() : MyBaseViewModel() {
     suspend fun getMovieListRecommend(): Source<List<ApiMovie.Movie>> {
         ensureWorkThread()
         return movieRepository.getMovieListRecommend()
+    }
+
+
+    @WorkerThread
+    suspend fun postMovieLike(movieId: Int): Source<Nope> {
+        ensureWorkThread()
+        return movieRepository.postMovieLike(movieId)
+    }
+
+    @WorkerThread
+    suspend fun postMovieCollection(movieId: Int): Source<ApiSubmitCollection> {
+        ensureWorkThread()
+        return movieRepository.postMovieCollection(movieId)
     }
 }
