@@ -1,13 +1,10 @@
 package com.mobile.app.bomber.tik.message.items;
 
-import android.view.View;
-
 import androidx.annotation.NonNull;
 
 import com.mobile.app.bomber.data.http.entities.ApiUsermsg;
 import com.mobile.app.bomber.tik.R;
 import com.mobile.app.bomber.tik.databinding.ItemMsgBinding;
-import com.mobile.app.bomber.tik.mine.UserDetailActivity;
 import com.pacific.adapter.AdapterViewHolder;
 import com.pacific.adapter.SimpleRecyclerItem;
 

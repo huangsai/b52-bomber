@@ -70,13 +70,13 @@ public class FansFragment extends BaseLikingFragment {
         AdapterViewHolder holder = AdapterUtils.INSTANCE.getHolder(view);
         ApiUsermsg.Item data = holder.<FansItem>item().data;
         final int position = holder.getBindingAdapterPosition();
-        final boolean oldIsFollowing = data.getIsfollow() == 1;
-        model.follow(data.getUid(), oldIsFollowing).observe(this, source -> {
+        final boolean oldIsFollowing = data.getIsfollow() == 2;
+        model.follow(data.getId(), oldIsFollowing).observe(this, source -> {
             if (source instanceof Source.Success) {
                 if (oldIsFollowing) {
-                    data.setIsfollow(2);
-                } else {
                     data.setIsfollow(1);
+                } else {
+                    data.setIsfollow(2);
                 }
                 adapter.notifyItemChanged(position, 0);
             } else {

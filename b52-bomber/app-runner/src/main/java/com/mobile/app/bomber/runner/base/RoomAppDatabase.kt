@@ -5,6 +5,7 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.mobile.app.bomber.data.db.AppDatabase
 import com.mobile.app.bomber.data.db.entities.DbMovieSearchKey
+import com.mobile.app.bomber.data.db.entities.DbTikMessageKey
 import com.mobile.app.bomber.data.db.entities.DbTikSearchKey
 import com.mobile.app.bomber.data.db.entities.DbUser
 
@@ -12,12 +13,13 @@ import com.mobile.app.bomber.data.db.entities.DbUser
         entities = [
             DbUser::class,
             DbTikSearchKey::class,
-            DbMovieSearchKey::class
+            DbMovieSearchKey::class,
+            DbTikMessageKey::class
         ],
         version = 1,
         exportSchema = true
 )
-abstract class RoomAppDatabase : RoomDatabase(), AppDatabase{
+abstract class RoomAppDatabase : RoomDatabase(), AppDatabase {
 
     class DbCallback : RoomDatabase.Callback() {
 

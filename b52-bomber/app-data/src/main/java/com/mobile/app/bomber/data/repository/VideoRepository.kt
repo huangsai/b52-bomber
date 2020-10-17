@@ -41,8 +41,8 @@ class VideoRepository @Inject constructor(
         )
         return callApiVideo(call, pager)
     }
-    suspend fun fixedAd(platform: Int): Source<ApiFixedad> {
-        val call = dataService.getFixedad(platform)
+    suspend fun fixedAd(): Source<ApiFixedad> {
+        val call = dataService.getFixedad()
         return try {
             call.execute().toSource()
         } catch (e: Exception) {

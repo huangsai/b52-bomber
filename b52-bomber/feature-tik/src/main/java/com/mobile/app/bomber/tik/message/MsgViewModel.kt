@@ -1,12 +1,12 @@
 package com.mobile.app.bomber.tik.message
 
-import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.liveData
 import com.mobile.app.bomber.common.base.MyBaseViewModel
 import com.mobile.app.bomber.data.DataX
+import com.mobile.app.bomber.data.db.entities.DbTikMessageKey
 import com.mobile.app.bomber.data.http.entities.*
-import com.mobile.guava.android.ensureWorkThread
 import com.mobile.guava.jvm.domain.Source
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
@@ -54,5 +54,35 @@ class MsgViewModel @Inject constructor() : MyBaseViewModel() {
                 .adapter(ApiVideo.Video::class.java)
                 .lenient()
                 .fromJson(videoJson)!!
+    }
+
+
+//    fun getKeys(): LiveData<List<DbTikMessageKey>> {
+//        return msgRepository.getKeys()
+//                .asLiveData(Dispatchers.IO)
+//    }
+
+    fun getKey(): LiveData<DbTikMessageKey?> {
+        return liveData(Dispatchers.IO) {
+            emit(msgRepository.getKey())
+        }
+    }
+
+    fun addKey(data:String): LiveData<DbTikMessageKey> {
+        return liveData(Dispatchers.IO) {
+            emit(msgRepository.addKey(data))
+        }
+    }
+
+    fun clearKeys(): LiveData<Int> {
+        return liveData(Dispatchers.IO) {
+            emit(msgRepository.clearKeys())
+        }
+    }
+
+    fun deleteKey(obj: DbTikMessageKey): LiveData<Int> {
+        return liveData(Dispatchers.IO) {
+            emit(msgRepository.deleteKey(obj))
+        }
     }
 }
