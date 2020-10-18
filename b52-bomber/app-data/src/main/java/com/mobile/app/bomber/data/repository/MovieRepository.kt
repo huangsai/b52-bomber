@@ -66,8 +66,8 @@ class MovieRepository @Inject constructor(
         }
     }
 
-    suspend fun getMovieDetail(movieId: Long): Source<ApiMovieDetail> {
-        val call = dataService.getMovieDetail(movieId)
+    suspend fun getMovieDetail(movieId: Long, uId: Long ,deviceId: String): Source<ApiMovieDetail> {
+        val call = dataService.getMovieDetail(movieId,uId,deviceId)
         return try {
             call.execute().toSource()
         } catch (e: Exception) {

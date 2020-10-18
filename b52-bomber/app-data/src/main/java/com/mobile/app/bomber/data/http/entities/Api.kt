@@ -98,7 +98,7 @@ data class ApiVideo(
     @JsonClass(generateAdapter = true)
     data class Video(
             @Json(name = "videoId") val videoId: Long,
-            @Json(name = "videoURL") val videoURL: String, //如果需要使用，需要引用decodeVideoUrl()
+            @Json(name = "videoUrl") val videoURL: String, //如果需要使用，需要引用decodeVideoUrl()
             @Json(name = "owner") var owner: Long,
             @Json(name = "uploadTm") val uploadTime: Long,
             @Json(name = "comments") val commentCount: Int,
@@ -107,7 +107,7 @@ data class ApiVideo(
             @Json(name = "title") val title: String?,
             @Json(name = "cover") val coverImageUrl: String?,
             @Json(name = "like") var likeCount: Int,
-            @Json(name = "isfollowed") var isFollowing: Boolean,
+            @Json(name = "isFollowed") var isFollowing: Boolean,
             @Json(name = "isLiked") var isLiking: Boolean,
             @Json(name = "playCount") var playCount: Int,
             @Json(name = "distance") var distance: Long?,

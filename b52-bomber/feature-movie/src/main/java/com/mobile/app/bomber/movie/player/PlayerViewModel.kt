@@ -11,8 +11,8 @@ class PlayerViewModel @Inject constructor(
         private val movieRepository: MovieRepository
 ) : ViewModel() {
 
-    suspend fun getMovieDetail(movieId: Long): Source<ApiMovieDetail> {
-        return movieRepository.getMovieDetail(movieId)
+    suspend fun getMovieDetail(movieId: Long, uId: Long, deviceId: String): Source<ApiMovieDetail> {
+        return movieRepository.getMovieDetail(movieId,uId,deviceId)
     }
 
     fun requestComment(): List<ApiComment.Comment> {
