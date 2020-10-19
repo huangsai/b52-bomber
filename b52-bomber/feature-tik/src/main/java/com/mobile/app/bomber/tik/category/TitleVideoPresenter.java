@@ -17,6 +17,7 @@ import com.mobile.app.bomber.tik.base.GlideExtKt;
 import com.mobile.app.bomber.tik.category.items.DiscoveryVideoItem;
 import com.mobile.app.bomber.tik.category.items.TheEndItem;
 import com.mobile.app.bomber.tik.category.items.TitleVideoItem;
+import com.mobile.app.bomber.tik.databinding.FragmentCatetoryBinding;
 import com.mobile.app.bomber.tik.databinding.ItemCategoryTitleVideoBinding;
 import com.mobile.app.bomber.tik.home.PlayListActivity;
 import com.mobile.ext.glide.GlideApp;
@@ -34,9 +35,11 @@ import java.util.List;
 public class TitleVideoPresenter extends BaseVideoPresenter {
 
     private TitleVideoItem videoItem;
+    private FragmentCatetoryBinding binding;
 
-    public TitleVideoPresenter(CategoryFragment fragment) {
+    public TitleVideoPresenter(CategoryFragment fragment, FragmentCatetoryBinding bind) {
         super(fragment);
+        this.binding = bind;
     }
 
     @Override
@@ -109,6 +112,7 @@ public class TitleVideoPresenter extends BaseVideoPresenter {
             } else {
                 Msg.INSTANCE.handleSourceException(source.requireError());
             }
+            binding.layoutRefresh.setRefreshing(false);
         });
     }
 }

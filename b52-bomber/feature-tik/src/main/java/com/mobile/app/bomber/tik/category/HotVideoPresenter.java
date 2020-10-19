@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.mobile.app.bomber.tik.databinding.FragmentCatetoryBinding;
 import com.pacific.adapter.AdapterUtils;
 import com.pacific.adapter.AdapterViewHolder;
 import com.mobile.guava.jvm.domain.Source;
@@ -25,9 +26,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class HotVideoPresenter extends BaseVideoPresenter {
+    private FragmentCatetoryBinding binding;
 
-    public HotVideoPresenter(CategoryFragment fragment) {
+    public HotVideoPresenter(CategoryFragment fragment, FragmentCatetoryBinding bind) {
         super(fragment);
+        this.binding = bind;
+
     }
 
     @Override
@@ -90,6 +94,8 @@ public class HotVideoPresenter extends BaseVideoPresenter {
                     adapter.add(new TheEndItem());
                 }
             }
+            binding.layoutRefresh.setRefreshing(false);
+
         });
     }
 }

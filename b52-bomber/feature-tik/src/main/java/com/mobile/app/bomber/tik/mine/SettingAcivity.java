@@ -96,11 +96,12 @@ public class SettingAcivity extends MyBaseActivity implements View.OnClickListen
                             Msg.INSTANCE.toast("暂时不能分享");
                             return;
                         }
-                    } catch (InterruptedException e) {
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }
             }.start();
-            ShareDialogFragment.goSystemShareSheet(this, shareUrl, "在xx世界最流行的色情视频app中免费观看各种视频，国产网红、日本av、欧美色情应有尽有 ");
+            ShareDialogFragment.goSystemShareSheet(this, shareUrl, "在xx世界最流行的色情视频app中免费观看各种视频，国产网红、日本av、欧美色情应有尽有.");
         }
     }
 }

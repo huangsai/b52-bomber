@@ -61,6 +61,7 @@ public class CategoryFragment extends MyBaseFragment implements View.OnClickList
         binding.recycler.setAdapter(adapter);
         // binding.imgSearch.setOnClickListener(this);
         binding.layoutRefresh.setOnRefreshListener(this);
+        binding.layoutRefresh.setRefreshing(true);
         return binding.getRoot();
     }
 
@@ -108,7 +109,7 @@ public class CategoryFragment extends MyBaseFragment implements View.OnClickList
     private void load() {
         List<RecyclerItem> list = new ArrayList<>();
         list.add(new TitlePresenter("火爆活动", R.drawable.fl_huobaohuodong));
-        titleVideoPresenter = new TitleVideoPresenter(this);
+        titleVideoPresenter = new TitleVideoPresenter(this,binding);
         list.add(titleVideoPresenter);
 
         // list.add(new TitlePresenter("发现精彩", R.drawable.fl_faxianjingcai));
@@ -120,11 +121,11 @@ public class CategoryFragment extends MyBaseFragment implements View.OnClickList
         list.add(rankPresenter);
 
         list.add(new TitlePresenter("今日最新视频", R.drawable.fl_zuixinshiping));
-        newVideoPresenter = new NewVideoPresenter(this);
+        newVideoPresenter = new NewVideoPresenter(this,binding);
         list.add(newVideoPresenter);
 
         list.add(new TitlePresenter("今日最热视频", R.drawable.fl_zuireshiping));
-        hotVideoPresenter = new HotVideoPresenter(this);
+        hotVideoPresenter = new HotVideoPresenter(this,binding);
         list.add(hotVideoPresenter);
 
         adapter.addAll(list);
