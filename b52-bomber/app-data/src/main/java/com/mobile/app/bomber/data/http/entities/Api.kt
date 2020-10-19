@@ -32,7 +32,7 @@ data class Nope(@Json(name = "retCode") val code: Int)
 data class ApiToken(
         @Json(name = "retCode") val code: Int,
         @Json(name = "uid") val uid: Long?,
-        @Json(name = "fastkey") val token: String?
+        @Json(name = "fastKey") val token: String?
 ) {
     @JsonClass(generateAdapter = true)
     data class AReq(
