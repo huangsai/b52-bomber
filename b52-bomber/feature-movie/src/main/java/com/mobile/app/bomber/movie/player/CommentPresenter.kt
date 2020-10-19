@@ -12,7 +12,6 @@ import com.mobile.app.bomber.movie.R
 import com.mobile.app.bomber.movie.base.Phrase3
 import com.mobile.app.bomber.movie.databinding.MovieActivityPlayerBinding
 import com.mobile.app.bomber.movie.player.items.CommentItem
-import com.mobile.app.bomber.runner.base.PrefsManager
 import com.mobile.ext.glide.GlideApp
 import com.mobile.guava.jvm.domain.Source
 import com.mobile.guava.jvm.extension.exhaustive
@@ -95,7 +94,7 @@ class CommentPresenter(
             }
             R.id.txt_bookmark -> {
                 playerActivity.lifecycleScope.launch(Dispatchers.IO) {
-                    val source = model.postMovieCollection(playerActivity.movieId.toInt(),0)
+                    val source = model.postMovieCollection(playerActivity.movieId.toInt(), 0)
                     withContext(Dispatchers.Main) {
                         when (source) {
                             is Source.Success -> {
@@ -108,7 +107,7 @@ class CommentPresenter(
             }
             R.id.txt_like -> {
                 playerActivity.lifecycleScope.launch(Dispatchers.IO) {
-                    val source = model.postMovieLike(playerActivity.movieId.toInt())
+                    val source = model.postMovieLike(playerActivity.movieId.toInt(), 1)
                     withContext(Dispatchers.Main) {
                         when (source) {
                             is Source.Success -> {

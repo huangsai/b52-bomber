@@ -75,9 +75,9 @@ class MovieRepository @Inject constructor(
         }
     }
 
-    suspend fun postMovieLike(movieId: Int): Source<Nope> {
+    suspend fun postMovieLike(movieId: Int,isLike:Int): Source<Nope> {
         val req = ApiMovieId(
-                userId, token, movieId
+                userId, token, movieId,isLike
         )
         return try {
             dataService.postMovieLike(req).execute().toSource()

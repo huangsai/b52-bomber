@@ -190,7 +190,6 @@ public class MsgFragment extends TopMainFragment implements View.OnClickListener
                     Gson gson = new Gson();
                     Type listType = new TypeToken<List<ApiUsermsg.Item>>() {
                     }.getType();
-                    Log.i("keyObj", dbKeys.getObj());
                     items.addAll(gson.fromJson(dbKeys.getObj(), listType));
                 }
                 List<MsgItem> msgItems = items.stream()

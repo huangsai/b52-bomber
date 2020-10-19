@@ -20,9 +20,9 @@ class PlayerViewModel @Inject constructor(
     }
 
     @WorkerThread
-    suspend fun postMovieLike(movieId: Int): Source<Nope> {
+    suspend fun postMovieLike(movieId: Int,isLike:Int): Source<Nope> {
         ensureWorkThread()
-        return movieRepository.postMovieLike(movieId)
+        return movieRepository.postMovieLike(movieId,isLike)
     }
 
     @WorkerThread

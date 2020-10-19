@@ -120,7 +120,7 @@ interface DataService {
             @Path("fastkey") token: String
     ): Call<ApiFollow>
 
-    @GET("/user/getfanslist/{uid}/{fastkey}/")
+    @GET("/user/getfanslist/{uid}/{fastkey}")
     fun fanList(
             @Path("uid") uid: Long,
             @Path("fastkey") token: String
