@@ -15,6 +15,7 @@ import com.mobile.app.bomber.movie.MovieX.BUS_MOVIE_REFRESH
 import com.mobile.app.bomber.movie.databinding.MovieFragmentMovieBinding
 import com.mobile.app.bomber.movie.search.SearchActivity
 import com.mobile.app.bomber.movie.top.BannerPresenter
+import com.mobile.app.bomber.movie.top.MovieContentPresenter
 import com.mobile.app.bomber.runner.features.ApiMovieFragment
 import com.mobile.guava.android.mvvm.newStartActivity
 import com.mobile.guava.android.mvvm.showDialogFragment
@@ -23,31 +24,22 @@ import com.mobile.guava.jvm.coroutines.Bus
 import com.mobile.guava.jvm.domain.Source
 import com.mobile.guava.jvm.extension.exhaustive
 import com.pacific.adapter.RecyclerAdapter
-import com.pacific.adapter.RecyclerItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class MovieFragment : MyBaseFragment(), ApiMovieFragment, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
-
-    companion object {
-        @JvmStatic
-        fun newInstance(position: Int): MovieFragment = MovieFragment().apply {
-            arguments = Bundle().apply {
-                putInt("position", position)
-            }
-        }
-    }
+class MovieFragment : MyBaseFragment(), ApiMovieFragment, View.OnClickListener,
+        SwipeRefreshLayout.OnRefreshListener {
 
     private val model: MovieViewModel by viewModels { MovieX.component.viewModelFactory() }
 
     private var _binding: MovieFragmentMovieBinding? = null
     private val binding: MovieFragmentMovieBinding get() = _binding!!
-    private var bannerPresenter: BannerPresenter? = null
-    private var movieVpPresenter: MovieVpPresenter? = null
-    private val adapter = RecyclerAdapter()
 
-    private val labels = ArrayList<String>()
+    private val adapter = RecyclerAdapter()
+    private val tabLabels = ArrayList<String>()
+    private lateinit var movieContentPresenter: MovieContentPresenter
+    private lateinit var bannerPresenter: BannerPresenter
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -58,31 +50,31 @@ class MovieFragment : MyBaseFragment(), ApiMovieFragment, View.OnClickListener, 
         binding.menu.setOnClickListener(this)
         binding.searchToolbar.setOnClickListener(this)
         binding.swipeRefresh.setOnRefreshListener(this)
-        val layoutManager = LinearLayoutManager(requireContext())
-        binding.recycler.layoutManager = layoutManager
+        binding.recycler.setItemViewCacheSize(5)
+        binding.recycler.layoutManager = LinearLayoutManager(requireActivity())
         binding.recycler.adapter = adapter
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initTab()
+        loadTabLabels()
     }
 
-    private fun initTab() {
-        labels.add(0, "精彩")
+    private fun loadTabLabels() {
         lifecycleScope.launch(Dispatchers.IO) {
             val source = model.getLabel()
+            source.dataOrNull()?.let {
+                tabLabels.add("精彩")
+                tabLabels.addAll(it)
+            }
             withContext(Dispatchers.Main) {
                 when (source) {
                     is Source.Success -> {
-                        labels.addAll(source.data)
-                        val list: MutableList<RecyclerItem> = ArrayList()
+                        movieContentPresenter = MovieContentPresenter(this@MovieFragment, tabLabels, binding)
                         bannerPresenter = BannerPresenter(this@MovieFragment, model)
-                        movieVpPresenter = MovieVpPresenter(this@MovieFragment, labels, binding)
-                        list.add(bannerPresenter!!)
-                        list.add(movieVpPresenter!!)
-                        adapter.addAll(list)
+                        adapter.add(bannerPresenter)
+                        adapter.add(movieContentPresenter)
                     }
                     is Source.Error -> {
                         Msg.handleSourceException(source.requireError())
@@ -97,8 +89,8 @@ class MovieFragment : MyBaseFragment(), ApiMovieFragment, View.OnClickListener, 
     }
 
     override fun onRefresh() {
+        bannerPresenter.onRefresh()
         binding.swipeRefresh.cancelRefreshing(1000)
-        bannerPresenter?.onRefresh()
         Bus.offer(BUS_MOVIE_REFRESH)
     }
 
@@ -106,8 +98,7 @@ class MovieFragment : MyBaseFragment(), ApiMovieFragment, View.OnClickListener, 
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.menu -> {
-                val labelDialogFragment = MovieLabelDialogFragment.newInstance(labels)
-                showDialogFragment(labelDialogFragment)
+                showDialogFragment(MovieLabelDialogFragment.newInstance(tabLabels))
             }
             R.id.search_toolbar -> {
                 newStartActivity(SearchActivity::class.java)
@@ -117,9 +108,16 @@ class MovieFragment : MyBaseFragment(), ApiMovieFragment, View.OnClickListener, 
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding.recycler.adapter = null
         _binding = null
     }
 
+    companion object {
 
+        @JvmStatic
+        fun newInstance(position: Int): MovieFragment = MovieFragment().apply {
+            arguments = Bundle().apply {
+                putInt("position", position)
+            }
+        }
+    }
 }
