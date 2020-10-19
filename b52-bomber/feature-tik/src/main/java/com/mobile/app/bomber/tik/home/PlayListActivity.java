@@ -52,7 +52,7 @@ public class PlayListActivity extends MyBaseActivity implements View.OnClickList
             model = AppRouterUtils.viewModels(this, MsgViewModel.class);
             getVideoById(videoId);
         } else {
-            final String videoJson = Values.INSTANCE.get("PlayListActivity_videoJson");
+            final String videoJson = "";
             if (videoJson != null && !videoJson.isEmpty()) {
                 playPosition = 0;
                 model = AppRouterUtils.viewModels(this, MsgViewModel.class);

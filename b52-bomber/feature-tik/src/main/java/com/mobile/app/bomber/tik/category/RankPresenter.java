@@ -8,6 +8,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.util.Preconditions;
 import com.mobile.app.bomber.runner.base.PrefsManager;
+import com.mobile.app.bomber.tik.databinding.FragmentCatetoryBinding;
 import com.mobile.app.bomber.tik.login.LoginActivity;
 import com.mobile.guava.android.mvvm.RouterKt;
 import com.pacific.adapter.AdapterViewHolder;
@@ -33,10 +34,13 @@ public class RankPresenter extends SimpleRecyclerItem implements View.OnClickLis
 
     @Nullable
     private AdapterViewHolder viewHolder;
+    private FragmentCatetoryBinding binding;
+
 
     public RankPresenter(CategoryFragment fragment) {
         Preconditions.checkNotNull(fragment);
         this.fragment = fragment;
+//        this.binding = bind;
     }
 
     @Override
@@ -114,6 +118,7 @@ public class RankPresenter extends SimpleRecyclerItem implements View.OnClickLis
 
                 GlideExtKt.loadProfile(fragment, obj.getPicUrl(), binding.imgLikeProfile);
             }
+//            binding.layoutRefresh.setRefreshing(false);
         });
     }
 }

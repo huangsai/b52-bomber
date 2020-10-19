@@ -366,9 +366,9 @@ data class ApiRank(
     data class Rank(
             @Json(name = "uid") val uId: Int,
             @Json(name = "num") val num: Float,
-            @Json(name = "username") val username: String,
+            @Json(name = "userName") val username: String,
             @Json(name = "pic") val picUrl: String?,
-            @Json(name = "isfollowed") var isFollowing: Boolean
+            @Json(name = "isFollowed") var isFollowing: Boolean
     )
 }
 
