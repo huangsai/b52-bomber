@@ -33,19 +33,6 @@ class MovieViewModel @Inject constructor() : MyBaseViewModel() {
         return movieRepository.getMovieListRecommend()
     }
 
-
-    @WorkerThread
-    suspend fun postMovieLike(movieId: Int): Source<Nope> {
-        ensureWorkThread()
-        return movieRepository.postMovieLike(movieId)
-    }
-
-    @WorkerThread
-    suspend fun postMovieCollection(movieId: Int): Source<ApiSubmitCollection> {
-        ensureWorkThread()
-        return movieRepository.postMovieCollection(movieId)
-    }
-
     @WorkerThread
     suspend fun getMovieHistory(): Source<List<ApiMovie.Movie>> {
         ensureWorkThread()

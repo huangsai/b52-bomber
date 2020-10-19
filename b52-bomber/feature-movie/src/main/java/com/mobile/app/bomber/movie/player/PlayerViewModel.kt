@@ -1,9 +1,13 @@
 package com.mobile.app.bomber.movie.player
 
+import androidx.annotation.WorkerThread
 import androidx.lifecycle.ViewModel
 import com.mobile.app.bomber.data.http.entities.ApiComment
 import com.mobile.app.bomber.data.http.entities.ApiMovieDetail
+import com.mobile.app.bomber.data.http.entities.ApiSubmitCollection
+import com.mobile.app.bomber.data.http.entities.Nope
 import com.mobile.app.bomber.data.repository.MovieRepository
+import com.mobile.guava.android.ensureWorkThread
 import com.mobile.guava.jvm.domain.Source
 import javax.inject.Inject
 
@@ -12,7 +16,19 @@ class PlayerViewModel @Inject constructor(
 ) : ViewModel() {
 
     suspend fun getMovieDetail(movieId: Long, uId: Long, deviceId: String): Source<ApiMovieDetail> {
-        return movieRepository.getMovieDetail(movieId,uId,deviceId)
+        return movieRepository.getMovieDetail(movieId, uId, deviceId)
+    }
+
+    @WorkerThread
+    suspend fun postMovieLike(movieId: Int): Source<Nope> {
+        ensureWorkThread()
+        return movieRepository.postMovieLike(movieId)
+    }
+
+    @WorkerThread
+    suspend fun postMovieCollection(movieId: Int, isCollection: Int): Source<ApiSubmitCollection> {
+        ensureWorkThread()
+        return movieRepository.postMovieCollection(movieId, isCollection)
     }
 
     fun requestComment(): List<ApiComment.Comment> {

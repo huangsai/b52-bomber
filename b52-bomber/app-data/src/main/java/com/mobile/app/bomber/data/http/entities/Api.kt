@@ -750,7 +750,9 @@ data class ApiMovieId(
 @JsonClass(generateAdapter = true)
 data class ApiMovieCollection(
         @Json(name = "uid") val uid: Long,
-        @Json(name = "movieId") val movieId: Int
+        @Json(name = "movieId") val movieId: Int,
+        @Json(name = "isCollection") val isCollection: Int,
+        @Json(name = "fastKey") val fastKey: String
 )
 
 @JsonClass(generateAdapter = true)

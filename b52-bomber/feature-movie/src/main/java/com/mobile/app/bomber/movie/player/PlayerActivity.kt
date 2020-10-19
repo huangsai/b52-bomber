@@ -31,7 +31,7 @@ class PlayerActivity : BaseActivity() {
     var data: ApiMovieDetail? = null
         private set
 
-    private var movieId: Long = 0L
+    var movieId: Long = 0L
 
     private lateinit var commentPresenter: CommentPresenter
     private lateinit var sourcePresenter: SourcePresenter

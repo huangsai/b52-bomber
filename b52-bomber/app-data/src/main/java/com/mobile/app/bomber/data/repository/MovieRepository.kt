@@ -66,8 +66,8 @@ class MovieRepository @Inject constructor(
         }
     }
 
-    suspend fun getMovieDetail(movieId: Long, uId: Long ,deviceId: String): Source<ApiMovieDetail> {
-        val call = dataService.getMovieDetail(movieId,uId,deviceId)
+    suspend fun getMovieDetail(movieId: Long, uId: Long, deviceId: String): Source<ApiMovieDetail> {
+        val call = dataService.getMovieDetail(movieId, uId, deviceId)
         return try {
             call.execute().toSource()
         } catch (e: Exception) {
@@ -86,9 +86,9 @@ class MovieRepository @Inject constructor(
         }
     }
 
-    suspend fun postMovieCollection(movieId: Int): Source<ApiSubmitCollection> {
+    suspend fun postMovieCollection(movieId: Int,isCollection: Int): Source<ApiSubmitCollection> {
         val req = ApiMovieCollection(
-                userId, movieId
+                userId, movieId,isCollection,token
         )
         return try {
             dataService.postMovieCollection(req).execute().toSource()

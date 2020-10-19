@@ -5,13 +5,17 @@ import android.view.View
 import android.widget.ImageView
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.mobile.ext.glide.GlideApp
+import com.mobile.app.bomber.common.base.Msg
 import com.mobile.app.bomber.common.base.tool.shareToSystem
 import com.mobile.app.bomber.data.http.entities.Pager
 import com.mobile.app.bomber.movie.R
 import com.mobile.app.bomber.movie.base.Phrase3
 import com.mobile.app.bomber.movie.databinding.MovieActivityPlayerBinding
 import com.mobile.app.bomber.movie.player.items.CommentItem
+import com.mobile.app.bomber.runner.base.PrefsManager
+import com.mobile.ext.glide.GlideApp
+import com.mobile.guava.jvm.domain.Source
+import com.mobile.guava.jvm.extension.exhaustive
 import com.pacific.adapter.AdapterUtils
 import com.pacific.adapter.AdapterViewHolder
 import com.pacific.adapter.RecyclerAdapter
@@ -36,6 +40,7 @@ class CommentPresenter(
         binding.txtShare.setOnClickListener(this)
         binding.txtBookmark.setOnClickListener(this)
         binding.txtDownload.setOnClickListener(this)
+        binding.txtLike.setOnClickListener(this)
 
         binding.recycler.layoutManager = LinearLayoutManager(playerActivity)
         binding.recycler.adapter = adapter
@@ -87,6 +92,32 @@ class CommentPresenter(
             }
             R.id.txt_share -> {
                 playerActivity.shareToSystem("http://www.google.com")
+            }
+            R.id.txt_bookmark -> {
+                playerActivity.lifecycleScope.launch(Dispatchers.IO) {
+                    val source = model.postMovieCollection(playerActivity.movieId.toInt(),0)
+                    withContext(Dispatchers.Main) {
+                        when (source) {
+                            is Source.Success -> {
+
+                            }
+                            else -> Msg.handleSourceException(source.requireError())
+                        }.exhaustive
+                    }
+                }
+            }
+            R.id.txt_like -> {
+                playerActivity.lifecycleScope.launch(Dispatchers.IO) {
+                    val source = model.postMovieLike(playerActivity.movieId.toInt())
+                    withContext(Dispatchers.Main) {
+                        when (source) {
+                            is Source.Success -> {
+
+                            }
+                            else -> Msg.handleSourceException(source.requireError())
+                        }.exhaustive
+                    }
+                }
             }
             R.id.item_comment_c -> {
                 val holder = AdapterUtils.getHolder(v)
