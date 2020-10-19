@@ -87,6 +87,8 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
         binding.imgAdd.setOnClickListener(this);
         binding.imgAdd.setOnLongClickListener(this);
         handleIntent(getIntent());
+        binding.mainRg.setVisibility(View.VISIBLE);
+
 
         // Intent intent = FeatureRouter.INSTANCE.authActivityIntent(this);
         // startActivity(intent);
