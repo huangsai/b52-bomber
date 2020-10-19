@@ -87,6 +87,11 @@ class CommonListFragment : MyBaseFragment(), AdapterImageLoader, View.OnClickLis
         load()
     }
 
+    override fun onResume() {
+        super.onResume()
+        binding.recycler.requestLayout()
+    }
+
     private fun load() {
         if (!pager.isAvailable) return
         lifecycleScope.launch(Dispatchers.IO) {
@@ -122,11 +127,6 @@ class CommonListFragment : MyBaseFragment(), AdapterImageLoader, View.OnClickLis
                 .placeholder(R.drawable.movie_default_cover)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(imageView)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        binding.root.requestLayout()
     }
 
     override fun onClick(v: View) {

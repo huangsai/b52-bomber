@@ -4,23 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.google.android.material.tabs.TabLayoutMediator
-import com.google.android.material.tabs.TabLayoutMediator.TabConfigurationStrategy
 import com.mobile.app.bomber.common.base.Msg
 import com.mobile.app.bomber.common.base.MyBaseFragment
 import com.mobile.app.bomber.common.base.tool.SingleClick
 import com.mobile.app.bomber.movie.MovieX.BUS_MOVIE_REFRESH
-import com.mobile.app.bomber.movie.common.CommonListFragment
 import com.mobile.app.bomber.movie.databinding.MovieFragmentMovieBinding
 import com.mobile.app.bomber.movie.search.SearchActivity
 import com.mobile.app.bomber.movie.top.BannerPresenter
-import com.mobile.app.bomber.movie.top.TopListFragment
 import com.mobile.app.bomber.runner.features.ApiMovieFragment
 import com.mobile.guava.android.mvvm.newStartActivity
 import com.mobile.guava.android.mvvm.showDialogFragment
@@ -28,6 +22,8 @@ import com.mobile.guava.android.ui.view.recyclerview.cancelRefreshing
 import com.mobile.guava.jvm.coroutines.Bus
 import com.mobile.guava.jvm.domain.Source
 import com.mobile.guava.jvm.extension.exhaustive
+import com.pacific.adapter.RecyclerAdapter
+import com.pacific.adapter.RecyclerItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -47,9 +43,11 @@ class MovieFragment : MyBaseFragment(), ApiMovieFragment, View.OnClickListener, 
 
     private var _binding: MovieFragmentMovieBinding? = null
     private val binding: MovieFragmentMovieBinding get() = _binding!!
+    private var bannerPresenter: BannerPresenter? = null
+    private var movieVpPresenter: MovieVpPresenter? = null
+    private val adapter = RecyclerAdapter()
 
     private val labels = ArrayList<String>()
-    private lateinit var bannerPresenter: BannerPresenter
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -60,12 +58,14 @@ class MovieFragment : MyBaseFragment(), ApiMovieFragment, View.OnClickListener, 
         binding.menu.setOnClickListener(this)
         binding.searchToolbar.setOnClickListener(this)
         binding.swipeRefresh.setOnRefreshListener(this)
+        val layoutManager = LinearLayoutManager(requireContext())
+        binding.recycler.layoutManager = layoutManager
+        binding.recycler.adapter = adapter
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        bannerPresenter = BannerPresenter(this, model, binding)
         initTab()
     }
 
@@ -77,10 +77,12 @@ class MovieFragment : MyBaseFragment(), ApiMovieFragment, View.OnClickListener, 
                 when (source) {
                     is Source.Success -> {
                         labels.addAll(source.data)
-                        binding.viewPager.adapter = MyAdapter(requireActivity(), labels)
-                        binding.viewPager.offscreenPageLimit = 1
-                        val tabLayoutMediator = TabLayoutMediator(binding.layoutTab, binding.viewPager, TabConfigurationStrategy { tab, position -> tab.text = labels[position] })
-                        tabLayoutMediator.attach()
+                        val list: MutableList<RecyclerItem> = ArrayList()
+                        bannerPresenter = BannerPresenter(this@MovieFragment, model)
+                        movieVpPresenter = MovieVpPresenter(this@MovieFragment, labels, binding)
+                        list.add(bannerPresenter!!)
+                        list.add(movieVpPresenter!!)
+                        adapter.addAll(list)
                     }
                     is Source.Error -> {
                         Msg.handleSourceException(source.requireError())
@@ -96,8 +98,8 @@ class MovieFragment : MyBaseFragment(), ApiMovieFragment, View.OnClickListener, 
 
     override fun onRefresh() {
         binding.swipeRefresh.cancelRefreshing(1000)
+        bannerPresenter?.onRefresh()
         Bus.offer(BUS_MOVIE_REFRESH)
-        bannerPresenter.onRefresh()
     }
 
     @SingleClick
@@ -115,26 +117,9 @@ class MovieFragment : MyBaseFragment(), ApiMovieFragment, View.OnClickListener, 
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding.viewPager.adapter = null
+        binding.recycler.adapter = null
         _binding = null
     }
 
-    private class MyAdapter(
-            activity: FragmentActivity,
-            private val labels: List<String>
-    ) : FragmentStateAdapter(activity) {
-
-        override fun createFragment(position: Int): Fragment {
-            return if (position == 0) {
-                TopListFragment.newInstance(position)
-            } else {
-                CommonListFragment.newInstance(position, labels[position])
-            }
-        }
-
-        override fun getItemCount(): Int {
-            return labels.size
-        }
-    }
 
 }

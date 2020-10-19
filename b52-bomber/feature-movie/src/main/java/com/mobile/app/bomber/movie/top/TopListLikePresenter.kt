@@ -46,7 +46,7 @@ class TopListLikePresenter(
     }
 
     override fun load(imageView: ImageView, holder: AdapterViewHolder) {
-        val data = AdapterUtils.getHolder(imageView).item<TopMovieVerItem>().data
+        val data = AdapterUtils.getHolder(imageView).item<TopMovieHorItem>().data
         GlideApp.with(context)
                 .load(data.cover)
                 .placeholder(R.drawable.movie_default_cover)

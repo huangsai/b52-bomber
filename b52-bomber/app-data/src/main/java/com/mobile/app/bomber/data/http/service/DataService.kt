@@ -278,7 +278,7 @@ interface DataService {
     @POST("/video/getMovieHistory/")
     fun getMovieHistory(@Body bode: ApiMovieHistory.Req): Call<ApiMovieHistory>
 
-    @GET("/getGuessULikeMovieList/{uid}/")
+    @GET("/video/getGuessULikeMovieList/{uid}/")
     fun getGuessULikeMovieList(@Path("uid") uid: Long): Call<ApiMovie>
 
     //-------⬆⬆⬆⬆⬆⬆⬆⬆----长视频相关接口----⬆⬆⬆⬆⬆⬆⬆-----//

@@ -94,44 +94,12 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/search_toolbar">
 
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/scroll_view"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true">
+            android:layout_height="wrap_content" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <com.youth.banner.Banner
-                    android:id="@+id/banner_img"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/size_150dp"
-                    app:banner_indicator_selected_color="@color/color_text_ffcc00" />
-
-                <TextView
-                    android:id="@+id/banner_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/size_16dp"
-                    android:layout_marginTop="@dimen/size_8dp"
-                    android:textColor="@color/color_text_919095"
-                    android:textSize="@dimen/font_10sp"
-                    tools:text="轮播图标题" />
-
-                <androidx.viewpager2.widget.ViewPager2
-                    android:id="@+id/view_pager"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginTop="@dimen/size_10dp"
-                    android:layout_weight="1" />
-            </LinearLayout>
-        </androidx.core.widget.NestedScrollView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

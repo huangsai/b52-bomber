@@ -9,10 +9,12 @@ import com.mobile.app.bomber.common.base.Msg
 import com.mobile.app.bomber.data.http.entities.ApiMovieBanner
 import com.mobile.app.bomber.movie.MovieViewModel
 import com.mobile.app.bomber.movie.R
-import com.mobile.app.bomber.movie.databinding.MovieFragmentMovieBinding
-import com.mobile.guava.android.mvvm.lifecycle.SimplePresenter
+import com.mobile.app.bomber.movie.databinding.MovieItemBannerBinding
+import com.mobile.app.bomber.movie.player.PlayerActivity
 import com.mobile.guava.jvm.domain.Source
 import com.mobile.guava.jvm.extension.exhaustive
+import com.pacific.adapter.AdapterViewHolder
+import com.pacific.adapter.SimpleRecyclerItem
 import com.youth.banner.adapter.BannerImageAdapter
 import com.youth.banner.holder.BannerImageHolder
 import com.youth.banner.indicator.CircleIndicator
@@ -24,16 +26,11 @@ import kotlinx.coroutines.withContext
 
 class BannerPresenter(
         private val fragment: Fragment,
-        private val model: MovieViewModel,
-        private val binding: MovieFragmentMovieBinding
-) : SimplePresenter(), OnBannerListener<ApiMovieBanner.Banner>, OnPageChangeListener {
+        private val model: MovieViewModel
+) : SimpleRecyclerItem(), OnBannerListener<ApiMovieBanner.Banner>, OnPageChangeListener {
 
     private var mData: List<ApiMovieBanner.Banner>? = null
     private var adapter: BannerImageAdapter<ApiMovieBanner.Banner>? = null
-
-    init {
-        load(false)
-    }
 
     fun onRefresh() {
         load(true)
@@ -82,7 +79,7 @@ class BannerPresenter(
     }
 
     override fun OnBannerClick(data: ApiMovieBanner.Banner?, position: Int) {
-        Msg.toast("点击了轮播图 movieId: ${data?.movieId}$")
+        PlayerActivity.start(fragment.requireActivity(), data?.movieId!!)
     }
 
     override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
@@ -93,5 +90,16 @@ class BannerPresenter(
     }
 
     override fun onPageScrollStateChanged(state: Int) {
+    }
+
+    private lateinit var binding: MovieItemBannerBinding
+
+    override fun bind(holder: AdapterViewHolder) {
+        binding = holder.binding(MovieItemBannerBinding::bind)
+        load(false)
+    }
+
+    override fun getLayout(): Int {
+        return R.layout.movie_item_banner
     }
 }

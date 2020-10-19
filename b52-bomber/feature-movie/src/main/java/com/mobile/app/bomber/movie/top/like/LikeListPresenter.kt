@@ -31,7 +31,7 @@ class LikeListPresenter(
     override fun load() {
         activity.lifecycleScope.launch(Dispatchers.IO) {
             val source = model.getMovieGuessLike()
-            val items = source.dataOrNull().orEmpty().map { TopMovieHorItem(it) }
+            val items = source.dataOrNull().orEmpty().map { TopMovieVerItem(it) }
             withContext(Dispatchers.Main) {
                 when (source) {
                     is Source.Success -> {
