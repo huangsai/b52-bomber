@@ -29,4 +29,8 @@ object FeatureRouter {
     fun authActivityIntent(activity: Activity): Intent {
         return activity.intentOf(packageAuth + "AuthActivity")
     }
+
+    fun startLoginActivity(activity: Activity): Intent {
+        return activity.intentOf(packageTik + "login.LoginActivity")
+    }
 }

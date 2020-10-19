@@ -105,10 +105,16 @@ class PlayerActivity : BaseActivity() {
 
     private fun load() {
         lifecycleScope.launch(Dispatchers.IO) {
-            val source = model.getMovieDetail(movieId,PrefsManager.getUserId(),PrefsManager.getDeviceId())
+            val source = if(PrefsManager.isLogin()) {
+                model.getMovieDetail(movieId, PrefsManager.getUserId(), PrefsManager.getToken())
+            }else{
+                model.getMovieDetail(movieId, 0, "default")
+            }
+
             withContext(Dispatchers.Main) {
                 when (source) {
                     is Source.Success -> {
+                        binding.txtLike.text=""
                         data = source.requireData()
                         commentPresenter.onCreate()
                         sourcePresenter.onCreate()

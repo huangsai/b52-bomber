@@ -260,11 +260,11 @@ interface DataService {
     @GET("/video/getMovieRecomment/{uid}/")
     fun getMovieListRecommend(@Path("uid") uid: Long): Call<ApiMovie>
 
-    @GET("/video/getMoviePlayDetailById/{mid}/{uid}/{deviceid}/")
+    @GET("/video/getMoviePlayDetailById/{mid}/{uid}/{fastKey}/")
     fun getMovieDetail(
             @Path("mid") movieId: Long,
             @Path("uid") uId: Long,
-            @Path("deviceid") deviceId: String
+            @Path("fastKey") fastKey: String
             ): Call<ApiMovieDetail>
 
     //点赞

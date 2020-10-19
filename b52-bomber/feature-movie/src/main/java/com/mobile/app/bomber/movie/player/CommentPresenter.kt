@@ -12,6 +12,7 @@ import com.mobile.app.bomber.common.base.tool.shareToSystem
 import com.mobile.app.bomber.data.http.entities.Pager
 import com.mobile.app.bomber.movie.R
 import com.mobile.app.bomber.movie.base.Phrase3
+import com.mobile.app.bomber.movie.base.requireLogin
 import com.mobile.app.bomber.movie.databinding.MovieActivityPlayerBinding
 import com.mobile.app.bomber.movie.player.items.CommentItem
 import com.mobile.ext.glide.GlideApp
@@ -51,10 +52,10 @@ class CommentPresenter(
 
     override fun onCreate() {
         requestComment()
+        binding.txtLike.text=""
         playerActivity.data?.apply {
             binding.txtLike.text = movie.like.toString()
         }
-
     }
 
     private fun requestComment() {
@@ -99,30 +100,38 @@ class CommentPresenter(
                 playerActivity.shareToSystem("http://www.google.com")
             }
             R.id.txt_bookmark -> {
-                playerActivity.lifecycleScope.launch(Dispatchers.IO) {
-                    val source = model.postMovieCollection(playerActivity.movieId.toInt(), 0)
-                    withContext(Dispatchers.Main) {
-                        when (source) {
-                            is Source.Success -> {
+                playerActivity.requireLogin(ActivityResultCallback {
+                    if (it.resultCode == Activity.RESULT_OK) {
+                        playerActivity.lifecycleScope.launch(Dispatchers.IO) {
+                            val source = model.postMovieCollection(playerActivity.movieId.toInt(), 0)
+                            withContext(Dispatchers.Main) {
+                                when (source) {
+                                    is Source.Success -> {
 
+                                    }
+                                    else -> Msg.handleSourceException(source.requireError())
+                                }.exhaustive
                             }
-                            else -> Msg.handleSourceException(source.requireError())
-                        }.exhaustive
+                        }
                     }
-                }
+                })
             }
             R.id.txt_like -> {
-                playerActivity.lifecycleScope.launch(Dispatchers.IO) {
-                    val source = model.postMovieLike(playerActivity.movieId.toInt(), 1)
-                    withContext(Dispatchers.Main) {
-                        when (source) {
-                            is Source.Success -> {
+                playerActivity.requireLogin(ActivityResultCallback {
+                    if (it.resultCode == Activity.RESULT_OK) {
+                        playerActivity.lifecycleScope.launch(Dispatchers.IO) {
+                            val source = model.postMovieLike(playerActivity.movieId.toInt(), 1)
+                            withContext(Dispatchers.Main) {
+                                when (source) {
+                                    is Source.Success -> {
 
+                                    }
+                                    else -> Msg.handleSourceException(source.requireError())
+                                }.exhaustive
                             }
-                            else -> Msg.handleSourceException(source.requireError())
-                        }.exhaustive
+                        }
                     }
-                }
+                })
             }
             R.id.item_comment_c -> {
                 val holder = AdapterUtils.getHolder(v)
