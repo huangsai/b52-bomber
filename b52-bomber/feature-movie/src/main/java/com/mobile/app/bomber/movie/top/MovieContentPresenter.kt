@@ -1,32 +1,38 @@
-package com.mobile.app.bomber.movie
+package com.mobile.app.bomber.movie.top
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
+import com.mobile.app.bomber.movie.MovieFragment
+import com.mobile.app.bomber.movie.R
 import com.mobile.app.bomber.movie.common.CommonListFragment
 import com.mobile.app.bomber.movie.databinding.MovieFragmentMovieBinding
-import com.mobile.app.bomber.movie.databinding.MovieItemVpBinding
-import com.mobile.app.bomber.movie.top.TopListFragment
+import com.mobile.app.bomber.movie.databinding.MovieItemMovieContentBinding
 import com.pacific.adapter.AdapterViewHolder
 import com.pacific.adapter.SimpleRecyclerItem
 
-class MovieVpPresenter(
+class MovieContentPresenter(
         private var fragment: MovieFragment,
         private var labels: ArrayList<String>,
         private var movieBinding: MovieFragmentMovieBinding
 ) : SimpleRecyclerItem() {
 
     override fun bind(holder: AdapterViewHolder) {
-        val binding = holder.binding(MovieItemVpBinding::bind)
-        binding.viewPager.adapter = MyAdapter(fragment.requireActivity(), labels)
-        binding.viewPager.offscreenPageLimit = labels.size
-        val tabLayoutMediator = TabLayoutMediator(movieBinding.layoutTab, binding.viewPager, TabLayoutMediator.TabConfigurationStrategy { tab, position -> tab.text = labels[position] })
+        val binding = holder.binding(MovieItemMovieContentBinding::bind)
+        binding.movieItemMovieContent.adapter = MyAdapter(fragment.requireActivity(), labels)
+        binding.movieItemMovieContent.offscreenPageLimit = labels.size
+        val tabLayoutMediator = TabLayoutMediator(
+                movieBinding.layoutTab,
+                binding.movieItemMovieContent
+        ) { tab, position ->
+            tab.text = labels[position]
+        }
         tabLayoutMediator.attach()
     }
 
     override fun getLayout(): Int {
-        return R.layout.movie_item_vp
+        return R.layout.movie_item_movie_content
     }
 
     private class MyAdapter(

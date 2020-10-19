@@ -61,8 +61,12 @@ class BannerPresenter(
     private fun bindData(data: List<ApiMovieBanner.Banner>) {
         binding.bannerImg.addOnPageChangeListener(this)
         adapter = object : BannerImageAdapter<ApiMovieBanner.Banner>(data) {
-            override fun onBindView(holder: BannerImageHolder, data: ApiMovieBanner.Banner, position: Int, size: Int) {
-                //图片加载自己实现
+            override fun onBindView(
+                    holder: BannerImageHolder,
+                    data: ApiMovieBanner.Banner,
+                    position: Int,
+                    size: Int
+            ) {
                 Glide.with(holder.itemView)
                         .load(data.imgUrl)
                         .placeholder(R.drawable.movie_default_cover)
