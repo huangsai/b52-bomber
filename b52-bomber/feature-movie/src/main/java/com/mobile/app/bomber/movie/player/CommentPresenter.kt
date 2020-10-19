@@ -1,8 +1,10 @@
 package com.mobile.app.bomber.movie.player
 
+import android.app.Activity
 import android.text.InputType
 import android.view.View
 import android.widget.ImageView
+import androidx.activity.result.ActivityResultCallback
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mobile.app.bomber.common.base.Msg
@@ -49,6 +51,10 @@ class CommentPresenter(
 
     override fun onCreate() {
         requestComment()
+        playerActivity.data?.apply {
+            binding.txtLike.text = movie.like.toString()
+        }
+
     }
 
     private fun requestComment() {
