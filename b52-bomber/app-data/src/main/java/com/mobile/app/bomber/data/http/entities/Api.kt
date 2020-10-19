@@ -767,7 +767,7 @@ data class ApiMovieHistory(
 ) {
     @JsonClass(generateAdapter = true)
     data class Req(
-            @Json(name = "deviceid") val deviceid: String,
+            @Json(name = "fastKey") val fastKey: String,
             @Json(name = "uid") val uid: Long
     )
 }

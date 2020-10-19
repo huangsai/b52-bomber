@@ -50,6 +50,11 @@ class TopListFragment : MyBaseFragment(), View.OnClickListener {
         load()
     }
 
+    override fun onResume() {
+        super.onResume()
+        binding.recycler.requestLayout()
+    }
+
     private fun load() {
         val list: MutableList<RecyclerItem> = ArrayList()
         list.add(TopTitlePresenter("${getString(R.string.movie_text_top_like_label)}>"))
@@ -87,11 +92,6 @@ class TopListFragment : MyBaseFragment(), View.OnClickListener {
         binding.recycler.layoutManager = null
         binding.recycler.adapter = null
         _binding = null
-    }
-
-    override fun onResume() {
-        super.onResume()
-        binding.root.requestLayout()
     }
 
     companion object {
