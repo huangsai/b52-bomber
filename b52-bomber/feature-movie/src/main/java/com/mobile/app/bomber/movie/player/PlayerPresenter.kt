@@ -76,9 +76,10 @@ class PlayerPresenter(
         binding.viewPlayer.player = ExoPlayerX.requirePlayer()
         // val sdCard = ensureFileSeparator(AndroidX.myApp.getExternalFilesDir(null)!!.absolutePath!!)
         // ExoPlayerX.play((sdCard + "trailer.mp4").toUri())
-        ExoPlayerX.play(
-                "http://192.168.2.120/group1/M00/00/00/wKgCeF9r9vaAYBc0AE1k-lWCChA674.mp4".toUri()
-        )
+        playerActivity.data?.apply {
+            ExoPlayerX.play(movie.movieUrl.toUri())
+        }
+
     }
 
     override fun onResume() {
