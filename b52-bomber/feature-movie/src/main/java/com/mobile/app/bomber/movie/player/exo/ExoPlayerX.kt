@@ -99,7 +99,7 @@ object ExoPlayerX : Player.EventListener, CacheWriter.ProgressListener {
                 .setTrackSelector(trackSelector)
                 .build()
 
-        player.repeatMode = Player.REPEAT_MODE_ALL
+        player.repeatMode = Player.REPEAT_MODE_OFF
         player.setWakeMode(C.WAKE_MODE_NONE)
         player.addListener(this)
     }

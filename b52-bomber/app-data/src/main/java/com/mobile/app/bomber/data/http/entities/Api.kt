@@ -601,20 +601,20 @@ data class ApiUsermsg(
 
     @JsonClass(generateAdapter = true)
     data class Item(
-            @Json(name = "atid") val atid: Int,
-            @Json(name = "commentid") val commentid: Int,
-            @Json(name = "commenttype") val commenttype: Int,
+            @Json(name = "atId") val atid: Int,
+            @Json(name = "commentId") val commentid: Int,
+            @Json(name = "commentType") val commenttype: Int,
             @Json(name = "content") val content: String,
-            @Json(name = "createtime") val createtime: Long,
-            @Json(name = "followtype") val followtype: Int,
-            @Json(name = "fromuid") val fromuid: Int,
-            @Json(name = "fromuserinfo") val fromuserinfo: List<Fromuserinfo>,
-            @Json(name = "giveliketype") val giveliketype: Int,
+            @Json(name = "createTime") val createtime: Long,
+            @Json(name = "followType") val followtype: Int,
+            @Json(name = "fromUid") val fromuid: Int,
+            @Json(name = "fromUserInfo") val fromuserinfo: List<Fromuserinfo>,
+            @Json(name = "giveLikeType") val giveliketype: Int,
             @Json(name = "id") val id: Int,
-            @Json(name = "isfollow") var isfollow: Int,
-            @Json(name = "msgtype") val msgtype: Int,
+            @Json(name = "isFollow") var isfollow: Int,
+            @Json(name = "msgType") val msgtype: Int,
             @Json(name = "uid") val uid: Int,
-            @Json(name = "videoid") val videoid: Int,
+            @Json(name = "videoId") val videoid: Int,
             @Json(name = "cover") val cover: String
     ) {
 
@@ -753,7 +753,9 @@ data class ApiMovieDetail(
     @JsonClass(generateAdapter = true)
     data class Ad(
             @Json(name = "img") val img: String,
-            @Json(name = "url") val url: String
+            @Json(name = "url") val url: String,
+            @Json(name = "desc") val desc: String,
+            @Json(name = "title") val title: String
     )
 }
 
