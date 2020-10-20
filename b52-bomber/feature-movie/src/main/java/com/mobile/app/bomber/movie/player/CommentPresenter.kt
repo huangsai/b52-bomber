@@ -52,7 +52,6 @@ class CommentPresenter(
 
     override fun onCreate() {
         requestComment()
-        binding.txtLike.text=""
         playerActivity.data?.apply {
             binding.txtLike.text = movie.like.toString()
         }

@@ -110,11 +110,9 @@ class PlayerActivity : BaseActivity() {
             }else{
                 model.getMovieDetail(movieId, 0, "default")
             }
-
             withContext(Dispatchers.Main) {
                 when (source) {
                     is Source.Success -> {
-                        binding.txtLike.text=""
                         data = source.requireData()
                         commentPresenter.onCreate()
                         sourcePresenter.onCreate()

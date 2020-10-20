@@ -736,9 +736,26 @@ data class ApiMovieLabel(
 data class ApiMovieDetail(
         @Json(name = "retCode") val code: Int,
         @Json(name = "desc") val desc: String,
-        @Json(name = "movieObj") val movie: ApiMovie.Movie,
-        @Json(name = "ad") val ad: ApiMovie.Ad
-)
+        @Json(name = "movieObj") val movie: MovieObj,
+        @Json(name = "ad") val ad: Ad
+) {
+    @JsonClass(generateAdapter = true)
+    data class MovieObj(
+            @Json(name = "movieId") val movieId: Int,
+            @Json(name = "name") val name: String,
+            @Json(name = "like") val like: Int,
+            @Json(name = "playNum") val playNum: Int,
+            @Json(name = "movieUrl") val movieUrl: String,
+            @Json(name = "isLike") val isLike: Int,
+            @Json(name = "isCollection") val isCollection: Int
+    )
+
+    @JsonClass(generateAdapter = true)
+    data class Ad(
+            @Json(name = "img") val img: String,
+            @Json(name = "url") val url: String
+    )
+}
 
 @JsonClass(generateAdapter = true)
 data class ApiMovieId(
