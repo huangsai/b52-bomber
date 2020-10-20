@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.mobile.app.bomber.common.base.MyBaseFragment
 import com.mobile.app.bomber.common.base.tool.SingleClick
 import com.mobile.app.bomber.movie.MovieViewModel
@@ -15,12 +16,13 @@ import com.mobile.app.bomber.movie.databinding.MovieFragmentTopListBinding
 import com.mobile.app.bomber.movie.top.like.TopLikeActivity
 import com.mobile.app.bomber.movie.top.recommend.TopRecommendActivity
 import com.mobile.guava.android.mvvm.newStartActivity
+import com.mobile.guava.android.ui.view.recyclerview.cancelRefreshing
 import com.pacific.adapter.AdapterUtils
 import com.pacific.adapter.RecyclerAdapter
 import com.pacific.adapter.RecyclerItem
 import java.util.*
 
-class TopListFragment : MyBaseFragment(), View.OnClickListener {
+class TopListFragment : MyBaseFragment(), View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private val model: MovieViewModel by viewModels { MovieX.component.viewModelFactory() }
 
@@ -28,6 +30,7 @@ class TopListFragment : MyBaseFragment(), View.OnClickListener {
     private val binding get() = _binding!!
 
     private val adapter = RecyclerAdapter()
+    private lateinit var bannerPresenter: BannerPresenter
 
     private lateinit var listLikePresenter: TopListLikePresenter
     private lateinit var listRecommendPresenter: TopListRecommendPresenter
@@ -42,21 +45,22 @@ class TopListFragment : MyBaseFragment(), View.OnClickListener {
         binding.recycler.layoutManager = layoutManager
         binding.recycler.adapter = adapter
         adapter.onClickListener = this
+        binding.swipeRefresh.setOnRefreshListener(this)
         return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        load()
     }
 
     override fun onResume() {
         super.onResume()
-        binding.recycler.requestLayout()
+        if (onResumeCount == 1) {
+            load()
+        }
     }
 
     private fun load() {
         val list: MutableList<RecyclerItem> = ArrayList()
+        list.add(MovieSearchPresenter(this))
+        bannerPresenter = BannerPresenter(this, model)
+        list.add(bannerPresenter)
         list.add(TopTitlePresenter("${getString(R.string.movie_text_top_like_label)}>"))
         listLikePresenter = TopListLikePresenter(this, model)
         list.add(listLikePresenter)
@@ -66,25 +70,25 @@ class TopListFragment : MyBaseFragment(), View.OnClickListener {
         adapter.addAll(list)
     }
 
-    override fun onBusEvent(event: Pair<Int, Any>) {
-        if (event.first == MovieX.BUS_MOVIE_REFRESH) {
-            listLikePresenter.onRefresh()
-            listRecommendPresenter.onRefresh()
-        }
-    }
-
     @SingleClick
     override fun onClick(v: View) {
         when (v.id) {
             R.id.item_title -> {
                 val pos = AdapterUtils.getHolder(v).bindingAdapterPosition
-                if (pos == 0) {
+                if (pos == 2) {
                     newStartActivity(TopLikeActivity::class.java)
-                } else if (pos == 2) {
+                } else if (pos == 4) {
                     newStartActivity(TopRecommendActivity::class.java)
                 }
             }
         }
+    }
+
+    override fun onRefresh() {
+        binding.swipeRefresh.cancelRefreshing(1000)
+        bannerPresenter.onRefresh()
+        listLikePresenter.onRefresh()
+        listRecommendPresenter.onRefresh()
     }
 
     override fun onDestroyView() {
@@ -102,4 +106,5 @@ class TopListFragment : MyBaseFragment(), View.OnClickListener {
             }
         }
     }
+
 }

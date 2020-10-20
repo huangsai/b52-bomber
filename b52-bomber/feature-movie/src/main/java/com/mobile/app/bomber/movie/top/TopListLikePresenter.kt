@@ -9,7 +9,6 @@ import com.mobile.app.bomber.movie.MovieViewModel
 import com.mobile.app.bomber.movie.R
 import com.mobile.app.bomber.movie.player.PlayerActivity
 import com.mobile.app.bomber.movie.top.items.TopMovieHorItem
-import com.mobile.app.bomber.movie.top.items.TopMovieVerItem
 import com.mobile.ext.glide.GlideApp
 import com.mobile.guava.jvm.domain.Source
 import com.mobile.guava.jvm.extension.exhaustive
@@ -59,7 +58,7 @@ class TopListLikePresenter(
     }
 
     override fun onClick(v: View) {
-        val data = AdapterUtils.getHolder(v).item<TopMovieVerItem>().data
+        val data = AdapterUtils.getHolder(v).item<TopMovieHorItem>().data
         PlayerActivity.start(fragment.requireActivity(), data.movieId.toLong())
     }
 

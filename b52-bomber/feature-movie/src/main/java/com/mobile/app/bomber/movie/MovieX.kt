@@ -7,8 +7,6 @@ import com.mobile.app.bomber.runner.RunnerX
 
 object MovieX {
 
-    const val BUS_MOVIE_REFRESH = 1000
-
     val component: MovieComponent by lazy {
         DaggerMovieComponent.factory().create(
                 DataX.component,

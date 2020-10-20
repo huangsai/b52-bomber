@@ -48,58 +48,12 @@
         android:background="@color/movie_line_color"
         app:layout_constraintTop_toBottomOf="@id/layout_tab" />
 
-    <LinearLayout
-        android:id="@+id/search_toolbar"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/size_14dp"
-        android:background="@drawable/movie_search_toorbar_bg"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingLeft="@dimen/size_14dp"
-        android:paddingTop="@dimen/size_10dp"
-        android:paddingRight="@dimen/size_14dp"
-        android:paddingBottom="@dimen/size_10dp"
-        app:layout_constraintBottom_toTopOf="@id/swipe_refresh"
-        app:layout_constraintTop_toBottomOf="@id/line">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/jq_sousuo" />
-
-        <TextView
-            android:id="@+id/et_search"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/size_14dp"
-            android:layout_marginRight="@dimen/size_14dp"
-            android:layout_weight="1"
-            android:hint="@string/movie_search_input_hint"
-            android:singleLine="true"
-            android:textColor="@color/white"
-            android:textColorHint="#9b9b9b"
-            android:textSize="@dimen/font_14sp" />
-
-        <ImageView
-            android:id="@+id/iv_clear"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/jq_quxiao" />
-    </LinearLayout>
-
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_refresh"
-        style="@style/ConCon"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/size_10dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/search_toolbar">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler"
-            style="@style/MatchMatch" />
-
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        app:layout_constraintTop_toBottomOf="@id/line" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
