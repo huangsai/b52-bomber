@@ -8,6 +8,7 @@ import android.widget.ImageView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.mobile.app.bomber.common.base.Msg.handleSourceException
 import com.mobile.app.bomber.common.base.MyBaseFragment
@@ -22,6 +23,7 @@ import com.mobile.app.bomber.movie.player.PlayerActivity
 import com.mobile.ext.glide.GlideApp
 import com.mobile.guava.android.ui.view.recyclerview.EndlessRecyclerViewScrollListener
 import com.mobile.guava.android.ui.view.recyclerview.LinearItemDecoration
+import com.mobile.guava.android.ui.view.recyclerview.cancelRefreshing
 import com.mobile.guava.jvm.domain.Source
 import com.mobile.guava.jvm.extension.exhaustive
 import com.pacific.adapter.AdapterImageLoader
@@ -31,7 +33,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class CommonListFragment : MyBaseFragment(), AdapterImageLoader, View.OnClickListener {
+class CommonListFragment : MyBaseFragment(), AdapterImageLoader, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private val model: MovieViewModel by viewModels { MovieX.component.viewModelFactory() }
 
@@ -69,7 +71,7 @@ class CommonListFragment : MyBaseFragment(), AdapterImageLoader, View.OnClickLis
                 .also {
                     endless = EndlessRecyclerViewScrollListener(it) { _, _ ->
                         if (pager.isAvailable) {
-                            load()
+                            load(false)
                         }
                     }
                     binding.recycler.addOnScrollListener(endless)
@@ -79,20 +81,18 @@ class CommonListFragment : MyBaseFragment(), AdapterImageLoader, View.OnClickLis
         adapter.onClickListener = this
         adapter.setEmptyView(binding.txtEmpty, binding.recycler)
         binding.recycler.adapter = adapter
+        binding.swipeRefresh.setOnRefreshListener(this)
         return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        load()
     }
 
     override fun onResume() {
         super.onResume()
-        binding.recycler.requestLayout()
+        if (onResumeCount == 1) {
+            load(true)
+        }
     }
 
-    private fun load() {
+    private fun load(isFirstLoad: Boolean) {
         if (!pager.isAvailable) return
         lifecycleScope.launch(Dispatchers.IO) {
             val source = model.getMovieListByLabel(pager, label)
@@ -112,14 +112,6 @@ class CommonListFragment : MyBaseFragment(), AdapterImageLoader, View.OnClickLis
         }
     }
 
-    override fun onBusEvent(event: Pair<Int, Any>) {
-        if (event.first == MovieX.BUS_MOVIE_REFRESH) {
-            pager.reset()
-            endless.reset()
-            load()
-        }
-    }
-
     override fun load(imageView: ImageView, holder: AdapterViewHolder) {
         val data = AdapterUtils.getHolder(imageView).item<CommonMovieItem>().data
         GlideApp.with(requireContext())
@@ -127,6 +119,13 @@ class CommonListFragment : MyBaseFragment(), AdapterImageLoader, View.OnClickLis
                 .placeholder(R.drawable.movie_default_cover)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(imageView)
+    }
+
+    override fun onRefresh() {
+        binding.swipeRefresh.cancelRefreshing(1000)
+        pager.reset()
+        endless.reset()
+        load(false)
     }
 
     override fun onClick(v: View) {
@@ -141,4 +140,5 @@ class CommonListFragment : MyBaseFragment(), AdapterImageLoader, View.OnClickLis
         binding.recycler.adapter = null
         _binding = null
     }
+
 }
