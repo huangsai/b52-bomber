@@ -215,7 +215,7 @@ data class ApiFollow(
             @Json(name = "pic") val profile: String?,
             @Json(name = "sex") val gender: Int?,
             @Json(name = "sign") val sign: String?,
-            @Json(name = "isfollowed") var isFollowing: Boolean?
+            @Json(name = "Isfollowed") var isFollowing: Boolean?
     ) {
         fun toUser(): ApiAtUser.User {
             return ApiAtUser.User(followUid, gender, username, profile, sign, "", "")
@@ -226,7 +226,7 @@ data class ApiFollow(
 @JsonClass(generateAdapter = true)
 data class ApiIsFollowing(
         @Json(name = "retCode") val code: Int,
-        @Json(name = "isfollowed") val isFollowed: Boolean
+        @Json(name = "isFollowed") val isFollowed: Boolean
 )
 
 @JsonClass(generateAdapter = true)
@@ -375,9 +375,9 @@ data class ApiRank(
 @JsonClass(generateAdapter = true)
 data class ApiUserCount(
         @Json(name = "retCode") val code: Int,
-        @Json(name = "likecount") val likeCount: Int,
-        @Json(name = "fanscount") val fansCount: Int,
-        @Json(name = "followcount") val followCount: Int
+        @Json(name = "likeCount") val likeCount: Int,
+        @Json(name = "fansCount") val fansCount: Int,
+        @Json(name = "followCount") val followCount: Int
 )
 
 @JsonClass(generateAdapter = true)

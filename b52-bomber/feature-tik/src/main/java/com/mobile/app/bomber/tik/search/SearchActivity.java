@@ -1,6 +1,7 @@
 package com.mobile.app.bomber.tik.search;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -17,6 +18,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.mobile.app.bomber.common.base.Msg;
+import com.mobile.app.bomber.common.base.views.ShowButtonLayout;
 import com.mobile.app.bomber.runner.RunnerX;
 import com.mobile.guava.jvm.domain.Source;
 import com.pacific.adapter.AdapterUtils;
@@ -140,7 +142,8 @@ public class SearchActivity extends MyBaseActivity
         model.getHotKeyTop().observe(this, source -> {
             if (binding.swipeRefreshSearch.isRefreshing())
                 binding.swipeRefreshSearch.setRefreshing(false);
-            if (source instanceof Source.Success) {
+             binding.mShowBtnLayout.removeAllViews();
+             if (source instanceof Source.Success) {
                 List<String> hotKeys = source.requireData();
                 for (int i = 0; i < hotKeys.size(); i++) {
                     TextView textView = (TextView) LayoutInflater.from(this).inflate(R.layout.item_tag_tv, binding.mShowBtnLayout, false);

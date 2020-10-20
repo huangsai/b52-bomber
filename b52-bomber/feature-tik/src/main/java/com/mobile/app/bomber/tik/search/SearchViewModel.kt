@@ -56,7 +56,7 @@ class SearchViewModel @Inject constructor() : MyBaseViewModel() {
 //        }
     }
 
-    fun searchUserList(key: String): LiveData<Source<List<ApiAtUser>>> {
+    fun searchUserList(key: String): LiveData<Source<List<ApiAtUser.User>>> {
         return flow { emit(tikSearchRepository.searchTikUserList(key)) }
                 .asLiveData(Dispatchers.IO)
     }

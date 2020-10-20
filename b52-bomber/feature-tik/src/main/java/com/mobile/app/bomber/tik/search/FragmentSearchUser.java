@@ -74,7 +74,7 @@ public class FragmentSearchUser extends MyBaseFragment implements SwipeRefreshLa
                 holder = AdapterUtils.INSTANCE.getHolder(v);
                 int index = holder.getBindingAdapterPosition();
                 item = holder.item();
-                UserDetailActivity.start(getActivity(), item.data.getUsers().get(index).getUid());
+                UserDetailActivity.start(getActivity(), item.data.getUid());
             }
         });
 
@@ -103,9 +103,9 @@ public class FragmentSearchUser extends MyBaseFragment implements SwipeRefreshLa
         result = bundle.getString("keyword");
         model.searchUserList(result).observe(getViewLifecycleOwner(), source -> {
             if (source instanceof Source.Success) {
-                List<ApiAtUser> users = source.requireData();
+                List<ApiAtUser.User> users = source.requireData();
                 List<SearchUserItem> items = new ArrayList<>();
-                for (ApiAtUser user : users) {
+                for (ApiAtUser.User user: users) {
                     SearchUserItem searchVideoItem = new SearchUserItem(user);
                     items.add(searchVideoItem);
                 }

@@ -17,6 +17,7 @@ import com.mobile.app.bomber.common.base.RecyclerAdapterEmpty;
 import com.mobile.app.bomber.data.http.entities.ApiVideo;
 import com.mobile.app.bomber.data.http.entities.Pager;
 import com.mobile.app.bomber.runner.RunnerX;
+import com.mobile.app.bomber.runner.base.PrefsManager;
 import com.mobile.app.bomber.tik.R;
 import com.mobile.app.bomber.tik.base.AppRouterUtils;
 //import com.mobile.app.bomber.tik.databinding.FragmentSearchVideoBinding;
@@ -69,7 +70,7 @@ public class FragmentSearchVideo extends MyBaseFragment implements SwipeRefreshL
             if (v.getId() == R.id.layout_video_item) {
                 holder = AdapterUtils.INSTANCE.getHolder(v);
                 item = holder.item();
-                UserDetailActivity.start(getActivity(), item.data.getVideoId());
+                UserDetailActivity.start(getActivity(), item.data.getOwner());
             }
         });
         endless = new EndlessRecyclerViewScrollListener(

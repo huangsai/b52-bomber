@@ -63,7 +63,7 @@ class TikSearchRepository @Inject constructor(
                 it.KeyWords
             }
         } catch (e: Exception) {
-            errorSource(e)
+            errorSource<Exception>(e)
         } as Source<List<String>>
     }
 
@@ -78,7 +78,7 @@ class TikSearchRepository @Inject constructor(
     }
 
 
-    suspend fun searchTikUserList(keyword: String): Source<List<ApiAtUser>> {
+    suspend fun searchTikUserList(keyword: String): Source<List<ApiAtUser.User>> {
         if (!appPrefsManager.isLogin()) {
             return Source.Error(sourceException403)
         }
@@ -86,12 +86,12 @@ class TikSearchRepository @Inject constructor(
 //        pager.isBusy = true
         val call = dataService.searchTikUsers(keyword)
         return try {
-            call.execute().toSource() {
+            call.execute().toSource(){
                 it.users
             }
         } catch (e: Exception) {
-            errorSource(e)
-        } as Source<List<ApiAtUser>>
+            errorSource<Exception>(e)
+        } as Source<List<ApiAtUser.User>>
     }
 
     private suspend fun callApiVideo(call: Call<ApiVideo>, pager: Pager): Source<List<ApiVideo.Video>> {
