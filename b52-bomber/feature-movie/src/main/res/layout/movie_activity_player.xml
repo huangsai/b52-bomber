@@ -124,7 +124,7 @@
     <TextView
         android:id="@+id/txt_like"
         style="@style/WrapWrap"
-        android:drawableLeft="@drawable/movie_player_like"
+        android:drawableLeft="@drawable/jq_dianzan_pingluan02"
         android:drawablePadding="@dimen/size_8dp"
         android:gravity="left|bottom"
         android:text="@string/movie_player_movie_like"

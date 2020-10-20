@@ -86,7 +86,7 @@ class MovieRepository @Inject constructor(
         }
     }
 
-    suspend fun postMovieCollection(movieId: Int, isCollection: Int): Source<ApiSubmitCollection> {
+    suspend fun postMovieCollection(movieId: Int, isCollection: Int): Source<Nope> {
         val req = ApiMovieCollection(
                 userId, movieId, isCollection, token
         )

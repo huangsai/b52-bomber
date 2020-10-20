@@ -26,7 +26,7 @@ class PlayerViewModel @Inject constructor(
     }
 
     @WorkerThread
-    suspend fun postMovieCollection(movieId: Int, isCollection: Int): Source<ApiSubmitCollection> {
+    suspend fun postMovieCollection(movieId: Int, isCollection: Int): Source<Nope> {
         ensureWorkThread()
         return movieRepository.postMovieCollection(movieId, isCollection)
     }

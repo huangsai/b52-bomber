@@ -273,7 +273,7 @@ interface DataService {
 
     //收藏
     @POST("/video/submitMovieCollection/")
-    fun postMovieCollection(@Body bode: ApiMovieCollection): Call<ApiSubmitCollection>
+    fun postMovieCollection(@Body bode: ApiMovieCollection): Call<Nope>
 
     @POST("/video/getMovieHistory/")
     fun getMovieHistory(@Body bode: ApiMovieHistory.Req): Call<ApiMovieHistory>

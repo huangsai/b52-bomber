@@ -743,11 +743,11 @@ data class ApiMovieDetail(
     data class MovieObj(
             @Json(name = "movieId") val movieId: Int,
             @Json(name = "name") val name: String,
-            @Json(name = "like") val like: Int,
+            @Json(name = "like") var likes: Int,
             @Json(name = "playNum") val playNum: Int,
             @Json(name = "movieUrl") val movieUrl: String,
-            @Json(name = "isLike") val isLike: Int,
-            @Json(name = "isCollection") val isCollection: Int
+            @Json(name = "isLike") var isLike: Int,
+            @Json(name = "isCollection") var isCollection: Int
     )
 
     @JsonClass(generateAdapter = true)
@@ -776,7 +776,7 @@ data class ApiMovieCollection(
 @JsonClass(generateAdapter = true)
 data class ApiSubmitCollection(
         @Json(name = "retCode") val code: Int,
-        @Json(name = "id") val id: Int
+        @Json(name = "Id") val id: Int
 )
 
 data class ApiMovieHistory(
