@@ -17,9 +17,9 @@ import org.jetbrains.annotations.NotNull;
 
 public class SearchUserItem extends SimpleRecyclerItem {
     @NonNull
-    public final ApiAtUser data;
+    public final ApiAtUser.User data;
 
-    public SearchUserItem(@NonNull ApiAtUser user) {
+    public SearchUserItem(@NonNull ApiAtUser.User user) {
         this.data = user;
     }
 
@@ -29,12 +29,12 @@ public class SearchUserItem extends SimpleRecyclerItem {
 //        GlideExtKt.loadProfile(holder.activity(), data.getProfile(), binding.heartImage);
         int index =  holder.getBindingAdapterPosition();
         GlideApp.with(holder.activity())
-                .load(data.getUsers().get(index).getProfile())
+                .load(data.getProfile())
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(binding.heartImage);
         holder.attachOnClickListener(R.id.layout_user_item);
         holder.attachOnClickListener(R.id.fensi_atten);
-        binding.nofiNick.setText(data.getUsers().get(0).getUsername());
+        binding.nofiNick.setText(data.getUsername());
     }
 
 
