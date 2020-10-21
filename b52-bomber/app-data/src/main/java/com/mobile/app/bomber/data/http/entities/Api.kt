@@ -383,7 +383,7 @@ data class ApiUserCount(
 @JsonClass(generateAdapter = true)
 data class ApiFans(
         @Json(name = "retCode") val code: Int,
-        @Json(name = "FansList") val follows: List<ApiFollow.Follow>?
+        @Json(name = "fansList") val follows: List<ApiFollow.Follow>?
 )
 
 @JsonClass(generateAdapter = true)

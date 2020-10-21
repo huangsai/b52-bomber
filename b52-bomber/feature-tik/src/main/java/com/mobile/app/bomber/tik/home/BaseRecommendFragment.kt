@@ -88,12 +88,12 @@ abstract class BaseRecommendFragment : TopHomeFragment() {
                     is Source.Success -> {
                         val data = source.requireData()
                         if (data.isNotEmpty()) {
-                            if (pager.isFirstPage(2)) {
+//                            if (pager.isFirstPage(2)) {
                                 myAdapter.replaceAll(data)
                                 binding.viewPager.adapter = myAdapter
-                            } else {
-                                myAdapter.addAll(data)
-                            }
+//                            } else {
+//                                myAdapter.addAll(data)
+//                            }
                         }
                     }
                     is Source.Error -> {
