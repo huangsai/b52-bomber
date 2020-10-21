@@ -183,6 +183,11 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
             binding.imgProfile.setImageResource(R.drawable.sy_guanggaotouxiang)
             binding.imgAdd.setImageResource(R.drawable.sy_guanggaolianjie)
             binding.imgAdd.visibility = View.VISIBLE
+            if (binding.txtName.text.isNullOrEmpty()){
+                binding.txtDesc.visibility = View.GONE
+            }else{
+                binding.txtDesc.visibility = View.VISIBLE
+            }
             binding.imgAdLabel.visibility = View.VISIBLE
             binding.layoutLink.visibility = View.VISIBLE
         } else {
