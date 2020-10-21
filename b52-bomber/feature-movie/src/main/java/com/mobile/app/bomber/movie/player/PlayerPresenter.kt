@@ -73,7 +73,9 @@ class PlayerPresenter(
 
     override fun onCreate() {
         ExoPlayerX.addEventListener(this)
-        binding.viewPlayer.player = ExoPlayerX.player
+        val player=ExoPlayerX.player
+        player.addListener(this)
+        binding.viewPlayer.player = player
         // val sdCard = ensureFileSeparator(AndroidX.myApp.getExternalFilesDir(null)!!.absolutePath!!)
         // ExoPlayerX.play((sdCard + "trailer.mp4").toUri())
         playerActivity.data?.apply {
@@ -230,5 +232,20 @@ class PlayerPresenter(
     }
 
     override fun load(view: ImageView, holder: AdapterViewHolder) {
+    }
+
+    override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
+        when (playbackState) {
+            Player.STATE_IDLE -> {
+            }
+            Player.STATE_BUFFERING -> {
+                binding.progress.visibility = View.VISIBLE
+            }
+            Player.STATE_READY -> {
+                binding.progress.visibility = View.INVISIBLE
+            }
+            Player.STATE_ENDED -> {
+            }
+        }
     }
 }
