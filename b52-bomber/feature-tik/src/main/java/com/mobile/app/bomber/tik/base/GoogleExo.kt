@@ -35,7 +35,7 @@ object GoogleExo : CacheWriter.ProgressListener {
 
     private val cache by lazy {
         SimpleCache(
-                File(AndroidX.myApp.externalCacheDir, "video_manager_disk_cache"),
+                File(AndroidX.myApp.externalCacheDir, "video_manager_disk_cache2"),
                 LeastRecentlyUsedCacheEvictor(250 * 1024 * 1024),
                 ExoDatabaseProvider(AndroidX.myApp)
         )

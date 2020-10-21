@@ -14,9 +14,9 @@ import com.google.android.exoplayer2.PlaybackParameters
 import com.google.android.exoplayer2.Player
 import com.mobile.app.bomber.movie.R
 import com.mobile.app.bomber.movie.databinding.MovieActivityPlayerBinding
-import com.mobile.app.bomber.movie.player.exo.ExoPlayerX
 import com.mobile.app.bomber.movie.player.exo.GlideThumbnailTransformation
-import com.mobile.app.bomber.movie.player.exo.TAG_EXO_PLAYER
+import com.mobile.ext.exo.ExoPlayerX
+import com.mobile.ext.exo.TAG_EXO_PLAYER
 import com.mobile.ext.glide.GlideApp
 import com.mobile.guava.android.context.isLandscape
 import com.mobile.guava.android.context.requestFullScreenWithLandscape
@@ -26,7 +26,6 @@ import com.pacific.adapter.AdapterViewHolder
 import com.skydoves.balloon.Balloon
 import com.skydoves.balloon.BalloonAnimation
 import timber.log.Timber
-
 
 class PlayerPresenter(
         binding: MovieActivityPlayerBinding,
@@ -74,7 +73,7 @@ class PlayerPresenter(
 
     override fun onCreate() {
         ExoPlayerX.addEventListener(this)
-        binding.viewPlayer.player = ExoPlayerX.requirePlayer()
+        binding.viewPlayer.player = ExoPlayerX.player
         // val sdCard = ensureFileSeparator(AndroidX.myApp.getExternalFilesDir(null)!!.absolutePath!!)
         // ExoPlayerX.play((sdCard + "trailer.mp4").toUri())
         playerActivity.data?.apply {
@@ -94,12 +93,13 @@ class PlayerPresenter(
     override fun onDestroy() {
         ExoPlayerX.removeEventListener(this)
         ExoPlayerX.stop()
+
         previewTimeBar.removeOnScrubListener(this)
         previewTimeBar.setPreviewLoader(null)
+        binding.viewPlayer.player = null
     }
 
     override fun onPlayWhenReadyChanged(playWhenReady: Boolean, reason: Int) {
-        Timber.tag("reason==").e(reason.toString())
         if (playWhenReady) {
             binding.progress.visibility = View.INVISIBLE
         } else {
@@ -217,7 +217,7 @@ class PlayerPresenter(
             if (optionFlag == 1) {
                 currentSpeed = index
                 btnSpeed.text = speeds[index]
-                ExoPlayerX.requirePlayer().setPlaybackParameters(PlaybackParameters(
+                ExoPlayerX.player.setPlaybackParameters(PlaybackParameters(
                         speeds[index].replace("x", "").safeToFloat(),
                         1.0f
                 ))
@@ -230,7 +230,5 @@ class PlayerPresenter(
     }
 
     override fun load(view: ImageView, holder: AdapterViewHolder) {
-
     }
-
 }

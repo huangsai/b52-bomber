@@ -11,8 +11,8 @@ import com.mobile.app.bomber.common.base.Msg
 import com.mobile.app.bomber.data.http.entities.ApiMovieDetail
 import com.mobile.app.bomber.movie.MovieX
 import com.mobile.app.bomber.movie.databinding.MovieActivityPlayerBinding
-import com.mobile.app.bomber.movie.player.exo.ExoPlayerX
 import com.mobile.app.bomber.runner.base.PrefsManager
+import com.mobile.ext.exo.ExoPlayerX
 import com.mobile.guava.android.context.isLandscape
 import com.mobile.guava.android.context.requestNormalScreenWithPortrait
 import com.mobile.guava.android.mvvm.BaseActivity
@@ -43,6 +43,7 @@ class PlayerActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         window.statusBarColor = Color.BLACK
         ExoPlayerX.initialize()
+        ExoPlayerX.createPlayer()
 
         binding = MovieActivityPlayerBinding.inflate(layoutInflater)
         setContentView(binding.root)
