@@ -331,4 +331,21 @@ object ExoPlayerX : Player.EventListener, CacheWriter.ProgressListener {
     }
 
     fun requirePlayer(): SimpleExoPlayer = player
+
+    override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
+        when (playbackState) {
+            Player.STATE_IDLE -> {
+            }
+            Player.STATE_BUFFERING -> {
+                onPlayWhenReadyChanged(false, Player.PLAY_WHEN_READY_CHANGE_REASON_REMOTE)
+                //binding.progress.visibility = View.VISIBLE
+            }
+            Player.STATE_READY -> {
+                onPlayWhenReadyChanged(true, Player.PLAY_WHEN_READY_CHANGE_REASON_REMOTE)
+                //binding.progress.visibility = View.INVISIBLE
+            }
+            Player.STATE_ENDED -> {
+            }
+        }
+    }
 }

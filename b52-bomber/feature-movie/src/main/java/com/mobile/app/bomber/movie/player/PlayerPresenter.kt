@@ -27,6 +27,7 @@ import com.skydoves.balloon.Balloon
 import com.skydoves.balloon.BalloonAnimation
 import timber.log.Timber
 
+
 class PlayerPresenter(
         binding: MovieActivityPlayerBinding,
         playerActivity: PlayerActivity,
@@ -229,6 +230,7 @@ class PlayerPresenter(
     }
 
     override fun load(view: ImageView, holder: AdapterViewHolder) {
-        TODO("Not yet implemented")
+
     }
+
 }
