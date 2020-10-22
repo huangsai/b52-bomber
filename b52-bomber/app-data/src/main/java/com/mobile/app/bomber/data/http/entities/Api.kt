@@ -310,7 +310,7 @@ data class ApiComment(
             @Json(name = "targetuid") val toUserId: Long,
             @Json(name = "targetuname") val toUsername: String,
             @Json(name = "targetupic") val toPic: String?,
-            @Json(name = "IsLiked") var isLiking: Boolean,
+            @Json(name = "isLiked") var isLiking: Boolean,
             @Json(name = "atlist") val at: List<At>?,
             @Json(name = "children") val children: List<Comment>?
     ) {
