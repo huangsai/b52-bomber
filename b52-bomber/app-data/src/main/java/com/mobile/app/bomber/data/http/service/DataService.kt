@@ -192,7 +192,7 @@ interface DataService {
     @POST("/video/deletevideocomments/")
     fun deleteComment(@Body body: ApiComment.ReqDelete): Call<Nope>
 
-    @GET("/getvideobyid/{uid}/{fastkey}/{videoid}/")
+    @GET("/video/getvideobyid/{uid}/{fastkey}/{videoid}/")
     fun videoById(
             @Path("uid") uId: Long,
             @Path("fastkey") token: String,
