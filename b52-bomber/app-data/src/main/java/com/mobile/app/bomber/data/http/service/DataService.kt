@@ -265,7 +265,7 @@ interface DataService {
             @Path("mid") movieId: Long,
             @Path("uid") uId: Long,
             @Path("fastKey") fastKey: String
-            ): Call<ApiMovieDetail>
+    ): Call<ApiMovieDetail>
 
     //点赞
     @POST("/video/postMovieLike/")
@@ -281,5 +281,18 @@ interface DataService {
     @GET("/video/getGuessULikeMovieList/{uid}/")
     fun getGuessULikeMovieList(@Path("uid") uid: Long): Call<ApiMovie>
 
+    //获取用户收藏的电影列表
+    @POST("/video/getMovieCollectionList/")
+    fun getMovieCollectionList(@Body bode: ApiCollectionReq): Call<ApiMovieCollectionList>
+
+    //上报影视播放次数
+    @POST("/video/postMoviePlayNum/")
+    fun postMoviePlayNum(@Body bode: ApiNumReq): Call<Nope>
+
+    //上报影视播放时长
+    @POST("/video/postMoviePlayDurationRecord/")
+    fun postMoviePlayDurationRecord(@Body bode: ApiDurationRecordReq): Call<Nope>
     //-------⬆⬆⬆⬆⬆⬆⬆⬆----长视频相关接口----⬆⬆⬆⬆⬆⬆⬆-----//
+
+
 }

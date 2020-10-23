@@ -792,4 +792,69 @@ data class ApiMovieHistory(
     )
 }
 
+@JsonClass(generateAdapter = true)
+data class ApiCollectionReq(
+        @Json(name = "uid") val uid: Long,
+        @Json(name = "page") val page: Int,
+        @Json(name = "size") val size: Int,
+        @Json(name = "fastkey") val fastKey: String
+)
+
+@JsonClass(generateAdapter = true)
+data class ApiNumReq(
+        @Json(name = "movieId") val movieId: Int,
+        @Json(name = "deviceId") val deviceId: String,
+        @Json(name = "uid") val uid: Int,
+        @Json(name = "channelId") val channelId: Int
+)
+
+@JsonClass(generateAdapter = true)
+data class ApiDurationRecordReq(
+        @Json(name = "movieId") val movieId: Int,
+        @Json(name = "deviceId") val deviceId: String,
+        @Json(name = "uid") val uid: Int,
+        @Json(name = "channelId") val channelId: Int,
+        @Json(name = "duration") val duration: Int
+)
+
+@JsonClass(generateAdapter = true)
+data class ApiMovieCollectionList(
+        @Json(name = "movieList") val movieList: List<Movie>,
+        @Json(name = "next") val next: Int,
+        @Json(name = "retCode") val retCode: Int,
+        @Json(name = "totalCount") val totalCount: Int,
+        @Json(name = "totalPage") val totalPage: Int,
+) {
+
+    @JsonClass(generateAdapter = true)
+    data class Movie(
+            @Json(name = "byuid") val byuid: Int,
+            @Json(name = "captions") val captions: Int,
+            @Json(name = "category") val category: String,
+            @Json(name = "comments") val comments: Int,
+            @Json(name = "country") val country: Int,
+            @Json(name = "cover") val cover: String,
+            @Json(name = "desc") val desc: String,
+            @Json(name = "download") val download: String,
+            @Json(name = "downloadurl") val downloadurl: String,
+            @Json(name = "duration") val duration: Int,
+            @Json(name = "follow") val follow: Int,
+            @Json(name = "id") val id: Int,
+            @Json(name = "isFollowed") val isFollowed: Boolean,
+            @Json(name = "isLiked") val isLiked: Boolean,
+            @Json(name = "isportait") val isportait: Int,
+            @Json(name = "like") val like: Int,
+            @Json(name = "mosaic") val mosaic: Int,
+            @Json(name = "movieId") val movieId: Int,
+            @Json(name = "movieUrl") val movieUrl: String,
+            @Json(name = "name") val name: String,
+            @Json(name = "playnum") val playnum: Int,
+            @Json(name = "propaganda") val propaganda: String,
+            @Json(name = "recommend") val recommend: Int,
+            @Json(name = "score") val score: Int,
+            @Json(name = "share") val share: Int,
+            @Json(name = "uploadtm") val uploadtm: Int,
+            @Json(name = "year") val year: Int
+    )
+}
 //-------⬆⬆⬆⬆⬆⬆⬆⬆----长视频相关----⬆⬆⬆⬆⬆⬆⬆-----//
