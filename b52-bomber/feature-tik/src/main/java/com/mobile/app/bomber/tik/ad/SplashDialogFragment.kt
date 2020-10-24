@@ -39,7 +39,7 @@ class SplashDialogFragment : BaseAppCompatDialogFragment(), View.OnClickListener
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(DialogFragment.STYLE_NORMAL, R.style.CameraDialog)
-        ad = Values.take("SplashDialogFragment")
+        ad = Values.take("SplashDialogFragment")!!
         isCancelable = false
     }
 

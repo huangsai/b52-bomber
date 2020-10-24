@@ -99,8 +99,8 @@ class CommentInputDialogFragment : BaseBottomSheetDialogFragment(), View.OnClick
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(DialogFragment.STYLE_NORMAL, R.style.NoDimBottomSheetDialog)
-        action = Values.take("CommentInputDialogFragment_action")
-        video = Values.take("CommentInputDialogFragment_video")
+        action = Values.take("CommentInputDialogFragment_action")!!
+        video = Values.take("CommentInputDialogFragment_video")!!
         comment = Values.take("CommentInputDialogFragment_comment")
         adapter.onClickListener = this
         adapter.imageLoader = this

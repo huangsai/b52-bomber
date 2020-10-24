@@ -22,7 +22,7 @@ class PopupAdDialogFragment : BaseAppCompatDialogFragment(), View.OnClickListene
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         applyDialogCount = true
-        data = Values.take("PopupAdDialogFragment")
+        data = Values.take("PopupAdDialogFragment")!!
     }
 
     override fun onCreateView(

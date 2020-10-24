@@ -52,7 +52,7 @@ class PlayerActivity : BaseActivity() {
         sourcePresenter = SourcePresenter(binding, this, model)
         playerPresenter = PlayerPresenter(binding, this, model)
 
-        movieId = Values.take("PlayerActivity_movieId")
+        movieId = Values.take("PlayerActivity_movieId")!!
         load()
     }
 
