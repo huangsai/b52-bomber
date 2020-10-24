@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.view.View
 import android.widget.*
 import androidx.core.net.toUri
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.request.target.Target
 import com.github.rubensousa.previewseekbar.PreviewBar
 import com.github.rubensousa.previewseekbar.PreviewLoader
@@ -12,9 +13,11 @@ import com.github.rubensousa.previewseekbar.exoplayer.PreviewTimeBar
 import com.google.android.exoplayer2.ExoPlaybackException
 import com.google.android.exoplayer2.PlaybackParameters
 import com.google.android.exoplayer2.Player
+import com.google.android.exoplayer2.SimpleExoPlayer
 import com.mobile.app.bomber.movie.R
 import com.mobile.app.bomber.movie.databinding.MovieActivityPlayerBinding
 import com.mobile.app.bomber.movie.player.exo.GlideThumbnailTransformation
+import com.mobile.app.bomber.runner.base.PrefsManager
 import com.mobile.ext.exo.ExoPlayerX
 import com.mobile.ext.exo.TAG_EXO_PLAYER
 import com.mobile.ext.glide.GlideApp
@@ -25,6 +28,8 @@ import com.mobile.guava.data.safeToFloat
 import com.pacific.adapter.AdapterViewHolder
 import com.skydoves.balloon.Balloon
 import com.skydoves.balloon.BalloonAnimation
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class PlayerPresenter(
@@ -50,6 +55,8 @@ class PlayerPresenter(
     private var currentSpeed = 1
     private var currentBitRate = 0
     private var optionFlag = 0
+    private var player: SimpleExoPlayer? = null
+    private var markedPlayDuration = false
 
     init {
         binding.progress.setOnClickListener(this)
@@ -73,13 +80,22 @@ class PlayerPresenter(
 
     override fun onCreate() {
         ExoPlayerX.addEventListener(this)
-        val player=ExoPlayerX.player
-        player.addListener(this)
+        player = ExoPlayerX.player
+        player?.repeatMode = Player.REPEAT_MODE_OFF
+        player?.addListener(this)
         binding.viewPlayer.player = player
         // val sdCard = ensureFileSeparator(AndroidX.myApp.getExternalFilesDir(null)!!.absolutePath!!)
         // ExoPlayerX.play((sdCard + "trailer.mp4").toUri())
         playerActivity.data?.apply {
             ExoPlayerX.play(movie.movieUrl.toUri())
+        }
+
+        playerActivity.lifecycleScope.launch(Dispatchers.IO) {
+            if (PrefsManager.isLogin()) {
+                model.postMoviePlayNum(playerActivity.movieId.toInt(), PrefsManager.getUserId())
+            } else {
+                model.postMoviePlayNum(playerActivity.movieId.toInt(), 0L)
+            }
         }
 
     }
@@ -90,12 +106,13 @@ class PlayerPresenter(
 
     override fun onPause() {
         ExoPlayerX.pause()
+        playDuration()
     }
 
     override fun onDestroy() {
+        player = null
         ExoPlayerX.removeEventListener(this)
         ExoPlayerX.stop()
-
         previewTimeBar.removeOnScrubListener(this)
         previewTimeBar.setPreviewLoader(null)
         binding.viewPlayer.player = null
@@ -245,6 +262,22 @@ class PlayerPresenter(
                 binding.progress.visibility = View.INVISIBLE
             }
             Player.STATE_ENDED -> {
+                playDuration()
+            }
+        }
+    }
+
+    private fun playDuration() {
+        if (!markedPlayDuration) {
+            markedPlayDuration = true
+            playerActivity.lifecycleScope.launch(Dispatchers.IO) {
+                player?.apply {
+                    if (PrefsManager.isLogin()) {
+                        model.postMoviePlayDurationRecord(playerActivity.movieId.toInt(), duration, PrefsManager.getUserId())
+                    } else {
+                        model.postMoviePlayDurationRecord(playerActivity.movieId.toInt(), duration, 0L)
+                    }
+                }
             }
         }
     }

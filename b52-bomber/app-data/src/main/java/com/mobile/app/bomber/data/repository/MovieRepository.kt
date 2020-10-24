@@ -121,4 +121,26 @@ class MovieRepository @Inject constructor(
             errorSource(e)
         }
     }
+
+    suspend fun postMoviePlayNum(movieId: Int, userId: Long): Source<Nope> {
+        val req = ApiNumReq(
+                movieId, appPrefsManager.getDeviceId(), userId, 1
+        )
+        return try {
+            dataService.postMoviePlayNum(req).execute().toSource()
+        } catch (e: Exception) {
+            errorSource(e)
+        }
+    }
+
+    suspend fun postMoviePlayDurationRecord(movieId: Int, duration: Long, userId: Long): Source<ApiId> {
+        val req = ApiDurationRecordReq(
+                movieId, appPrefsManager.getDeviceId(), userId, 1, duration
+        )
+        return try {
+            dataService.postMoviePlayDurationRecord(req).execute().toSource()
+        } catch (e: Exception) {
+            errorSource(e)
+        }
+    }
 }

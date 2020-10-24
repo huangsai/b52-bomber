@@ -3,8 +3,8 @@ package com.mobile.app.bomber.movie.player
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.ViewModel
 import com.mobile.app.bomber.data.http.entities.ApiComment
+import com.mobile.app.bomber.data.http.entities.ApiId
 import com.mobile.app.bomber.data.http.entities.ApiMovieDetail
-import com.mobile.app.bomber.data.http.entities.ApiSubmitCollection
 import com.mobile.app.bomber.data.http.entities.Nope
 import com.mobile.app.bomber.data.repository.MovieRepository
 import com.mobile.guava.android.ensureWorkThread
@@ -20,15 +20,27 @@ class PlayerViewModel @Inject constructor(
     }
 
     @WorkerThread
-    suspend fun postMovieLike(movieId: Int,isLike:Int): Source<Nope> {
+    suspend fun postMovieLike(movieId: Int, isLike: Int): Source<Nope> {
         ensureWorkThread()
-        return movieRepository.postMovieLike(movieId,isLike)
+        return movieRepository.postMovieLike(movieId, isLike)
     }
 
     @WorkerThread
     suspend fun postMovieCollection(movieId: Int, isCollection: Int): Source<Nope> {
         ensureWorkThread()
         return movieRepository.postMovieCollection(movieId, isCollection)
+    }
+
+    @WorkerThread
+    suspend fun postMoviePlayNum(movieId: Int, userId: Long): Source<Nope> {
+        ensureWorkThread()
+        return movieRepository.postMoviePlayNum(movieId, userId)
+    }
+
+    @WorkerThread
+    suspend fun postMoviePlayDurationRecord(movieId: Int, duration: Long, userId: Long): Source<ApiId> {
+        ensureWorkThread()
+        return movieRepository.postMoviePlayDurationRecord(movieId, duration, userId)
     }
 
     fun requestComment(): List<ApiComment.Comment> {

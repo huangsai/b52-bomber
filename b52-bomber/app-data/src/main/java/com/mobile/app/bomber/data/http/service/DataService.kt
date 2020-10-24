@@ -291,7 +291,7 @@ interface DataService {
 
     //上报影视播放时长
     @POST("/video/postMoviePlayDurationRecord/")
-    fun postMoviePlayDurationRecord(@Body bode: ApiDurationRecordReq): Call<Nope>
+    fun postMoviePlayDurationRecord(@Body bode: ApiDurationRecordReq): Call<ApiId>
     //-------⬆⬆⬆⬆⬆⬆⬆⬆----长视频相关接口----⬆⬆⬆⬆⬆⬆⬆-----//
 
 

@@ -776,9 +776,9 @@ data class ApiMovieCollection(
 )
 
 @JsonClass(generateAdapter = true)
-data class ApiSubmitCollection(
+data class ApiId(
         @Json(name = "retCode") val code: Int,
-        @Json(name = "Id") val id: Int
+        @Json(name = "id") val id: Int
 )
 
 data class ApiMovieHistory(
@@ -804,7 +804,7 @@ data class ApiCollectionReq(
 data class ApiNumReq(
         @Json(name = "movieId") val movieId: Int,
         @Json(name = "deviceId") val deviceId: String,
-        @Json(name = "uid") val uid: Int,
+        @Json(name = "uid") val uid: Long,
         @Json(name = "channelId") val channelId: Int
 )
 
@@ -812,9 +812,9 @@ data class ApiNumReq(
 data class ApiDurationRecordReq(
         @Json(name = "movieId") val movieId: Int,
         @Json(name = "deviceId") val deviceId: String,
-        @Json(name = "uid") val uid: Int,
+        @Json(name = "uid") val uid: Long,
         @Json(name = "channelId") val channelId: Int,
-        @Json(name = "duration") val duration: Int
+        @Json(name = "duration") val duration: Long
 )
 
 @JsonClass(generateAdapter = true)
