@@ -6,21 +6,24 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
-import com.mobile.guava.android.mvvm.newStartActivity
+import com.google.android.material.snackbar.Snackbar
+import com.mobile.app.bomber.common.base.Msg
+import com.mobile.app.bomber.common.base.adapter.BaseFragmentStateAdapter
+import com.mobile.app.bomber.common.base.tool.SingleClick
 import com.mobile.app.bomber.data.http.entities.ApiVideo
 import com.mobile.app.bomber.data.repository.is403
+import com.mobile.app.bomber.tik.databinding.FragmentRecommendBinding
+import com.mobile.app.bomber.tik.login.LoginActivity
+import com.mobile.guava.android.mvvm.newStartActivity
 import com.mobile.guava.android.ui.view.recyclerview.EndlessRecyclerViewScrollListener
 import com.mobile.guava.android.ui.view.viewpager.recyclerView
 import com.mobile.guava.jvm.domain.Source
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import com.mobile.app.bomber.common.base.adapter.BaseFragmentStateAdapter
-import com.mobile.app.bomber.common.base.Msg
-import com.mobile.app.bomber.common.base.tool.SingleClick
-import com.mobile.app.bomber.tik.databinding.FragmentRecommendBinding
-import com.mobile.app.bomber.tik.login.LoginActivity
+
 
 abstract class BaseRecommendFragment : TopHomeFragment() {
 
@@ -30,6 +33,7 @@ abstract class BaseRecommendFragment : TopHomeFragment() {
     protected val binding get() = _binding!!
 
     protected lateinit var myAdapter: MyAdapter
+    protected lateinit var data: List<ApiVideo>
 
     var currentFragment: PlayFragment? = null
 
@@ -53,7 +57,15 @@ abstract class BaseRecommendFragment : TopHomeFragment() {
             endless = EndlessRecyclerViewScrollListener(it.layoutManager!!) { _, _ ->
                 if (pager.isAvailable) {
                     binding.progress.visibility = View.VISIBLE
-                    load()
+//                    load()
+                    val lastVisibleItemPosition: Int? = binding.viewPager.recyclerView.layoutManager?.itemCount
+                    //说明是最后一条数据
+                    if (lastVisibleItemPosition != null) {
+                        if (lastVisibleItemPosition  == binding.viewPager.adapter!!.itemCount) {
+//                            Msg.toast("加载更多数据")
+                            refreshMoreData()
+                        }
+                    }
                 }
             }
             it.addOnScrollListener(endless)
@@ -74,6 +86,29 @@ abstract class BaseRecommendFragment : TopHomeFragment() {
         }
     }
 
+    private fun refreshMoreData() {
+        if (!pager.isAvailable) return
+        lifecycleScope.launch(Dispatchers.Default) {
+            val source = if (isFollowingFragment) {
+                model.videosOfFollow(pager)
+            } else {
+                model.videosOfCommend(pager)
+            }
+            withContext(Dispatchers.Main) {
+                when (source) {
+                    is Source.Success -> {
+                        val data = source.requireData()
+                        if (data.isNotEmpty()) {
+                            myAdapter.addAll(data)
+                        }
+                    }
+                }
+
+            }
+            falseRefreshing()
+        }
+    }
+
     override fun load() {
         if (!pager.isAvailable) return
 
@@ -89,11 +124,8 @@ abstract class BaseRecommendFragment : TopHomeFragment() {
                         val data = source.requireData()
                         if (data.isNotEmpty()) {
 //                            if (pager.isFirstPage(2)) {
-                                myAdapter.replaceAll(data)
-                                binding.viewPager.adapter = myAdapter
-//                            } else {
-//                                myAdapter.addAll(data)
-//                            }
+                            binding.viewPager.adapter = myAdapter
+                            myAdapter.replaceAll(data)
                         }
                     }
                     is Source.Error -> {
