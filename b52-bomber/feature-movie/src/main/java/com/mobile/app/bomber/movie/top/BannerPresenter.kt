@@ -80,7 +80,9 @@ class BannerPresenter(
                 .setOnBannerListener(this@BannerPresenter)
                 .addBannerLifecycleObserver(fragment)
                 .indicator = CircleIndicator(fragment.requireContext())
-        binding.bannerTitle.text = data[0].title
+        if (data.isNotEmpty()) {
+            binding.bannerTitle.text = data[0].title
+        }
     }
 
     override fun OnBannerClick(data: ApiMovieBanner.Banner?, position: Int) {
