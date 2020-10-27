@@ -86,7 +86,7 @@ interface DataService {
             @Path("userid") targetUid: Long
     ): Call<ApiIsFollowing>
 
-    @POST("/group1/upload")
+    @POST("/upload")
     fun uploadFile(@Body body: RequestBody): Call<ApiFile>
 
     @POST("/user/changeheadpic/")

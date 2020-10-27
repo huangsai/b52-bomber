@@ -28,7 +28,7 @@ class HostSelectionInterceptor : Interceptor {
             HOST_TAG_TEST -> { //测试服
                 when {
                     isAboutUser(original) -> "${HOST_TEST}"
-                    isAboutUpload(original) -> "${HOST_TEST}"
+                    isAboutUpload(original) -> "${HOST_TEST_UPLOAD}"
                     isAboutSystem(original) -> "${HOST_TEST}"
                     else -> "${HOST_TEST}"
                 }.toHttpUrl()

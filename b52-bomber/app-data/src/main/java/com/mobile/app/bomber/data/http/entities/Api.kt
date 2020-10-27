@@ -15,6 +15,7 @@ const val HOST_TAG = HOST_TAG_TEST
 //测试环境  http://117.50.119.233  http://119.28.18.13
 //正式环境  http://api.zomppga.tokyo:444
 const val HOST_TEST = "http://172.31.9.97/"
+const val HOST_TEST_UPLOAD = "http://172.31.10.18:8080"
 
 //开发环境
 const val HOST_DEV = "http://192.168.2.120:"
@@ -238,8 +239,6 @@ data class ApiFile(
         @Json(name = "md5") val md5: String,
         @Json(name = "mtime") val time: Long,
         @Json(name = "path") val path: String,
-        @Json(name = "scene") val scene: String,
-        @Json(name = "scenes") val scenes: String,
         @Json(name = "size") val size: Int,
         @Json(name = "src") val src: String,
         @Json(name = "url") val url: String
