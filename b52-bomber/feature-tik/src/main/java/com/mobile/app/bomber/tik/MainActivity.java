@@ -3,6 +3,7 @@ package com.mobile.app.bomber.tik;
 import android.app.Activity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.RadioButton;
@@ -50,6 +51,9 @@ import com.mobile.guava.jvm.domain.Source;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Map;
 
@@ -157,7 +161,7 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
     }
 
     private void requestSplashAd() {
-        model.ad(1).observe(this, source -> {
+        model.ad(3).observe(this, source -> {
             if (source instanceof Source.Success) {
                 ApiAd ad = source.requireData();
                 if (TextUtils.isEmpty(ad.getUrl())) {
@@ -192,6 +196,7 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
     public void requestPopupAd() {
         model.adMsg(1).observe(this, source -> {
             login();
+            JSONObject jsonObject = new JSONObject();
             if (source instanceof Source.Success) {
                 ApiAdMsg data = source.requireData();
                 if (!TextUtils.isEmpty(data.getContent())) {
