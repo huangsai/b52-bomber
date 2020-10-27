@@ -537,9 +537,9 @@ data class ApiHotKey(
 
 @JsonClass(generateAdapter = true)
 data class ApiTags(
-        @Json(name = "RetCode") val code: Int,
-        @Json(name = "Desc") val desc: String,
-        @Json(name = "Data") val data: List<String>?
+        @Json(name = "retCode") val code: Int,
+        @Json(name = "desc") val desc: String,
+        @Json(name = "data") val data: List<String>?
 )
 
 
