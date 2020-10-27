@@ -23,10 +23,7 @@ import com.mobile.app.bomber.common.base.tool.ClipBoardUtil
 import com.mobile.app.bomber.common.base.tool.SingleClick
 import com.mobile.app.bomber.data.http.entities.ApiComment
 import com.mobile.app.bomber.data.http.entities.ApiVideo
-import com.mobile.guava.data.Values
 import com.mobile.app.bomber.runner.RunnerX
-import com.mobile.guava.android.mvvm.BaseBottomSheetDialogFragment
-import com.mobile.guava.android.mvvm.showDialogFragment
 import com.mobile.app.bomber.tik.R
 import com.mobile.app.bomber.tik.base.AppRouterUtils
 import com.mobile.app.bomber.tik.base.loadProfile
@@ -34,8 +31,11 @@ import com.mobile.app.bomber.tik.base.requireLogin
 import com.mobile.app.bomber.tik.databinding.DialogCommentActionsBinding
 import com.mobile.app.bomber.tik.databinding.FragmentCommentDialogBinding
 import com.mobile.app.bomber.tik.home.items.CommentItem
+import com.mobile.guava.android.mvvm.BaseBottomSheetDialogFragment
+import com.mobile.guava.android.mvvm.showDialogFragment
 import com.mobile.guava.android.ui.view.recyclerview.keepItemViewVisible
 import com.mobile.guava.android.ui.view.text.disableEditable
+import com.mobile.guava.data.Values
 import com.mobile.guava.jvm.coroutines.Bus
 import com.mobile.guava.jvm.domain.Source
 import com.mobile.guava.jvm.extension.exhaustive
@@ -134,12 +134,13 @@ class CommentDialogFragment : BaseBottomSheetDialogFragment(), View.OnClickListe
                 value++
             }
         }
-        binding.txtTitle.text = "${value}条评论"
+        binding.txtTitle.text = ("${value}条评论")
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         binding.recycler.adapter = null
+        _binding = null
     }
 
     override fun onDestroy() {
@@ -244,7 +245,7 @@ class CommentDialogFragment : BaseBottomSheetDialogFragment(), View.OnClickListe
             } else {
                 adapter.add(CommentItem.TypeA(newComment))
             }
-            binding.recycler.keepItemViewVisible(0,true)
+            binding.recycler.keepItemViewVisible(0, true)
         } else {
             val index = adapter.indexOf(commentItem!!)
             if (adapter.itemCount == index + 1) {
@@ -252,7 +253,7 @@ class CommentDialogFragment : BaseBottomSheetDialogFragment(), View.OnClickListe
             } else {
                 adapter.add(index + 1, CommentItem.TypeB(newComment))
             }
-            binding.recycler.keepItemViewVisible(index + 1,true)
+            binding.recycler.keepItemViewVisible(index + 1, true)
         }
     }
 
