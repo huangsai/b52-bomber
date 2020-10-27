@@ -190,7 +190,7 @@ class CommentDialogFragment : BaseBottomSheetDialogFragment(), View.OnClickListe
             }
             R.id.item_comment_a, R.id.item_comment_b -> {
                 commentItem = AdapterUtils.getHolder(v).item()
-                showCommentInput(1)
+                showCommentInput(4)
             }
         }
     }

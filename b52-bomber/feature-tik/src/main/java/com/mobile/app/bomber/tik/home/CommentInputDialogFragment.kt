@@ -23,9 +23,7 @@ import com.mobile.app.bomber.common.base.Msg
 import com.mobile.app.bomber.common.base.tool.SingleClick
 import com.mobile.app.bomber.data.http.entities.ApiComment
 import com.mobile.app.bomber.data.http.entities.ApiVideo
-import com.mobile.guava.data.Values
 import com.mobile.app.bomber.runner.base.PrefsManager
-import com.mobile.guava.android.mvvm.BaseBottomSheetDialogFragment
 import com.mobile.app.bomber.tik.R
 import com.mobile.app.bomber.tik.base.AppRouterUtils
 import com.mobile.app.bomber.tik.base.loadProfile
@@ -35,9 +33,11 @@ import com.mobile.app.bomber.tik.home.items.AtUserItem
 import com.mobile.app.bomber.tik.home.items.MyAtUser
 import com.mobile.ext.rxjava3.binding.RxView
 import com.mobile.guava.android.ime.ImeUtils
+import com.mobile.guava.android.mvvm.BaseBottomSheetDialogFragment
 import com.mobile.guava.android.ui.view.expandable.ExpandableLayout2
 import com.mobile.guava.android.ui.view.text.backspace
 import com.mobile.guava.android.ui.view.text.moveCursorToLast
+import com.mobile.guava.data.Values
 import com.mobile.guava.jvm.domain.Source
 import com.mobile.guava.jvm.extension.exhaustive
 import com.pacific.adapter.AdapterImageLoader
@@ -49,7 +49,6 @@ import io.reactivex.rxjava3.disposables.Disposable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import timber.log.Timber
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
@@ -167,6 +166,7 @@ class CommentInputDialogFragment : BaseBottomSheetDialogFragment(), View.OnClick
     }
 
     private fun applyAction() {
+        binding.editComment.hint = getString(R.string.comment_hint)
         when (action) {
             1 -> showIme()
             2 -> {
@@ -174,6 +174,10 @@ class CommentInputDialogFragment : BaseBottomSheetDialogFragment(), View.OnClick
                 binding.editComment.append("@")
             }
             3 -> binding.layoutEmoji.expand(false)
+            4 -> {
+                showIme()
+                binding.editComment.hint = "回复 @" + comment?.username+"："
+            }
             else -> throw IllegalStateException()
         }
     }
@@ -303,7 +307,7 @@ class CommentInputDialogFragment : BaseBottomSheetDialogFragment(), View.OnClick
             val atList = atUsers.map { it.toAt() }
             val newComment = ApiComment.Comment(
                     PrefsManager.getUserId(), video.videoId, 0L, 0,
-                    System.currentTimeMillis()/1000L, PrefsManager.getLoginName(),
+                    System.currentTimeMillis() / 1000L, PrefsManager.getLoginName(),
                     PrefsManager.getHeadPicUrl(), content, toCommendId, toUserId,
                     comment?.username ?: "", comment?.pic ?: "",
                     false, atList, null
