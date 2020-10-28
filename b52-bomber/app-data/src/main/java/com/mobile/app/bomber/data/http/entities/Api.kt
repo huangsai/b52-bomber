@@ -747,7 +747,7 @@ data class ApiMovieDetail(
         @Json(name = "retCode") val code: Int,
         @Json(name = "desc") val desc: String,
         @Json(name = "movieObj") val movie: MovieObj,
-        @Json(name = "ad") val ad: Ad
+        @Json(name = "ad") val ad: Ad?
 ) {
     @JsonClass(generateAdapter = true)
     data class MovieObj(

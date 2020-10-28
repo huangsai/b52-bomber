@@ -50,18 +50,24 @@ class CommentPresenter(
         adapter.imageLoader = this
     }
 
+
     override fun onCreate() {
         requestComment()
         playerActivity.data?.apply {
             binding.txtTitle.text = movie.name
             binding.txtDesc.text = (movie.playNum.toString() + "次播放，影片简介")
-            GlideApp.with(playerActivity)
-                    .load(ad.img)
-                    .placeholder(R.drawable.jq_icon_40)
-                    .into(binding.includeGameAd.imgIcon)
-            binding.txtLike.text = ("点赞  " + movie.likes.toString())
-            binding.includeGameAd.txtTitle1.text = ad.title
-            binding.includeGameAd.txtDesc1.text = ad.desc
+            if (ad == null) {
+                binding.layoutGameAd.visibility = View.GONE
+            } else {
+                binding.layoutGameAd.visibility = View.VISIBLE
+                GlideApp.with(playerActivity)
+                        .load(ad?.img)
+                        .placeholder(R.drawable.jq_icon_40)
+                        .into(binding.includeGameAd.imgIcon)
+                binding.txtLike.text = ("点赞  " + movie.likes.toString())
+                binding.includeGameAd.txtTitle1.text = ad?.title
+                binding.includeGameAd.txtDesc1.text = ad?.desc
+            }
             if (movie.isLike == 0) {//0未点赞 1已点赞
                 binding.txtLike.setCompoundDrawablesWithIntrinsicBounds(R.drawable.jq_dianzan_pingluan02, 0, 0, 0)
             } else if (movie.isLike == 1) {
