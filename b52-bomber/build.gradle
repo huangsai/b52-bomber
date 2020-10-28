@@ -7,6 +7,7 @@ buildscript {
     ext {
         kotlin_version = '1.4.10'
     }
+
     repositories {
         google()
         jcenter()
@@ -105,6 +106,12 @@ allprojects { project ->
 subprojects { project ->
     afterEvaluate {
         if (project.plugins.hasPlugin('android') || project.plugins.hasPlugin('android-library')) {
+
+            boolean isAndroidLibrary = project.plugins.hasPlugin('android-library')
+            boolean isRelease = project.gradle.startParameter.taskNames.any {
+                it.toLowerCase().contains('release')
+            }
+
             android {
                 compileSdkVersion buildConfig.compileSdk
                 buildToolsVersion buildConfig.buildTools

@@ -1,9 +1,12 @@
 package com.mobile.app.bomber.movie.search
 
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +18,7 @@ import com.mobile.app.bomber.movie.R
 import com.mobile.app.bomber.movie.databinding.MovieActivitySearchBinding
 import com.mobile.app.bomber.movie.search.items.SearchInputItem
 import com.mobile.app.bomber.movie.search.result.SearchResultListPresenter
+import com.mobile.guava.android.context.hideSoftInput
 import com.pacific.adapter.AdapterUtils
 import com.pacific.adapter.RecyclerAdapter
 import com.pacific.adapter.SimpleRecyclerItem
@@ -95,8 +99,9 @@ class SearchActivity : MyBaseActivity(), TextWatcher, View.OnClickListener {
         binding.recycler.adapter = adapter
         adapter.replaceAll(items)
         isMainView = false
-    }
+        this.hideSoftInput();
 
+    }
     fun setInputContent(inputContent: String) {
         binding.etSearch.setText(inputContent)
         binding.etSearch.setSelection(inputContent.length)
