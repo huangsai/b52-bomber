@@ -158,7 +158,7 @@ interface DataService {
     @GET("/sys/getindexmessage/{type}/")
     fun adMsg(@Path("type") type: Int): Call<ApiAdMsg>
 
-    @GET("/sys/getadconfig/{type}/")
+    @GET("/sys/getadconfig/{type}/1/")
     fun ad(@Path("type") type: Int): Call<ApiAd>
 
     @GET("/video/commentstouser/{uid}/{fastkey}/{page}/{size}/")
