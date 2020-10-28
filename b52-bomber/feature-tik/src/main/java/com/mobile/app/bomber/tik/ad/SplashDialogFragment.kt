@@ -61,7 +61,7 @@ class SplashDialogFragment : BaseAppCompatDialogFragment(), View.OnClickListener
         ImmersionBar.with(this).init()
         val a = screen
         val result = a.x / a.y
-        var imgeUrl: String = ""!!
+        var imgeUrl: String = ""
         if (ad.image.eighteen.isNotEmpty()) { // 9:18分辨率
             imgeUrl = ad.image.eighteen
         } else if (ad.image.twentyone.isNotEmpty()) { //9:21分辨率
