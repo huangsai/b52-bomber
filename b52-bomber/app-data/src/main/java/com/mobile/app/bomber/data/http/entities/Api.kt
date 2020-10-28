@@ -401,12 +401,22 @@ data class ApiAdMsg(
 data class ApiAd(
         @Json(name = "retCode") val code: Int,
         @Json(name = "id") val id: Long,
-        @Json(name = "imageurl") val image: String,
+        @Json(name = "imageurl") val image: ImageUrl,
         @Json(name = "linkurl") val url: String,
         @Json(name = "tyep") val type: Int,
         @Json(name = "weight") val weight: Int,
         @Json(name = "staytime") val startTime: Long
-)
+){
+    @JsonClass(generateAdapter = true)
+    data class ImageUrl(
+            @Json(name = "sixteen") val sixteen: String,
+            @Json(name = "eighteen") val eighteen: String,
+            @Json(name = "twentyOne") val twentyone: String,
+            @Json(name = "x") val x: String,
+            @Json(name = "eight") val eight: String,
+            @Json(name = "pro") var pro: String
+    )
+}
 
 @JsonClass(generateAdapter = true)
 data class ApiAtList(
