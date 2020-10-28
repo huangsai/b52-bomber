@@ -3,14 +3,11 @@ package com.mobile.app.bomber.tik.ad
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import com.mobile.guava.android.mvvm.BaseAppCompatDialogFragment
-import com.mobile.app.bomber.data.http.entities.ApiAd
-import com.mobile.guava.data.Values
-import com.mobile.guava.jvm.Guava
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
@@ -18,13 +15,18 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.gyf.immersionbar.ImmersionBar
-import com.mobile.ext.glide.GlideApp
+import com.mobile.app.bomber.common.base.tool.SingleClick
+import com.mobile.app.bomber.data.http.entities.ApiAd
 import com.mobile.app.bomber.tik.MainActivity
 import com.mobile.app.bomber.tik.R
 import com.mobile.app.bomber.tik.base.chrome
 import com.mobile.app.bomber.tik.base.decodeImgUrl
-import com.mobile.app.bomber.common.base.tool.SingleClick
 import com.mobile.app.bomber.tik.databinding.FragmentSplashDialogBinding
+import com.mobile.ext.glide.GlideApp
+import com.mobile.guava.android.mvvm.BaseAppCompatDialogFragment
+import com.mobile.guava.android.ui.screen.screen
+import com.mobile.guava.data.Values
+import com.mobile.guava.jvm.Guava
 import java.util.concurrent.TimeUnit
 
 class SplashDialogFragment : BaseAppCompatDialogFragment(), View.OnClickListener,
@@ -57,8 +59,18 @@ class SplashDialogFragment : BaseAppCompatDialogFragment(), View.OnClickListener
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         ImmersionBar.with(this).init()
+        val a = screen
+        val result = a.x / a.y
+        var imgeUrl: String = ""!!
+        if (ad.image.eighteen.isNotEmpty()) { // 9:18分辨率
+            imgeUrl = ad.image.eighteen
+        } else if (ad.image.twentyone.isNotEmpty()) { //9:21分辨率
+            imgeUrl = ad.image.twentyone;
+        } else if (ad.image.sixteen.isNotEmpty()) {
+            imgeUrl = ad.image.sixteen;
+        }
         GlideApp.with(this)
-                .load(decodeImgUrl(ad.image))
+                .load(decodeImgUrl(imgeUrl))
                 .listener(this)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .thumbnail(0.25f)
