@@ -1,0 +1,1 @@
+-keep public class com.mobile.app.bomber.movie.MovieFragment
