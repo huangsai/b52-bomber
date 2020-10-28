@@ -3,7 +3,6 @@ package com.mobile.app.bomber.tik.ad
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -144,7 +143,7 @@ class SplashDialogFragment : BaseAppCompatDialogFragment(), View.OnClickListener
 
         override fun onTick(millisUntilFinished: Long) {
             val second = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished)
-            binding.txtTimer.text = (4 - second).toString() + "/5"
+            binding.txtTimer.text = ("跳过 " + second)
         }
     }
 }
