@@ -2,15 +2,24 @@ package com.mobile.app.bomber.movie.player
 
 import android.view.View
 import android.widget.ImageView
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
-import com.mobile.ext.glide.GlideApp
+import com.mobile.app.bomber.common.base.Msg
+import com.mobile.app.bomber.data.http.entities.ApiMovieDetailById
 import com.mobile.app.bomber.movie.R
 import com.mobile.app.bomber.movie.base.animRotate
 import com.mobile.app.bomber.movie.databinding.MovieActivityPlayerBinding
 import com.mobile.app.bomber.movie.player.items.ActorItem
+import com.mobile.ext.glide.GlideApp
 import com.mobile.guava.android.ui.view.expandable.ExpandableLayout2
+import com.mobile.guava.jvm.domain.Source
+import com.mobile.guava.jvm.extension.exhaustive
+import com.pacific.adapter.AdapterUtils.getHolder
 import com.pacific.adapter.AdapterViewHolder
 import com.pacific.adapter.RecyclerAdapter
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class SourcePresenter(
         binding: MovieActivityPlayerBinding,
@@ -20,6 +29,11 @@ class SourcePresenter(
 
     private val adapter = RecyclerAdapter()
     private var isAnimating = false
+    var dataDetail: ApiMovieDetailById? = null
+        private set
+    var detail: ApiMovieDetailById.Detail? = null
+        private set
+    var movieId: Long = 0L
 
     init {
         adapter.onClickListener = this
@@ -33,19 +47,47 @@ class SourcePresenter(
         binding.imgDetailArrow.animRotate(0f)
     }
 
-    override fun onCreate() {
-        requestMovieInfo()
+    fun onCreateSouce(mid: Long) {
+        requestMovieInfo(mid)
     }
 
-    private fun requestMovieInfo() {
-        binding.includeMovieInfo.txtLabel.text = listOf("国产电影", "国产电影", "国产电影", "国产电影")
-                .joinToString("\u3000")
-        binding.includeMovieInfo.txtDetail.text = "国产电影,国产电影,国产电影\n国产电影,国产电影,国产电影"
-
-        adapter.addAll(listOf(
-                ActorItem(), ActorItem(), ActorItem(), ActorItem(),
-                ActorItem(), ActorItem(), ActorItem(), ActorItem()
-        ))
+    private fun requestMovieInfo(mid: Long) {
+        playerActivity.lifecycleScope.launch(Dispatchers.IO) {
+            val source = model.getMovieDetailById(mid)
+            withContext(Dispatchers.Main) {
+                when (source) {
+                    is Source.Success -> {
+                        dataDetail = source.requireData()
+                        detail = dataDetail!!.detail
+                        var nameArray = listOf<String>()
+                        var desc = detail!!.desc
+                        var listArray = dataDetail!!.detail.performer
+                        var nameList = nameArray.toMutableList()
+                        val items: ArrayList<ActorItem> = ArrayList<ActorItem>()
+                        for (i in listArray.indices) {
+                            var former: ApiMovieDetailById.Performer = listArray[i]
+                            var actorItem = ActorItem()
+                            actorItem.getData(former)
+                            nameList.add(former.name)
+                            binding.includeMovieInfo.txtDetail.text = desc
+                            binding.includeMovieInfo.txtLabel.text = nameList
+                                    .joinToString("\u3000")
+                            items.add(actorItem)
+                            adapter.replaceAll(items)
+                        }
+                    }
+                    else -> Msg.handleSourceException(source.requireError())
+                }.exhaustive
+            }
+        }
+//        binding.includeMovieInfo.txtLabel.text = listOf("国产电影", "国产电影", "国产电影", "国产电影")
+//                .joinToString("\u3000")
+//        binding.includeMovieInfo.txtDetail.text = "国产电影,国产电影,国产电影\n国产电影,国产电影,国产电影"
+//
+//        adapter.addAll(listOf(
+//                ActorItem(), ActorItem(), ActorItem(), ActorItem(),
+//                ActorItem(), ActorItem(), ActorItem(), ActorItem()
+//        ))
     }
 
     override fun onClick(v: View) {
@@ -59,6 +101,11 @@ class SourcePresenter(
                     binding.imgDetailArrow.animRotate(180f)
                 }
                 binding.includeMovieInfo.layoutMovieInfo.toggle()
+            }
+            R.id.img_profile -> {
+                var holder = getHolder(v)
+                var item = holder.item<ActorItem>()
+                Msg.toast("点击了   "+item.data!!.id)
             }
         }
     }

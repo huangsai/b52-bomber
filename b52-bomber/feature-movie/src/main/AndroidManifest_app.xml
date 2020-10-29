@@ -22,6 +22,7 @@
         </activity>
         <activity android:name=".top.like.TopLikeActivity" />
         <activity android:name=".top.recommend.TopRecommendActivity" />
+        <activity android:name=".top.lastupdate.TopLastupdateActivity" />
 
         <activity
             android:name=".player.PlayerActivity"

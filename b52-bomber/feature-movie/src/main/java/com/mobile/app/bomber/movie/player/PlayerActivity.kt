@@ -1,14 +1,18 @@
 package com.mobile.app.bomber.movie.player
 
 import android.app.Activity
+import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
+import android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.window.WindowManager
 import com.google.android.exoplayer2.util.Util
 import com.mobile.app.bomber.common.base.Msg
 import com.mobile.app.bomber.data.http.entities.ApiMovieDetail
+import com.mobile.app.bomber.data.http.entities.ApiMovieDetailById
 import com.mobile.app.bomber.movie.MovieX
 import com.mobile.app.bomber.movie.databinding.MovieActivityPlayerBinding
 import com.mobile.app.bomber.runner.base.PrefsManager
@@ -54,6 +58,7 @@ class PlayerActivity : BaseActivity() {
 
         movieId = Values.take("PlayerActivity_movieId")!!
         load()
+        loadMovieDetail()
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -97,18 +102,31 @@ class PlayerActivity : BaseActivity() {
     }
 
     override fun onBackPressed() {
+
+//        with(window) {
+//            val wmLayoutParams = this.attributes
+//            wmLayoutParams.flags = wmLayoutParams.flags and android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN.inv()
+//            attributes = wmLayoutParams
+//            clearFlags(android.view.WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+//        }
+//        if (requestedOrientation != ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
+//            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+//        }
+
         if (isLandscape()) {
+//            window.addFlags(android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN) //隐藏状态栏
             requestNormalScreenWithPortrait()
         } else {
+//            window.clearFlags(android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN) //隐藏状态栏
             super.onBackPressed()
         }
     }
 
     private fun load() {
         lifecycleScope.launch(Dispatchers.IO) {
-            val source = if(PrefsManager.isLogin()) {
+            val source = if (PrefsManager.isLogin()) {
                 model.getMovieDetail(movieId, PrefsManager.getUserId(), PrefsManager.getToken())
-            }else{
+            } else {
                 model.getMovieDetail(movieId, 0, "default")
             }
             withContext(Dispatchers.Main) {
@@ -116,13 +134,30 @@ class PlayerActivity : BaseActivity() {
                     is Source.Success -> {
                         data = source.requireData()
                         commentPresenter.onCreate()
-                        sourcePresenter.onCreate()
+                        sourcePresenter.onCreateSouce(movieId)
                         playerPresenter.onCreate()
                     }
                     else -> Msg.handleSourceException(source.requireError())
                 }.exhaustive
             }
         }
+    }
+
+
+    private fun loadMovieDetail() {
+//        lifecycleScope.launch(Dispatchers.IO) {
+//            val source = model.getMovieDetailById(movieId)
+//            withContext(Dispatchers.Main) {
+//                when (source) {
+//                    is Source.Success -> {
+//                        dataDetail = source.requireData()
+//                        detail = dataDetail!!.detail
+//                        var desc = detail!!.desc
+//                    }
+//                    else -> Msg.handleSourceException(source.requireError())
+//                }.exhaustive
+//            }
+//        }
     }
 
     companion object {

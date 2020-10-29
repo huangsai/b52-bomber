@@ -24,7 +24,7 @@ import kotlinx.coroutines.withContext
 class TopListRecommendPresenter(
         private val fragment: TopListFragment,
         private val model: MovieViewModel
-) : BaseTopMoviePresenter(fragment.requireContext(), true) {
+) : BaseMoviePresenter(fragment.requireContext(), true) {
 
     override fun load() {
         fragment.lifecycleScope.launch(Dispatchers.IO) {
@@ -50,6 +50,8 @@ class TopListRecommendPresenter(
                 .placeholder(R.drawable.movie_default_cover)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(imageView)
+
+
     }
 
     override fun onRefresh() {

@@ -25,7 +25,7 @@ import kotlinx.coroutines.withContext
 class TopListLikePresenter(
         private val fragment: TopListFragment,
         private val model: MovieViewModel
-) : BaseTopMoviePresenter(fragment.requireContext(), false) {
+) : BaseMoviePresenter(fragment.requireContext(), false) {
 
     override fun load() {
         fragment.lifecycleScope.launch(Dispatchers.IO) {

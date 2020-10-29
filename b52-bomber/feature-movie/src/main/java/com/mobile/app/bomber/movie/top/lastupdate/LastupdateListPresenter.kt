@@ -1,15 +1,15 @@
-package com.mobile.app.bomber.movie.top.like
+package com.mobile.app.bomber.movie.top.lastupdate
 
 import android.view.View
 import android.widget.ImageView
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.mobile.app.bomber.common.base.Msg
+import com.mobile.app.bomber.data.http.entities.Pager
 import com.mobile.app.bomber.movie.MovieViewModel
 import com.mobile.app.bomber.movie.R
 import com.mobile.app.bomber.movie.player.PlayerActivity
 import com.mobile.app.bomber.movie.top.BaseMoviePresenter
-import com.mobile.app.bomber.movie.top.items.TopMovieHorItem
 import com.mobile.app.bomber.movie.top.items.TopMovieVerItem
 import com.mobile.ext.glide.GlideApp
 import com.mobile.guava.jvm.domain.Source
@@ -21,17 +21,17 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 /**
- * 猜你喜欢-历史观看列表
+ * 为你推荐-小编力推列表
  */
-class HistoryVisitPresenter(
-        private val activity: TopLikeActivity,
+class LastupdateListPresenter(
+        private val activity: TopLastupdateActivity,
         private val model: MovieViewModel
 ) : BaseMoviePresenter(activity, true) {
-
+    protected val pager = Pager()
     override fun load() {
         activity.lifecycleScope.launch(Dispatchers.IO) {
-            val source = model.getMovieHistory()
-            val items = source.dataOrNull().orEmpty().map { TopMovieHorItem(it) }
+            val source = model.getMovieListLastUpdate(pager)
+            val items = source.dataOrNull().orEmpty().map { TopMovieVerItem(it) }
             withContext(Dispatchers.Main) {
                 when (source) {
                     is Source.Success -> {

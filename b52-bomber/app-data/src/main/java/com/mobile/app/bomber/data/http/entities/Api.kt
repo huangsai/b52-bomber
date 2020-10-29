@@ -406,7 +406,7 @@ data class ApiAd(
         @Json(name = "tyep") val type: Int,
         @Json(name = "weight") val weight: Int,
         @Json(name = "staytime") val startTime: Long
-){
+) {
     @JsonClass(generateAdapter = true)
     data class ImageUrl(
             @Json(name = "sixteen") val sixteen: String,
@@ -766,6 +766,34 @@ data class ApiMovieDetail(
             @Json(name = "url") val url: String,
             @Json(name = "desc") val desc: String,
             @Json(name = "title") val title: String
+    )
+}
+
+@JsonClass(generateAdapter = true)
+data class ApiMovieDetailById(
+        @Json(name = "retCode") val code: Int,
+        @Json(name = "desc") val desc: String,
+        @Json(name = "detail") val detail: Detail
+) {
+    @JsonClass(generateAdapter = true)
+    data class Detail(
+            @Json(name = "movieId") val movieId: Int,
+            @Json(name = "desc") val desc: String,
+            @Json(name = "performer") val performer: List<Performer>,
+            @Json(name = "category") val category: List<Category>,
+    )
+
+    @JsonClass(generateAdapter = true)
+    data class Performer(
+            @Json(name = "id") val id: String,
+            @Json(name = "name") val name: String,
+            @Json(name = "img") val img: String,
+            )
+
+    @JsonClass(generateAdapter = true)
+    data class Category(
+            @Json(name = "id") val id: String,
+            @Json(name = "name") val name: String
     )
 }
 

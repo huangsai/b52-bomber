@@ -6,14 +6,14 @@ import android.widget.ImageView
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.mobile.app.bomber.common.base.Msg
 import com.mobile.app.bomber.movie.R
-import com.mobile.app.bomber.movie.top.BaseTopMoviePresenter
+import com.mobile.app.bomber.movie.top.BaseMoviePresenter
 import com.mobile.ext.glide.GlideApp
 import com.pacific.adapter.AdapterViewHolder
 
 /**
  * 为你推荐-好友观看列表
  */
-class HistoryFriendPresenter(context: Context) : BaseTopMoviePresenter(context, true) {
+class HistoryFriendPresenter(context: Context) : BaseMoviePresenter(context, true) {
 
     override fun load() {
     }

@@ -66,8 +66,30 @@ class MovieRepository @Inject constructor(
         }
     }
 
+
+    suspend fun getMovieListLastUpdate(pager: Pager): Source<List<ApiMovie.Movie>> {
+        if (pager.isReachedTheEnd) return Source.Success(emptyList())
+        val call = dataService.getMovieLastUpdate(pager.totalPage,pager.pageSize)
+        return try {
+            call.execute().toSource {
+                it.movies.orEmpty()
+            }
+        } catch (e: Exception) {
+            errorSource(e)
+        }
+    }
+
     suspend fun getMovieDetail(movieId: Long, uId: Long, deviceId: String): Source<ApiMovieDetail> {
         val call = dataService.getMovieDetail(movieId, uId, deviceId)
+        return try {
+            call.execute().toSource()
+        } catch (e: Exception) {
+            errorSource(e)
+        }
+    }
+
+    suspend fun getMovieDetailById(uId: Long): Source<ApiMovieDetailById> {
+        val call = dataService.getMovieDetailById(uId)
         return try {
             call.execute().toSource()
         } catch (e: Exception) {

@@ -2,10 +2,7 @@ package com.mobile.app.bomber.movie.player
 
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.ViewModel
-import com.mobile.app.bomber.data.http.entities.ApiComment
-import com.mobile.app.bomber.data.http.entities.ApiId
-import com.mobile.app.bomber.data.http.entities.ApiMovieDetail
-import com.mobile.app.bomber.data.http.entities.Nope
+import com.mobile.app.bomber.data.http.entities.*
 import com.mobile.app.bomber.data.repository.MovieRepository
 import com.mobile.guava.android.ensureWorkThread
 import com.mobile.guava.jvm.domain.Source
@@ -17,6 +14,10 @@ class PlayerViewModel @Inject constructor(
 
     suspend fun getMovieDetail(movieId: Long, uId: Long, deviceId: String): Source<ApiMovieDetail> {
         return movieRepository.getMovieDetail(movieId, uId, deviceId)
+    }
+
+    suspend fun getMovieDetailById(uId: Long): Source<ApiMovieDetailById> {
+        return movieRepository.getMovieDetailById(uId)
     }
 
     @WorkerThread
