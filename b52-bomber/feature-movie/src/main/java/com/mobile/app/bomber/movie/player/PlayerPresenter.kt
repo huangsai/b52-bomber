@@ -2,9 +2,12 @@ package com.mobile.app.bomber.movie.player
 
 import android.content.res.Configuration
 import android.graphics.Color
+import android.graphics.Point
 import android.view.View
 import android.widget.*
 import androidx.core.net.toUri
+import androidx.core.view.doOnLayout
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.request.target.Target
 import com.github.rubensousa.previewseekbar.PreviewBar
@@ -24,6 +27,7 @@ import com.mobile.ext.glide.GlideApp
 import com.mobile.guava.android.context.isLandscape
 import com.mobile.guava.android.context.requestFullScreenWithLandscape
 import com.mobile.guava.android.mvvm.AndroidX
+import com.mobile.guava.android.ui.screen.screen
 import com.mobile.guava.data.safeToFloat
 import com.pacific.adapter.AdapterViewHolder
 import com.skydoves.balloon.Balloon
@@ -57,6 +61,7 @@ class PlayerPresenter(
     private var optionFlag = 0
     private var player: SimpleExoPlayer? = null
     private var markedPlayDuration = false
+    private var originPlayerViewSize: Point? = null
 
     init {
         binding.progress.setOnClickListener(this)
@@ -69,13 +74,17 @@ class PlayerPresenter(
         previewTimeBar.isPreviewEnabled = thumbnailsUrl.isNotEmpty()
         btnSpeed.text = speeds[currentSpeed]
         btnRate.text = bitRates[currentBitRate]
-        AndroidX.appDialogCount.observe(playerActivity, { dialogCount ->
+        AndroidX.appDialogCount.observe(playerActivity, Observer { dialogCount ->
             if (dialogCount > 0) {
                 onPause()
             } else {
                 onResume()
             }
         })
+
+        binding.viewPlayer.doOnLayout {
+            originPlayerViewSize = Point(it.measuredWidth, it.measuredHeight)
+        }
     }
 
     override fun onCreate() {
@@ -162,10 +171,14 @@ class PlayerPresenter(
             btnFullScreen.visibility = View.GONE
             btnSpeed.visibility = View.VISIBLE
             btnRate.visibility = View.VISIBLE
+            setPlayerViewSize(screen.y, screen.x)
         } else {
             btnFullScreen.visibility = View.VISIBLE
             btnSpeed.visibility = View.GONE
             btnRate.visibility = View.GONE
+            originPlayerViewSize?.let {
+                setPlayerViewSize(it.x, it.y)
+            }
         }
     }
 
@@ -182,6 +195,15 @@ class PlayerPresenter(
             R.id.btn_speed -> showVideoOptions(v, 1)
             R.id.btn_rate -> showVideoOptions(v, 2)
         }
+    }
+
+    private fun setPlayerViewSize(w: Int, h: Int) {
+        binding.viewPlayer.layoutParams?.let {
+            it.width = w
+            it.height = h
+            binding.viewPlayer.layoutParams = it
+        }
+
     }
 
     private fun showVideoOptions(anchor: View, flag: Int) {
