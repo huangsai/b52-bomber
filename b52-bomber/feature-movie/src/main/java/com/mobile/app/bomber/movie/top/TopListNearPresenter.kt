@@ -6,11 +6,11 @@ import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.mobile.app.bomber.common.base.Msg
 import com.mobile.app.bomber.data.http.entities.ApiMovie
+import com.mobile.app.bomber.data.http.entities.Pager
 import com.mobile.app.bomber.movie.MovieViewModel
 import com.mobile.app.bomber.movie.R
 import com.mobile.app.bomber.movie.player.PlayerActivity
 import com.mobile.app.bomber.movie.top.items.TopMovieNearItem
-import com.mobile.app.bomber.movie.top.items.TopMovieVerItem
 import com.mobile.ext.glide.GlideApp
 import com.mobile.guava.jvm.domain.Source
 import com.mobile.guava.jvm.extension.exhaustive
@@ -28,30 +28,33 @@ class TopListNearPresenter(
         private val model: MovieViewModel
 ) : BaseTopMoviePresenter(fragment.requireContext(), true) {
 
+    protected val pager = Pager()
+
     override fun load() {
           adapter.clear()
-//        fragment.lifecycleScope.launch(Dispatchers.IO) {
-//            val source = model.getMovieListRecommend()
-//            val items = source.dataOrNull().orEmpty().map { TopMovieNearItem(it) }
-//            withContext(Dispatchers.Main) {
-//                when (source) {
-//                    is Source.Success -> {
-////                        adapter.replaceAll(items)
-//                    }
-//                    is Source.Error -> {
-//                        Msg.handleSourceException(source.requireError())
-//                    }
-//                }.exhaustive
-//            }
-//        }
-       var m =  ApiMovie.Movie(1,1,"1","1",1
-               ,1,1,1,1,
-               1,1,1,"1",1,1,
-               1,1,1,"1","1",
-               "1","1","1",1,1)
-        var item = TopMovieNearItem(m)
-        var lsit = listOf(item,item,item,item,item)
-        adapter.replaceAll(lsit)
+        if (!pager.isAvailable) return
+        fragment.lifecycleScope.launch(Dispatchers.IO) {
+            val source = model.getMovieListLastUpdate(pager)
+            val items = source.dataOrNull().orEmpty().map { TopMovieNearItem(it) }
+            withContext(Dispatchers.Main) {
+                when (source) {
+                    is Source.Success -> {
+                        adapter.replaceAll(items)
+                    }
+                    is Source.Error -> {
+                        Msg.handleSourceException(source.requireError())
+                    }
+                }.exhaustive
+            }
+        }
+//       var m =  ApiMovie.Movie(1,1,"1","1",1
+//               ,1,1,1,1,
+//               1,1,1,"1",1,1,
+//               1,1,1,"1","1",
+//               "1","1","1",1,1)
+//        var item = TopMovieNearItem(m)
+//        var lsit = listOf(item,item,item,item,item)
+//        adapter.replaceAll(lsit)
 
     }
 

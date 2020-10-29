@@ -44,8 +44,8 @@ class TopListFragment : MyBaseFragment(), View.OnClickListener, SwipeRefreshLayo
     private lateinit var listNearPresenter: TopListNearPresenter
 
     private lateinit var listLikePresenter: TopListLikePresenter
+
     private lateinit var listRecommendPresenter: TopListRecommendPresenter
-    private lateinit var endless: EndlessRecyclerViewScrollListener
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -58,21 +58,6 @@ class TopListFragment : MyBaseFragment(), View.OnClickListener, SwipeRefreshLayo
         binding.recycler.adapter = adapter
         adapter.onClickListener = this
         binding.swipeRefresh.setOnRefreshListener(this)
-
-        binding.recycler.also {
-            endless = EndlessRecyclerViewScrollListener(it.layoutManager!!) { _, _ ->
-                    val lastVisibleItemPosition: Int? = binding.recycler.layoutManager?.itemCount
-                    //说明是最后一条数据
-                    if (lastVisibleItemPosition != null) {
-                        if (lastVisibleItemPosition  == binding.recycler.adapter!!.itemCount) {
-                            Msg.toast("加载更多数据")
-//                            refreshMoreData()
-                        }
-                    }
-            }
-            it.addOnScrollListener(endless)
-        }
-
         return binding.root
     }
 
@@ -88,7 +73,7 @@ class TopListFragment : MyBaseFragment(), View.OnClickListener, SwipeRefreshLayo
         list.add(MovieSearchPresenter(this))
         bannerPresenter = BannerPresenter(this, model)
 
-        listNearPresenter= TopListNearPresenter(this, model)
+        listNearPresenter = TopListNearPresenter(this, model)
 
         listLikePresenter = TopListLikePresenter(this, model)
 
@@ -98,7 +83,7 @@ class TopListFragment : MyBaseFragment(), View.OnClickListener, SwipeRefreshLayo
             val source = model.getBanner()
             if (source.requireData().isNotEmpty()) {
                 list.add(bannerPresenter)
-            }else{
+            } else {
                 list.remove(bannerPresenter)
             }
         }
@@ -121,6 +106,8 @@ class TopListFragment : MyBaseFragment(), View.OnClickListener, SwipeRefreshLayo
                     newStartActivity(TopLikeActivity::class.java)
                 } else if (pos == 4) {
                     newStartActivity(TopRecommendActivity::class.java)
+                } else if (pos == 6) {
+//                    newStartActivity(TopRecommendActivity::class.java)
                 }
             }
         }
