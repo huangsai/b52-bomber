@@ -2,6 +2,7 @@ package com.mobile.app.bomber.movie.player
 
 import android.content.res.Configuration
 import android.graphics.Color
+import android.os.Handler
 import android.view.View
 import android.widget.*
 import androidx.core.net.toUri
@@ -44,6 +45,11 @@ class PlayerPresenter(
     private val btnRate: TextView = binding.viewPlayer.findViewById(R.id.btn_rate)
     private val imgPreView: ImageView = binding.viewPlayer.findViewById(R.id.img_preview)
     private val previewTimeBar: PreviewTimeBar = binding.viewPlayer.findViewById(R.id.exo_progress)
+    private val imgBack: ImageView = binding.viewPlayer.findViewById(R.id.img_back)
+    private var handler: Handler? = Handler()
+    private val run = Runnable {
+        binding.viewPlayer.hideController()
+    }
 
     private var thumbnailsUrl = ""
 
@@ -60,7 +66,7 @@ class PlayerPresenter(
 
     init {
         binding.progress.setOnClickListener(this)
-        binding.imgBack.setOnClickListener(this)
+        imgBack.setOnClickListener(this)
         btnFullScreen.setOnClickListener(this)
         btnSpeed.setOnClickListener(this)
         btnRate.setOnClickListener(this)
@@ -84,6 +90,13 @@ class PlayerPresenter(
         player?.repeatMode = Player.REPEAT_MODE_OFF
         player?.addListener(this)
         binding.viewPlayer.player = player
+        binding.viewPlayer.setControllerVisibilityListener {
+            if (it == View.VISIBLE) {
+                handler?.postDelayed(run, 10000)
+            } else if (it == View.GONE) {
+                handler?.removeCallbacks(run)
+            }
+        }
         // val sdCard = ensureFileSeparator(AndroidX.myApp.getExternalFilesDir(null)!!.absolutePath!!)
         // ExoPlayerX.play((sdCard + "trailer.mp4").toUri())
         playerActivity.data?.apply {
@@ -110,6 +123,8 @@ class PlayerPresenter(
     }
 
     override fun onDestroy() {
+        handler?.removeCallbacks(run)
+        handler = null
         player = null
         ExoPlayerX.removeEventListener(this)
         ExoPlayerX.stop()
