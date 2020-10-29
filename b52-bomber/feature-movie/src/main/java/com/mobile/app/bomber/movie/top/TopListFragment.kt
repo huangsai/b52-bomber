@@ -39,6 +39,8 @@ class TopListFragment : MyBaseFragment(), View.OnClickListener, SwipeRefreshLayo
     private val adapter = RecyclerAdapter()
     private lateinit var bannerPresenter: BannerPresenter
 
+    private lateinit var listNearPresenter: TopListNearPresenter
+
     private lateinit var listLikePresenter: TopListLikePresenter
     private lateinit var listRecommendPresenter: TopListRecommendPresenter
 
@@ -68,6 +70,8 @@ class TopListFragment : MyBaseFragment(), View.OnClickListener, SwipeRefreshLayo
         list.add(MovieSearchPresenter(this))
         bannerPresenter = BannerPresenter(this, model)
 
+        listNearPresenter= TopListNearPresenter(this, model)
+
         listLikePresenter = TopListLikePresenter(this, model)
 
         listRecommendPresenter = TopListRecommendPresenter(this, model)
@@ -81,6 +85,8 @@ class TopListFragment : MyBaseFragment(), View.OnClickListener, SwipeRefreshLayo
             }
         }
 
+        list.add(TopTitlePresenter("${getString(R.string.movie_text_top_near_label)}>"))
+        list.add(listNearPresenter)
         list.add(TopTitlePresenter("${getString(R.string.movie_text_top_like_label)}>"))
         list.add(listLikePresenter)
         list.add(TopTitlePresenter("${getString(R.string.movie_text_top_recommend_label)}>"))
@@ -105,6 +111,7 @@ class TopListFragment : MyBaseFragment(), View.OnClickListener, SwipeRefreshLayo
     override fun onRefresh() {
         binding.swipeRefresh.cancelRefreshing(1000)
         bannerPresenter.onRefresh()
+        listNearPresenter.onRefresh()
         listLikePresenter.onRefresh()
         listRecommendPresenter.onRefresh()
     }

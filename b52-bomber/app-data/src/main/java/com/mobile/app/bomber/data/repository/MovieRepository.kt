@@ -75,6 +75,15 @@ class MovieRepository @Inject constructor(
         }
     }
 
+    suspend fun getMovieDetailById(uId: Long): Source<ApiMovieDetailById> {
+        val call = dataService.getMovieDetailById(uId)
+        return try {
+            call.execute().toSource()
+        } catch (e: Exception) {
+            errorSource(e)
+        }
+    }
+
     suspend fun postMovieLike(movieId: Int, isLike: Int): Source<Nope> {
         val req = ApiMovieId(
                 userId, token, movieId, isLike

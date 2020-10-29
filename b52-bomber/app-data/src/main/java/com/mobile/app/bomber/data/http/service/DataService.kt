@@ -267,6 +267,12 @@ interface DataService {
             @Path("fastKey") fastKey: String
     ): Call<ApiMovieDetail>
 
+    @GET("/video/getMovieDetailById/{mid}/")
+    fun getMovieDetailById(
+            @Path("mid") movieId: Long
+    ): Call<ApiMovieDetailById>
+
+
     //点赞
     @POST("/video/postMovieLike/")
     fun postMovieLike(@Body bode: ApiMovieId): Call<Nope>
