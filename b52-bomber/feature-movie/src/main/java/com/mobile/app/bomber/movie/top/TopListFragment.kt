@@ -102,12 +102,14 @@ class TopListFragment : MyBaseFragment(), View.OnClickListener, SwipeRefreshLayo
         when (v.id) {
             R.id.item_title -> {
                 val pos = AdapterUtils.getHolder(v).bindingAdapterPosition
-                if (pos == 2) {
+                var presenter :TopTitlePresenter = adapter.get<RecyclerItem>(pos) as TopTitlePresenter
+                Msg.toast("000"+presenter.name)
+                 if (presenter.name.contains("最近更新")) {
+//                    newStartActivity(TopLikeActivity::class.java)
+                } else if (presenter.name.contains("猜你喜欢")) {
                     newStartActivity(TopLikeActivity::class.java)
-                } else if (pos == 4) {
+                } else if (presenter.name.contains("为你推荐")) {
                     newStartActivity(TopRecommendActivity::class.java)
-                } else if (pos == 6) {
-//                    newStartActivity(TopRecommendActivity::class.java)
                 }
             }
         }
