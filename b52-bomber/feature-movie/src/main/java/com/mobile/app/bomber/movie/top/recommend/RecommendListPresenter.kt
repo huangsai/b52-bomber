@@ -8,7 +8,7 @@ import com.mobile.app.bomber.common.base.Msg
 import com.mobile.app.bomber.movie.MovieViewModel
 import com.mobile.app.bomber.movie.R
 import com.mobile.app.bomber.movie.player.PlayerActivity
-import com.mobile.app.bomber.movie.top.BaseTopMoviePresenter
+import com.mobile.app.bomber.movie.top.BaseMoviePresenter
 import com.mobile.app.bomber.movie.top.items.TopMovieVerItem
 import com.mobile.ext.glide.GlideApp
 import com.mobile.guava.jvm.domain.Source
@@ -25,7 +25,7 @@ import kotlinx.coroutines.withContext
 class RecommendListPresenter(
         private val activity: TopRecommendActivity,
         private val model: MovieViewModel
-) : BaseTopMoviePresenter(activity, true) {
+) : BaseMoviePresenter(activity, true) {
 
     override fun load() {
         activity.lifecycleScope.launch(Dispatchers.IO) {

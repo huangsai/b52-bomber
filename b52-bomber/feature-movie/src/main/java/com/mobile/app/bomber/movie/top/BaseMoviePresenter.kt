@@ -14,7 +14,7 @@ import com.pacific.adapter.AdapterImageLoader
 import com.pacific.adapter.AdapterViewHolder
 import com.pacific.adapter.SimpleRecyclerItem
 
-abstract class BaseTopMoviePresenter(protected val context: Context, private val isVertical: Boolean) :
+abstract class BaseMoviePresenter(protected val context: Context, private val isVertical: Boolean) :
         SimpleRecyclerItem(), AdapterImageLoader, View.OnClickListener {
 
     private lateinit var itemDecoration: RecyclerView.ItemDecoration
@@ -45,6 +45,13 @@ abstract class BaseTopMoviePresenter(protected val context: Context, private val
             binding.recycler.adapter = adapter
             load()
         }
+    }
+
+    override fun unbind(holder: AdapterViewHolder) {
+        super.unbind(holder)
+        val binding: MovieItemTopListBinding = holder.binding()
+        binding.recycler.layoutManager = null
+        binding.recycler.adapter = null
     }
 
     override fun getLayout(): Int {

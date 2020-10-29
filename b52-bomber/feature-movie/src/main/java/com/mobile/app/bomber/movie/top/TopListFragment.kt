@@ -49,6 +49,7 @@ class TopListFragment : MyBaseFragment(), View.OnClickListener, SwipeRefreshLayo
     ): View? {
         _binding = MovieFragmentTopListBinding.inflate(inflater, container, false)
         val layoutManager = LinearLayoutManager(requireContext())
+        binding.recycler.setItemViewCacheSize(10)
         binding.recycler.layoutManager = layoutManager
         binding.recycler.adapter = adapter
         adapter.onClickListener = this

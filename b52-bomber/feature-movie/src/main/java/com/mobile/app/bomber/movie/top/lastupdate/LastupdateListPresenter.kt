@@ -9,7 +9,7 @@ import com.mobile.app.bomber.data.http.entities.Pager
 import com.mobile.app.bomber.movie.MovieViewModel
 import com.mobile.app.bomber.movie.R
 import com.mobile.app.bomber.movie.player.PlayerActivity
-import com.mobile.app.bomber.movie.top.BaseTopMoviePresenter
+import com.mobile.app.bomber.movie.top.BaseMoviePresenter
 import com.mobile.app.bomber.movie.top.items.TopMovieVerItem
 import com.mobile.ext.glide.GlideApp
 import com.mobile.guava.jvm.domain.Source
@@ -26,7 +26,7 @@ import kotlinx.coroutines.withContext
 class LastupdateListPresenter(
         private val activity: TopLastupdateActivity,
         private val model: MovieViewModel
-) : BaseTopMoviePresenter(activity, true) {
+) : BaseMoviePresenter(activity, true) {
     protected val pager = Pager()
     override fun load() {
         activity.lifecycleScope.launch(Dispatchers.IO) {

@@ -25,7 +25,7 @@ import kotlinx.coroutines.withContext
 class TopListNearPresenter(
         private val fragment: TopListFragment,
         private val model: MovieViewModel
-) : BaseTopMoviePresenter(fragment.requireContext(), true) {
+) : BaseMoviePresenter(fragment.requireContext(), true) {
 
     private val pager = Pager()
 
