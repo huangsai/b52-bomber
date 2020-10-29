@@ -2,8 +2,8 @@ package com.mobile.app.bomber.movie.player
 
 import android.content.res.Configuration
 import android.graphics.Color
-import android.os.Handler
 import android.graphics.Point
+import android.os.Handler
 import android.view.View
 import android.widget.*
 import androidx.core.net.toUri
@@ -27,6 +27,7 @@ import com.mobile.ext.exo.TAG_EXO_PLAYER
 import com.mobile.ext.glide.GlideApp
 import com.mobile.guava.android.context.isLandscape
 import com.mobile.guava.android.context.requestFullScreenWithLandscape
+import com.mobile.guava.android.context.requestNormalScreenWithPortrait
 import com.mobile.guava.android.mvvm.AndroidX
 import com.mobile.guava.android.ui.screen.screen
 import com.mobile.guava.data.safeToFloat
@@ -183,12 +184,10 @@ class PlayerPresenter(
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            btnFullScreen.visibility = View.GONE
             btnSpeed.visibility = View.VISIBLE
             btnRate.visibility = View.VISIBLE
             setPlayerViewSize(screen.y, screen.x)
         } else {
-            btnFullScreen.visibility = View.VISIBLE
             btnSpeed.visibility = View.GONE
             btnRate.visibility = View.GONE
             originPlayerViewSize?.let {
@@ -203,9 +202,10 @@ class PlayerPresenter(
             R.id.img_back -> playerActivity.onBackPressed()
             R.id.btn_fullscreen -> {
                 if (playerActivity.isLandscape()) {
-                    return
+                    playerActivity.requestNormalScreenWithPortrait()
+                } else {
+                    playerActivity.requestFullScreenWithLandscape()
                 }
-                playerActivity.requestFullScreenWithLandscape()
             }
             R.id.btn_speed -> showVideoOptions(v, 1)
             R.id.btn_rate -> showVideoOptions(v, 2)
