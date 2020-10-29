@@ -15,6 +15,7 @@ import com.mobile.app.bomber.movie.MovieViewModel
 import com.mobile.app.bomber.movie.MovieX
 import com.mobile.app.bomber.movie.R
 import com.mobile.app.bomber.movie.databinding.MovieFragmentTopListBinding
+import com.mobile.app.bomber.movie.top.lastupdate.TopLastupdateActivity
 import com.mobile.app.bomber.movie.top.like.TopLikeActivity
 import com.mobile.app.bomber.movie.top.recommend.TopRecommendActivity
 import com.mobile.guava.android.mvvm.newStartActivity
@@ -102,10 +103,9 @@ class TopListFragment : MyBaseFragment(), View.OnClickListener, SwipeRefreshLayo
         when (v.id) {
             R.id.item_title -> {
                 val pos = AdapterUtils.getHolder(v).bindingAdapterPosition
-                var presenter :TopTitlePresenter = adapter.get<RecyclerItem>(pos) as TopTitlePresenter
-                Msg.toast("000"+presenter.name)
-                 if (presenter.name.contains("最近更新")) {
-//                    newStartActivity(TopLikeActivity::class.java)
+                var presenter: TopTitlePresenter = adapter.get<RecyclerItem>(pos) as TopTitlePresenter
+                if (presenter.name.contains("最近更新")) {
+                    newStartActivity(TopLastupdateActivity::class.java)
                 } else if (presenter.name.contains("猜你喜欢")) {
                     newStartActivity(TopLikeActivity::class.java)
                 } else if (presenter.name.contains("为你推荐")) {
