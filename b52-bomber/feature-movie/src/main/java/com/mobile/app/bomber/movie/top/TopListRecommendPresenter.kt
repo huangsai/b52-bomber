@@ -2,11 +2,13 @@ package com.mobile.app.bomber.movie.top
 
 import android.view.View
 import android.widget.ImageView
+import androidx.compose.runtime.invalidate
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.mobile.app.bomber.common.base.Msg
 import com.mobile.app.bomber.movie.MovieViewModel
 import com.mobile.app.bomber.movie.R
+import com.mobile.app.bomber.movie.databinding.MovieItemTopVerBinding
 import com.mobile.app.bomber.movie.player.PlayerActivity
 import com.mobile.app.bomber.movie.top.items.TopMovieVerItem
 import com.mobile.ext.glide.GlideApp
@@ -25,7 +27,6 @@ class TopListRecommendPresenter(
         private val fragment: TopListFragment,
         private val model: MovieViewModel
 ) : BaseTopMoviePresenter(fragment.requireContext(), true) {
-
     override fun load() {
         fragment.lifecycleScope.launch(Dispatchers.IO) {
             val source = model.getMovieListRecommend()
@@ -50,6 +51,8 @@ class TopListRecommendPresenter(
                 .placeholder(R.drawable.movie_default_cover)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(imageView)
+
+
     }
 
     override fun onRefresh() {

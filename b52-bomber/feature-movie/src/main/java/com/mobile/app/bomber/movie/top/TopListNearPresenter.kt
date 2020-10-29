@@ -29,6 +29,7 @@ class TopListNearPresenter(
 ) : BaseTopMoviePresenter(fragment.requireContext(), true) {
 
     override fun load() {
+          adapter.clear()
 //        fragment.lifecycleScope.launch(Dispatchers.IO) {
 //            val source = model.getMovieListRecommend()
 //            val items = source.dataOrNull().orEmpty().map { TopMovieNearItem(it) }
@@ -50,7 +51,7 @@ class TopListNearPresenter(
                "1","1","1",1,1)
         var item = TopMovieNearItem(m)
         var lsit = listOf(item,item,item,item,item)
-        adapter.addAll(lsit)
+        adapter.replaceAll(lsit)
 
     }
 

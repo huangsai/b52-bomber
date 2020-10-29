@@ -18,7 +18,9 @@ import com.mobile.app.bomber.movie.databinding.MovieFragmentTopListBinding
 import com.mobile.app.bomber.movie.top.like.TopLikeActivity
 import com.mobile.app.bomber.movie.top.recommend.TopRecommendActivity
 import com.mobile.guava.android.mvvm.newStartActivity
+import com.mobile.guava.android.ui.view.recyclerview.EndlessRecyclerViewScrollListener
 import com.mobile.guava.android.ui.view.recyclerview.cancelRefreshing
+import com.mobile.guava.android.ui.view.viewpager.recyclerView
 import com.mobile.guava.jvm.domain.Source
 import com.mobile.guava.jvm.extension.exhaustive
 import com.pacific.adapter.AdapterUtils
@@ -43,6 +45,7 @@ class TopListFragment : MyBaseFragment(), View.OnClickListener, SwipeRefreshLayo
 
     private lateinit var listLikePresenter: TopListLikePresenter
     private lateinit var listRecommendPresenter: TopListRecommendPresenter
+    private lateinit var endless: EndlessRecyclerViewScrollListener
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -55,6 +58,21 @@ class TopListFragment : MyBaseFragment(), View.OnClickListener, SwipeRefreshLayo
         binding.recycler.adapter = adapter
         adapter.onClickListener = this
         binding.swipeRefresh.setOnRefreshListener(this)
+
+        binding.recycler.also {
+            endless = EndlessRecyclerViewScrollListener(it.layoutManager!!) { _, _ ->
+                    val lastVisibleItemPosition: Int? = binding.recycler.layoutManager?.itemCount
+                    //说明是最后一条数据
+                    if (lastVisibleItemPosition != null) {
+                        if (lastVisibleItemPosition  == binding.recycler.adapter!!.itemCount) {
+                            Msg.toast("加载更多数据")
+//                            refreshMoreData()
+                        }
+                    }
+            }
+            it.addOnScrollListener(endless)
+        }
+
         return binding.root
     }
 
