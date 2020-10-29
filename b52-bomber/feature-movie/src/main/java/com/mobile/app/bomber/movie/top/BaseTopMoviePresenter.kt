@@ -2,7 +2,6 @@ package com.mobile.app.bomber.movie.top
 
 import android.content.Context
 import android.view.View
-import androidx.annotation.CallSuper
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -24,38 +23,32 @@ abstract class BaseTopMoviePresenter(protected val context: Context, private val
 
     override fun bind(holder: AdapterViewHolder) {
         val binding = holder.binding(MovieItemTopListBinding::bind)
-        if (isVertical) {
-            itemDecoration = MiddleGridItemDecoration(holder.activity(), R.dimen.size_6dp)
-            layoutManager = GridLayoutManager(holder.activity(), 2)
-        } else {
-            itemDecoration = LinearItemDecoration.builder(holder.activity())
-                    .color(android.R.color.transparent, R.dimen.size_6dp)
-                    .horizontal()
-                    .build()
-            layoutManager = LinearLayoutManager(
-                    holder.activity(),
-                    LinearLayoutManager.HORIZONTAL,
-                    false)
+        if (binding.recycler.layoutManager == null) {
+            if (isVertical) {
+                itemDecoration = MiddleGridItemDecoration(holder.activity(), R.dimen.size_6dp)
+                layoutManager = GridLayoutManager(holder.activity(), 2)
+            } else {
+                itemDecoration = LinearItemDecoration.builder(holder.activity())
+                        .color(android.R.color.transparent, R.dimen.size_6dp)
+                        .horizontal()
+                        .build()
+                layoutManager = LinearLayoutManager(
+                        holder.activity(),
+                        LinearLayoutManager.HORIZONTAL,
+                        false)
+            }
+            binding.recycler.layoutManager = layoutManager
+            binding.recycler.addItemDecoration(itemDecoration)
+            adapter.setEmptyView(binding.txtEmpty, binding.recycler)
+            adapter.imageLoader = this
+            adapter.onClickListener = this
+            binding.recycler.adapter = adapter
+            load()
         }
-        binding.recycler.layoutManager = layoutManager
-        binding.recycler.addItemDecoration(itemDecoration)
-        adapter.setEmptyView(binding.txtEmpty, binding.recycler)
-        adapter.imageLoader = this
-        adapter.onClickListener = this
-        binding.recycler.adapter = adapter
-        load()
     }
 
     override fun getLayout(): Int {
         return R.layout.movie_item_top_list
-    }
-
-    @CallSuper
-    override fun unbind(holder: AdapterViewHolder) {
-        super.unbind(holder)
-        val binding: MovieItemTopListBinding = holder.binding()
-        binding.recycler.layoutManager = null
-        binding.recycler.adapter = null
     }
 
     protected abstract fun load()

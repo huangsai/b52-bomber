@@ -27,6 +27,7 @@ class TopListRecommendPresenter(
         private val fragment: TopListFragment,
         private val model: MovieViewModel
 ) : BaseTopMoviePresenter(fragment.requireContext(), true) {
+
     override fun load() {
         fragment.lifecycleScope.launch(Dispatchers.IO) {
             val source = model.getMovieListRecommend()

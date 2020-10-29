@@ -8,7 +8,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.mobile.app.bomber.common.base.Msg
 import com.mobile.app.bomber.common.base.MyBaseFragment
 import com.mobile.app.bomber.common.base.tool.SingleClick
 import com.mobile.app.bomber.movie.MovieViewModel
@@ -19,17 +18,12 @@ import com.mobile.app.bomber.movie.top.lastupdate.TopLastupdateActivity
 import com.mobile.app.bomber.movie.top.like.TopLikeActivity
 import com.mobile.app.bomber.movie.top.recommend.TopRecommendActivity
 import com.mobile.guava.android.mvvm.newStartActivity
-import com.mobile.guava.android.ui.view.recyclerview.EndlessRecyclerViewScrollListener
 import com.mobile.guava.android.ui.view.recyclerview.cancelRefreshing
-import com.mobile.guava.android.ui.view.viewpager.recyclerView
-import com.mobile.guava.jvm.domain.Source
-import com.mobile.guava.jvm.extension.exhaustive
 import com.pacific.adapter.AdapterUtils
 import com.pacific.adapter.RecyclerAdapter
 import com.pacific.adapter.RecyclerItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.util.*
 
 class TopListFragment : MyBaseFragment(), View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
@@ -73,22 +67,15 @@ class TopListFragment : MyBaseFragment(), View.OnClickListener, SwipeRefreshLayo
         val list: MutableList<RecyclerItem> = ArrayList()
         list.add(MovieSearchPresenter(this))
         bannerPresenter = BannerPresenter(this, model)
-
         listNearPresenter = TopListNearPresenter(this, model)
-
         listLikePresenter = TopListLikePresenter(this, model)
-
         listRecommendPresenter = TopListRecommendPresenter(this, model)
-
         this.lifecycleScope.launch(Dispatchers.IO) {
             val source = model.getBanner()
             if (source.requireData().isNotEmpty()) {
                 list.add(bannerPresenter)
-            } else {
-                list.remove(bannerPresenter)
             }
         }
-
         list.add(TopTitlePresenter("${getString(R.string.movie_text_top_near_label)}>"))
         list.add(listNearPresenter)
         list.add(TopTitlePresenter("${getString(R.string.movie_text_top_like_label)}>"))
@@ -104,12 +91,16 @@ class TopListFragment : MyBaseFragment(), View.OnClickListener, SwipeRefreshLayo
             R.id.item_title -> {
                 val pos = AdapterUtils.getHolder(v).bindingAdapterPosition
                 var presenter: TopTitlePresenter = adapter.get<RecyclerItem>(pos) as TopTitlePresenter
-                if (presenter.name.contains("最近更新")) {
-                    newStartActivity(TopLastupdateActivity::class.java)
-                } else if (presenter.name.contains("猜你喜欢")) {
-                    newStartActivity(TopLikeActivity::class.java)
-                } else if (presenter.name.contains("为你推荐")) {
-                    newStartActivity(TopRecommendActivity::class.java)
+                when {
+                    presenter.name.contains("最近更新") -> {
+                        newStartActivity(TopLastupdateActivity::class.java)
+                    }
+                    presenter.name.contains("猜你喜欢") -> {
+                        newStartActivity(TopLikeActivity::class.java)
+                    }
+                    presenter.name.contains("为你推荐") -> {
+                        newStartActivity(TopRecommendActivity::class.java)
+                    }
                 }
             }
         }

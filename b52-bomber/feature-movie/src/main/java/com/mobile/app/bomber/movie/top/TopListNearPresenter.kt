@@ -5,12 +5,11 @@ import android.widget.ImageView
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.mobile.app.bomber.common.base.Msg
-import com.mobile.app.bomber.data.http.entities.ApiMovie
 import com.mobile.app.bomber.data.http.entities.Pager
 import com.mobile.app.bomber.movie.MovieViewModel
 import com.mobile.app.bomber.movie.R
 import com.mobile.app.bomber.movie.player.PlayerActivity
-import com.mobile.app.bomber.movie.top.items.TopMovieNearItem
+import com.mobile.app.bomber.movie.top.items.TopMovieVerItem
 import com.mobile.ext.glide.GlideApp
 import com.mobile.guava.jvm.domain.Source
 import com.mobile.guava.jvm.extension.exhaustive
@@ -28,14 +27,13 @@ class TopListNearPresenter(
         private val model: MovieViewModel
 ) : BaseTopMoviePresenter(fragment.requireContext(), true) {
 
-    protected val pager = Pager()
+    private val pager = Pager()
 
     override fun load() {
-          adapter.clear()
-        if (!pager.isAvailable) return
+//        if (!pager.isAvailable) return
         fragment.lifecycleScope.launch(Dispatchers.IO) {
             val source = model.getMovieListLastUpdate(pager)
-            val items = source.dataOrNull().orEmpty().map { TopMovieNearItem(it) }
+            val items = source.dataOrNull().orEmpty().map { TopMovieVerItem(it) }
             withContext(Dispatchers.Main) {
                 when (source) {
                     is Source.Success -> {
@@ -47,19 +45,10 @@ class TopListNearPresenter(
                 }.exhaustive
             }
         }
-//       var m =  ApiMovie.Movie(1,1,"1","1",1
-//               ,1,1,1,1,
-//               1,1,1,"1",1,1,
-//               1,1,1,"1","1",
-//               "1","1","1",1,1)
-//        var item = TopMovieNearItem(m)
-//        var lsit = listOf(item,item,item,item,item)
-//        adapter.replaceAll(lsit)
-
     }
 
     override fun load(imageView: ImageView, holder: AdapterViewHolder) {
-        val data = AdapterUtils.getHolder(imageView).item<TopMovieNearItem>().data
+        val data = AdapterUtils.getHolder(imageView).item<TopMovieVerItem>().data
         GlideApp.with(context)
                 .load(data.cover)
                 .placeholder(R.drawable.movie_default_cover)
@@ -72,7 +61,7 @@ class TopListNearPresenter(
     }
 
     override fun onClick(v: View) {
-        val data = AdapterUtils.getHolder(v).item<TopMovieNearItem>().data
+        val data = AdapterUtils.getHolder(v).item<TopMovieVerItem>().data
         PlayerActivity.start(fragment.requireActivity(), data.movieId.toLong())
     }
 
