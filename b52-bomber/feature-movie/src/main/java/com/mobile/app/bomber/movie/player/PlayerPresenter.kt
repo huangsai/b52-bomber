@@ -185,11 +185,9 @@ class PlayerPresenter(
     override fun onConfigurationChanged(newConfig: Configuration) {
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             btnSpeed.visibility = View.VISIBLE
-            btnRate.visibility = View.VISIBLE
             setPlayerViewSize(screen.y, screen.x)
         } else {
             btnSpeed.visibility = View.GONE
-            btnRate.visibility = View.GONE
             originPlayerViewSize?.let {
                 setPlayerViewSize(it.x, it.y)
             }

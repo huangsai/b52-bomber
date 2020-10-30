@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/MatchMatch"
     tools:background="@android:color/black">
+
     <ImageView
         android:id="@+id/img_back"
         style="@style/CommonImage"
@@ -12,6 +13,7 @@
         android:src="@drawable/jq_fanhui"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <LinearLayout
         android:id="@+id/layout_control_left"
         style="@style/movie_PlayerControlLayout"
@@ -44,6 +46,7 @@
             android:id="@+id/btn_speed"
             style="@style/movie_ControlText"
             android:layout_width="@dimen/size_50dp"
+            android:layout_marginRight="10dp"
             android:visibility="gone" />
 
         <TextView

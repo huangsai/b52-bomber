@@ -29,8 +29,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class PlayerActivity : BaseActivity() {
-
-    private lateinit var binding: MovieActivityPlayerBinding
+    private var _binding: MovieActivityPlayerBinding? = null
+    private val binding get() = _binding!!
 
     var data: ApiMovieDetail? = null
         private set
@@ -49,7 +49,7 @@ class PlayerActivity : BaseActivity() {
         ExoPlayerX.initialize()
         ExoPlayerX.createPlayer()
 
-        binding = MovieActivityPlayerBinding.inflate(layoutInflater)
+        _binding = MovieActivityPlayerBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.includeMovieInfo.layoutMovieInfo.collapse(false)
         commentPresenter = CommentPresenter(binding, this, model)
