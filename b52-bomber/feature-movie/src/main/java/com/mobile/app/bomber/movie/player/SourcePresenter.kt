@@ -64,7 +64,15 @@ class SourcePresenter(
                         var listArray = dataDetail!!.detail.performer
                         var nameList = nameArray.toMutableList()
                         val items: ArrayList<ActorItem> = ArrayList<ActorItem>()
+                        if (listArray!!.isNullOrEmpty() || listArray!!.size < 1) {
+                            Msg.toast("暂无数据")
+                            binding.includeMovieInfo.txtDetail.visibility = View.GONE
+                            binding.includeMovieInfo.txtLabel.visibility = View.GONE
+                            return@withContext
+                        }
                         for (i in listArray.indices) {
+                            binding.includeMovieInfo.txtDetail.visibility = View.VISIBLE
+                            binding.includeMovieInfo.txtLabel.visibility = View.VISIBLE
                             var former: ApiMovieDetailById.Performer = listArray[i]
                             var actorItem = ActorItem()
                             actorItem.getData(former)
@@ -105,7 +113,7 @@ class SourcePresenter(
             R.id.img_profile -> {
                 var holder = getHolder(v)
                 var item = holder.item<ActorItem>()
-                Msg.toast("点击了   "+item.data!!.id)
+                Msg.toast("点击了   " + item.data!!.id)
             }
         }
     }

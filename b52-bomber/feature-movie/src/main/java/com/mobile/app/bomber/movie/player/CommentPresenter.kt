@@ -55,7 +55,13 @@ class CommentPresenter(
         requestComment()
         playerActivity.data?.apply {
             binding.txtTitle.text = movie.name
-            binding.txtDesc.text = (movie.playNum.toString() + "次播放，影片简介 >")
+            var nullorEmpty = "0"
+            if (movie.playNum.toString().isNullOrEmpty()) {
+                nullorEmpty = "0"
+            } else {
+                nullorEmpty = movie.playNum.toString()
+            }
+            binding.txtDesc.text = (nullorEmpty + "次播放，影片简介 >")
             if (ad == null) {
                 binding.layoutGameAd.visibility = View.GONE
             } else {
