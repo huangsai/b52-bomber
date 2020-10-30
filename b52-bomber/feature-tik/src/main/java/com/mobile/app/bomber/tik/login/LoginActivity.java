@@ -89,6 +89,7 @@ public class LoginActivity extends MyBaseActivity implements View.OnClickListene
 //                PrefsManager.INSTANCE.setUserId(token.getUid());
             }
             Msg.INSTANCE.toast("登录成功");
+            finish();
             setResult(Activity.RESULT_OK);
             finish();
         });
