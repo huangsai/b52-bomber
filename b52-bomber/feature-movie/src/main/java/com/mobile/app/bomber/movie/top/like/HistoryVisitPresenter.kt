@@ -46,7 +46,7 @@ class HistoryVisitPresenter(
     }
 
     override fun load(imageView: ImageView, holder: AdapterViewHolder) {
-        val data = AdapterUtils.getHolder(imageView).item<TopMovieVerItem>().data
+        val data = AdapterUtils.getHolder(imageView).item<TopMovieHorItem>().data
         GlideApp.with(context)
                 .load(data.cover)
                 .placeholder(R.drawable.movie_default_cover)
@@ -59,7 +59,7 @@ class HistoryVisitPresenter(
     }
 
     override fun onClick(v: View) {
-        val data = AdapterUtils.getHolder(v).item<TopMovieVerItem>().data
+        val data = AdapterUtils.getHolder(v).item<TopMovieHorItem>().data
         PlayerActivity.start(activity, data.movieId.toLong())
     }
 }

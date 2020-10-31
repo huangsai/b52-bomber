@@ -119,7 +119,7 @@ class MovieRepository @Inject constructor(
         }
     }
 
-    suspend fun getMovieHistory(): Source<List<ApiMovie.Movie>> {
+    suspend fun getMovieHistory(): Source<List<ApiMovieHistory.History>> {
         val call = dataService.getMovieHistory(ApiMovieHistory.Req(appPrefsManager.getToken(), appPrefsManager.getUserId()))
         return try {
             call.execute().toSource {

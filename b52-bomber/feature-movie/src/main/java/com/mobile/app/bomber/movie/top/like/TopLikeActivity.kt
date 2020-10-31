@@ -49,32 +49,50 @@ class TopLikeActivity : MyBaseActivity(), View.OnClickListener, SwipeRefreshLayo
         binding.layoutToolbar.toolbar.setNavigationIcon(R.drawable.jq_fanhui)
         binding.layoutToolbar.toolbar.setNavigationOnClickListener(this)
         binding.layoutToolbar.txtToolbarTitle.text = getString(R.string.movie_text_top_like_label)
+        binding.recycler.setHasFixedSize(true)
+        binding.recycler.layoutManager = LinearLayoutManager(this)
+        binding.recycler.adapter = adapter
+        binding.swipeRefresh.setOnRefreshListener(this)
         initRecycler()
     }
 
     private fun initRecycler() {
 
-        binding.recycler.setHasFixedSize(true)
-        binding.recycler.layoutManager = LinearLayoutManager(this)
-        binding.recycler.adapter = adapter
-        binding.swipeRefresh.setOnRefreshListener(this)
 
         val list: MutableList<RecyclerItem> = ArrayList()
-//        list.add(TopTitlePresenter(getString(R.string.movie_text_visit_history_label)))
+        list.add(TopTitlePresenter(getString(R.string.movie_text_visit_history_label)))
         historyVisitPresenter = HistoryVisitPresenter(this, model)
-//        list.add(historyVisitPresenter)
+        list.add(historyVisitPresenter)
 
         this.lifecycleScope.launch(Dispatchers.IO) {
             if (PrefsManager.isLogin()) {
                 val source = model.getMovieHistory()
                 val items = source.requireData()
-                if (items.isNotEmpty()) {
-                    list.add(historyVisitPresenter)
-                    list.add(TopTitlePresenter(getString(R.string.movie_text_visit_history_label)))
-                } else {
-                    list.removeAt(0);
-                    list.removeAt(1);
+                withContext(Dispatchers.Main) {
+                    when (source) {
+                        is Source.Success -> {
+                            if (items.isNullOrEmpty() || items.size < 1) {
+                                list.remove(historyVisitPresenter)
+                                adapter.remove(historyVisitPresenter)
+                                list.remove(TopTitlePresenter(getString(R.string.movie_text_visit_history_label)))
+                                adapter.remove(TopTitlePresenter(getString(R.string.movie_text_visit_history_label)))
+                            } else {
+//                                list.removeAt(0);
+//                                list.removeAt(1);
+                            }
+                        }
+                        is Source.Error -> {
+                            Msg.handleSourceException(source.requireError())
+                        }
+                    }.exhaustive
                 }
+//                if (items.isNotEmpty()) {
+//                    list.add(historyVisitPresenter)
+//                    list.add(TopTitlePresenter(getString(R.string.movie_text_visit_history_label)))
+//                } else {
+//                    list.removeAt(0);
+//                    list.removeAt(1);
+//                }
             }
         }
         list.add(TopTitlePresenter(getString(R.string.movie_text_top_like_label)))
@@ -89,6 +107,8 @@ class TopLikeActivity : MyBaseActivity(), View.OnClickListener, SwipeRefreshLayo
     }
 
     override fun onRefresh() {
+        adapter.clear()
+        initRecycler()
         binding.swipeRefresh.cancelRefreshing(1000)
         historyVisitPresenter.onRefresh()
         likeListPresenter.onRefresh()

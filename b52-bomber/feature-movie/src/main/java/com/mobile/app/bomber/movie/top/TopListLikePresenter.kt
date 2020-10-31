@@ -9,6 +9,7 @@ import com.mobile.app.bomber.movie.MovieViewModel
 import com.mobile.app.bomber.movie.R
 import com.mobile.app.bomber.movie.player.PlayerActivity
 import com.mobile.app.bomber.movie.top.items.TopMovieHorItem
+import com.mobile.app.bomber.movie.top.items.TopMovieLikeItem
 import com.mobile.ext.glide.GlideApp
 import com.mobile.guava.jvm.domain.Source
 import com.mobile.guava.jvm.extension.exhaustive
@@ -30,7 +31,7 @@ class TopListLikePresenter(
     override fun load() {
         fragment.lifecycleScope.launch(Dispatchers.IO) {
             val source = model.getMovieGuessLike()
-            val items = source.dataOrNull().orEmpty().map { TopMovieHorItem(it) }
+            val items = source.dataOrNull().orEmpty().map { TopMovieLikeItem(it) }
             withContext(Dispatchers.Main) {
                 when (source) {
                     is Source.Success -> {
@@ -45,7 +46,7 @@ class TopListLikePresenter(
     }
 
     override fun load(imageView: ImageView, holder: AdapterViewHolder) {
-        val data = AdapterUtils.getHolder(imageView).item<TopMovieHorItem>().data
+        val data = AdapterUtils.getHolder(imageView).item<TopMovieLikeItem>().data
         GlideApp.with(context)
                 .load(data.cover)
                 .placeholder(R.drawable.movie_default_cover)
@@ -58,7 +59,7 @@ class TopListLikePresenter(
     }
 
     override fun onClick(v: View) {
-        val data = AdapterUtils.getHolder(v).item<TopMovieHorItem>().data
+        val data = AdapterUtils.getHolder(v).item<TopMovieLikeItem>().data
         PlayerActivity.start(fragment.requireActivity(), data.movieId.toLong())
     }
 

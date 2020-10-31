@@ -40,7 +40,7 @@ class MovieViewModel @Inject constructor() : MyBaseViewModel() {
     }
 
     @WorkerThread
-    suspend fun getMovieHistory(): Source<List<ApiMovie.Movie>> {
+    suspend fun getMovieHistory(): Source<List<ApiMovieHistory.History>> {
         ensureWorkThread()
         return movieRepository.getMovieHistory()
     }
