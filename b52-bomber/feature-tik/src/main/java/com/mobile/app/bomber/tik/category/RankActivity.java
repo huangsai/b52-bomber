@@ -11,29 +11,28 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.util.Preconditions;
+import com.mobile.app.bomber.common.base.Msg;
+import com.mobile.app.bomber.common.base.MyBaseActivity;
+import com.mobile.app.bomber.common.base.tool.SingleClick;
+import com.mobile.app.bomber.data.http.entities.ApiRank;
+import com.mobile.app.bomber.data.http.entities.Pager;
+import com.mobile.app.bomber.tik.R;
+import com.mobile.app.bomber.tik.base.AppRouterUtils;
+import com.mobile.app.bomber.tik.base.GlideExtKt;
+import com.mobile.app.bomber.tik.category.items.RankItem;
+import com.mobile.app.bomber.tik.databinding.ActivityRankBinding;
+import com.mobile.ext.glide.GlideApp;
+import com.mobile.guava.android.mvvm.RouterKt;
+import com.mobile.guava.android.ui.view.recyclerview.EndlessRecyclerViewScrollListener;
+import com.mobile.guava.android.ui.view.recyclerview.RecyclerViewUtilsKt;
+import com.mobile.guava.data.Values;
+import com.mobile.guava.jvm.date.Java8TimeKt;
+import com.mobile.guava.jvm.domain.Source;
 import com.pacific.adapter.AdapterImageLoader;
 import com.pacific.adapter.AdapterUtils;
 import com.pacific.adapter.AdapterViewHolder;
 import com.pacific.adapter.OnDataSetChanged;
 import com.pacific.adapter.RecyclerAdapter;
-import com.mobile.guava.android.mvvm.RouterKt;
-import com.mobile.app.bomber.data.http.entities.ApiRank;
-import com.mobile.app.bomber.data.http.entities.Pager;
-import com.mobile.guava.data.Values;
-import com.mobile.guava.android.ui.view.recyclerview.EndlessRecyclerViewScrollListener;
-import com.mobile.guava.android.ui.view.recyclerview.RecyclerViewUtilsKt;
-import com.mobile.guava.jvm.date.Java8TimeKt;
-import com.mobile.guava.jvm.domain.Source;
-
-import com.mobile.app.bomber.tik.R;
-import com.mobile.app.bomber.tik.base.AppRouterUtils;
-import com.mobile.ext.glide.GlideApp;
-import com.mobile.app.bomber.tik.base.GlideExtKt;
-import com.mobile.app.bomber.common.base.Msg;
-import com.mobile.app.bomber.common.base.MyBaseActivity;
-import com.mobile.app.bomber.common.base.tool.SingleClick;
-import com.mobile.app.bomber.tik.category.items.RankItem;
-import com.mobile.app.bomber.tik.databinding.ActivityRankBinding;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -135,8 +134,8 @@ public class RankActivity extends MyBaseActivity implements View.OnClickListener
         (type == 1 ? model.ranksOfPlay(time, pager) : model.ranksOfLike(time, pager)
         ).observe(this, source -> {
             if (source instanceof Source.Success) {
-                 List<ApiRank.Rank> firstData = source.requireData();
-                 List<RankItem> data = source.requireData().stream()
+                List<ApiRank.Rank> firstData = source.requireData();
+                List<RankItem> data = source.requireData().stream()
                         .map(o -> new RankItem(o, firstData.get(0), type))
                         .collect(Collectors.toList());
                 if (pager.isFirstPage(2)) {
@@ -151,7 +150,7 @@ public class RankActivity extends MyBaseActivity implements View.OnClickListener
                 Msg.INSTANCE.handleSourceException(source.requireError());
             }
             RecyclerViewUtilsKt.cancelRefreshing(binding.layoutRefresh, 500L);
-            binding.txtTime.setText("更新于 " + Java8TimeKt.yyyy_mm_dd_hh_mm_ss(System.currentTimeMillis()));
+            binding.txtTime.setText(("更新于 " + Java8TimeKt.yyyy_mm_dd_hh_mm_ss(System.currentTimeMillis())));
         });
     }
 
@@ -159,7 +158,7 @@ public class RankActivity extends MyBaseActivity implements View.OnClickListener
         final boolean oldIsFollowing = rank.isFollowing();
         rank.setFollowing(!oldIsFollowing);
         adapter.notifyItemChanged(position, 0);
-        model.follow(rank.getUId(), oldIsFollowing?1:0).observe(this, source -> {
+        model.follow(rank.getUId(), oldIsFollowing ? 1 : 0).observe(this, source -> {
             if (source instanceof Source.Error) {
                 Msg.INSTANCE.handleSourceException(source.requireError());
                 rank.setFollowing(oldIsFollowing);

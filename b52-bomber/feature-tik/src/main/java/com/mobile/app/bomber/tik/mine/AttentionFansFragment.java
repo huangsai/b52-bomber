@@ -11,24 +11,23 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.pacific.adapter.AdapterImageLoader;
-import com.pacific.adapter.AdapterUtils;
-import com.pacific.adapter.AdapterViewHolder;
-import com.mobile.app.bomber.runner.base.PrefsManager;
-import com.mobile.app.bomber.data.http.entities.ApiFollow;
-import com.mobile.app.bomber.data.http.entities.ApiUserCount;
-import com.mobile.guava.data.Values;
-import com.mobile.guava.jvm.domain.Source;
-
-import com.mobile.app.bomber.tik.R;
-import com.mobile.app.bomber.tik.base.AppRouterUtils;
-import com.mobile.app.bomber.tik.base.GlideExtKt;
 import com.mobile.app.bomber.common.base.Msg;
 import com.mobile.app.bomber.common.base.MyBaseFragment;
 import com.mobile.app.bomber.common.base.RecyclerAdapterEmpty;
 import com.mobile.app.bomber.common.base.tool.SingleClick;
+import com.mobile.app.bomber.data.http.entities.ApiFollow;
+import com.mobile.app.bomber.data.http.entities.ApiUserCount;
+import com.mobile.app.bomber.runner.base.PrefsManager;
+import com.mobile.app.bomber.tik.R;
+import com.mobile.app.bomber.tik.base.AppRouterUtils;
+import com.mobile.app.bomber.tik.base.GlideExtKt;
 import com.mobile.app.bomber.tik.databinding.FragmentAttentionFansBinding;
 import com.mobile.app.bomber.tik.mine.items.AttentionFansItem;
+import com.mobile.guava.data.Values;
+import com.mobile.guava.jvm.domain.Source;
+import com.pacific.adapter.AdapterImageLoader;
+import com.pacific.adapter.AdapterUtils;
+import com.pacific.adapter.AdapterViewHolder;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -144,7 +143,7 @@ public class AttentionFansFragment extends MyBaseFragment implements AdapterImag
     public void followedState(Button button) {
         AttentionFansItem item = AdapterUtils.INSTANCE.getHolder(button).item();
         ApiFollow.Follow data = item.data;
-        meViewModel.follow(data.getFollowUid(), data.isFollowing()?1:0).observe(this, apiFollowSource -> {
+        meViewModel.follow(data.getFollowUid(), data.isFollowing() ? 1 : 0).observe(this, apiFollowSource -> {
             if (apiFollowSource instanceof Source.Success) {
                 data.setFollowing(!data.isFollowing());
                 recyclerAdapter.replace(item, new AttentionFansItem(data));

@@ -6,18 +6,17 @@ import android.view.View;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 
+import com.mobile.app.bomber.common.base.Msg;
+import com.mobile.app.bomber.common.base.MyBaseActivity;
+import com.mobile.app.bomber.common.base.tool.SingleClick;
 import com.mobile.app.bomber.runner.RunnerX;
+import com.mobile.app.bomber.tik.R;
+import com.mobile.app.bomber.tik.base.AppRouterUtils;
+import com.mobile.app.bomber.tik.databinding.ActivityUserDetailBinding;
 import com.mobile.guava.android.mvvm.RouterKt;
 import com.mobile.guava.data.Values;
 import com.mobile.guava.jvm.coroutines.Bus;
 import com.mobile.guava.jvm.domain.Source;
-
-import com.mobile.app.bomber.tik.R;
-import com.mobile.app.bomber.tik.base.AppRouterUtils;
-import com.mobile.app.bomber.common.base.Msg;
-import com.mobile.app.bomber.common.base.MyBaseActivity;
-import com.mobile.app.bomber.common.base.tool.SingleClick;
-import com.mobile.app.bomber.tik.databinding.ActivityUserDetailBinding;
 
 /**
  * 用户详情页
@@ -41,7 +40,7 @@ public class UserDetailActivity extends MyBaseActivity implements View.OnClickLi
         setContentView(binding.getRoot());
         userId = Values.INSTANCE.take("UserDetailActivity_userId");
         followStatus(userId);
-        UserDetailFragment userDetailFragment = UserDetailFragment.newInstance(userId,0);
+        UserDetailFragment userDetailFragment = UserDetailFragment.newInstance(userId, 0);
         addFragment(R.id.layout_container, userDetailFragment);
         binding.ibBack.setOnClickListener(this);
         binding.ibMore.setOnClickListener(this);
@@ -80,7 +79,7 @@ public class UserDetailActivity extends MyBaseActivity implements View.OnClickLi
 
     private void followDone(long userId) {
         boolean isUnFollow = !binding.userBtnFollow.getText().toString().equals("+关注");
-        meViewModel.follow(userId, isUnFollow?1:0).observe(this, apiFollowSource -> {
+        meViewModel.follow(userId, !isUnFollow ? 1 : 0).observe(this, apiFollowSource -> {
             if (apiFollowSource instanceof Source.Success) {
                 handleFollowStatusView(isUnFollow);
             } else {
