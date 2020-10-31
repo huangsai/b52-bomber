@@ -87,6 +87,10 @@ class BannerPresenter(
     }
 
     override fun OnBannerClick(data: ApiMovieBanner.Banner?, position: Int) {
+        if (data!!.movieId < 9) {
+            Msg.toast("当前轮播图不能播放")
+            return
+        }
         PlayerActivity.start(fragment.requireActivity(), data?.movieId!!)
     }
 
