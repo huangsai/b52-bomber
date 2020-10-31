@@ -684,7 +684,6 @@ data class ApiMovie(
 
     @JsonClass(generateAdapter = true)
     data class Movie(
-            @Json(name = "id") val id: Long,
             @Json(name = "movieId") val movieId: Int,
             @Json(name = "movieUrl") val movieUrl: String,
             @Json(name = "downloadurl") val downloadUrl: String,
