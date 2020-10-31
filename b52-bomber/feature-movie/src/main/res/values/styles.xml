@@ -36,8 +36,8 @@
     </style>
 
     <style name="movie_ExoMediaButton" parent="ExoMediaButton.Pause">
-        <item name="android:layout_width">@dimen/size_20dp</item>
-        <item name="android:layout_height">@dimen/size_20dp</item>
+        <item name="android:layout_width">@dimen/size_30dp</item>
+        <item name="android:layout_height">@dimen/size_30dp</item>
     </style>
 
     <style name="movie_PlayerControlLayout">

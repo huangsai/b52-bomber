@@ -205,7 +205,7 @@ data class ApiFollow(
             @Json(name = "uid") val uid: Long,
             @Json(name = "fastkey") val token: String,
             @Json(name = "followuid") val targetUserId: Long,
-            @Json(name = "unfollow") val notFollowing: Boolean
+            @Json(name = "unfollow") val notFollowing: Int
     )
 
     @JsonClass(generateAdapter = true)

@@ -23,20 +23,20 @@ import com.google.android.exoplayer2.ExoPlaybackException
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.source.MediaSource
-import com.mobile.ext.glide.GlideApp
 import com.mobile.app.bomber.common.base.Msg
 import com.mobile.app.bomber.common.base.MyBaseFragment
 import com.mobile.app.bomber.common.base.tool.SingleClick
 import com.mobile.app.bomber.data.http.entities.ApiVideo
-import com.mobile.guava.data.Values
 import com.mobile.app.bomber.runner.RunnerX
 import com.mobile.app.bomber.tik.R
 import com.mobile.app.bomber.tik.base.*
 import com.mobile.app.bomber.tik.databinding.FragmentPlayBinding
 import com.mobile.app.bomber.tik.mine.UserDetailActivity
+import com.mobile.ext.glide.GlideApp
 import com.mobile.guava.android.mvvm.AndroidX
 import com.mobile.guava.android.mvvm.showDialogFragment
 import com.mobile.guava.android.ui.view.text.MySpannable
+import com.mobile.guava.data.Values
 import com.mobile.guava.data.nullSafe
 import com.mobile.guava.jvm.domain.Source
 import com.mobile.guava.jvm.extension.exhaustive
@@ -183,9 +183,9 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
             binding.imgProfile.setImageResource(R.drawable.sy_guanggaotouxiang)
             binding.imgAdd.setImageResource(R.drawable.sy_guanggaolianjie)
             binding.imgAdd.visibility = View.VISIBLE
-            if (binding.txtName.text.isNullOrEmpty()){
+            if (binding.txtName.text.isNullOrEmpty()) {
                 binding.txtDesc.visibility = View.GONE
-            }else{
+            } else {
                 binding.txtDesc.visibility = View.VISIBLE
             }
             binding.imgAdLabel.visibility = View.VISIBLE
@@ -272,7 +272,11 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
     }
 
     private fun follow() {
-        val oldIsFollowing = video.isFollowing
+        val oldIsFollowing = if (video.isFollowing) {
+                    1
+                } else {
+                    0
+                }
         switchFollowState()
         lifecycleScope.launch(Dispatchers.IO) {
             val source = model.follow(video.owner, oldIsFollowing)

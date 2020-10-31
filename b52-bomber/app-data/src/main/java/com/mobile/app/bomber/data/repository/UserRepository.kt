@@ -101,7 +101,7 @@ class UserRepository @Inject constructor(
     /**
      * NOTE: notFollowing
      */
-    suspend fun follow(targetUserId: Long, notFollowing: Boolean): Source<ApiFollow> {
+    suspend fun follow(targetUserId: Long, notFollowing: Int): Source<ApiFollow> {
         val call = dataService.follow(ApiFollow.Req(
                 userId, token, targetUserId, notFollowing
         ))

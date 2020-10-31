@@ -42,7 +42,7 @@ class HomeViewModel @Inject constructor() : MyBaseViewModel() {
     }
 
     @WorkerThread
-    suspend fun follow(targetUserId: Long, notFollowing: Boolean): Source<ApiFollow> {
+    suspend fun follow(targetUserId: Long, notFollowing: Int): Source<ApiFollow> {
         ensureWorkThread()
         return userRepository.follow(targetUserId, notFollowing)
     }

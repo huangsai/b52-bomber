@@ -159,7 +159,7 @@ public class RankActivity extends MyBaseActivity implements View.OnClickListener
         final boolean oldIsFollowing = rank.isFollowing();
         rank.setFollowing(!oldIsFollowing);
         adapter.notifyItemChanged(position, 0);
-        model.follow(rank.getUId(), oldIsFollowing).observe(this, source -> {
+        model.follow(rank.getUId(), oldIsFollowing?1:0).observe(this, source -> {
             if (source instanceof Source.Error) {
                 Msg.INSTANCE.handleSourceException(source.requireError());
                 rank.setFollowing(oldIsFollowing);

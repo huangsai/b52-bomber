@@ -70,13 +70,14 @@
 
     <TextView
         android:id="@+id/txt_desc"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/size_24dp"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/size_28dp"
         android:gravity="left|center_vertical"
         android:text="@string/movie_player_movie_play_count"
         android:textColor="@color/movie_player_game_ad_desc"
-        android:textSize="@dimen/font_13sp"
+        android:textSize="@dimen/font_12sp"
         app:layout_constraintLeft_toLeftOf="@+id/txt_title"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_title" />
 
     <ImageView

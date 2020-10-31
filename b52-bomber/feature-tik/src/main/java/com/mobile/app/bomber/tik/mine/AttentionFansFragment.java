@@ -144,10 +144,9 @@ public class AttentionFansFragment extends MyBaseFragment implements AdapterImag
     public void followedState(Button button) {
         AttentionFansItem item = AdapterUtils.INSTANCE.getHolder(button).item();
         ApiFollow.Follow data = item.data;
-        Boolean newIsFollowing = !data.isFollowing();
-        meViewModel.follow(data.getFollowUid(), newIsFollowing).observe(this, apiFollowSource -> {
+        meViewModel.follow(data.getFollowUid(), data.isFollowing()?1:0).observe(this, apiFollowSource -> {
             if (apiFollowSource instanceof Source.Success) {
-                data.setFollowing(newIsFollowing);
+                data.setFollowing(!data.isFollowing());
                 recyclerAdapter.replace(item, new AttentionFansItem(data));
             } else {
                 Msg.INSTANCE.handleSourceException(apiFollowSource.requireError());

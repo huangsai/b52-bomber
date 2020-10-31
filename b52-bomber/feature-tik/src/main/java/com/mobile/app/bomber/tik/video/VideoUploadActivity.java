@@ -12,20 +12,19 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.mobile.guava.android.mvvm.RouterKt;
-import com.mobile.guava.jvm.domain.Source;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-
-import com.mobile.app.bomber.tik.R;
-import com.mobile.app.bomber.tik.base.AppRouterUtils;
-import com.mobile.ext.glide.GlideApp;
 import com.mobile.app.bomber.common.base.Msg;
 import com.mobile.app.bomber.common.base.MyBaseActivity;
 import com.mobile.app.bomber.common.base.tool.FileUtil;
 import com.mobile.app.bomber.common.base.tool.ShareUtils;
 import com.mobile.app.bomber.common.base.tool.SingleClick;
+import com.mobile.app.bomber.tik.R;
+import com.mobile.app.bomber.tik.base.AppRouterUtils;
 import com.mobile.app.bomber.tik.databinding.ActivityVideoUploadBinding;
 import com.mobile.app.bomber.tik.home.LocationLiveData;
+import com.mobile.ext.glide.GlideApp;
+import com.mobile.guava.android.mvvm.RouterKt;
+import com.mobile.guava.jvm.domain.Source;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -178,10 +177,15 @@ public class VideoUploadActivity extends MyBaseActivity implements View.OnClickL
             hideLoading();
             if (source instanceof Source.Success) {
                 Msg.INSTANCE.toast("上传成功");
-                if (shareWechatBool)
+                if (shareWechatBool) {
                     ShareUtils.shareToWechat(VideoUploadActivity.this);
-                if (shareQQBool)
+                    return;
+                }
+                if (shareQQBool) {
                     ShareUtils.shareToQQ(VideoUploadActivity.this);
+                    return;
+                }
+                finish();
             } else {
                 Msg.INSTANCE.handleSourceException(source.requireError());
             }
@@ -212,7 +216,7 @@ public class VideoUploadActivity extends MyBaseActivity implements View.OnClickL
             if (source instanceof Source.Success) {
                 List<String> keywords = source.requireData();
                 for (String hotWord : keywords) {
-               TextView view = (TextView) LayoutInflater.from(this).inflate(R.layout.item_tag_tv, binding.mShowBtnLayout, false);
+                    TextView view = (TextView) LayoutInflater.from(this).inflate(R.layout.item_tag_tv, binding.mShowBtnLayout, false);
                     view.setText("#" + hotWord);
                     view.setTag(hotWord);
                     view.setOnClickListener(new View.OnClickListener() {

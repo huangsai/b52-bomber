@@ -39,7 +39,7 @@ class MsgViewModel @Inject constructor() : MyBaseViewModel() {
                 .asLiveData(Dispatchers.IO)
     }
 
-    fun follow(targetUserId: Long, notFollowing: Boolean): LiveData<Source<ApiFollow>> {
+    fun follow(targetUserId: Long, notFollowing: Int): LiveData<Source<ApiFollow>> {
         return flow { emit(userRepository.follow(targetUserId, notFollowing)) }
                 .asLiveData(Dispatchers.IO)
     }

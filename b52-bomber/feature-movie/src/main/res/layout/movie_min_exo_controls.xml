@@ -10,6 +10,8 @@
         style="@style/CommonImage"
         android:paddingLeft="@dimen/size_6dp"
         android:paddingTop="@dimen/size_16dp"
+        android:paddingBottom="@dimen/size_16dp"
+        android:paddingRight="@dimen/size_12dp"
         android:src="@drawable/jq_fanhui"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

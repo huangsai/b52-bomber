@@ -43,7 +43,7 @@ class SourcePresenter(
         binding.includeMovieInfo.recycler.adapter = adapter
 
         binding.includeMovieInfo.layoutMovieInfo.setOnExpansionUpdateListener(this)
-        binding.imgDetailArrow.setOnClickListener(this)
+        binding.txtDesc.setOnClickListener(this)
         binding.imgDetailArrow.animRotate(0f)
     }
 
@@ -92,7 +92,7 @@ class SourcePresenter(
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.img_detail_arrow -> {
+            R.id.txt_desc -> {
                 if (isAnimating) return
                 isAnimating = true
                 if (binding.includeMovieInfo.layoutMovieInfo.isExpanded) {
