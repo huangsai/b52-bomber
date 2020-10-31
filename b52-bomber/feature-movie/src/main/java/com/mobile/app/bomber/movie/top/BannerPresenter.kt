@@ -6,6 +6,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.mobile.app.bomber.common.base.Msg
+import com.mobile.app.bomber.common.base.tool.chrome
 import com.mobile.app.bomber.data.http.entities.ApiMovieBanner
 import com.mobile.app.bomber.movie.MovieViewModel
 import com.mobile.app.bomber.movie.R
@@ -87,7 +88,15 @@ class BannerPresenter(
     }
 
     override fun OnBannerClick(data: ApiMovieBanner.Banner?, position: Int) {
-        PlayerActivity.start(fragment.requireActivity(), data?.movieId!!)
+        if (mData!!.get(position).movieUrl.isNotEmpty()) {
+            fragment.chrome(mData!!.get(position).movieUrl)
+        } else {
+            if (mData!!.get(position).movieId < 9) {
+                Msg.toast("当前轮播图不能播放")
+                return
+            }
+            PlayerActivity.start(fragment.requireActivity(), data?.movieId!!)
+        }
     }
 
     override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {

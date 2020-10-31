@@ -46,7 +46,6 @@ public class FragmentMe extends MyBaseFragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
-        userDetailFragment.setUserId(PrefsManager.INSTANCE.getUserId());
 
     }
 
