@@ -673,6 +673,22 @@ data class ApiMovieHotKey(
     )
 }
 
+
+//@JsonClass(generateAdapter = true)
+//data class ApiMovieHistory(
+//        @Json(name = "retCode") val code: Int,
+//        @Json(name = "movieList") val movies: List<History>?
+//) {
+//    @JsonClass(generateAdapter = true)
+//    data class History(
+//            @Json(name = "movieId") val movieId: Int,
+//            @Json(name = "movieUrl") val movieUrl: String,
+//            @Json(name = "name") val downloadUrl: String,
+//            @Json(name = "desc") val uploadTime: Long,
+//            @Json(name = "cover") val duration: Long
+//    )
+//}
+
 @JsonClass(generateAdapter = true)
 data class ApiMovie(
         @Json(name = "retCode") val code: Int,
@@ -684,7 +700,6 @@ data class ApiMovie(
 
     @JsonClass(generateAdapter = true)
     data class Movie(
-            @Json(name = "id") val id: Long,
             @Json(name = "movieId") val movieId: Int,
             @Json(name = "movieUrl") val movieUrl: String,
             @Json(name = "downloadurl") val downloadUrl: String,
@@ -788,7 +803,7 @@ data class ApiMovieDetailById(
             @Json(name = "id") val id: String,
             @Json(name = "name") val name: String,
             @Json(name = "img") val img: String,
-            )
+    )
 
     @JsonClass(generateAdapter = true)
     data class Category(
@@ -821,12 +836,21 @@ data class ApiId(
 
 data class ApiMovieHistory(
         @Json(name = "retCode") val code: Int,
-        @Json(name = "movieList") val movies: List<ApiMovie.Movie>?,
+        @Json(name = "movieList") val movies: List<History>?,
 ) {
     @JsonClass(generateAdapter = true)
     data class Req(
             @Json(name = "fastKey") val fastKey: String,
-            @Json(name = "uid") val uid: Long
+            @Json(name = "uid") val uid: Long,
+    )
+
+    @JsonClass(generateAdapter = true)
+    data class History(
+            @Json(name = "movieId") val movieId: Int,
+            @Json(name = "movieUrl") val movieUrl: String,
+            @Json(name = "name") val name: String,
+            @Json(name = "desc") val desc: String,
+            @Json(name = "cover") val cover: String
     )
 }
 
