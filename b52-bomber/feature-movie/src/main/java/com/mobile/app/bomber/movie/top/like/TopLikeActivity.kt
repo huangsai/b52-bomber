@@ -77,8 +77,7 @@ class TopLikeActivity : MyBaseActivity(), View.OnClickListener, SwipeRefreshLayo
                                 list.remove(TopTitlePresenter(getString(R.string.movie_text_visit_history_label)))
                                 adapter.remove(TopTitlePresenter(getString(R.string.movie_text_visit_history_label)))
                             } else {
-//                                list.removeAt(0);
-//                                list.removeAt(1);
+
                             }
                         }
                         is Source.Error -> {
@@ -86,13 +85,6 @@ class TopLikeActivity : MyBaseActivity(), View.OnClickListener, SwipeRefreshLayo
                         }
                     }.exhaustive
                 }
-//                if (items.isNotEmpty()) {
-//                    list.add(historyVisitPresenter)
-//                    list.add(TopTitlePresenter(getString(R.string.movie_text_visit_history_label)))
-//                } else {
-//                    list.removeAt(0);
-//                    list.removeAt(1);
-//                }
             }
         }
         list.add(TopTitlePresenter(getString(R.string.movie_text_top_like_label)))
