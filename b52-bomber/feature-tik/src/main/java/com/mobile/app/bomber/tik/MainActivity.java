@@ -117,19 +117,21 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
             if (!entry.getValue()) {
                 if (key.equals(android.Manifest.permission.CAMERA)) {
                     hasNeededPermission = false;
-                    MainActivity.this.alertPermission(R.string.alert_msg_permission_camera, true);
+                    MainActivity.this.alertPermission(R.string.alert_msg_permission_camera);
                 } else if (key.equals(android.Manifest.permission.READ_PHONE_STATE)) {
+                    //需要
                     hasNeededPermission = false;
-                    MainActivity.this.alertPermission(R.string.alert_msg_permission_phone_state, true);
+                    MainActivity.this.alertPermission(R.string.alert_msg_permission_phone_state);
                 } else if (key.equals(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                     hasNeededPermission = false;
-                    MainActivity.this.alertPermission(R.string.alert_msg_permission_storage, true);
+                    MainActivity.this.alertPermission(R.string.alert_msg_permission_storage);
                 } else if (key.equals(android.Manifest.permission.RECORD_AUDIO)) {
                     hasNeededPermission = false;
-                    MainActivity.this.alertPermission(R.string.alert_msg_permission_record, true);
+                    MainActivity.this.alertPermission(R.string.alert_msg_permission_record);
                 } else {
+                    //需要
                     hasLocationPermission = false;
-                    MainActivity.this.alertPermission(R.string.alert_msg_permission_location, false);
+                    MainActivity.this.alertPermission(R.string.alert_msg_permission_location);
                 }
             }
         }

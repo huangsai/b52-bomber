@@ -34,13 +34,12 @@ public abstract class MyBaseActivity extends BaseActivity {
         super(contentLayoutId);
     }
 
-    public void alertPermission(@StringRes int msgRes, boolean exitSystem) {
+    public void alertPermission(@StringRes int msgRes) {
         new AlertDialog.Builder(this)
                 .setTitle(R.string.base_alert_title)
                 .setMessage(msgRes)
                 .setPositiveButton(R.string.base_alert_known, (dialog, which) -> {
                     dialog.dismiss();
-                    if (exitSystem) Bus.INSTANCE.offer(AndroidX.BUS_EXIT);
                 })
                 .create()
                 .show();
