@@ -41,4 +41,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recycler" />
 
+    <include
+        android:id="@+id/txt_empty"
+        layout="@layout/item_empty"></include>
+
 </com.mobile.guava.android.ui.view.expandable.ExpandableLayout2>

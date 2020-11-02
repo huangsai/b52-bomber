@@ -66,11 +66,13 @@ class SourcePresenter(
                         val items: ArrayList<ActorItem> = ArrayList<ActorItem>()
                         if (listArray!!.isNullOrEmpty() || listArray!!.size < 1) {
                             Msg.toast("暂无数据")
+                            binding.includeMovieInfo.txtEmpty.NoData.visibility = View.VISIBLE
                             binding.includeMovieInfo.txtDetail.visibility = View.GONE
                             binding.includeMovieInfo.txtLabel.visibility = View.GONE
                             return@withContext
                         }
                         for (i in listArray.indices) {
+                            binding.includeMovieInfo.txtEmpty.NoData.visibility = View.GONE
                             binding.includeMovieInfo.txtDetail.visibility = View.VISIBLE
                             binding.includeMovieInfo.txtLabel.visibility = View.VISIBLE
                             var former: ApiMovieDetailById.Performer = listArray[i]
