@@ -20,6 +20,8 @@
         android:id="@+id/txt_empty"
         style="@style/EmptyText"
         android:text="@string/msg_empty_pull_refresh"
+        android:textColor="#848388"
+        android:textSize="@dimen/font_10sp"
         app:layout_constraintBottom_toBottomOf="@+id/layout_refresh"
         app:layout_constraintLeft_toLeftOf="@+id/layout_refresh"
         app:layout_constraintRight_toRightOf="@+id/layout_refresh"

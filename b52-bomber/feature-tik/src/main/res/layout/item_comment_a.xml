@@ -63,8 +63,8 @@
     <TextView
         android:id="@+id/txt_like"
         style="@style/WrapWrap"
-        android:paddingLeft="@dimen/size_16dp"
-        android:paddingRight="@dimen/size_16dp"
+        android:paddingLeft="@dimen/size_10dp"
+        android:paddingRight="@dimen/size_10dp"
         android:gravity="center_horizontal"
         android:drawableTop="@drawable/comment_like"
         app:layout_constraintBottom_toBottomOf="parent"

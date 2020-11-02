@@ -20,9 +20,10 @@
 
     <ImageView
         android:id="@+id/img_close"
-        style="@style/CommonImage"
-        android:padding="@dimen/size_16dp"
+        android:layout_width="@dimen/font_20sp"
+        android:layout_height="@dimen/font_20sp"
         android:src="@drawable/sy_quxiaochacha01"
+        android:layout_marginRight="@dimen/font_20sp"
         app:layout_constraintBottom_toBottomOf="@+id/txt_title"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/txt_title" />

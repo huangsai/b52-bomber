@@ -75,7 +75,7 @@
     <string name="comment_send">发送</string>
     <string name="comment_trim_expanded">\u3000收起</string>
     <string name="comment_trim_collapsed">查看更多</string>
-    <string name="comment_no_more">无更多评论</string>
+    <string name="comment_no_more">暂时没有更多了</string>
     <string name="date_picker_show">不展示</string>
     <string name="mine_modify_profile">点击更换头像</string>
     <string name="ad_view_detail">查看详情</string>

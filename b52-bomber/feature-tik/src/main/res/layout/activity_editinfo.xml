@@ -42,7 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_05dp"
         android:layout_below="@+id/back_root"
-        android:background="#33334f" />
+        android:background="#222236" />
 
     <LinearLayout
         android:id="@+id/topView"
