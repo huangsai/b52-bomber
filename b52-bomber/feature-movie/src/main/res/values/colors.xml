@@ -5,6 +5,8 @@
     <color name="movie_comment_hint">#222236 </color>
     <color name="movie_player_comment">#1C1C29</color>
     <color name="movie_player_comment_user">#FFCD35</color>
+    <color name="movie_video_title">#FFCC00</color>
+
     <color name="movie_line_color">#141421</color>
     <color name="movie_player_options">#80000000</color>
     <color name="movie_player_options_selected">#FF9600</color>
