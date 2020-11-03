@@ -218,10 +218,11 @@ public class EditInfoActivity extends MyBaseActivity
     public void onTakeCamera() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+                    + ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     == PackageManager.PERMISSION_GRANTED) {
                 takeCamera();
             } else {
-                requestPermissions(new String[]{Manifest.permission.CAMERA},
+                requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE},
                         104);
             }
         } else {
@@ -234,11 +235,23 @@ public class EditInfoActivity extends MyBaseActivity
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case 104:
-                if (grantResults.length > 0 &&
-                        grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Boolean hasCameraPermission = true;
+                Boolean hasWritePermission = true;
+                for (int i = 0; i < permissions.length; i++) {
+                    if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                        //判断是否勾选禁止后不再询问
+                        String key = permissions[i];
+                        if (key.equals(Manifest.permission.CAMERA)) {
+                            hasCameraPermission = false;
+                        } else if (key.equals(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                            hasWritePermission = false;
+                        }
+                    }
+                }
+                if (hasCameraPermission && hasWritePermission) {
                     takeCamera();
                 } else {
-                    alertPermission(R.string.alert_msg_permission_camera);
+                    alertPermission(R.string.alert_msg_permission_camera_storage);
                 }
                 break;
         }
