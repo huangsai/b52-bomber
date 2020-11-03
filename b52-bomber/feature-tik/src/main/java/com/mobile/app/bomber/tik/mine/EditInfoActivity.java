@@ -1,15 +1,19 @@
 package com.mobile.app.bomber.tik.mine;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LiveData;
 
 import com.mobile.app.bomber.common.base.Msg;
@@ -18,7 +22,6 @@ import com.mobile.app.bomber.common.base.tool.FileUtil;
 import com.mobile.app.bomber.common.base.tool.SingleClick;
 import com.mobile.app.bomber.data.http.entities.ApiUser;
 import com.mobile.app.bomber.data.http.entities.Nope;
-import com.mobile.guava.data.Values;
 import com.mobile.app.bomber.data.repository.SourceExtKt;
 import com.mobile.app.bomber.tik.R;
 import com.mobile.app.bomber.tik.base.AppRouterKt;
@@ -27,6 +30,7 @@ import com.mobile.app.bomber.tik.base.GlideExtKt;
 import com.mobile.app.bomber.tik.databinding.ActivityEditinfoBinding;
 import com.mobile.app.bomber.tik.login.LoginActivity;
 import com.mobile.guava.android.mvvm.RouterKt;
+import com.mobile.guava.data.Values;
 import com.mobile.guava.jvm.domain.Source;
 
 import java.io.File;
@@ -212,6 +216,35 @@ public class EditInfoActivity extends MyBaseActivity
 
     @Override
     public void onTakeCamera() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+                    == PackageManager.PERMISSION_GRANTED) {
+                takeCamera();
+            } else {
+                requestPermissions(new String[]{Manifest.permission.CAMERA},
+                        104);
+            }
+        } else {
+            takeCamera();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case 104:
+                if (grantResults.length > 0 &&
+                        grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    takeCamera();
+                } else {
+                    alertPermission(R.string.alert_msg_permission_camera);
+                }
+                break;
+        }
+    }
+
+    private void takeCamera() {
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
         startActivityForResult(intent, 1);
     }
@@ -243,6 +276,7 @@ public class EditInfoActivity extends MyBaseActivity
     public void onSelectNoDisplay() {
         binding.genders.setText("不显示");
     }
+
 
 }
 

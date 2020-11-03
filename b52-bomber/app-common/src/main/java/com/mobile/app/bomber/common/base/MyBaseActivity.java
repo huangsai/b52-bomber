@@ -1,5 +1,9 @@
 package com.mobile.app.bomber.common.base;
 
+import android.content.Intent;
+import android.net.Uri;
+import android.provider.Settings;
+
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContract;
@@ -39,6 +43,10 @@ public abstract class MyBaseActivity extends BaseActivity {
                 .setTitle(R.string.base_alert_title)
                 .setMessage(msgRes)
                 .setPositiveButton(R.string.base_alert_known, (dialog, which) -> {
+                    Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                    Uri uri = Uri.fromParts("package", getPackageName(), null);
+                    intent.setData(uri);
+                    startActivity(intent);
                     dialog.dismiss();
                 })
                 .create()

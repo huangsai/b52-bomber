@@ -23,6 +23,7 @@
             android:name=".MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ZygoteTheme"
+            android:launchMode="singleTask"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:windowSoftInputMode="adjustNothing">
 

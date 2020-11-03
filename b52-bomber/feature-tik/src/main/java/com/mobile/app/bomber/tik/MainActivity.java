@@ -97,53 +97,47 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
 
     private void requestPermission() {
         String[] permissions = new String[]{
-                android.Manifest.permission.CAMERA,
                 android.Manifest.permission.READ_PHONE_STATE,
-                android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 android.Manifest.permission.ACCESS_FINE_LOCATION,
                 android.Manifest.permission.ACCESS_COARSE_LOCATION,
-                android.Manifest.permission.RECORD_AUDIO
         };
         registerForActivityResult(permissionsContract, this).launch(permissions);
     }
 
     @Override
     public void onActivityResult(Map<String, Boolean> map) {
-        boolean hasNeededPermission = true;
+        boolean hasPhoneStatePermission = true;
         boolean hasLocationPermission = true;
         String key;
         for (Map.Entry<String, Boolean> entry : map.entrySet()) {
             key = entry.getKey();
             if (!entry.getValue()) {
-                if (key.equals(android.Manifest.permission.CAMERA)) {
-                    hasNeededPermission = false;
-                    MainActivity.this.alertPermission(R.string.alert_msg_permission_camera);
-                } else if (key.equals(android.Manifest.permission.READ_PHONE_STATE)) {
+                if (key.equals(android.Manifest.permission.READ_PHONE_STATE)) {
                     //需要
-                    hasNeededPermission = false;
-                    MainActivity.this.alertPermission(R.string.alert_msg_permission_phone_state);
-                } else if (key.equals(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                    hasNeededPermission = false;
-                    MainActivity.this.alertPermission(R.string.alert_msg_permission_storage);
-                } else if (key.equals(android.Manifest.permission.RECORD_AUDIO)) {
-                    hasNeededPermission = false;
-                    MainActivity.this.alertPermission(R.string.alert_msg_permission_record);
+                    hasPhoneStatePermission = false;
                 } else {
                     //需要
                     hasLocationPermission = false;
-                    MainActivity.this.alertPermission(R.string.alert_msg_permission_location);
                 }
             }
         }
         if (hasLocationPermission) {
             lookupLocation();
+            if (!hasPhoneStatePermission) {
+                MainActivity.this.alertPermission(R.string.alert_msg_permission_phone_state);
+            }
+        } else {
+            if (!hasPhoneStatePermission) {
+                MainActivity.this.alertPermission(R.string.alert_msg_permission_location_and_phone);
+            } else {
+                MainActivity.this.alertPermission(R.string.alert_msg_permission_location);
+            }
         }
-        if (hasNeededPermission) {
-            requestSplashAd();
-        }
+        requestSplashAd();
+
     }
 
-    private void lookupLocation() {
+    public void lookupLocation() {
         if (LocationLiveData.INSTANCE.getValue() == null && !AppUtil.isGpsAble(this)) {
             AppUtil.openGPS(this);
         }
