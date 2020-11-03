@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import androidx.activity.result.ActivityResultCallback;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
@@ -35,7 +34,6 @@ import com.mobile.app.bomber.tik.base.AppRouterKt;
 import com.mobile.app.bomber.tik.base.AppRouterUtils;
 import com.mobile.app.bomber.tik.databinding.ActivityMainBinding;
 import com.mobile.app.bomber.tik.home.HomeFragment;
-import com.mobile.app.bomber.tik.home.LocationLiveData;
 import com.mobile.app.bomber.tik.home.TestDialogFragment;
 import com.mobile.app.bomber.tik.home.TopMainFragment;
 import com.mobile.app.bomber.tik.login.LoginActivity;
@@ -52,13 +50,10 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
 
-import java.util.Map;
-
 import kotlin.Pair;
-import timber.log.Timber;
 
 public class MainActivity extends MyBaseActivity implements View.OnClickListener,
-        View.OnLongClickListener, ActivityResultCallback<Map<String, Boolean>>,
+        View.OnLongClickListener,
         RadioGroup.OnCheckedChangeListener {
 
     private long longClickNano = 0;
@@ -76,7 +71,8 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         model = AppRouterUtils.viewModels(this, LoginViewModel.class);
-        requestPermission();
+        requestSplashAd();
+
     }
 
     private void onCreate() {
@@ -95,63 +91,6 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
         // startActivity(intent);
     }
 
-    private void requestPermission() {
-        String[] permissions = new String[]{
-                android.Manifest.permission.READ_PHONE_STATE,
-                android.Manifest.permission.ACCESS_FINE_LOCATION,
-                android.Manifest.permission.ACCESS_COARSE_LOCATION,
-        };
-        registerForActivityResult(permissionsContract, this).launch(permissions);
-    }
-
-    @Override
-    public void onActivityResult(Map<String, Boolean> map) {
-        boolean hasPhoneStatePermission = true;
-        boolean hasLocationPermission = true;
-        String key;
-        for (Map.Entry<String, Boolean> entry : map.entrySet()) {
-            key = entry.getKey();
-            if (!entry.getValue()) {
-                if (key.equals(android.Manifest.permission.READ_PHONE_STATE)) {
-                    //需要
-                    hasPhoneStatePermission = false;
-                } else {
-                    //需要
-                    hasLocationPermission = false;
-                }
-            }
-        }
-        if (hasLocationPermission) {
-            lookupLocation();
-            if (!hasPhoneStatePermission) {
-                MainActivity.this.alertPermission(R.string.alert_msg_permission_phone_state);
-            }
-        } else {
-            if (!hasPhoneStatePermission) {
-                MainActivity.this.alertPermission(R.string.alert_msg_permission_location_and_phone);
-            } else {
-                MainActivity.this.alertPermission(R.string.alert_msg_permission_location);
-            }
-        }
-        requestSplashAd();
-
-    }
-
-    public void lookupLocation() {
-        if (LocationLiveData.INSTANCE.getValue() == null && !AppUtil.isGpsAble(this)) {
-            AppUtil.openGPS(this);
-        }
-        LocationLiveData.INSTANCE.observe(this, location -> {
-            if (location != null) {
-                Timber.tag("LocationLiveData").d(
-                        "(%s,%s)",
-                        location.getLatitude(),
-                        location.getLongitude()
-                );
-                LocationLiveData.INSTANCE.removeObservers(this);
-            }
-        });
-    }
 
     private void requestSplashAd() {
         model.ad(3).observe(this, source -> {

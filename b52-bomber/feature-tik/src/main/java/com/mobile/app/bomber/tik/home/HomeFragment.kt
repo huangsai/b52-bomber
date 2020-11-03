@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.Activity
 import android.content.pm.PackageManager
 import android.graphics.Color
+import android.location.Location
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,18 +14,20 @@ import androidx.activity.result.ActivityResultCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.mobile.app.bomber.common.base.MyBaseActivity
+import com.mobile.app.bomber.common.base.tool.AppUtil
 import com.mobile.app.bomber.common.base.tool.SingleClick
 import com.mobile.app.bomber.runner.base.PrefsManager
-import com.mobile.app.bomber.tik.MainActivity
 import com.mobile.app.bomber.tik.R
 import com.mobile.app.bomber.tik.base.AppRouterUtils
 import com.mobile.app.bomber.tik.base.requireLogin
 import com.mobile.app.bomber.tik.category.CategoryActivity
 import com.mobile.app.bomber.tik.databinding.FragmentHomeBinding
+import com.mobile.app.bomber.tik.home.LocationLiveData.value
 import com.mobile.app.bomber.tik.login.LoginActivity
 import com.mobile.app.bomber.tik.search.SearchActivity
 import com.mobile.app.bomber.tik.video.VideoRecordActivity
@@ -34,6 +37,7 @@ import com.mobile.guava.android.ui.view.recyclerview.enforceSingleScrollDirectio
 import com.mobile.guava.android.ui.view.viewpager.recyclerView
 import com.skydoves.balloon.Balloon
 import com.skydoves.balloon.BalloonAnimation
+import timber.log.Timber
 
 class HomeFragment : TopMainFragment(), View.OnClickListener {
 
@@ -78,8 +82,7 @@ class HomeFragment : TopMainFragment(), View.OnClickListener {
             position = it.getInt("position")
         }
         adapter = MyAdapter(this)
-
-
+        requestPermission()
     }
 
     override fun onCreateView(
@@ -133,6 +136,42 @@ class HomeFragment : TopMainFragment(), View.OnClickListener {
                 }
     }
 
+    private fun requestPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.READ_PHONE_STATE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                lookupLocation()
+            }
+            if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.READ_PHONE_STATE)
+                    + ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
+                    + ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_COARSE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED) {
+
+            } else {
+                requestPermissions(arrayOf(Manifest.permission.READ_PHONE_STATE, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION),
+                        101)
+            }
+        } else {
+            lookupLocation()
+        }
+    }
+
+    fun lookupLocation() {
+        if (value == null && !AppUtil.isGpsAble(activity)) {
+            AppUtil.openGPS(activity)
+        }
+        LocationLiveData.observe(this, Observer { location: Location? ->
+            if (location != null) {
+                Timber.tag("LocationLiveData").d(
+                        "(%s,%s)",
+                        location.latitude,
+                        location.longitude
+                )
+                LocationLiveData.removeObservers(this)
+            }
+        })
+    }
+
     private fun requestPermissionLocation() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
@@ -167,10 +206,37 @@ class HomeFragment : TopMainFragment(), View.OnClickListener {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String?>, grantResults: IntArray) {
         when (requestCode) {
+            101 -> {
+                var hasPhoneStatePermission = true
+                var hasLocationPermission = true
+                for (i in permissions.indices) {
+                    if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                        //判断是否勾选禁止后不再询问
+                        val key = permissions[i]
+                        if (key == Manifest.permission.READ_PHONE_STATE) {
+                            hasPhoneStatePermission = false
+                        } else {
+                            hasLocationPermission = false
+                        }
+                    }
+                }
+                if (hasLocationPermission) {
+                    lookupLocation()
+                    if (!hasPhoneStatePermission) {
+                        (activity as MyBaseActivity).alertPermission(R.string.alert_msg_permission_phone_state)
+                    }
+                } else {
+                    if (!hasPhoneStatePermission) {
+                        (activity as MyBaseActivity).alertPermission(R.string.alert_msg_permission_location_and_phone)
+                    } else {
+                        (activity as MyBaseActivity).alertPermission(R.string.alert_msg_permission_location)
+                    }
+                }
+            }
             102 -> {
                 if (grantResults.size > 0 &&
                         grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    (activity as MainActivity).lookupLocation()
+                    lookupLocation()
                     newStartActivity(NearByActivity::class.java)
                 } else {
                     (activity as MyBaseActivity).alertPermission(R.string.alert_msg_permission_location)
@@ -205,7 +271,6 @@ class HomeFragment : TopMainFragment(), View.OnClickListener {
 
     @SingleClick
     override fun onClick(v: View?) {
-
         when (v!!.id) {
             R.id.img_search -> newStartActivity(SearchActivity::class.java)
             R.id.img_camera -> {
