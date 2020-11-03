@@ -46,8 +46,8 @@
 <!--    movie_player_game_ad_go-->
     <TextView
         android:id="@+id/txt_go"
-        android:layout_width="@dimen/size_64dp"
-        android:layout_height="@dimen/size_32dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="@drawable/jq_game"
         android:gravity="center"
         android:text="@string/movie_player_game_ad_go"
