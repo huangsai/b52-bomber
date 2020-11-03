@@ -81,14 +81,17 @@
     <com.github.rubensousa.previewseekbar.exoplayer.PreviewTimeBar
         android:id="@+id/exo_progress"
         style="@style/ConWrap"
-        app:bar_height="@dimen/size_2dp"
+        app:bar_height="@dimen/size_3dp"
         app:layout_constraintBottom_toBottomOf="@id/exo_position"
         app:layout_constraintEnd_toStartOf="@id/exo_duration"
         app:layout_constraintStart_toEndOf="@+id/exo_position"
         app:layout_constraintTop_toTopOf="@+id/exo_position"
         app:previewAnimationEnabled="true"
-        android:alpha="0.4"
-        app:played_color="#ffa200"
+        app:played_color="@color/movie_player_progress"
+        app:scrubber_color="@color/movie_player_progress"
+        app:unplayed_color="#8cffffff"
+        app:buffered_color="#8cffffff"
+
         app:previewFrameLayout="@id/previewFrameLayout"
         app:scrubber_dragged_size="@dimen/size_16dp"
         app:scrubber_enabled_size="@dimen/size_10dp" />
