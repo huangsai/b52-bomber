@@ -89,6 +89,9 @@
         app:previewAnimationEnabled="true"
         app:played_color="@color/movie_player_progress"
         app:scrubber_color="@color/movie_player_progress"
+        app:unplayed_color="#8cffffff"
+        app:buffered_color="#8cffffff"
+
         app:previewFrameLayout="@id/previewFrameLayout"
         app:scrubber_dragged_size="@dimen/size_16dp"
         app:scrubber_enabled_size="@dimen/size_10dp" />

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/MatchMatch"
-    android:background="@android:color/black"
+    android:background="#060612"
     tools:context=".player.PlayerActivity">
 
     <com.google.android.exoplayer2.ui.PlayerView
