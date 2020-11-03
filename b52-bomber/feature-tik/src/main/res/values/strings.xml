@@ -54,12 +54,17 @@
 
     <string name="activity_register_register_new_user">注册新用户</string>
 
-    <string name="alert_msg_permission_camera">相机权限被拒绝，本程序将自动关闭</string>
-    <string name="alert_msg_permission_storage">存储权限被拒绝，本程序将自动关闭</string>
-    <string name="alert_msg_permission_record">录音权限被拒绝，本程序将自动关闭</string>
+    <string name="alert_msg_permission_camera">请前往设置权限中打开相机权限，否则功能无法正常运行！</string>
+    <string name="alert_msg_permission_storage">请前往设置权限中打开存储权限，否则功能无法正常运行！</string>
+    <string name="alert_msg_permission_record">请前往设置权限中打开录音权限，否则功能无法正常运行！</string>
+    <string name="alert_msg_permission_camera_storage_record">请前往设置权限中打开相机、存储、录音权限，否则功能无法正常运行！</string>
+    <string name="alert_msg_permission_camera_record">请前往设置权限中打开相机、录音权限，否则功能无法正常运行！</string>
+    <string name="alert_msg_permission_storage_record">请前往设置权限中打开存储、录音权限，否则功能无法正常运行！</string>
+    <string name="alert_msg_permission_camera_storage">请前往设置权限中打开相机、存储权限，否则功能无法正常运行！</string>
 
-    <string name="alert_msg_permission_phone_state">读取设备信息权限被拒绝，为了你的账户安全，本程序将自动关闭</string>
-    <string name="alert_msg_permission_location">开启位置信息可以获得更好的同城体验</string>
+    <string name="alert_msg_permission_phone_state">请前往设置权限中打开设备信息权限，否则部分功能无法正常运行！</string>
+    <string name="alert_msg_permission_location">请前往设置权限中打开位置权限，否则功能无法正常运行！</string>
+    <string name="alert_msg_permission_location_and_phone">"请前往设置权限中打开设备信息与位置权限，否则部分功能无法正常运行！"</string>
     <string name="abc">abc</string>
     <string name="share_title">分享至</string>
     <string name="share_action_link">复制链接</string>

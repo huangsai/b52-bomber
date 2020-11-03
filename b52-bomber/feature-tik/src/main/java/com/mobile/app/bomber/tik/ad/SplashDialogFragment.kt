@@ -139,6 +139,7 @@ class SplashDialogFragment : BaseAppCompatDialogFragment(), View.OnClickListener
         override fun onFinish() {
             isAdFinished = true
             binding.txtTimer.setText(R.string.ad_close)
+            dismissAllowingStateLoss()
         }
 
         override fun onTick(millisUntilFinished: Long) {

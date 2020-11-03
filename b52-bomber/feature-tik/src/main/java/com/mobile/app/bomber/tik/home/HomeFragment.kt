@@ -1,31 +1,37 @@
 package com.mobile.app.bomber.tik.home
 
+import android.Manifest
 import android.app.Activity
+import android.content.pm.PackageManager
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.ActivityResultCallback
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
-import com.mobile.guava.android.ui.view.recyclerview.enforceSingleScrollDirection
-import com.mobile.guava.android.ui.view.viewpager.recyclerView
-import com.mobile.app.bomber.tik.R
-import com.mobile.app.bomber.tik.base.AppRouterUtils
+import com.mobile.app.bomber.common.base.MyBaseActivity
 import com.mobile.app.bomber.common.base.tool.SingleClick
 import com.mobile.app.bomber.runner.base.PrefsManager
+import com.mobile.app.bomber.tik.MainActivity
+import com.mobile.app.bomber.tik.R
+import com.mobile.app.bomber.tik.base.AppRouterUtils
 import com.mobile.app.bomber.tik.base.requireLogin
-import com.mobile.guava.android.mvvm.newStartActivity
 import com.mobile.app.bomber.tik.category.CategoryActivity
 import com.mobile.app.bomber.tik.databinding.FragmentHomeBinding
 import com.mobile.app.bomber.tik.login.LoginActivity
 import com.mobile.app.bomber.tik.search.SearchActivity
 import com.mobile.app.bomber.tik.video.VideoRecordActivity
 import com.mobile.guava.android.mvvm.AndroidX
+import com.mobile.guava.android.mvvm.newStartActivity
+import com.mobile.guava.android.ui.view.recyclerview.enforceSingleScrollDirection
+import com.mobile.guava.android.ui.view.viewpager.recyclerView
 import com.skydoves.balloon.Balloon
 import com.skydoves.balloon.BalloonAnimation
 
@@ -38,7 +44,7 @@ class HomeFragment : TopMainFragment(), View.OnClickListener {
     private lateinit var mediator: TabLayoutMediator
     private lateinit var adapter: MyAdapter
 
-    private var balloon: Balloon?= null
+    private var balloon: Balloon? = null
 
     private var currentPosition = -1
     private var ignoreOnPageChangeCallback = false
@@ -119,11 +125,82 @@ class HomeFragment : TopMainFragment(), View.OnClickListener {
                             newStartActivity(CategoryActivity::class.java)
                         }
                         findViewById<View>(R.id.txt_nearby).setOnClickListener {
-                            newStartActivity(NearByActivity::class.java)
+                            requestPermissionLocation()
+
                         }
                     }
                     show(anchor)
                 }
+    }
+
+    private fun requestPermissionLocation() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
+                    + ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_COARSE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED) {
+                newStartActivity(NearByActivity::class.java)
+            } else {
+                requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION),
+                        102)
+            }
+        } else {
+            newStartActivity(NearByActivity::class.java)
+        }
+
+    }
+
+    private fun requestPermissionCamera() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.CAMERA)
+                    + ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    + ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.RECORD_AUDIO)
+                    == PackageManager.PERMISSION_GRANTED) {
+                newStartActivity(VideoRecordActivity::class.java)
+            } else {
+                requestPermissions(arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO),
+                        103)
+            }
+        } else {
+            newStartActivity(VideoRecordActivity::class.java)
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String?>, grantResults: IntArray) {
+        when (requestCode) {
+            102 -> {
+                if (grantResults.size > 0 &&
+                        grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    (activity as MainActivity).lookupLocation()
+                    newStartActivity(NearByActivity::class.java)
+                } else {
+                    (activity as MyBaseActivity).alertPermission(R.string.alert_msg_permission_location)
+                }
+                return
+            }
+            103 -> {
+                var hasCameraPermission = true
+                var hasWritePermission = true
+                var hasRecordPermission = true
+                for (i in permissions.indices) {
+                    if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                        //判断是否勾选禁止后不再询问
+                        val key = permissions[i]
+                        if (key == Manifest.permission.CAMERA) {
+                            hasCameraPermission = false
+                        } else if (key == Manifest.permission.WRITE_EXTERNAL_STORAGE) {
+                            hasWritePermission = false
+                        } else if (key == Manifest.permission.RECORD_AUDIO) {
+                            hasRecordPermission = false
+                        }
+                    }
+                }
+                if (hasCameraPermission && hasWritePermission && hasRecordPermission) {
+                    newStartActivity(VideoRecordActivity::class.java)
+                } else {
+                    (activity as MyBaseActivity).alertPermission(R.string.alert_msg_permission_camera_storage_record)
+                }
+            }
+        }
     }
 
     @SingleClick
@@ -133,7 +210,7 @@ class HomeFragment : TopMainFragment(), View.OnClickListener {
             R.id.img_search -> newStartActivity(SearchActivity::class.java)
             R.id.img_camera -> {
                 if (PrefsManager.isLogin()) {
-                    newStartActivity(VideoRecordActivity::class.java)
+                    requestPermissionCamera()
                 } else {
                     newStartActivity(LoginActivity::class.java)
                 }

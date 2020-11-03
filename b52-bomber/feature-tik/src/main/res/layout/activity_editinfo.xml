@@ -75,7 +75,7 @@
                 android:layout_centerInParent="true"
 
                 android:layout_marginTop="@dimen/size_10dp"
-                android:text="点击更换头像"
+                android:text="@string/mine_modify_profile"
                 android:textColor="#ffffff"
                 android:textSize="12dp" />
         </RelativeLayout>
