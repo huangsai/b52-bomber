@@ -75,9 +75,9 @@ class CommentPresenter(
                 binding.includeGameAd.txtDesc1.text = ad?.desc
             }
             if (movie.isLike == 0) {//0未点赞 1已点赞
-                binding.txtLike.setCompoundDrawablesWithIntrinsicBounds(R.drawable.jq_dianzan_pingluan02, 0, 0, 0)
+                binding.txtLike.setCompoundDrawablesWithIntrinsicBounds(R.drawable.jq_dianzan_weixuanzhong, 0, 0, 0)
             } else if (movie.isLike == 1) {
-                binding.txtLike.setCompoundDrawablesWithIntrinsicBounds(R.drawable.jq_dianzan_pinglun, 0, 0, 0)
+                binding.txtLike.setCompoundDrawablesWithIntrinsicBounds(R.drawable.jq_dianzan, 0, 0, 0)
             }
             if (movie.isCollection == 0) {//0未关注 1已关注
                 binding.txtBookmark.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.jq_shoucang, 0, 0)
@@ -174,12 +174,12 @@ class CommentPresenter(
                                                 movie.isLike = 1
                                                 movie.likes += 1
                                                 binding.txtLike.text = ("点赞  " + movie.likes.toString())
-                                                binding.txtLike.setCompoundDrawablesWithIntrinsicBounds(R.drawable.jq_dianzan_pinglun, 0, 0, 0)
+                                                binding.txtLike.setCompoundDrawablesWithIntrinsicBounds(R.drawable.jq_dianzan, 0, 0, 0)
                                             } else {
                                                 movie.isLike = 0
                                                 movie.likes -= 1
                                                 binding.txtLike.text = ("点赞  " + movie.likes.toString())
-                                                binding.txtLike.setCompoundDrawablesWithIntrinsicBounds(R.drawable.jq_dianzan_pingluan02, 0, 0, 0)
+                                                binding.txtLike.setCompoundDrawablesWithIntrinsicBounds(R.drawable.jq_dianzan_weixuanzhong, 0, 0, 0)
                                             }
                                         }
                                         else -> Msg.handleSourceException(source.requireError())

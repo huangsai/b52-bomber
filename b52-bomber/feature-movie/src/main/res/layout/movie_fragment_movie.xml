@@ -5,29 +5,50 @@
     android:layout_height="match_parent"
     android:background="@color/main_background">
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/layout_tab"
-        android:layout_width="@dimen/size_0dp"
-        android:layout_height="@dimen/size_18dp"
-        android:layout_marginLeft="@dimen/size_16dp"
-        android:layout_marginTop="@dimen/size_46dp"
-        android:layout_marginRight="@dimen/size_16dp"
-        android:background="@android:color/transparent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/menu"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tabBackground="@color/transparent"
-        app:tabIndicatorColor="@color/color_text_ffcc00"
-        app:tabIndicatorFullWidth="false"
-        app:tabIndicatorHeight="@dimen/size_1dp"
-        app:tabMaxWidth="200dp"
-        app:tabMinWidth="@dimen/size_20dp"
-        app:tabMode="scrollable"
-        app:tabPaddingEnd="@dimen/size_8dp"
-        app:tabPaddingStart="@dimen/size_8dp"
-        app:tabPaddingTop="@dimen/size_0dp"
-        app:tabRippleColor="@color/transparent"
-        app:tabTextAppearance="@style/movie_TabTextAppearance" />
+<!--    <com.mobile.app.bomber.common.tablayout.XTabLayout-->
+<!--        android:id="@+id/layout_tab"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="@dimen/size_18dp"-->
+<!--        android:layout_marginLeft="@dimen/size_16dp"-->
+<!--        android:layout_marginTop="@dimen/size_46dp"-->
+<!--        android:layout_marginRight="@dimen/size_16dp"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        app:layout_constraintRight_toLeftOf="@id/menu"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:wtl_default_text_color="@color/colorPrimary"-->
+<!--        app:wtl_default_text_size="12sp"-->
+<!--        app:wtl_indicator_color="@color/colorAccent"-->
+<!--        app:wtl_indicator_corner_radius="4dp"-->
+<!--        app:wtl_indicator_height="1dp"-->
+<!--        app:wtl_indicator_margin_bottom="10dp"-->
+<!--        app:wtl_selected_text_bold="true"-->
+<!--        app:wtl_selected_text_color="@color/colorAccent"-->
+<!--        app:wtl_selected_text_size="16sp"-->
+<!--        app:wtl_tab_fill_container="false" />-->
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/layout_tab"
+            android:layout_width="@dimen/size_0dp"
+            android:layout_height="@dimen/size_18dp"
+            android:layout_marginLeft="@dimen/size_16dp"
+            android:layout_marginTop="@dimen/size_46dp"
+            android:layout_marginRight="@dimen/size_16dp"
+            android:background="@android:color/transparent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/menu"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tabBackground="@color/transparent"
+            app:tabIndicatorColor="@color/color_text_ffcc00"
+            app:tabIndicatorFullWidth="false"
+            app:tabIndicatorHeight="@dimen/size_1dp"
+            app:tabMaxWidth="200dp"
+            app:tabMinWidth="@dimen/size_20dp"
+            app:tabMode="scrollable"
+            app:tabPaddingEnd="@dimen/size_8dp"
+            app:tabPaddingStart="@dimen/size_8dp"
+            app:tabPaddingTop="@dimen/size_0dp"
+            app:tabRippleColor="@color/transparent"
+            app:tabTextAppearance="@style/movie_TabTextAppearance" />
 
     <ImageView
         android:id="@+id/menu"

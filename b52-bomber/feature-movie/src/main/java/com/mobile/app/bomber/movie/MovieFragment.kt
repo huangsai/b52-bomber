@@ -1,14 +1,17 @@
 package com.mobile.app.bomber.movie
 
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.mobile.app.bomber.common.base.Msg
 import com.mobile.app.bomber.common.base.MyBaseFragment
@@ -24,14 +27,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class MovieFragment : MyBaseFragment(), ApiMovieFragment, View.OnClickListener {
+
+class MovieFragment : MyBaseFragment(), ApiMovieFragment, View.OnClickListener, TabLayout.OnTabSelectedListener {
 
     private val model: MovieViewModel by viewModels { MovieX.component.viewModelFactory() }
 
     private var _binding: MovieFragmentMovieBinding? = null
     private val binding: MovieFragmentMovieBinding get() = _binding!!
     private val tabLabels = ArrayList<String>()
-
+    private var textv: TextView? = null;
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
@@ -39,7 +43,12 @@ class MovieFragment : MyBaseFragment(), ApiMovieFragment, View.OnClickListener {
     ): View? {
         _binding = MovieFragmentMovieBinding.inflate(inflater, container, false)
         binding.menu.setOnClickListener(this)
+
+        binding.layoutTab.addOnTabSelectedListener(this)
+        binding.layoutTab.getTabAt(0)
         return binding.root
+
+
     }
 
     override fun onResume() {
@@ -60,7 +69,10 @@ class MovieFragment : MyBaseFragment(), ApiMovieFragment, View.OnClickListener {
                 when (source) {
                     is Source.Success -> {
                         binding.viewPager.adapter = MyAdapter(requireActivity(), tabLabels)
-                        val tabLayoutMediator = TabLayoutMediator(binding.layoutTab, binding.viewPager) { tab, position -> tab.text = tabLabels[position] }
+                        val tabLayoutMediator = TabLayoutMediator(binding.layoutTab, binding.viewPager) { tab, position ->
+                            tab.text = tabLabels[position]
+
+                        }
                         tabLayoutMediator.attach()
                     }
                     is Source.Error -> {
@@ -69,6 +81,8 @@ class MovieFragment : MyBaseFragment(), ApiMovieFragment, View.OnClickListener {
                 }.exhaustive
             }
         }
+
+
     }
 
     fun selectTab(pos: Int) {
@@ -116,5 +130,23 @@ class MovieFragment : MyBaseFragment(), ApiMovieFragment, View.OnClickListener {
         override fun getItemCount(): Int {
             return labels.size
         }
+    }
+
+    override fun onTabReselected(tab: TabLayout.Tab?) {
+
+    }
+
+    override fun onTabUnselected(tab: TabLayout.Tab?) {
+        tab!!.setCustomView(null)
+    }
+
+    override fun onTabSelected(tab: TabLayout.Tab?) {
+        val textView = TextView(activity)
+        val selectedSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, 14f, resources.displayMetrics)
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, selectedSize)
+        textView.text = tab!!.text
+        textView.textSize = 14f
+        textView.setTextColor(getResources().getColor(R.color.color_text_ffcc00));
+        tab!!.customView = textView
     }
 }

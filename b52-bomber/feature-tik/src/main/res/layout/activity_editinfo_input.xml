@@ -45,7 +45,7 @@
         android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_05dp"
-        android:background="#33334f" />
+        android:background="#222236" />
 
     <LinearLayout
         android:layout_width="match_parent"

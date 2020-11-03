@@ -43,12 +43,12 @@
         app:layout_constraintEnd_toStartOf="@+id/txt_go"
         app:layout_constraintStart_toStartOf="@+id/txt_title1"
         app:layout_constraintTop_toBottomOf="@+id/guide1" />
-
+<!--    movie_player_game_ad_go-->
     <TextView
         android:id="@+id/txt_go"
-        android:layout_width="@dimen/size_64dp"
-        android:layout_height="@dimen/size_32dp"
-        android:background="@drawable/movie_player_game_ad_go"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/jq_game"
         android:gravity="center"
         android:text="@string/movie_player_game_ad_go"
         android:textSize="@dimen/font_15sp"
