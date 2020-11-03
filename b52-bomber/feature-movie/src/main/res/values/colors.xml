@@ -10,4 +10,5 @@
     <color name="movie_line_color">#141421</color>
     <color name="movie_player_options">#80000000</color>
     <color name="movie_player_options_selected">#FF9600</color>
+    <color name="movie_player_progress">#FFA200</color>
 </resources>
