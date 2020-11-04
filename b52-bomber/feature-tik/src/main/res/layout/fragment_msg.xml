@@ -29,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_marginTop="@dimen/size_10dp"
             android:layout_height="0.5dp"
-            android:background="#33334f" />
+            android:background="#222236" />
     </LinearLayout>
 
     <ImageView

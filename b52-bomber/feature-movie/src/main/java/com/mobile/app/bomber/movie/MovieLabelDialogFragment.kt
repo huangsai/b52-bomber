@@ -5,12 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import androidx.recyclerview.widget.GridLayoutManager
+import android.widget.TextView
 import com.mobile.app.bomber.common.base.tool.SingleClick
-import com.mobile.guava.data.Values
 import com.mobile.app.bomber.movie.base.views.MiddleGridItemDecoration
 import com.mobile.app.bomber.movie.databinding.MovieDialogLabelBinding
 import com.mobile.guava.android.mvvm.BaseAppCompatDialogFragment
+import com.mobile.guava.data.Values
 import com.pacific.adapter.AdapterUtils
 import com.pacific.adapter.RecyclerAdapter
 
@@ -39,22 +39,39 @@ class MovieLabelDialogFragment : BaseAppCompatDialogFragment(), View.OnClickList
         dialog?.window?.setBackgroundDrawableResource(android.R.color.transparent)
         _binding = MovieDialogLabelBinding.inflate(layoutInflater)
         binding.layoutToolbar.toolbar.title = ""
-        binding.layoutToolbar.toolbar.setNavigationIcon(R.drawable.jq_fanhui)
+        binding.layoutToolbar.toolbar.setNavigationIcon(R.drawable.gg_fanhui)
         binding.layoutToolbar.toolbar.setNavigationOnClickListener(this)
         binding.layoutToolbar.txtToolbarTitle.text = getString(R.string.movie_text_all_label)
-        initRecycler()
+//        initRecycler()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val items = ArrayList<MovieLabelItem>()
+//        if (labels != null) {
+//            for (label: String in labels!!) {
+//                items.add(MovieLabelItem(label))
+//            }
+//        }
+//        adapter.addAll(items)
+
+//-------------------自定义shoubtnlayout------------------
+//        binding.mShowBtnLayout.removeAllViews()
         if (labels != null) {
-            for (label: String in labels!!) {
-                items.add(MovieLabelItem(label))
+            for (index in 0..labels!!.size-1) {
+                val textView = LayoutInflater.from(requireContext()).inflate(R.layout.movie_label_tag_, binding.mShowBtnLayout, false) as TextView
+                textView.setText(labels!!.get(index).toString())
+                textView.tag = index
+                textView.setOnClickListener { v ->
+                    val movieFragment: MovieFragment = requireParentFragment() as MovieFragment
+                    movieFragment.selectTab(index)
+                    dismissAllowingStateLoss()
+
+                }
+                binding.mShowBtnLayout.addView(textView)
             }
         }
-        adapter.addAll(items)
     }
 
     override fun onStart() {
@@ -66,11 +83,11 @@ class MovieLabelDialogFragment : BaseAppCompatDialogFragment(), View.OnClickList
     }
 
     private fun initRecycler() {
-        val itemDecoration = MiddleGridItemDecoration(requireContext(), R.dimen.size_14dp)
-        binding.recycler.layoutManager = GridLayoutManager(requireContext(), 5)
-        binding.recycler.addItemDecoration(itemDecoration)
-        adapter.onClickListener = this
-        binding.recycler.adapter = adapter
+        val itemDecoration = MiddleGridItemDecoration(requireContext(), R.dimen.size_6dp)
+//        binding.recycler.layoutManager = GridLayoutManager(requireContext(), 5)
+//        binding.recycler.addItemDecoration(itemDecoration)
+//        adapter.onClickListener = this
+//        binding.recycler.adapter = adapter
     }
 
     @SingleClick
@@ -78,14 +95,14 @@ class MovieLabelDialogFragment : BaseAppCompatDialogFragment(), View.OnClickList
         if (v!!.id == R.id.item_label_text) {
             val pos = AdapterUtils.getHolder(v).bindingAdapterPosition
             val movieFragment: MovieFragment = requireParentFragment() as MovieFragment
-            movieFragment.selectTab(pos)
+//            movieFragment.selectTab(pos)
         }
-        dismissAllowingStateLoss()
+//        dismissAllowingStateLoss()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding.recycler.adapter = null
+//        binding.recycler.adapter = null
         _binding = null
     }
 }

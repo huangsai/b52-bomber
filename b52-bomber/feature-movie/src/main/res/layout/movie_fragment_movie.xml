@@ -5,26 +5,12 @@
     android:layout_height="match_parent"
     android:background="@color/main_background">
 
-<!--    <com.mobile.app.bomber.common.tablayout.XTabLayout-->
-<!--        android:id="@+id/layout_tab"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="@dimen/size_18dp"-->
-<!--        android:layout_marginLeft="@dimen/size_16dp"-->
-<!--        android:layout_marginTop="@dimen/size_46dp"-->
-<!--        android:layout_marginRight="@dimen/size_16dp"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--        app:layout_constraintRight_toLeftOf="@id/menu"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:wtl_default_text_color="@color/colorPrimary"-->
-<!--        app:wtl_default_text_size="12sp"-->
-<!--        app:wtl_indicator_color="@color/colorAccent"-->
-<!--        app:wtl_indicator_corner_radius="4dp"-->
-<!--        app:wtl_indicator_height="1dp"-->
-<!--        app:wtl_indicator_margin_bottom="10dp"-->
-<!--        app:wtl_selected_text_bold="true"-->
-<!--        app:wtl_selected_text_color="@color/colorAccent"-->
-<!--        app:wtl_selected_text_size="16sp"-->
-<!--        app:wtl_tab_fill_container="false" />-->
+<!--    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout-->
+<!--        android:id="@+id/swipe_refresh"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        >-->
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/layout_tab"
@@ -49,6 +35,7 @@
             app:tabPaddingTop="@dimen/size_0dp"
             app:tabRippleColor="@color/transparent"
             app:tabTextAppearance="@style/movie_TabTextAppearance" />
+<!--    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
 
     <ImageView
         android:id="@+id/menu"

@@ -1,10 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/item_label_text"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/size_20dp"
+    android:layout_width="wrap_content"
+    android:layout_height="20dp"
     android:background="@drawable/movie_label_item_bg"
     android:gravity="center"
+    android:paddingLeft="@dimen/font_12sp"
+    android:paddingRight="@dimen/font_12sp"
+    android:paddingTop="@dimen/size_3dp"
+    android:paddingBottom="@dimen/size_3dp"
     android:text=""
     android:textColor="@color/white"
     android:textSize="@dimen/font_12sp" />
+
+
+<!--<TextView xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--android:layout_width="wrap_content"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:layout_marginLeft="12dp"-->
+<!--android:layout_marginTop="3dp"-->
+<!--android:layout_marginRight="12dp"-->
+<!--android:background="@drawable/video_tag_selector"-->
+<!--android:paddingLeft="12dp"-->
+<!--android:paddingTop="3dp"-->
+<!--android:paddingRight="12dp"-->
+<!--android:paddingBottom="3dp"-->
+<!--android:text=""-->
+<!--android:textColor="@color/white"-->
+<!--android:textSize="@dimen/font_12sp" />-->
