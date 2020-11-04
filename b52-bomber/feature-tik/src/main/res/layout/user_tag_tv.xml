@@ -14,4 +14,4 @@
     android:textAlignment="center"
     android:text=""
     android:textColor="@color/white"
-    android:textSize="@dimen/font_12sp" />
+    android:textSize="@dimen/font_14sp" />

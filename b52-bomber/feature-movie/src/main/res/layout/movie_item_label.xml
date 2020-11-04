@@ -11,7 +11,7 @@
     android:paddingBottom="@dimen/size_3dp"
     android:text=""
     android:textColor="@color/white"
-    android:textSize="@dimen/font_12sp" />
+    android:textSize="@dimen/font_14sp" />
 
 
 <!--<TextView xmlns:android="http://schemas.android.com/apk/res/android"-->

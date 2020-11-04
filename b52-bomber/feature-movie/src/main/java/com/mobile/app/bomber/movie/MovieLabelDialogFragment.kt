@@ -48,7 +48,7 @@ class MovieLabelDialogFragment : BaseAppCompatDialogFragment(), View.OnClickList
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val items = ArrayList<MovieLabelItem>()
+       // val items = ArrayList<MovieLabelItem>()
 //        if (labels != null) {
 //            for (label: String in labels!!) {
 //                items.add(MovieLabelItem(label))
@@ -59,9 +59,9 @@ class MovieLabelDialogFragment : BaseAppCompatDialogFragment(), View.OnClickList
 //-------------------自定义shoubtnlayout------------------
 //        binding.mShowBtnLayout.removeAllViews()
         if (labels != null) {
-            for (index in 0..labels!!.size-1) {
+            for (index in 0..labels!!.size - 1) {
                 val textView = LayoutInflater.from(requireContext()).inflate(R.layout.movie_label_tag_, binding.mShowBtnLayout, false) as TextView
-                textView.setText(labels!!.get(index).toString())
+                textView.setText(labels?.get(index))
                 textView.tag = index
                 textView.setOnClickListener { v ->
                     val movieFragment: MovieFragment = requireParentFragment() as MovieFragment
@@ -96,8 +96,10 @@ class MovieLabelDialogFragment : BaseAppCompatDialogFragment(), View.OnClickList
             val pos = AdapterUtils.getHolder(v).bindingAdapterPosition
             val movieFragment: MovieFragment = requireParentFragment() as MovieFragment
 //            movieFragment.selectTab(pos)
+        } else {
+            dismissAllowingStateLoss()
         }
-//        dismissAllowingStateLoss()
+
     }
 
     override fun onDestroyView() {
