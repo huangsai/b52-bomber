@@ -29,7 +29,7 @@
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/layout_tab"
             android:layout_width="@dimen/size_0dp"
-            android:layout_height="@dimen/size_18dp"
+            android:layout_height="@dimen/size_22dp"
             android:layout_marginLeft="@dimen/size_16dp"
             android:layout_marginTop="@dimen/size_46dp"
             android:layout_marginRight="@dimen/size_16dp"

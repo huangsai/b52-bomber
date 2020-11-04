@@ -137,16 +137,16 @@ class MovieFragment : MyBaseFragment(), ApiMovieFragment, View.OnClickListener, 
     }
 
     override fun onTabUnselected(tab: TabLayout.Tab?) {
-        tab!!.setCustomView(null)
+        tab?.setCustomView(null)
     }
 
     override fun onTabSelected(tab: TabLayout.Tab?) {
         val textView = TextView(activity)
-        val selectedSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, 14f, resources.displayMetrics)
+        val selectedSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, 16f, resources.displayMetrics)
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, selectedSize)
-        textView.text = tab!!.text
-        textView.textSize = 14f
+        textView.text = tab?.text
+
         textView.setTextColor(getResources().getColor(R.color.color_text_ffcc00));
-        tab!!.customView = textView
+        tab?.customView = textView
     }
 }
