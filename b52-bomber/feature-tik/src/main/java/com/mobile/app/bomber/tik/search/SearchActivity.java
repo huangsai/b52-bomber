@@ -146,7 +146,7 @@ public class SearchActivity extends MyBaseActivity
              if (source instanceof Source.Success) {
                 List<String> hotKeys = source.requireData();
                 for (int i = 0; i < hotKeys.size(); i++) {
-                    TextView textView = (TextView) LayoutInflater.from(this).inflate(R.layout.item_tag_tv, binding.mShowBtnLayout, false);
+                    TextView textView = (TextView) LayoutInflater.from(this).inflate(R.layout.user_tag_tv, binding.mShowBtnLayout, false);
                     textView.setText(hotKeys.get(i).toString());
                     textView.setTag(i);
                     textView.setOnClickListener(view -> {

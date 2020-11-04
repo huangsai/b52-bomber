@@ -5,7 +5,7 @@
     android:layout_marginLeft="10dp"
     android:layout_marginRight="10dp"
     android:layout_marginTop="@dimen/font_10sp"
-    android:background="@drawable/video_tag_selector"
+    android:background="@drawable/movie_label_item_bg"
     android:paddingLeft="12dp"
     android:gravity="center"
     android:paddingTop="3dp"
