@@ -4,7 +4,6 @@ import android.Manifest
 import android.app.Activity
 import android.content.pm.PackageManager
 import android.graphics.Color
-import android.location.Location
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,12 +13,10 @@ import androidx.activity.result.ActivityResultCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.mobile.app.bomber.common.base.MyBaseActivity
-import com.mobile.app.bomber.common.base.tool.AppUtil
 import com.mobile.app.bomber.common.base.tool.SingleClick
 import com.mobile.app.bomber.runner.base.PrefsManager
 import com.mobile.app.bomber.tik.R
@@ -27,7 +24,6 @@ import com.mobile.app.bomber.tik.base.AppRouterUtils
 import com.mobile.app.bomber.tik.base.requireLogin
 import com.mobile.app.bomber.tik.category.CategoryActivity
 import com.mobile.app.bomber.tik.databinding.FragmentHomeBinding
-import com.mobile.app.bomber.tik.home.LocationLiveData.value
 import com.mobile.app.bomber.tik.login.LoginActivity
 import com.mobile.app.bomber.tik.search.SearchActivity
 import com.mobile.app.bomber.tik.video.VideoRecordActivity
@@ -37,7 +33,6 @@ import com.mobile.guava.android.ui.view.recyclerview.enforceSingleScrollDirectio
 import com.mobile.guava.android.ui.view.viewpager.recyclerView
 import com.skydoves.balloon.Balloon
 import com.skydoves.balloon.BalloonAnimation
-import timber.log.Timber
 
 class HomeFragment : TopMainFragment(), View.OnClickListener {
 
@@ -138,9 +133,10 @@ class HomeFragment : TopMainFragment(), View.OnClickListener {
 
     private fun requestPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.READ_PHONE_STATE)
+            if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
+                    + ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_COARSE_LOCATION)
                     == PackageManager.PERMISSION_GRANTED) {
-                lookupLocation()
+                LocationLiveData.lookupLocation(this,requireContext())
             }
             if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.READ_PHONE_STATE)
                     + ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
@@ -152,25 +148,10 @@ class HomeFragment : TopMainFragment(), View.OnClickListener {
                         101)
             }
         } else {
-            lookupLocation()
+            LocationLiveData.lookupLocation(this,requireContext())
         }
     }
 
-    fun lookupLocation() {
-        if (value == null && !AppUtil.isGpsAble(activity)) {
-            AppUtil.openGPS(activity)
-        }
-        LocationLiveData.observe(this, Observer { location: Location? ->
-            if (location != null) {
-                Timber.tag("LocationLiveData").d(
-                        "(%s,%s)",
-                        location.latitude,
-                        location.longitude
-                )
-                LocationLiveData.removeObservers(this)
-            }
-        })
-    }
 
     private fun requestPermissionLocation() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -221,7 +202,7 @@ class HomeFragment : TopMainFragment(), View.OnClickListener {
                     }
                 }
                 if (hasLocationPermission) {
-                    lookupLocation()
+                    LocationLiveData.lookupLocation(this,requireContext())
                     if (!hasPhoneStatePermission) {
                         (activity as MyBaseActivity).alertPermission(R.string.alert_msg_permission_phone_state)
                     }
@@ -235,8 +216,8 @@ class HomeFragment : TopMainFragment(), View.OnClickListener {
             }
             102 -> {
                 if (grantResults.size > 0 &&
-                        grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    lookupLocation()
+                        grantResults[0] + grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                    LocationLiveData.lookupLocation(this,requireContext())
                     newStartActivity(NearByActivity::class.java)
                 } else {
                     (activity as MyBaseActivity).alertPermission(R.string.alert_msg_permission_location)

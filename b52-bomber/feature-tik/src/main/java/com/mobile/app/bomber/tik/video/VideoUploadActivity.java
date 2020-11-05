@@ -1,16 +1,21 @@
 package com.mobile.app.bomber.tik.video;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.mobile.app.bomber.common.base.Msg;
@@ -126,6 +131,37 @@ public class VideoUploadActivity extends MyBaseActivity implements View.OnClickL
         }
     }
 
+    private void requestPermissionLocation() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                    + ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED) {
+                clickLocation();
+            } else {
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
+                        105);
+            }
+        } else {
+            clickLocation();
+        }
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case 105:
+                if (grantResults.length > 0 &&
+                        grantResults[0]+grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                    LocationLiveData.INSTANCE.lookupLocation(this, this);
+                } else {
+                    alertPermission(R.string.alert_msg_permission_location);
+                }
+                break;
+        }
+    }
+
     private void clickWechatShareLayout() {
         binding.shareQqText.setSelected(false);
         binding.qq.setSelected(false);
@@ -202,7 +238,7 @@ public class VideoUploadActivity extends MyBaseActivity implements View.OnClickL
         } else if (id == R.id.developVideo) {
             publishVideo();
         } else if (id == R.id.tv_location) {
-            clickLocation();
+            requestPermissionLocation();
         } else if (id == R.id.ll_share_wechat_layout) {
             clickWechatShareLayout();
         } else if (id == R.id.ll_share_qq_layout) {

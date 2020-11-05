@@ -6,7 +6,10 @@ import android.content.pm.PackageManager
 import android.location.*
 import android.os.Bundle
 import androidx.annotation.RequiresPermission
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import androidx.lifecycle.LiveData
+import com.mobile.app.bomber.common.base.tool.AppUtil
 import com.mobile.app.bomber.runner.base.PrefsManager
 import com.mobile.guava.android.mvvm.AndroidX
 import timber.log.Timber
@@ -91,5 +94,21 @@ object LocationLiveData : LiveData<Location>(), LocationListener {
 
     override fun onProviderDisabled(provider: String) {
         Timber.tag("LocationLiveData").d("onProviderDisabled")
+    }
+
+    fun lookupLocation(owner: LifecycleOwner,context: Context) {
+        if (value == null && !AppUtil.isGpsAble(context)) {
+            AppUtil.openGPS(context)
+        }
+        LocationLiveData.observe(owner, Observer { location: Location? ->
+            if (location != null) {
+                Timber.tag("LocationLiveData").d(
+                        "(%s,%s)",
+                        location.latitude,
+                        location.longitude
+                )
+                LocationLiveData.removeObservers(owner)
+            }
+        })
     }
 }
