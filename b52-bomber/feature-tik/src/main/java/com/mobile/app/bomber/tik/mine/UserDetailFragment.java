@@ -141,7 +141,7 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
                         binding.userAge.setBackgroundResource(R.drawable.tvgenderman_setting);
                     }
                     binding.userName.setText(apiUser.getUsername());
-                    binding.userId.setText("ID:" + apiUser.getUid());
+                    binding.userId.setText("ID：" + apiUser.getUid());
                     if (apiUser.getWechat().equals("") ||
                             apiUser.getWechat().isEmpty() ||
                             userId == PrefsManager.INSTANCE.getUserId()) {
@@ -149,7 +149,7 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
                     } else {
                         binding.userCopyWechat.setVisibility(View.VISIBLE);
                     }
-                    binding.userWechat.setText("微信号:" + apiUser.getWechat());
+                    binding.userWechat.setText("微信号：" + apiUser.getWechat());
                     String birString = AppUtil.handleAgeStr(apiUser.getBirthday());
                     if (TextUtils.isEmpty(birString)) {
                         binding.userAge.setVisibility(View.GONE);
@@ -160,7 +160,7 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
                     GlideExtKt.loadProfile(this, apiUser.getPic(), binding.userProfile);
                     binding.userSign.setText(apiUser.getSign());
                 } else {
-                    binding.userId.setText("ID:" + 0);
+                    binding.userId.setText("ID：" + 0);
                     binding.userGender.setText("女");
                     binding.userAge.setText("19");
                 }
