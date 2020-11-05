@@ -2,10 +2,13 @@ package com.mobile.app.bomber.tik.mine;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Looper;
 import android.text.TextUtils;
 import android.view.View;
 
 import androidx.annotation.Nullable;
+import androidx.lifecycle.LiveData;
 
 import com.mobile.app.bomber.common.base.tool.AppUtil;
 import com.mobile.app.bomber.data.http.entities.ApiDownLoadUrl;
@@ -23,6 +26,8 @@ import com.mobile.app.bomber.tik.databinding.ActivitySettingEditinfoBinding;
 import com.mobile.app.bomber.tik.login.LoginActivity;
 import com.mobile.app.bomber.tik.login.LoginViewModel;
 import com.mobile.guava.jvm.domain.Source;
+
+import java.lang.ref.WeakReference;
 
 
 public class SettingAcivity extends MyBaseActivity implements View.OnClickListener {
@@ -58,7 +63,6 @@ public class SettingAcivity extends MyBaseActivity implements View.OnClickListen
         binding.settingItem.checkUpate.setOnClickListener(this);
         binding.settingItem.share.setOnClickListener(this);
         binding.settingItem.currntBuild.setText(AppUtil.getAppVersionName(getApplicationContext()));
-
     }
 
     @SingleClick
@@ -87,21 +91,52 @@ public class SettingAcivity extends MyBaseActivity implements View.OnClickListen
                     Msg.INSTANCE.handleSourceException(source.requireError());
                 }
             });
+//            new MyThread(this,shareUrl).start();
 
-            new Thread() {
-                public void run() {
-                    try {
-                        Thread.sleep(1000);
+//            try {
+//                Thread.sleep(1000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+
+            new Handler().postDelayed(
+                    ()-> {
                         if (TextUtils.isEmpty(shareUrl)) {
+                            Looper.prepare();
                             Msg.INSTANCE.toast("暂时不能分享");
+                            Looper.loop();
                             return;
                         }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }.start();
+                    },1000
+            );
             ShareDialogFragment.goSystemShareSheet(this, shareUrl, "在xx世界最流行的色情视频app中免费观看各种视频，国产网红、日本av、欧美色情应有尽有.");
+        }
+    }
+
+    private static class MyThread extends Thread {
+        WeakReference<SettingAcivity> mThreadActivityRef;
+        String urlContent;
+
+        public MyThread(SettingAcivity activity,String urlContent) {
+            mThreadActivityRef = new WeakReference<SettingAcivity>(
+                    activity);
+            this.urlContent = urlContent;
+        }
+
+
+        @Override
+        public void run() {
+            super.run();
+            if (mThreadActivityRef == null)
+                return;
+            if (mThreadActivityRef.get() != null) {
+                if (TextUtils.isEmpty(urlContent)) {
+                    Looper.prepare();
+                    Msg.INSTANCE.toast("暂时不能分享");
+                    Looper.loop();
+                    return;
+                }
+            }
         }
     }
 }
