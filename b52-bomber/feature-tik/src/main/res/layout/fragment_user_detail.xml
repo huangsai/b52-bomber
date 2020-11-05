@@ -101,6 +101,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
+                android:textSize="@dimen/font_12sp"
                 android:textColor="@color/white" />
 
             <TextView
@@ -111,6 +112,7 @@
                 android:background="@drawable/copy_setting"
                 android:gravity="center"
                 android:text="复制"
+                android:textSize="@dimen/font_12sp"
                 android:textColor="@color/white" />
         </LinearLayout>
 
@@ -122,6 +124,7 @@
             android:layout_marginTop="@dimen/size_10dp"
             android:layout_marginLeft="@dimen/size_14dp"
             android:layout_marginRight="@dimen/size_14dp"
+            android:textSize="@dimen/font_12sp"
             android:hint="这家伙很烂，什么都没留下"
             android:textColor="#605d69" />
         <!--   点赞、粉丝、关注 -->
