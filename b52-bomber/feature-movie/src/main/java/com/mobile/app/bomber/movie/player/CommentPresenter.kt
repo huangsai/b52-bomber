@@ -62,17 +62,22 @@ class CommentPresenter(
                 nullorEmpty = movie.playNum.toString()
             }
             binding.txtDesc.text = (nullorEmpty + "次播放，影片简介 >")
+            binding.txtLike.text = ("点赞  " + movie.likes.toString())
             if (ad == null) {
                 binding.layoutGameAd.visibility = View.GONE
             } else {
-                binding.layoutGameAd.visibility = View.VISIBLE
-                GlideApp.with(playerActivity)
-                        .load(ad?.img)
-                        .placeholder(R.drawable.jq_icon_40)
-                        .into(binding.includeGameAd.imgIcon)
-                binding.txtLike.text = ("点赞  " + movie.likes.toString())
-                binding.includeGameAd.txtTitle1.text = ad?.title
-                binding.includeGameAd.txtDesc1.text = ad?.desc
+                if (ad?.title.isNullOrEmpty() && ad?.desc.isNullOrEmpty()) {
+                    binding.layoutGameAd.visibility = View.GONE
+                } else {
+                    binding.layoutGameAd.visibility = View.VISIBLE
+                    GlideApp.with(playerActivity)
+                            .load(ad?.img)
+                            .placeholder(R.drawable.jq_icon_40)
+                            .into(binding.includeGameAd.imgIcon)
+
+                    binding.includeGameAd.txtTitle1.text = ad?.title
+                    binding.includeGameAd.txtDesc1.text = ad?.desc
+                }
             }
             if (movie.isLike == 0) {//0未点赞 1已点赞
                 binding.txtLike.setCompoundDrawablesWithIntrinsicBounds(R.drawable.jq_dianzan_weixuanzhong, 0, 0, 0)
