@@ -57,7 +57,7 @@ class CommentRepository @Inject constructor(
                 appPrefsManager.getUserId(),
                 appPrefsManager.getToken(),
                 comment.id,
-                if (comment.isLiking) -1 else 1
+                if (comment.isLiking) 1 else -1
         )
         return try {
             dataService.likeComment(req).toSource()
