@@ -112,6 +112,7 @@ class SearchActivity : MyBaseActivity(), TextWatcher, View.OnClickListener, OnEd
     fun setInputContent(inputContent: String) {
         binding.etSearch.setText(inputContent)
         binding.etSearch.setSelection(inputContent.length)
+        searchDone()
     }
 
     override fun afterTextChanged(s: Editable?) {
@@ -178,7 +179,7 @@ class SearchActivity : MyBaseActivity(), TextWatcher, View.OnClickListener, OnEd
 //         }
 //     }
     override fun onEditorAction(p0: TextView?, p1: Int, p2: KeyEvent?): Boolean {
-        if (p1 == EditorInfo.IME_ACTION_NEXT || p1 == EditorInfo.IME_ACTION_GO || p1 == EditorInfo.IME_ACTION_DONE) {
+        if (p1 == EditorInfo.IME_ACTION_SEARCH) {
             searchDone()
 //            hideSoftInput()
         }
