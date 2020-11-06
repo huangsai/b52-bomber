@@ -1,11 +1,14 @@
 package com.mobile.app.bomber.tik.mine;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.Nullable;
 
@@ -177,6 +180,24 @@ public class EditInfoInputActivity extends MyBaseActivity implements View.OnClic
                 Msg.INSTANCE.toast("修改失败");
             }
         });
+    }
+
+//    @Override
+//    public boolean dispatchTouchEvent(MotionEvent ev) {
+//        Msg.INSTANCE.toast("111");
+//
+//        return super.dispatchTouchEvent(ev);
+//
+//    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        hideInputKeyboard(getCurrentFocus());
+        return super.onTouchEvent(event);
+    }
+    protected void hideInputKeyboard(View v) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
     }
 }
 
