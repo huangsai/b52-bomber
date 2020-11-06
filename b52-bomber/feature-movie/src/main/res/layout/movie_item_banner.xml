@@ -8,12 +8,17 @@
     android:paddingTop="@dimen/size_10dp"
     android:paddingBottom="@dimen/size_16dp">
 
-    <com.youth.banner.Banner
-        android:id="@+id/banner_img"
+    <com.mobile.guava.android.ui.view.viewpager.NestedScrollableHost
         android:layout_width="match_parent"
-        android:layout_height="@dimen/size_150dp"
-        app:banner_indicator_selected_color="@color/color_text_ffcc00"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="wrap_content">
+
+        <com.mobile.app.bomber.movie.top.MyBanner
+            android:id="@+id/banner_img"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_150dp"
+            app:banner_indicator_selected_color="@color/color_text_ffcc00"
+            app:layout_constraintTop_toTopOf="parent" />
+    </com.mobile.guava.android.ui.view.viewpager.NestedScrollableHost>
 
     <TextView
         android:id="@+id/banner_title"
