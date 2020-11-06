@@ -1,9 +1,12 @@
 package com.mobile.app.bomber.tik.search;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -272,5 +275,16 @@ public class SearchActivity extends MyBaseActivity
         public int getItemCount() {
             return mFragments.size();
         }
+    }
+
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        hideInputKeyboard(getCurrentFocus());
+        return super.onTouchEvent(event);
+    }
+    protected void hideInputKeyboard(View v) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
     }
 }
