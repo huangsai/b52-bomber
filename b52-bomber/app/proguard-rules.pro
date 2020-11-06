@@ -39,3 +39,5 @@
 # ============================================================================================
 
 -keep public class com.mobile.app.bomber.movie.MovieFragment { *; }
+-keep class com.trinity.** { *; }
+-keep class com.tencent.mars.xlog.** { *; }
