@@ -188,7 +188,6 @@ public class SearchActivity extends MyBaseActivity
                 this,
                 obj -> Timber.tag("db").d("增加成功%s", obj.getName())
         );
-        hideInputKeyboard(getCurrentFocus());
     }
 
     @SingleClick
@@ -263,11 +262,10 @@ public class SearchActivity extends MyBaseActivity
 
     @Override
     public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-//        if (p1 == EditorInfo.IME_ACTION_NEXT || p1 == EditorInfo.IME_ACTION_GO || p1 == EditorInfo.IME_ACTION_DONE) {
 
-            if (i == EditorInfo.IME_ACTION_SEARCH) {
+        if (i == EditorInfo.IME_ACTION_SEARCH) {
+            hideInputKeyboard(getCurrentFocus());
             handleSearchResult(textView.getText().toString());
-//            hideSoftInput()
             return true;
         }
         return false;
@@ -292,14 +290,6 @@ public class SearchActivity extends MyBaseActivity
             return mFragments.size();
         }
     }
-//    override fun onEditorAction(p0: TextView?, p1: Int, p2: KeyEvent?): Boolean {
-//        if (p1 == EditorInfo.IME_ACTION_SEARCH) {
-//            searchDone()
-////            hideSoftInput()
-//        }
-//        return false
-//    }
-
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         hideInputKeyboard(getCurrentFocus());
