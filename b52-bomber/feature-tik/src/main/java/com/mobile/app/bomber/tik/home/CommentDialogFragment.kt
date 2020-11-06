@@ -10,9 +10,11 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.activity.result.ActivityResultCallback
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
@@ -86,6 +88,9 @@ class CommentDialogFragment : BaseBottomSheetDialogFragment(), View.OnClickListe
     ): View? {
         binding.recycler.layoutManager = LinearLayoutManager(requireActivity())
         binding.recycler.adapter = adapter
+        val divider = DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
+        divider.setDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.custom_divider)!!)
+        binding.recycler.addItemDecoration(divider)
         binding.editComment.disableEditable()
         binding.editComment.setOnClickListener(this)
         binding.imgAt.setOnClickListener(this)

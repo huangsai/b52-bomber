@@ -34,7 +34,7 @@
     <color name="comment_input_hint">#919095</color>
     <color name="comment_forward">#BAB8C0</color>
     <color name="comment_like_bomb">#FE652F</color>
-    <color name="comment_at">#FFCD35</color>
+    <color name="comment_at">#ffd612</color>
 
     <color name="date_picker_confirm">#3478F6</color>
     <color name="date_picker_switch">#999999</color>
