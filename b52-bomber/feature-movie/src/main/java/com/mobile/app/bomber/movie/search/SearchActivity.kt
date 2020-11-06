@@ -1,16 +1,16 @@
 package com.mobile.app.bomber.movie.search
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.KeyEvent
-import android.view.KeyEvent.KEYCODE_DPAD_UP
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.TextView.OnEditorActionListener
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -30,8 +30,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
-
-
 class SearchActivity : MyBaseActivity(), TextWatcher, View.OnClickListener, OnEditorActionListener, View.OnTouchListener {
     private lateinit var binding: MovieActivitySearchBinding
     val model: SearchViewModel by viewModels { MovieX.component.viewModelFactory() }
@@ -195,4 +193,14 @@ class SearchActivity : MyBaseActivity(), TextWatcher, View.OnClickListener, OnEd
         }
         return false
     }
+
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+         hideSoftInput()
+        return super.onTouchEvent(event)
+    }
+
+//    protected fun hideInputKeyboard(v: View?) {
+//        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+//        imm.hideSoftInputFromWindow(v!!.windowToken, 0)
+//    }
 }
