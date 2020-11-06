@@ -1,12 +1,16 @@
 package com.mobile.app.bomber.movie.search
 
-import android.app.Activity
-import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.KeyEvent
+import android.view.KeyEvent.KEYCODE_DPAD_UP
+import android.view.MotionEvent
 import android.view.View
-import android.view.inputmethod.InputMethodManager
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
+import android.widget.TextView.OnEditorActionListener
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,7 +31,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
-class SearchActivity : MyBaseActivity(), TextWatcher, View.OnClickListener {
+
+class SearchActivity : MyBaseActivity(), TextWatcher, View.OnClickListener, OnEditorActionListener, View.OnTouchListener {
     private lateinit var binding: MovieActivitySearchBinding
     val model: SearchViewModel by viewModels { MovieX.component.viewModelFactory() }
 
@@ -43,6 +48,9 @@ class SearchActivity : MyBaseActivity(), TextWatcher, View.OnClickListener {
         binding.done.setOnClickListener(this)
         binding.back.setOnClickListener(this)
         binding.clearText.setOnClickListener(this)
+        binding.etSearch.setOnEditorActionListener(this)
+        binding.recycler.setOnTouchListener(this)
+
         binding.etSearch.addTextChangedListener(this)
 
         adapter.onClickListener = this
@@ -102,6 +110,7 @@ class SearchActivity : MyBaseActivity(), TextWatcher, View.OnClickListener {
         this.hideSoftInput();
 
     }
+
     fun setInputContent(inputContent: String) {
         binding.etSearch.setText(inputContent)
         binding.etSearch.setSelection(inputContent.length)
@@ -159,5 +168,31 @@ class SearchActivity : MyBaseActivity(), TextWatcher, View.OnClickListener {
         super.onDestroy()
         binding.recycler.layoutManager = null
         binding.recycler.adapter = null
+    }
+
+
+
+    //    override fun onTouchEvent(event: MotionEvent?): Boolean {
+//        return super.onTouchEvent(event)
+//        if(event?.action == MotionEvent.ACTION_DOWN){
+//            Msg.toast("111")
+//            hideSoftInput()
+//         }
+//     }
+    override fun onEditorAction(p0: TextView?, p1: Int, p2: KeyEvent?): Boolean {
+        if (p1 == EditorInfo.IME_ACTION_NEXT || p1 == EditorInfo.IME_ACTION_GO || p1 == EditorInfo.IME_ACTION_DONE) {
+            searchDone()
+//            hideSoftInput()
+        }
+        return false
+    }
+
+
+    override fun onTouch(p0: View?, p1: MotionEvent?): Boolean {
+        if (p1?.action == MotionEvent.ACTION_DOWN) {
+            hideSoftInput()
+            return true
+        }
+        return false
     }
 }
