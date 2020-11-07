@@ -89,8 +89,7 @@ class TopListFragment : MyBaseFragment(), View.OnClickListener, SwipeRefreshLayo
                             list.remove(bannerPresenter)
                             adapter.remove(bannerPresenter)
                         } else {
-//                            list.add(bannerPresenter)
-//                            adapter.add(bannerPresenter)
+
                         }
                     }
                     is Source.Error -> {
