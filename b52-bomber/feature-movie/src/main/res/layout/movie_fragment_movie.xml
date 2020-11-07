@@ -56,7 +56,7 @@
         android:background="@color/movie_line_color"
         app:layout_constraintTop_toBottomOf="@id/layout_tab" />
 
-    <androidx.viewpager2.widget.ViewPager2
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"

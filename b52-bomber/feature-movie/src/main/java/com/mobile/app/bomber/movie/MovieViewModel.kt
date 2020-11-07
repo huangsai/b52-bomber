@@ -34,7 +34,7 @@ class MovieViewModel @Inject constructor() : MyBaseViewModel() {
     }
 
     @WorkerThread
-    suspend fun getMovieListLastUpdate(page :Pager): Source<List<ApiMovie.Movie>> {
+    suspend fun getMovieListLastUpdate(page: Pager): Source<List<ApiMovie.Movie>> {
         ensureWorkThread()
         return movieRepository.getMovieListLastUpdate(page)
     }

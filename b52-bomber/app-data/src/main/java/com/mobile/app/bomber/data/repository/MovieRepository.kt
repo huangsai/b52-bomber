@@ -69,7 +69,7 @@ class MovieRepository @Inject constructor(
 
     suspend fun getMovieListLastUpdate(pager: Pager): Source<List<ApiMovie.Movie>> {
         if (pager.isReachedTheEnd) return Source.Success(emptyList())
-        val call = dataService.getMovieLastUpdate(pager.totalPage,pager.pageSize)
+        val call = dataService.getMovieLastUpdate(pager.totalPage, pager.pageSize)
         return try {
             call.execute().toSource {
                 it.movies.orEmpty()

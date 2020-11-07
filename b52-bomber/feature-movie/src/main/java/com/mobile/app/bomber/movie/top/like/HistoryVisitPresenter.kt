@@ -10,7 +10,6 @@ import com.mobile.app.bomber.movie.R
 import com.mobile.app.bomber.movie.player.PlayerActivity
 import com.mobile.app.bomber.movie.top.BaseMoviePresenter
 import com.mobile.app.bomber.movie.top.items.TopMovieHorItem
-import com.mobile.app.bomber.movie.top.items.TopMovieVerItem
 import com.mobile.ext.glide.GlideApp
 import com.mobile.guava.jvm.domain.Source
 import com.mobile.guava.jvm.extension.exhaustive
