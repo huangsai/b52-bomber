@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.tabs.TabLayout
 import com.mobile.app.bomber.common.base.Msg
 import com.mobile.app.bomber.common.base.MyBaseFragment
@@ -20,6 +21,7 @@ import com.mobile.app.bomber.movie.databinding.MovieFragmentMovieBinding
 import com.mobile.app.bomber.movie.top.TopListFragment
 import com.mobile.app.bomber.runner.features.ApiMovieFragment
 import com.mobile.guava.android.mvvm.showDialogFragment
+import com.mobile.guava.android.ui.view.recyclerview.cancelRefreshing
 import com.mobile.guava.jvm.domain.Source
 import com.mobile.guava.jvm.extension.exhaustive
 import kotlinx.coroutines.Dispatchers
@@ -27,14 +29,13 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 
-class MovieFragment : MyBaseFragment(), ApiMovieFragment, View.OnClickListener, TabLayout.OnTabSelectedListener {
+class MovieFragment : MyBaseFragment(), ApiMovieFragment, View.OnClickListener, TabLayout.OnTabSelectedListener, SwipeRefreshLayout.OnRefreshListener {
 
     private val model: MovieViewModel by viewModels { MovieX.component.viewModelFactory() }
 
     private var _binding: MovieFragmentMovieBinding? = null
     private val binding: MovieFragmentMovieBinding get() = _binding!!
     private val tabLabels = ArrayList<String>()
-    private var textv: TextView? = null;
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
@@ -43,8 +44,12 @@ class MovieFragment : MyBaseFragment(), ApiMovieFragment, View.OnClickListener, 
         _binding = MovieFragmentMovieBinding.inflate(inflater, container, false)
         binding.menu.setOnClickListener(this)
 
+//        binding.swipeLabelRefresh.setOnRefreshListener(this)
+//        binding.swipeLabelRefresh.isEnabled = false
+
         binding.layoutTab.addOnTabSelectedListener(this)
         binding.layoutTab.getTabAt(0)
+
         return binding.root
 
 
@@ -55,6 +60,20 @@ class MovieFragment : MyBaseFragment(), ApiMovieFragment, View.OnClickListener, 
         if (onResumeCount == 1) {
             loadTabLabels()
         }
+        if (tabLabels.size < 1 || tabLabels.isNullOrEmpty()) {
+//            binding.viewPager.isEnabled = false
+//            binding.swipeLabelRefresh.visibility = View.VISIBLE
+//            binding.swipeLabelRefresh.isEnabled = true
+//            binding.layoutTab.setLeftTopRightBottom(0,40,0,0)
+//
+//            loadTabLabels()
+
+        } else {
+//            binding.swipeLabelRefresh.visibility = View.GONE
+//            binding.swipeLabelRefresh.isEnabled = false
+//            binding.viewPager.isEnabled = true
+        }
+
     }
 
     private fun loadTabLabels() {
@@ -64,6 +83,7 @@ class MovieFragment : MyBaseFragment(), ApiMovieFragment, View.OnClickListener, 
                 tabLabels.add("精彩")
                 tabLabels.addAll(it)
             }
+
             withContext(Dispatchers.Main) {
                 when (source) {
                     is Source.Success -> {
@@ -82,8 +102,6 @@ class MovieFragment : MyBaseFragment(), ApiMovieFragment, View.OnClickListener, 
                 }.exhaustive
             }
         }
-
-
     }
 
     fun selectTab(pos: Int) {
@@ -154,5 +172,19 @@ class MovieFragment : MyBaseFragment(), ApiMovieFragment, View.OnClickListener, 
 
         textView.setTextColor(getResources().getColor(R.color.color_text_ffcc00));
         tab?.customView = textView
+    }
+
+    override fun onRefresh() {
+        if (tabLabels.size < 1 || tabLabels.isNullOrEmpty()) {
+//            loadTabLabels()
+//            binding.viewPager.adapter =null
+//            binding.layoutTab.setLeftTopRightBottom(0,40,0,0)
+//            binding.viewPager.isEnabled = false
+//            binding.swipeLabelRefresh.visibility = View.VISIBLE
+
+        } else {
+//            binding.swipeLabelRefresh.visibility = View.GONE
+//            binding.viewPager.isEnabled = true
+        }
     }
 }
