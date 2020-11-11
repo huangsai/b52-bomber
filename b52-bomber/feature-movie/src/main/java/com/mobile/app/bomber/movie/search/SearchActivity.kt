@@ -152,6 +152,7 @@ class SearchActivity : MyBaseActivity(), TextWatcher, View.OnClickListener, OnEd
         val keyword = binding.etSearch.text.toString().trim()
         if (keyword.trim().isEmpty()) {
             Msg.toast(getString(R.string.movie_pls_input_search_content))
+            hideSoftInput()
             return
         }
         lifecycleScope.launch(Dispatchers.IO) {

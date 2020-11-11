@@ -77,7 +77,7 @@ class BannerPresenter(
         }
         binding.bannerImg.adapter = adapter
         binding.bannerImg
-                .setBannerGalleryEffect(20, 10, 1.0f)
+                .setBannerGalleryEffect(20, 12, 1.0f)
                 .setOnBannerListener(this@BannerPresenter)
                 .addBannerLifecycleObserver(fragment)
                 .indicator = CircleIndicator(fragment.requireContext())

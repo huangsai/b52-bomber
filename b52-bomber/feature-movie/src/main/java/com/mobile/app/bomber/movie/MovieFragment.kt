@@ -29,7 +29,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 
-class MovieFragment : MyBaseFragment(), ApiMovieFragment, View.OnClickListener, TabLayout.OnTabSelectedListener, SwipeRefreshLayout.OnRefreshListener {
+class MovieFragment : MyBaseFragment(), ApiMovieFragment, View.OnClickListener, TabLayout.OnTabSelectedListener {
 
     private val model: MovieViewModel by viewModels { MovieX.component.viewModelFactory() }
 
@@ -60,19 +60,7 @@ class MovieFragment : MyBaseFragment(), ApiMovieFragment, View.OnClickListener, 
         if (onResumeCount == 1) {
             loadTabLabels()
         }
-        if (tabLabels.size < 1 || tabLabels.isNullOrEmpty()) {
-//            binding.viewPager.isEnabled = false
-//            binding.swipeLabelRefresh.visibility = View.VISIBLE
-//            binding.swipeLabelRefresh.isEnabled = true
-//            binding.layoutTab.setLeftTopRightBottom(0,40,0,0)
-//
-//            loadTabLabels()
 
-        } else {
-//            binding.swipeLabelRefresh.visibility = View.GONE
-//            binding.swipeLabelRefresh.isEnabled = false
-//            binding.viewPager.isEnabled = true
-        }
 
     }
 
@@ -174,17 +162,4 @@ class MovieFragment : MyBaseFragment(), ApiMovieFragment, View.OnClickListener, 
         tab?.customView = textView
     }
 
-    override fun onRefresh() {
-        if (tabLabels.size < 1 || tabLabels.isNullOrEmpty()) {
-//            loadTabLabels()
-//            binding.viewPager.adapter =null
-//            binding.layoutTab.setLeftTopRightBottom(0,40,0,0)
-//            binding.viewPager.isEnabled = false
-//            binding.swipeLabelRefresh.visibility = View.VISIBLE
-
-        } else {
-//            binding.swipeLabelRefresh.visibility = View.GONE
-//            binding.viewPager.isEnabled = true
-        }
-    }
 }
