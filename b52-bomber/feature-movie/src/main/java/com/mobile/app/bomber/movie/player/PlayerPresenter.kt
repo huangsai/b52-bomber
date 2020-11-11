@@ -216,7 +216,6 @@ class PlayerPresenter(
             it.height = h
             binding.viewPlayer.layoutParams = it
         }
-
     }
 
     private fun showVideoOptions(anchor: View, flag: Int) {
