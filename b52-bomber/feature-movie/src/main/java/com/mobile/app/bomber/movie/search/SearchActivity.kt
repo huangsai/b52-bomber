@@ -1,12 +1,16 @@
 package com.mobile.app.bomber.movie.search
 
-import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.KeyEvent
+import android.view.MotionEvent
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.TextView
+import android.widget.TextView.OnEditorActionListener
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,8 +30,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
-
-class SearchActivity : MyBaseActivity(), TextWatcher, View.OnClickListener {
+class SearchActivity : MyBaseActivity(), TextWatcher, View.OnClickListener, OnEditorActionListener, View.OnTouchListener {
     private lateinit var binding: MovieActivitySearchBinding
     val model: SearchViewModel by viewModels { MovieX.component.viewModelFactory() }
 
@@ -43,6 +46,9 @@ class SearchActivity : MyBaseActivity(), TextWatcher, View.OnClickListener {
         binding.done.setOnClickListener(this)
         binding.back.setOnClickListener(this)
         binding.clearText.setOnClickListener(this)
+        binding.etSearch.setOnEditorActionListener(this)
+        binding.recycler.setOnTouchListener(this)
+
         binding.etSearch.addTextChangedListener(this)
 
         adapter.onClickListener = this
@@ -102,9 +108,11 @@ class SearchActivity : MyBaseActivity(), TextWatcher, View.OnClickListener {
         this.hideSoftInput();
 
     }
+
     fun setInputContent(inputContent: String) {
         binding.etSearch.setText(inputContent)
         binding.etSearch.setSelection(inputContent.length)
+        searchDone()
     }
 
     override fun afterTextChanged(s: Editable?) {
@@ -144,6 +152,7 @@ class SearchActivity : MyBaseActivity(), TextWatcher, View.OnClickListener {
         val keyword = binding.etSearch.text.toString().trim()
         if (keyword.trim().isEmpty()) {
             Msg.toast(getString(R.string.movie_pls_input_search_content))
+            hideSoftInput()
             return
         }
         lifecycleScope.launch(Dispatchers.IO) {
@@ -160,4 +169,40 @@ class SearchActivity : MyBaseActivity(), TextWatcher, View.OnClickListener {
         binding.recycler.layoutManager = null
         binding.recycler.adapter = null
     }
+
+
+
+    //    override fun onTouchEvent(event: MotionEvent?): Boolean {
+//        return super.onTouchEvent(event)
+//        if(event?.action == MotionEvent.ACTION_DOWN){
+//            Msg.toast("111")
+//            hideSoftInput()
+//         }
+//     }
+    override fun onEditorAction(p0: TextView?, p1: Int, p2: KeyEvent?): Boolean {
+        if (p1 == EditorInfo.IME_ACTION_SEARCH) {
+            searchDone()
+//            hideSoftInput()
+        }
+        return false
+    }
+
+
+    override fun onTouch(p0: View?, p1: MotionEvent?): Boolean {
+        if (p1?.action == MotionEvent.ACTION_DOWN) {
+            hideSoftInput()
+            return true
+        }
+        return false
+    }
+
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+         hideSoftInput()
+        return super.onTouchEvent(event)
+    }
+
+//    protected fun hideInputKeyboard(v: View?) {
+//        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+//        imm.hideSoftInputFromWindow(v!!.windowToken, 0)
+//    }
 }

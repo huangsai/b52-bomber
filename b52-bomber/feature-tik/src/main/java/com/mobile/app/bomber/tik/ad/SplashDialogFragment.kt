@@ -122,7 +122,9 @@ class SplashDialogFragment : BaseAppCompatDialogFragment(), View.OnClickListener
             dismissAllowingStateLoss()
             return
         }
-        chrome(ad.url)
+        if (v != binding.txtTimer) {
+            chrome(ad.url)
+        }
         dismissAllowingStateLoss()
     }
 

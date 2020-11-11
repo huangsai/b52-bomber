@@ -231,6 +231,21 @@ public class EditInfoActivity extends MyBaseActivity
     }
 
     @Override
+    public void onChoosePhoto() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                choosePhoto();
+            } else {
+                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        106);
+            }
+        } else {
+            choosePhoto();
+        }
+    }
+
+    @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
@@ -254,6 +269,14 @@ public class EditInfoActivity extends MyBaseActivity
                     alertPermission(R.string.alert_msg_permission_camera_storage);
                 }
                 break;
+            case 106:
+                if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                    //判断是否勾选禁止后不再询问
+                    alertPermission(R.string.alert_msg_permission_storage);
+                } else {
+                    choosePhoto();
+                }
+                break;
         }
     }
 
@@ -262,8 +285,8 @@ public class EditInfoActivity extends MyBaseActivity
         startActivityForResult(intent, 1);
     }
 
-    @Override
-    public void onChoosePhoto() {
+
+    private void choosePhoto() {
         Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);//调用android的图库
         startActivityForResult(i, 2);
     }

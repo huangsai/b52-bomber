@@ -42,7 +42,6 @@ allprojects { project ->
         maven { url "https://jitpack.io" }
         maven { url "http://172.31.9.72:8081/repository/maven-releases/" }
         maven { url "http://172.31.9.72:8081/repository/maven-snapshots/" }
-
         flatDir {
             dirs 'libs'
         }

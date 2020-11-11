@@ -133,7 +133,7 @@ class PlayerPresenter(
     }
 
     override fun onDestroy() {
-        handler?.removeCallbacksAndMessages(run)
+        handler?.removeCallbacks(run)
         handler = null
         player = null
         ExoPlayerX.removeEventListener(this)

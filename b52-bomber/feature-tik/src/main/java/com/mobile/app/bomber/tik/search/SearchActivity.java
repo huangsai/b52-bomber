@@ -1,9 +1,15 @@
 package com.mobile.app.bomber.tik.search;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -41,7 +47,7 @@ import java.util.List;
 import timber.log.Timber;
 
 public class SearchActivity extends MyBaseActivity
-        implements View.OnClickListener, SearchTitleBarPresenter.Callback, SwipeRefreshLayout.OnRefreshListener {
+        implements View.OnClickListener, SearchTitleBarPresenter.Callback, SwipeRefreshLayout.OnRefreshListener, TextView.OnEditorActionListener {
 
     private ActivitySearchBinding binding;
     private RecyclerAdapter recyclerAdapter = new RecyclerAdapter();
@@ -77,6 +83,7 @@ public class SearchActivity extends MyBaseActivity
         binding.swipeRefreshSearch.setOnRefreshListener(this);
         binding.swipeRefreshSearch.setRefreshing(true);
         binding.swipeRefreshSearch.setEnabled(true);
+        binding.toolbar.etSearch.setOnEditorActionListener(this);
 
         initHotSearchData();
         initSearchHistoryData();
@@ -142,8 +149,8 @@ public class SearchActivity extends MyBaseActivity
         model.getHotKeyTop().observe(this, source -> {
             if (binding.swipeRefreshSearch.isRefreshing())
                 binding.swipeRefreshSearch.setRefreshing(false);
-             binding.mShowBtnLayout.removeAllViews();
-             if (source instanceof Source.Success) {
+            binding.mShowBtnLayout.removeAllViews();
+            if (source instanceof Source.Success) {
                 List<String> hotKeys = source.requireData();
                 for (int i = 0; i < hotKeys.size(); i++) {
                     TextView textView = (TextView) LayoutInflater.from(this).inflate(R.layout.user_tag_tv, binding.mShowBtnLayout, false);
@@ -167,6 +174,11 @@ public class SearchActivity extends MyBaseActivity
      */
     public void handleSearchResult(String keyword) {
         //后期把data传过去,刷新搜索结果Fragment
+        if (keyword.trim().isEmpty()) {
+            hideInputKeyboard(getCurrentFocus());
+            Msg.INSTANCE.toast("请输入搜索内容");
+            return;
+        }
         binding.swipeRefreshSearch.setEnabled(false);
         bundle.putString("keyword", keyword);
         fragmentSearchVideo.setArguments(bundle);
@@ -254,6 +266,17 @@ public class SearchActivity extends MyBaseActivity
         initHotSearchData();
     }
 
+    @Override
+    public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+
+        if (i == EditorInfo.IME_ACTION_SEARCH) {
+            hideInputKeyboard(getCurrentFocus());
+            handleSearchResult(textView.getText().toString());
+            return true;
+        }
+        return false;
+    }
+
     private static class FragmentTabAdapter extends FragmentStateAdapter {
 
         private final List<Fragment> mFragments;
@@ -272,5 +295,15 @@ public class SearchActivity extends MyBaseActivity
         public int getItemCount() {
             return mFragments.size();
         }
+    }
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        hideInputKeyboard(getCurrentFocus());
+        return super.onTouchEvent(event);
+    }
+
+    protected void hideInputKeyboard(View v) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
     }
 }

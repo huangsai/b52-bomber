@@ -2,6 +2,7 @@ package com.mobile.app.bomber.movie.top
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
@@ -58,7 +59,6 @@ class BannerPresenter(
             }
         }
     }
-
     private fun bindData(data: List<ApiMovieBanner.Banner>) {
         binding.bannerImg.addOnPageChangeListener(this)
         adapter = object : BannerImageAdapter<ApiMovieBanner.Banner>(data) {
@@ -77,7 +77,7 @@ class BannerPresenter(
         }
         binding.bannerImg.adapter = adapter
         binding.bannerImg
-                .setBannerGalleryEffect(20, 10, 1.0f)
+                .setBannerGalleryEffect(20, 12, 1.0f)
                 .setOnBannerListener(this@BannerPresenter)
                 .addBannerLifecycleObserver(fragment)
                 .indicator = CircleIndicator(fragment.requireContext())
@@ -86,7 +86,6 @@ class BannerPresenter(
             binding.bannerTitle.text = data[0].title
         }
     }
-
     override fun OnBannerClick(data: ApiMovieBanner.Banner?, position: Int) {
         if (mData!!.get(position).movieUrl.isNotEmpty()) {
             fragment.chrome(mData!!.get(position).movieUrl)
@@ -100,13 +99,16 @@ class BannerPresenter(
     }
 
     override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+
     }
 
     override fun onPageSelected(position: Int) {
+
         binding.bannerTitle.text = mData?.get(position)?.title
     }
 
     override fun onPageScrollStateChanged(state: Int) {
+
     }
 
     private lateinit var binding: MovieItemBannerBinding

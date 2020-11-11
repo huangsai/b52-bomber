@@ -1,8 +1,6 @@
 package com.mobile.app.bomber.movie.top
 
 import android.os.Bundle
-import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.viewpager2.widget.ViewPager2
 import com.mobile.app.bomber.common.base.Msg
 import com.mobile.app.bomber.common.base.MyBaseFragment
 import com.mobile.app.bomber.common.base.tool.SingleClick
@@ -90,8 +89,7 @@ class TopListFragment : MyBaseFragment(), View.OnClickListener, SwipeRefreshLayo
                             list.remove(bannerPresenter)
                             adapter.remove(bannerPresenter)
                         } else {
-//                            list.add(bannerPresenter)
-//                            adapter.add(bannerPresenter)
+
                         }
                     }
                     is Source.Error -> {

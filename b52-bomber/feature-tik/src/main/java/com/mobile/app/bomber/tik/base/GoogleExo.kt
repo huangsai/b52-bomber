@@ -49,7 +49,7 @@ object GoogleExo : CacheWriter.ProgressListener {
             ))
 
     val controlDispatcher = DefaultControlDispatcher()
-
+    var bufferSize = ByteArray(1024 * 1024)
     fun preload(uri: Uri) {
         GlobalScope.launch(Dispatchers.IO) {
             try {
@@ -68,7 +68,7 @@ object GoogleExo : CacheWriter.ProgressListener {
                             cacheDataSourceFactory.createDataSource(),
                             dataSpec,
                             true,
-                            null,
+                            bufferSize,
                             this@GoogleExo
 
                     ).cache()

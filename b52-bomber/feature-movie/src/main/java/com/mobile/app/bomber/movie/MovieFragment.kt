@@ -7,12 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
 import com.mobile.app.bomber.common.base.Msg
 import com.mobile.app.bomber.common.base.MyBaseFragment
 import com.mobile.app.bomber.common.base.tool.SingleClick
@@ -21,6 +21,7 @@ import com.mobile.app.bomber.movie.databinding.MovieFragmentMovieBinding
 import com.mobile.app.bomber.movie.top.TopListFragment
 import com.mobile.app.bomber.runner.features.ApiMovieFragment
 import com.mobile.guava.android.mvvm.showDialogFragment
+import com.mobile.guava.android.ui.view.recyclerview.cancelRefreshing
 import com.mobile.guava.jvm.domain.Source
 import com.mobile.guava.jvm.extension.exhaustive
 import kotlinx.coroutines.Dispatchers
@@ -35,7 +36,6 @@ class MovieFragment : MyBaseFragment(), ApiMovieFragment, View.OnClickListener, 
     private var _binding: MovieFragmentMovieBinding? = null
     private val binding: MovieFragmentMovieBinding get() = _binding!!
     private val tabLabels = ArrayList<String>()
-    private var textv: TextView? = null;
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
@@ -44,8 +44,12 @@ class MovieFragment : MyBaseFragment(), ApiMovieFragment, View.OnClickListener, 
         _binding = MovieFragmentMovieBinding.inflate(inflater, container, false)
         binding.menu.setOnClickListener(this)
 
+//        binding.swipeLabelRefresh.setOnRefreshListener(this)
+//        binding.swipeLabelRefresh.isEnabled = false
+
         binding.layoutTab.addOnTabSelectedListener(this)
         binding.layoutTab.getTabAt(0)
+
         return binding.root
 
 
@@ -56,6 +60,8 @@ class MovieFragment : MyBaseFragment(), ApiMovieFragment, View.OnClickListener, 
         if (onResumeCount == 1) {
             loadTabLabels()
         }
+
+
     }
 
     private fun loadTabLabels() {
@@ -65,15 +71,18 @@ class MovieFragment : MyBaseFragment(), ApiMovieFragment, View.OnClickListener, 
                 tabLabels.add("精彩")
                 tabLabels.addAll(it)
             }
+
             withContext(Dispatchers.Main) {
                 when (source) {
                     is Source.Success -> {
-                        binding.viewPager.adapter = MyAdapter(requireActivity(), tabLabels)
-                        val tabLayoutMediator = TabLayoutMediator(binding.layoutTab, binding.viewPager) { tab, position ->
-                            tab.text = tabLabels[position]
-
-                        }
-                        tabLayoutMediator.attach()
+                        binding.viewPager.adapter = MyAdapter(childFragmentManager, tabLabels)
+//                        val tabLayoutMediator = TabLayoutMediator(binding.layoutTab, binding.viewPager) { tab, position ->
+//                            tab.text = tabLabels[position]
+//
+//                        }
+//                        tabLayoutMediator.attach()
+                        binding.viewPager.setOffscreenPageLimit(tabLabels.size)
+                        binding.layoutTab.setupWithViewPager(binding.viewPager)
                     }
                     is Source.Error -> {
                         Msg.handleSourceException(source.requireError())
@@ -81,8 +90,6 @@ class MovieFragment : MyBaseFragment(), ApiMovieFragment, View.OnClickListener, 
                 }.exhaustive
             }
         }
-
-
     }
 
     fun selectTab(pos: Int) {
@@ -115,11 +122,11 @@ class MovieFragment : MyBaseFragment(), ApiMovieFragment, View.OnClickListener, 
     }
 
     private class MyAdapter(
-            activity: FragmentActivity,
+            fm: FragmentManager,
             private val labels: List<String>
-    ) : FragmentStateAdapter(activity) {
+    ) : FragmentPagerAdapter(fm) {
 
-        override fun createFragment(position: Int): Fragment {
+        override fun getItem(position: Int): Fragment {
             return if (position == 0) {
                 TopListFragment.newInstance(position)
             } else {
@@ -127,8 +134,13 @@ class MovieFragment : MyBaseFragment(), ApiMovieFragment, View.OnClickListener, 
             }
         }
 
-        override fun getItemCount(): Int {
+
+        override fun getCount(): Int {
             return labels.size
+        }
+
+        override fun getPageTitle(position: Int): CharSequence? {
+            return labels.get(position)
         }
     }
 
@@ -149,4 +161,5 @@ class MovieFragment : MyBaseFragment(), ApiMovieFragment, View.OnClickListener, 
         textView.setTextColor(getResources().getColor(R.color.color_text_ffcc00));
         tab?.customView = textView
     }
+
 }
