@@ -2,6 +2,7 @@ package com.mobile.app.bomber.tik.search;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -173,6 +174,11 @@ public class SearchActivity extends MyBaseActivity
      */
     public void handleSearchResult(String keyword) {
         //后期把data传过去,刷新搜索结果Fragment
+        if (keyword.trim().isEmpty()) {
+            hideInputKeyboard(getCurrentFocus());
+            Msg.INSTANCE.toast("请输入搜索内容");
+            return;
+        }
         binding.swipeRefreshSearch.setEnabled(false);
         bundle.putString("keyword", keyword);
         fragmentSearchVideo.setArguments(bundle);
