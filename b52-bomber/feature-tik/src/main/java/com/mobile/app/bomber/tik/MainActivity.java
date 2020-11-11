@@ -43,6 +43,7 @@ import com.mobile.app.bomber.tik.mine.FragmentMe;
 import com.mobile.app.bomber.tik.video.VideoRecordActivity;
 import com.mobile.guava.android.mvvm.AndroidX;
 import com.mobile.guava.android.mvvm.RouterKt;
+import com.mobile.guava.android.ui.screen.ScreenUtilsKt;
 import com.mobile.guava.jvm.Guava;
 import com.mobile.guava.jvm.domain.Source;
 
@@ -68,11 +69,11 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         ImmersionBar.with(this).init();
         super.onCreate(savedInstanceState);
+        ScreenUtilsKt.getScreen();
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         model = AppRouterUtils.viewModels(this, LoginViewModel.class);
         requestSplashAd();
-
     }
 
     private void onCreate() {
@@ -85,10 +86,6 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
         binding.imgAdd.setOnLongClickListener(this);
         handleIntent(getIntent());
         binding.mainRg.setVisibility(View.VISIBLE);
-
-
-        // Intent intent = FeatureRouter.INSTANCE.authActivityIntent(this);
-        // startActivity(intent);
     }
 
 

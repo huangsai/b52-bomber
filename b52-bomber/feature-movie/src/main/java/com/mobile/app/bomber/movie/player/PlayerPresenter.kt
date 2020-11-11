@@ -216,7 +216,6 @@ class PlayerPresenter(
             it.height = h
             binding.viewPlayer.layoutParams = it
         }
-
     }
 
     private fun showVideoOptions(anchor: View, flag: Int) {
@@ -305,13 +304,13 @@ class PlayerPresenter(
     private fun playDuration() {
         if (!markedPlayDuration) {
             markedPlayDuration = true
-            playerActivity.lifecycleScope.launch(Dispatchers.IO) {
-                player?.apply {
-                    if (PrefsManager.isLogin()) {
-                        model.postMoviePlayDurationRecord(playerActivity.movieId.toInt(), duration, PrefsManager.getUserId())
-                    } else {
-                        model.postMoviePlayDurationRecord(playerActivity.movieId.toInt(), duration, 0L)
-                    }
+            player?.let {
+                playerActivity.lifecycleScope.launch(Dispatchers.IO) {
+                    model.postMoviePlayDurationRecord(
+                            playerActivity.movieId.toInt(),
+                            it.duration,
+                            if (PrefsManager.isLogin()) PrefsManager.getUserId() else 0L
+                    )
                 }
             }
         }
