@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.google.android.material.tabs.TabLayout
 import com.mobile.app.bomber.common.base.Msg.handleSourceException
 import com.mobile.app.bomber.common.base.MyBaseFragment
 import com.mobile.app.bomber.common.base.RecyclerAdapterEmpty
@@ -43,6 +44,7 @@ class CommonListFragment : MyBaseFragment(), AdapterImageLoader, View.OnClickLis
     private val adapter = RecyclerAdapterEmpty()
     private lateinit var endless: EndlessRecyclerViewScrollListener
     private lateinit var label: String
+
     private val pager = Pager()
 
     companion object {
