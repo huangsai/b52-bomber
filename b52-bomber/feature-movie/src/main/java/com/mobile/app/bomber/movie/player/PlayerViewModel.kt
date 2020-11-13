@@ -82,4 +82,10 @@ class PlayerViewModel @Inject constructor(
                 children
         )
     }
+
+    @WorkerThread
+    suspend fun shareAppUrl(): Source<ApiDownLoadUrl> {
+        ensureWorkThread()
+        return movieRepository.getDownloadUrl()
+    }
 }

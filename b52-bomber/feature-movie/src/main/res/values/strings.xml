@@ -11,7 +11,7 @@
     <string name="movie_text_visit_friend_label">好友观看</string>
     <string name="movie_text_recommend_best_label">小编力推</string>
     <string name="movie_player_game_ad_go">前往</string>
-    <string name="movie_player_movie_play_count">{count}次播放，影片简介 ></string>
+    <string name="movie_player_movie_play_count">0次播放，影片简介 ></string>
     <string name="movie_player_movie_bookmark">收藏</string>
     <string name="movie_player_movie_download">下载</string>
     <string name="movie_player_movie_share">分享</string>

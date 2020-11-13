@@ -2,6 +2,7 @@ package com.mobile.app.bomber.movie.player
 
 import android.app.Activity
 import android.text.InputType
+import android.text.TextUtils
 import android.view.View
 import android.widget.ImageView
 import androidx.activity.result.ActivityResultCallback
@@ -59,7 +60,8 @@ class CommentPresenter(
             if (movie.playNum.toString().isNullOrEmpty()) {
                 nullorEmpty = "0"
             } else {
-                nullorEmpty = movie.playNum.toString()
+                val random = (Math.random() * 100).toInt() //生成的随机数
+                nullorEmpty = (8000 + movie.playNum * 100 + random).toString()
             }
             binding.txtDesc.text = (nullorEmpty + "次播放，影片简介 >")
             binding.txtLike.text = ("点赞  " + movie.likes.toString())
@@ -132,7 +134,7 @@ class CommentPresenter(
                 R.id.edit_comment -> {
                 }
                 R.id.txt_share -> {
-                    playerActivity.shareToSystem("http://www.google.com")
+                    shareAppURl()
                 }
                 R.id.txt_bookmark -> {
                     playerActivity.requireLogin(ActivityResultCallback {
@@ -218,5 +220,28 @@ class CommentPresenter(
                 .load(holder.item<CommentItem>().data.pic)
                 .placeholder(R.drawable.jq_icon_40)
                 .into(view)
+    }
+
+    private fun shareAppURl() {
+        playerActivity.lifecycleScope.launch(Dispatchers.IO) {
+            val source = model.shareAppUrl()
+            withContext(Dispatchers.Main) {
+                when (source) {
+                    is Source.Success -> {
+                        var downurl = source.requireData()
+                        val shareURl = downurl.downloadUrl
+                        if (TextUtils.isEmpty(shareURl)) {
+                            Msg.toast("暂时不能分享")
+                        } else {
+                            playerActivity.shareToSystem("点击一下 立即拥有 " + shareURl)
+                        }
+                    }
+                    is Source.Error -> {
+                        Msg.toast("暂时不能分享")
+                        Msg.handleSourceException(source.requireError())
+                    }
+                }.exhaustive
+            }
+        }
     }
 }

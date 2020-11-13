@@ -1,30 +1,26 @@
 package com.mobile.app.bomber.tik.mine;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.HandlerThread;
 import android.os.Looper;
 import android.text.TextUtils;
 import android.view.View;
 
 import androidx.annotation.Nullable;
-import androidx.lifecycle.LiveData;
 
-import com.mobile.app.bomber.common.base.tool.AppUtil;
-import com.mobile.app.bomber.data.http.entities.ApiDownLoadUrl;
-import com.mobile.app.bomber.tik.home.ShareDialogFragment;
-import com.mobile.guava.android.mvvm.RouterKt;
-import com.mobile.guava.data.Values;
-
-import com.mobile.app.bomber.tik.R;
-import com.mobile.app.bomber.tik.base.AppRouterUtils;
 import com.mobile.app.bomber.common.base.Msg;
 import com.mobile.app.bomber.common.base.MyBaseActivity;
+import com.mobile.app.bomber.common.base.tool.AppUtil;
 import com.mobile.app.bomber.common.base.tool.CacheDataUtil;
 import com.mobile.app.bomber.common.base.tool.SingleClick;
+import com.mobile.app.bomber.data.http.entities.ApiDownLoadUrl;
+import com.mobile.app.bomber.tik.R;
+import com.mobile.app.bomber.tik.base.AppRouterUtils;
 import com.mobile.app.bomber.tik.databinding.ActivitySettingEditinfoBinding;
+import com.mobile.app.bomber.tik.home.ShareDialogFragment;
 import com.mobile.app.bomber.tik.login.LoginActivity;
 import com.mobile.app.bomber.tik.login.LoginViewModel;
+import com.mobile.guava.android.mvvm.RouterKt;
+import com.mobile.guava.data.Values;
 import com.mobile.guava.jvm.domain.Source;
 
 import java.lang.ref.WeakReference;
@@ -87,7 +83,13 @@ public class SettingAcivity extends MyBaseActivity implements View.OnClickListen
                     ApiDownLoadUrl url = source.requireData();
                     shareUrl = url.getDownloadUrl();
                     content = url.getDesc();
+                    if (TextUtils.isEmpty(shareUrl)) {
+                        Msg.INSTANCE.toast("暂时不能分享");
+                    } else {
+                        ShareDialogFragment.goSystemShareSheet(this, shareUrl, "点击一下 立即拥有 ");//"在xx世界最流行的色情视频app中免费观看各种视频，国产网红、日本av、欧美色情应有尽有.");
+                    }
                 } else {
+                    Msg.INSTANCE.toast("暂时不能分享");
                     Msg.INSTANCE.handleSourceException(source.requireError());
                 }
             });
@@ -98,18 +100,6 @@ public class SettingAcivity extends MyBaseActivity implements View.OnClickListen
 //            } catch (InterruptedException e) {
 //                e.printStackTrace();
 //            }
-
-            new Handler().postDelayed(
-                    ()-> {
-                        if (TextUtils.isEmpty(shareUrl)) {
-                            Looper.prepare();
-                            Msg.INSTANCE.toast("暂时不能分享");
-                            Looper.loop();
-                            return;
-                        }
-                    },1000
-            );
-            ShareDialogFragment.goSystemShareSheet(this, shareUrl, "在xx世界最流行的色情视频app中免费观看各种视频，国产网红、日本av、欧美色情应有尽有.");
         }
     }
 
@@ -117,7 +107,7 @@ public class SettingAcivity extends MyBaseActivity implements View.OnClickListen
         WeakReference<SettingAcivity> mThreadActivityRef;
         String urlContent;
 
-        public MyThread(SettingAcivity activity,String urlContent) {
+        public MyThread(SettingAcivity activity, String urlContent) {
             mThreadActivityRef = new WeakReference<SettingAcivity>(
                     activity);
             this.urlContent = urlContent;

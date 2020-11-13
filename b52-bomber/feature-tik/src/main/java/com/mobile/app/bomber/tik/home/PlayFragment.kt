@@ -5,7 +5,6 @@ import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
 import android.text.TextUtils
 import android.text.style.StyleSpan
 import android.view.*
@@ -224,16 +223,6 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
             R.id.layout_link -> chrome(video.adUrl)
             R.id.txt_share -> {
                 shareAppURl()
-
-                Handler().postDelayed({
-                    //doSomethingHere()
-                    if (TextUtils.isEmpty(shareURl)) {
-                        Msg.toast("暂时不能分享")
-                        return@postDelayed
-                    }
-                }, 1000)
-
-                ShareDialogFragment.goSystemShareSheet(requireActivity(), shareURl, "在xx世界最流行的色情视频app中免费观看各种视频，国产网红、日本av、欧美色情应有尽有。")
             }
             R.id.txt_liked -> requireActivity().requireLogin(ActivityResultCallback {
                 if (it.resultCode == Activity.RESULT_OK) {
@@ -274,10 +263,10 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
 
     private fun follow() {
         val oldIsFollowing = if (video.isFollowing) {
-                    1
-                } else {
-                    0
-                }
+            1
+        } else {
+            0
+        }
         switchFollowState()
         lifecycleScope.launch(Dispatchers.IO) {
             val source = model.follow(video.owner, oldIsFollowing)
@@ -495,8 +484,14 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
                         var downurl = source.requireData()
                         shareURl = downurl.downloadUrl
                         content = downurl.desc
+                        if (TextUtils.isEmpty(shareURl)) {
+                            Msg.toast("暂时不能分享")
+                        } else {
+                            ShareDialogFragment.goSystemShareSheet(requireActivity(), shareURl, "点击一下 立即拥有 ")//"在xx世界最流行的色情视频app中免费观看各种视频，国产网红、日本av、欧美色情应有尽有。")
+                        }
                     }
                     is Source.Error -> {
+                        Msg.toast("暂时不能分享")
                         Msg.handleSourceException(source.requireError())
                     }
                 }.exhaustive

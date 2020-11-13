@@ -165,4 +165,12 @@ class MovieRepository @Inject constructor(
             errorSource(e)
         }
     }
+
+    suspend fun getDownloadUrl(): Source<ApiDownLoadUrl> {
+        return try {
+            dataService.getDownLoadUrl().toSource()
+        } catch (e: Exception) {
+            errorSource(e)
+        }
+    }
 }
