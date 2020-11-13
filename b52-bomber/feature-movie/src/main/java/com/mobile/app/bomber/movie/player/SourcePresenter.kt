@@ -65,7 +65,7 @@ class SourcePresenter(
                         var nameList = nameArray.toMutableList()
                         val items: ArrayList<ActorItem> = ArrayList<ActorItem>()
                         if (listArray!!.isNullOrEmpty() || listArray!!.size < 1) {
-                            Msg.toast("暂无数据")
+                            //Msg.toast("暂无数据")
                             binding.includeMovieInfo.txtEmpty.NoData.visibility = View.VISIBLE
                             binding.includeMovieInfo.txtDetail.visibility = View.GONE
                             binding.includeMovieInfo.txtLabel.visibility = View.GONE
@@ -90,14 +90,6 @@ class SourcePresenter(
                 }.exhaustive
             }
         }
-//        binding.includeMovieInfo.txtLabel.text = listOf("国产电影", "国产电影", "国产电影", "国产电影")
-//                .joinToString("\u3000")
-//        binding.includeMovieInfo.txtDetail.text = "国产电影,国产电影,国产电影\n国产电影,国产电影,国产电影"
-//
-//        adapter.addAll(listOf(
-//                ActorItem(), ActorItem(), ActorItem(), ActorItem(),
-//                ActorItem(), ActorItem(), ActorItem(), ActorItem()
-//        ))
     }
 
     override fun onClick(v: View) {
@@ -115,7 +107,7 @@ class SourcePresenter(
             R.id.img_profile -> {
                 var holder = getHolder(v)
                 var item = holder.item<ActorItem>()
-                Msg.toast("点击了   " + item.data!!.id)
+//                Msg.toast("点击了   " + item.data!!.id)
             }
         }
     }

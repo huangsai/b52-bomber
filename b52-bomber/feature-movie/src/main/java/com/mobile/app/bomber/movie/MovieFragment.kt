@@ -11,7 +11,6 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.tabs.TabLayout
 import com.mobile.app.bomber.common.base.Msg
 import com.mobile.app.bomber.common.base.MyBaseFragment
@@ -21,7 +20,6 @@ import com.mobile.app.bomber.movie.databinding.MovieFragmentMovieBinding
 import com.mobile.app.bomber.movie.top.TopListFragment
 import com.mobile.app.bomber.runner.features.ApiMovieFragment
 import com.mobile.guava.android.mvvm.showDialogFragment
-import com.mobile.guava.android.ui.view.recyclerview.cancelRefreshing
 import com.mobile.guava.jvm.domain.Source
 import com.mobile.guava.jvm.extension.exhaustive
 import kotlinx.coroutines.Dispatchers
@@ -31,6 +29,7 @@ import kotlinx.coroutines.withContext
 
 class MovieFragment : MyBaseFragment(), ApiMovieFragment, View.OnClickListener, TabLayout.OnTabSelectedListener {
 
+    private var isFisrtGetLabel = true
     private val model: MovieViewModel by viewModels { MovieX.component.viewModelFactory() }
 
     private var _binding: MovieFragmentMovieBinding? = null
@@ -81,11 +80,16 @@ class MovieFragment : MyBaseFragment(), ApiMovieFragment, View.OnClickListener, 
 //
 //                        }
 //                        tabLayoutMediator.attach()
-                        binding.viewPager.setOffscreenPageLimit(tabLabels.size)
+                        binding.viewPager.offscreenPageLimit = tabLabels.size
                         binding.layoutTab.setupWithViewPager(binding.viewPager)
                     }
                     is Source.Error -> {
                         Msg.handleSourceException(source.requireError())
+                        if (isFisrtGetLabel) {
+                            loadTabLabels()
+                            isFisrtGetLabel = false
+                        } else {
+                        }
                     }
                 }.exhaustive
             }

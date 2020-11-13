@@ -224,6 +224,7 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
             R.id.layout_link -> chrome(video.adUrl)
             R.id.txt_share -> {
                 shareAppURl()
+
                 Handler().postDelayed({
                     //doSomethingHere()
                     if (TextUtils.isEmpty(shareURl)) {
