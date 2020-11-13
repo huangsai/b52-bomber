@@ -67,20 +67,20 @@ public class RankPresenter extends SimpleRecyclerItem implements View.OnClickLis
     public void onClick(View v) {
         final int id = v.getId();
         if (id == R.id.layout_play_count) {
-            if (PrefsManager.INSTANCE.isLogin()) {
+//            if (PrefsManager.INSTANCE.isLogin()) {
                 RankActivity.start(fragment.requireActivity(), 1);
-            }else {
-                RouterKt.newStartActivity(fragment, LoginActivity.class);
-            }
+//            }else {
+//                RouterKt.newStartActivity(fragment, LoginActivity.class);
+//            }
             return;
         }
 
         if (id == R.id.layout_like_count) {
-            if (PrefsManager.INSTANCE.isLogin()) {
+//            if (PrefsManager.INSTANCE.isLogin()) {
                 RankActivity.start(fragment.requireActivity(), 2);
-            }else{
-                RouterKt.newStartActivity(fragment, LoginActivity.class);
-            }
+//            }else{
+//                RouterKt.newStartActivity(fragment, LoginActivity.class);
+//            }
             return;
         }
     }
