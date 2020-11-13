@@ -226,9 +226,15 @@ class UserRepository @Inject constructor(
     }
 
     suspend fun ranksOfUser(type: String, time: Long, pager: Pager): Source<List<ApiRank.Rank>> {
+        var islogin : String? = null
+        if (!appPrefsManager.isLogin()) {
+            islogin = "blank"
+        }else{
+            islogin = token
+        }
         pager.isBusy = true
         val call = dataService.ranksOfUser(
-                userId, token, type, time, pager.requestPage, pager.pageSize
+                userId, islogin, type, time, pager.requestPage, pager.pageSize
         )
         return try {
             call.execute().toSource {
