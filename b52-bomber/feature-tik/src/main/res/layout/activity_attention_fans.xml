@@ -16,7 +16,7 @@
             android:id="@+id/comBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/size_10dp"
+            android:padding="10dp"
             android:src="@drawable/gg_fanhui" />
 
         <TextView

@@ -21,7 +21,6 @@
         app:use_controller="true"
         app:use_sensor_rotation="true" />
 
-
     <ProgressBar
         android:id="@+id/progress"
         style="?android:attr/progressBarStyleInverse"
