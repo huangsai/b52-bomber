@@ -18,6 +18,7 @@ import com.google.android.exoplayer2.ExoPlaybackException
 import com.google.android.exoplayer2.PlaybackParameters
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
+import com.mobile.app.bomber.common.base.tool.realScreen
 import com.mobile.app.bomber.movie.R
 import com.mobile.app.bomber.movie.databinding.MovieActivityPlayerBinding
 import com.mobile.app.bomber.movie.player.exo.GlideThumbnailTransformation
@@ -29,7 +30,6 @@ import com.mobile.guava.android.context.isLandscape
 import com.mobile.guava.android.context.requestFullScreenWithLandscape
 import com.mobile.guava.android.context.requestNormalScreenWithPortrait
 import com.mobile.guava.android.mvvm.AndroidX
-import com.mobile.guava.android.ui.screen.screen
 import com.mobile.guava.data.safeToFloat
 import com.pacific.adapter.AdapterViewHolder
 import com.skydoves.balloon.Balloon
@@ -185,7 +185,7 @@ class PlayerPresenter(
     override fun onConfigurationChanged(newConfig: Configuration) {
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             btnSpeed.visibility = View.VISIBLE
-            setPlayerViewSize(screen.y, screen.x)
+            setPlayerViewSize(realScreen.x, realScreen.y)
         } else {
             btnSpeed.visibility = View.GONE
             originPlayerViewSize?.let {

@@ -18,6 +18,7 @@ import com.daimajia.androidanimations.library.YoYo;
 import com.gyf.immersionbar.ImmersionBar;
 import com.mobile.app.bomber.common.base.Msg;
 import com.mobile.app.bomber.common.base.MyBaseActivity;
+import com.mobile.app.bomber.common.base.tool.ActivityUtilsKt;
 import com.mobile.app.bomber.common.base.tool.AppUtil;
 import com.mobile.app.bomber.common.base.tool.SingleClick;
 import com.mobile.app.bomber.common.base.tool.UpdateManger;
@@ -70,6 +71,7 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
         ImmersionBar.with(this).init();
         super.onCreate(savedInstanceState);
         ScreenUtilsKt.getScreen();
+        ActivityUtilsKt.getRealScreen();
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         model = AppRouterUtils.viewModels(this, LoginViewModel.class);
