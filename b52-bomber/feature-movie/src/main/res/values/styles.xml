@@ -1,5 +1,12 @@
 <resources>
 
+    <style name="movie_PlayerActivityTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@drawable/movie_player_activity</item>
+    </style>
+
     <style name="movie_TabTextAppearance" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">@dimen/font_14sp</item>
         <item name="android:textColor">@color/movie_color_movie_tab_text</item>

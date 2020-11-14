@@ -71,7 +71,6 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
         ImmersionBar.with(this).init();
         super.onCreate(savedInstanceState);
         ScreenUtilsKt.getScreen();
-        ActivityUtilsKt.getRealScreen();
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         model = AppRouterUtils.viewModels(this, LoginViewModel.class);

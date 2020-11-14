@@ -13,6 +13,7 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
+            android:theme="@style/movie_PlayerActivityTheme"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
         <activity android:name=".search.SearchActivity" />

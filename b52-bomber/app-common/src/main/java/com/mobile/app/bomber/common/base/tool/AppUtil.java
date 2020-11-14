@@ -7,13 +7,9 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.graphics.Point;
 import android.location.LocationManager;
-import android.os.Build;
 import android.provider.Settings;
 import android.text.TextUtils;
-import android.view.Display;
-import android.view.WindowManager;
 import android.widget.Button;
 
 import com.mobile.app.bomber.common.base.Msg;
@@ -28,26 +24,6 @@ import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class AppUtil {
-
-    public static Point getRealSize(Context context) {
-        WindowManager windowManager = (WindowManager) context.getSystemService(
-                Context.WINDOW_SERVICE
-        );
-        final Display display = windowManager.getDefaultDisplay();
-        Point outPoint = new Point();
-        if (Build.VERSION.SDK_INT >= 19) {
-            // include navigation bar
-            display.getRealSize(outPoint);
-        } else {
-            // exclude navigation bar
-            display.getSize(outPoint);
-        }
-        if (outPoint.y > outPoint.x) {
-            return new Point(outPoint.y, outPoint.x);
-        } else {
-            return new Point(outPoint.x, outPoint.y);
-        }
-    }
 
     /**
      * 复制内容

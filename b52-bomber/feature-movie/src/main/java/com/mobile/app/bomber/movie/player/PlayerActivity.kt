@@ -1,8 +1,10 @@
 package com.mobile.app.bomber.movie.player
 
 import android.app.Activity
+import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
 import androidx.activity.viewModels
@@ -11,11 +13,13 @@ import com.google.android.exoplayer2.util.Util
 import com.mobile.app.bomber.common.base.Msg
 import com.mobile.app.bomber.data.http.entities.ApiMovieDetail
 import com.mobile.app.bomber.movie.MovieX
+import com.mobile.app.bomber.movie.R
 import com.mobile.app.bomber.movie.databinding.MovieActivityPlayerBinding
 import com.mobile.app.bomber.runner.base.PrefsManager
 import com.mobile.ext.exo.ExoPlayerX
 import com.mobile.guava.android.context.isLandscape
 import com.mobile.guava.android.context.requestNormalScreenWithPortrait
+import com.mobile.guava.android.context.toColor
 import com.mobile.guava.android.mvvm.BaseActivity
 import com.mobile.guava.android.mvvm.newStartActivity
 import com.mobile.guava.android.ui.screen.screen
@@ -42,8 +46,10 @@ class PlayerActivity : BaseActivity() {
     private val model: PlayerViewModel by viewModels { MovieX.component.viewModelFactory() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        window.statusBarColor = toColor(R.color.colorPrimary)
+        window.setBackgroundDrawable(ColorDrawable(toColor(R.color.colorPrimary)))
+
         super.onCreate(savedInstanceState)
-        window.statusBarColor = Color.BLACK
         ExoPlayerX.initialize()
         ExoPlayerX.createPlayer()
 
@@ -100,7 +106,7 @@ class PlayerActivity : BaseActivity() {
 
     override fun onBackPressed() {
         if (isLandscape()) {
-            requestNormalScreenWithPortrait()
+            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         } else {
             super.onBackPressed()
         }
