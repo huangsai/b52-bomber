@@ -30,6 +30,7 @@
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginRight="30dp"
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/info_activity_info"
@@ -70,7 +71,7 @@
                 android:paddingRight="1dp"
                 android:paddingBottom="1dp"
                 app:strokeColor="#ffffff"
-                app:strokeWidth="2dp"
+                app:strokeWidth="1dp"
                 android:src="@drawable/default_profile"
                 app:shapeAppearanceOverlay="@style/CircleImageView" />
 
