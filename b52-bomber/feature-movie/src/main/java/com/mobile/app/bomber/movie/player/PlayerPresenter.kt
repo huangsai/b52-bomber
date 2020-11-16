@@ -129,9 +129,6 @@ class PlayerPresenter(
 
     override fun onPause() {
         ExoPlayerX.pause()
-    }
-
-    override fun onStop() {
         playDuration()
     }
 
