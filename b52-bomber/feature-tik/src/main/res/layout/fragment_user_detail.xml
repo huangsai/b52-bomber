@@ -3,30 +3,35 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/swipe_refresh"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
 
         <!--    头像，个人信息-->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_20dp"
+            android:orientation="horizontal"
             android:paddingLeft="@dimen/size_14dp"
-            android:paddingRight="@dimen/size_14dp"
-            android:orientation="horizontal">
+            android:paddingRight="@dimen/size_14dp">
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/user_profile"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
+                android:paddingLeft="1dp"
+                android:paddingTop="1dp"
+                android:paddingRight="1dp"
+                android:paddingBottom="1dp"
+                app:strokeColor="#ffffff"
+                app:strokeWidth="1dp"
                 android:src="@drawable/default_profile"
-                app:shapeAppearanceOverlay="@style/CircleImageView" />
+                app:shapeAppearanceOverlay="@style/CircleImageView"
+                />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -40,8 +45,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/font_18sp"
-                     />
+                    android:textSize="@dimen/font_18sp" />
 
                 <TextView
                     android:id="@+id/user_id"
@@ -86,8 +90,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_10dp"
             android:layout_marginLeft="@dimen/size_14dp"
+            android:layout_marginTop="@dimen/size_10dp"
             android:background="@drawable/edit_info_wechat_bg"
             android:gravity="center_vertical"
             android:orientation="horizontal"
@@ -101,8 +105,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textSize="@dimen/font_12sp"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_12sp" />
 
             <TextView
                 android:id="@+id/user_copy_wechat"
@@ -112,8 +116,8 @@
                 android:background="@drawable/copy_setting"
                 android:gravity="center"
                 android:text="复制"
-                android:textSize="@dimen/font_12sp"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_12sp" />
         </LinearLayout>
 
         <!--    签名-->
@@ -121,18 +125,18 @@
             android:id="@+id/user_sign"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_10dp"
             android:layout_marginLeft="@dimen/size_14dp"
+            android:layout_marginTop="@dimen/size_10dp"
             android:layout_marginRight="@dimen/size_14dp"
-            android:textSize="@dimen/font_12sp"
             android:hint="这家伙很烂，什么都没留下"
-            android:textColor="#605d69" />
+            android:textColor="#605d69"
+            android:textSize="@dimen/font_12sp" />
         <!--   点赞、粉丝、关注 -->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_10dp"
             android:layout_marginLeft="@dimen/size_14dp"
+            android:layout_marginTop="@dimen/size_10dp"
             android:orientation="horizontal">
 
             <TextView
@@ -166,8 +170,8 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/size_5dp"
             android:layout_height="@dimen/size_05dp"
+            android:layout_marginTop="@dimen/size_5dp"
             android:background="@color/tik_line_color" />
 
         <com.google.android.material.tabs.TabLayout

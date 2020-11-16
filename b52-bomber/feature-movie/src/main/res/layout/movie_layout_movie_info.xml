@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout_movie_info"
     style="@style/MatchMatch"
-    android:background="@android:color/black"
+    android:background="#060612"
     android:padding="@dimen/size_10dp"
     app:el_duration="800"
     app:el_expanded="true">
