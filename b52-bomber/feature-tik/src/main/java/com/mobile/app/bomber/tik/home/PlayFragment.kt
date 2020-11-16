@@ -95,6 +95,7 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
         gestureDetector = GestureDetectorCompat(requireContext(), onGestureListener)
         Timber.d("videoUrl : " + video.decodeVideoUrl())
         GoogleExo.preload(Uri.parse(video.decodeVideoUrl()))
+
     }
 
     override fun onCreateView(
