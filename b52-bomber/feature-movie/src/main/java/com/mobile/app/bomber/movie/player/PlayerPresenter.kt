@@ -129,6 +129,9 @@ class PlayerPresenter(
 
     override fun onPause() {
         ExoPlayerX.pause()
+    }
+
+    override fun onStop() {
         playDuration()
     }
 
@@ -308,7 +311,7 @@ class PlayerPresenter(
                 playerActivity.lifecycleScope.launch(Dispatchers.IO) {
                     model.postMoviePlayDurationRecord(
                             playerActivity.movieId.toInt(),
-                            it.duration,
+                            it.currentPosition,
                             if (PrefsManager.isLogin()) PrefsManager.getUserId() else 0L
                     )
                 }
