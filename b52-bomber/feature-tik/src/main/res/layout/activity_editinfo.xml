@@ -65,6 +65,12 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginTop="@dimen/size_10dp"
                 android:scaleType="centerCrop"
+                android:paddingLeft="1dp"
+                android:paddingTop="1dp"
+                android:paddingRight="1dp"
+                android:paddingBottom="1dp"
+                app:strokeColor="#ffffff"
+                app:strokeWidth="2dp"
                 android:src="@drawable/default_profile"
                 app:shapeAppearanceOverlay="@style/CircleImageView" />
 
