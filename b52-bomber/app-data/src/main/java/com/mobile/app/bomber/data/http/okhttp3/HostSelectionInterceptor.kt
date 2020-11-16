@@ -1,12 +1,12 @@
 package com.mobile.app.bomber.data.http.okhttp3
 
+import com.mobile.app.bomber.data.DataX
 import com.mobile.app.bomber.data.http.entities.*
 import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.Interceptor
 import okhttp3.Response
 import java.io.IOException
-import kotlin.jvm.Throws
 
 class HostSelectionInterceptor : Interceptor {
 
@@ -24,29 +24,22 @@ class HostSelectionInterceptor : Interceptor {
     }
 
     private fun createHttpUrl(original: String): HttpUrl {
+        val httpAddress = DataX.component.appPrefsManager().getHttpAddress()
+        val httpAddressUpload = DataX.component.appPrefsManager().getHttpAddressUpload()
         return when (HOST_TAG) {
             HOST_TAG_TEST -> { //测试服
                 when {
-                    isAboutUser(original) -> "${HOST_TEST}"
-                    isAboutUpload(original) -> "${HOST_TEST_UPLOAD}"
-                    isAboutSystem(original) -> "${HOST_TEST}"
-                    else -> "${HOST_TEST}"
+                    isAboutUpload(original) -> if (httpAddressUpload.isNotEmpty()) httpAddressUpload else HOST_TEST_UPLOAD
+                    else -> if (httpAddress.isNotEmpty()) httpAddress else HOST_TEST
                 }.toHttpUrl()
             }
             HOST_TAG_RELEASE -> { //正式服
                 when {
-                    isAboutUpload(original) -> HOST_RELEASE_UPLOAD
-                    else -> HOST_RELEASE
+                    isAboutUpload(original) -> if (httpAddressUpload.isNotEmpty()) httpAddressUpload else HOST_RELEASE_UPLOAD
+                    else -> if (httpAddress.isNotEmpty()) httpAddress else HOST_RELEASE
                 }.toHttpUrl()
             }
-            else -> { //开发服
-                when {
-                    isAboutUser(original) -> "${HOST_DEV}8000"
-                    isAboutUpload(original) -> "${HOST_DEV}8080"
-                    isAboutSystem(original) -> "${HOST_DEV}8003"
-                    else -> "${HOST_DEV}8001"
-                }.toHttpUrl()
-            }
+            else -> throw IllegalStateException()
         }
     }
 

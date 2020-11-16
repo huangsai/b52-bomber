@@ -18,7 +18,6 @@ import com.daimajia.androidanimations.library.YoYo;
 import com.gyf.immersionbar.ImmersionBar;
 import com.mobile.app.bomber.common.base.Msg;
 import com.mobile.app.bomber.common.base.MyBaseActivity;
-import com.mobile.app.bomber.common.base.tool.ActivityUtilsKt;
 import com.mobile.app.bomber.common.base.tool.AppUtil;
 import com.mobile.app.bomber.common.base.tool.SingleClick;
 import com.mobile.app.bomber.common.base.tool.UpdateManger;
@@ -35,7 +34,6 @@ import com.mobile.app.bomber.tik.base.AppRouterKt;
 import com.mobile.app.bomber.tik.base.AppRouterUtils;
 import com.mobile.app.bomber.tik.databinding.ActivityMainBinding;
 import com.mobile.app.bomber.tik.home.HomeFragment;
-import com.mobile.app.bomber.tik.home.TestDialogFragment;
 import com.mobile.app.bomber.tik.home.TopMainFragment;
 import com.mobile.app.bomber.tik.login.LoginActivity;
 import com.mobile.app.bomber.tik.login.LoginViewModel;
@@ -55,10 +53,8 @@ import org.json.JSONObject;
 import kotlin.Pair;
 
 public class MainActivity extends MyBaseActivity implements View.OnClickListener,
-        View.OnLongClickListener,
         RadioGroup.OnCheckedChangeListener {
 
-    private long longClickNano = 0;
     private long firstTime = 0;
     private int mLastCheckedViewID = R.id.main_home_rb;
     private ActivityMainBinding binding;
@@ -83,8 +79,6 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
         binding.viewPager.setUserInputEnabled(false);
         binding.viewPager.setAdapter(new MyAdapter(this));
         binding.viewPager.setCurrentItem(0);
-        binding.imgAdd.setOnClickListener(this);
-        binding.imgAdd.setOnLongClickListener(this);
         handleIntent(getIntent());
         binding.mainRg.setVisibility(View.VISIBLE);
     }
@@ -169,17 +163,6 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
                     }
             );
         }
-    }
-
-    @Override
-    public boolean onLongClick(View v) {
-        long nano = System.currentTimeMillis();
-        if (nano - longClickNano < 2000) {
-            RouterKt.showDialogFragment(this, TestDialogFragment.newInstance());
-        } else {
-            longClickNano = nano;
-        }
-        return true;
     }
 
     @Override

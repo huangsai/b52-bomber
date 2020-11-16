@@ -24,6 +24,8 @@ object RunnerX {
     const val PREFS_IS_LOGIN = "isLogin"
     const val PREFS_LOCATION_LAT = "locationLat"
     const val PREFS_LOCATION_LNG = "locationLng"
+    const val PREFS_HTTP_ADDRESS = "httpAddress"
+    const val PREFS_HTTP_ADDRESS_UPLOAD = "httpAddressUpload"
 
     const val BUS_FRAGMENT_ME_REFRESH = 100
     const val BUS_SEARCH_RESULT = 102

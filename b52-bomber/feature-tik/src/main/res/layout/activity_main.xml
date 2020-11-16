@@ -80,14 +80,4 @@
             android:textColor="@color/color_home_tab_text" />
     </RadioGroup>
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/img_add"
-        style="@style/CommonImage"
-        android:src="@drawable/sy_shiping"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/main_rg"
-        app:layout_constraintLeft_toLeftOf="@+id/main_rg"
-        app:layout_constraintRight_toRightOf="@+id/main_rg"
-        app:layout_constraintTop_toTopOf="@+id/main_rg" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
