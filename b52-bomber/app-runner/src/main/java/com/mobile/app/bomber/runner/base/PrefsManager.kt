@@ -117,4 +117,21 @@ object PrefsManager : AppPrefsManager {
     override fun setMsgTime(time: Int, type: String): Boolean {
         return mmvk.encode(getUserId().toString() + type, time)
     }
+
+    override fun getHttpAddress(): String {
+        return mmvk.decodeString(RunnerX.PREFS_HTTP_ADDRESS, "")
+    }
+
+    override fun setHttpAddress(address: String): Boolean {
+        return mmvk.encode(RunnerX.PREFS_HTTP_ADDRESS, address)
+    }
+
+    override fun getHttpAddressUpload(): String {
+        return mmvk.decodeString(RunnerX.PREFS_HTTP_ADDRESS_UPLOAD, "")
+    }
+
+    override fun setHttpAddressUpload(addressUpload: String): Boolean {
+        return mmvk.encode(RunnerX.PREFS_HTTP_ADDRESS_UPLOAD, addressUpload)
+
+    }
 }

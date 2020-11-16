@@ -39,4 +39,12 @@ interface AppPrefsManager {
     fun getMsgTime(type: String): Int
 
     fun setMsgTime(time: Int, type: String): Boolean
+
+    fun getHttpAddress(): String
+
+    fun setHttpAddress(address: String): Boolean
+
+    fun getHttpAddressUpload(): String
+
+    fun setHttpAddressUpload(addressUpload: String): Boolean
 }
