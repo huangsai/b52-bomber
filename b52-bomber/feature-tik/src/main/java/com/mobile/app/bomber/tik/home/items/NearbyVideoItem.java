@@ -29,9 +29,11 @@ public class NearbyVideoItem extends SimpleRecyclerItem {
         binding.txtName.setText(data.getUsername());
         binding.txtDistance.setText(data.distanceText());
         if (TextUtils.isEmpty(data.getDesc())) {
-            binding.txtDesc.setVisibility(View.GONE);
+//            binding.txtDesc.setVisibility(View.GONE);
+            binding.txtDesc.setText("视频暂无简介");
+
         } else {
-            binding.txtDesc.setVisibility(View.VISIBLE);
+//            binding.txtDesc.setVisibility(View.VISIBLE);
             binding.txtDesc.setText(data.getDesc());
         }
         holder.attachImageLoader(R.id.img_profile);
