@@ -110,7 +110,8 @@ class PlayerPresenter(
         // val sdCard = ensureFileSeparator(AndroidX.myApp.getExternalFilesDir(null)!!.absolutePath!!)
         // ExoPlayerX.play((sdCard + "trailer.mp4").toUri())
         playerActivity.data?.apply {
-            ExoPlayerX.play(movie.movieUrl.toUri())
+            val url = movie.movieUrl.toUri()
+            ExoPlayerX.play(url)
         }
 
         playerActivity.lifecycleScope.launch(Dispatchers.IO) {
@@ -164,7 +165,7 @@ class PlayerPresenter(
         if (ExoPlayerX.isPlaying) {
             ExoPlayerX.pause()
         }
-        GlideApp.with(playerActivity)
+        GlideApp.with(AndroidX.myApp)
                 .load(thumbnailsUrl)
                 .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
                 .transform(GlideThumbnailTransformation(currentPosition))
@@ -220,7 +221,7 @@ class PlayerPresenter(
 
     private fun showVideoOptions(anchor: View, flag: Int) {
         optionFlag = flag
-        balloon = Balloon.Builder(playerActivity.application)
+        balloon = Balloon.Builder(AndroidX.myApp)
                 .setLayout(R.layout.movie_player_video_options)
                 .setArrowVisible(false)
                 .setBackgroundColor(Color.TRANSPARENT)
