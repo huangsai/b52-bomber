@@ -395,7 +395,7 @@ data class ApiAd(
         @Json(name = "id") val id: Long,
         @Json(name = "imageurl") val image: ImageUrl,
         @Json(name = "linkurl") val url: String,
-        @Json(name = "tyep") val type: Int,
+        @Json(name = "type") val type: Int,
         @Json(name = "weight") val weight: Int,
         @Json(name = "staytime") val startTime: Long
 ) {

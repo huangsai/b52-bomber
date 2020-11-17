@@ -38,7 +38,7 @@ dependencies {
     implementation dep.exoplayer.smoothstreaming
     implementation dep.exoplayer.ui
     implementation dep.exoplayer.okhttp
-
+    implementation 'com.mobile.sdk:sdk-ipv6:0.0.9'
     implementation 'com.daimajia.easing:library:2.0@aar'
     implementation 'com.daimajia.androidanimations:library:2.3@aar'
     implementation 'com.gyf.immersionbar:immersionbar:3.0.0'
