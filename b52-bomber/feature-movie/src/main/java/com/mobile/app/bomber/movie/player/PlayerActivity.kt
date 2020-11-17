@@ -5,16 +5,20 @@ import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
+import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.exoplayer2.util.Util
 import com.mobile.app.bomber.common.base.Msg
+import com.mobile.app.bomber.common.base.tool.chrome
 import com.mobile.app.bomber.data.http.entities.ApiMovieDetail
 import com.mobile.app.bomber.movie.MovieX
+import com.mobile.app.bomber.movie.R
 import com.mobile.app.bomber.movie.databinding.MovieActivityPlayerBinding
 import com.mobile.app.bomber.runner.base.PrefsManager
 import com.mobile.ext.exo.ExoPlayerX
 import com.mobile.guava.android.context.isLandscape
+import com.mobile.guava.android.context.requestFullScreenWithLandscape
 import com.mobile.guava.android.context.requestNormalScreenWithPortrait
 import com.mobile.guava.android.mvvm.BaseActivity
 import com.mobile.guava.android.mvvm.newStartActivity
@@ -26,7 +30,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class PlayerActivity : BaseActivity() {
+class PlayerActivity : BaseActivity(), View.OnClickListener {
     private var _binding: MovieActivityPlayerBinding? = null
     private val binding get() = _binding!!
 
@@ -52,7 +56,7 @@ class PlayerActivity : BaseActivity() {
         commentPresenter = CommentPresenter(binding, this, model)
         sourcePresenter = SourcePresenter(binding, this, model)
         playerPresenter = PlayerPresenter(binding, this, model)
-
+        binding.includeGameAd.txtGo.setOnClickListener(this)
         movieId = Values.take("PlayerActivity_movieId")!!
         load()
     }
@@ -133,5 +137,13 @@ class PlayerActivity : BaseActivity() {
             Values.put("PlayerActivity_movieId", movieId)
             activity.newStartActivity(PlayerActivity::class.java)
         }
+    }
+
+    override fun onClick(v: View) {
+        when (v.id) {
+            R.id.txt_go -> {
+                this.chrome(data?.ad?.url)
+             }
+         }
     }
 }
