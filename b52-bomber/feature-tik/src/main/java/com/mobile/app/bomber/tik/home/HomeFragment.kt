@@ -16,7 +16,6 @@ import androidx.fragment.app.viewModels
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
-import com.mobile.app.bomber.common.base.Msg
 import com.mobile.app.bomber.common.base.MyBaseActivity
 import com.mobile.app.bomber.common.base.tool.SingleClick
 import com.mobile.app.bomber.runner.base.PrefsManager
@@ -25,10 +24,11 @@ import com.mobile.app.bomber.tik.base.AppRouterUtils
 import com.mobile.app.bomber.tik.base.requireLogin
 import com.mobile.app.bomber.tik.category.CategoryActivity
 import com.mobile.app.bomber.tik.databinding.FragmentHomeBinding
-import com.mobile.app.bomber.tik.home.HttpInputDialogFragment.Companion.newInstance
 import com.mobile.app.bomber.tik.login.LoginActivity
 import com.mobile.app.bomber.tik.search.SearchActivity
 import com.mobile.app.bomber.tik.video.VideoRecordActivity
+import com.mobile.ext.net.HttpInputDialogFragment
+import com.mobile.ext.net.OnDialogDismissListener
 import com.mobile.guava.android.mvvm.AndroidX
 import com.mobile.guava.android.mvvm.newStartActivity
 import com.mobile.guava.android.mvvm.showDialogFragment
@@ -278,7 +278,14 @@ class HomeFragment : TopMainFragment(), View.OnClickListener, View.OnLongClickLi
     }
 
     override fun onLongClick(p0: View?): Boolean {
-        this.showDialogFragment(newInstance())
+        val dialogFragment = HttpInputDialogFragment.newInstance(
+                object : OnDialogDismissListener {
+                    override fun onDismiss(vararg args: String) {
+                        PrefsManager.setHttpAddress(args[0])
+                        PrefsManager.setHttpAddressUpload(args[1])
+                    }
+                })
+        this.showDialogFragment(dialogFragment)
         return true
     }
 
