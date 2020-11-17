@@ -80,10 +80,10 @@ public class SearchTitleBarPresenter implements View.OnClickListener, TextWatche
         String keyword = binding.etSearch.getText().toString().trim();
         if (TextUtils.isEmpty(keyword)) {
             binding.ivClear.setVisibility(View.INVISIBLE);
-            binding.searchDone.setVisibility(View.INVISIBLE);
+//            binding.searchDone.setVisibility(View.INVISIBLE);
         } else {
             binding.ivClear.setVisibility(View.VISIBLE);
-            binding.searchDone.setVisibility(View.VISIBLE);
+//            binding.searchDone.setVisibility(View.VISIBLE);
         }
     }
 
