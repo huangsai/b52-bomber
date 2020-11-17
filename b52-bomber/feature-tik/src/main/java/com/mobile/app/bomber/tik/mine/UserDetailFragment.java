@@ -89,12 +89,7 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
         binding.viewPager.setOffscreenPageLimit(2);
         binding.swipeRefresh.setOnRefreshListener(this);
         binding.swipeRefresh.setRefreshing(true);
-        TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(binding.layoutTab, binding.viewPager, new TabLayoutMediator.TabConfigurationStrategy() {
-            @Override
-            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
-                tab.setText(indexTitle.get(position));
-            }
-        });
+        TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(binding.layoutTab, binding.viewPager, (tab, position) -> tab.setText(indexTitle.get(position)));
         tabLayoutMediator.attach();
     }
 

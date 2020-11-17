@@ -89,7 +89,7 @@ public class UserVideoFragment extends MyBaseFragment implements AdapterImageLoa
         recyclerAdapter = new RecyclerAdapterEmpty();
         recyclerAdapter.setImageLoader(this);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(requireContext(), 3);
-        binding.recyclerView.addItemDecoration(new TestedGridItemDecoration(requireActivity(), R.dimen.size_2dp));
+        binding.recyclerView.addItemDecoration(new TestedGridItemDecoration(requireActivity(), R.dimen.size_1dp));
         binding.recyclerView.setLayoutManager(gridLayoutManager);
         endlessListener = new EndlessRecyclerViewScrollListener(gridLayoutManager, (integer, recyclerView) -> {
             if (pager.isAvailable()) {
