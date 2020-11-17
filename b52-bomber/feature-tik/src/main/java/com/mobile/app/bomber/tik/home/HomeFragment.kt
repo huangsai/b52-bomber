@@ -16,6 +16,7 @@ import androidx.fragment.app.viewModels
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
+import com.mobile.app.bomber.common.base.Msg
 import com.mobile.app.bomber.common.base.MyBaseActivity
 import com.mobile.app.bomber.common.base.tool.SingleClick
 import com.mobile.app.bomber.runner.base.PrefsManager
@@ -98,7 +99,7 @@ class HomeFragment : TopMainFragment(), View.OnClickListener, View.OnLongClickLi
         binding.viewPager.recyclerView.enforceSingleScrollDirection()
         binding.viewPager.offscreenPageLimit = 2
         binding.viewPager.adapter = adapter
-
+        binding.lineFull.setOnClickListener(this)
         currentPosition = 1
         binding.viewPager.setCurrentItem(currentPosition, false)
 
@@ -121,7 +122,7 @@ class HomeFragment : TopMainFragment(), View.OnClickListener, View.OnLongClickLi
                 .setMarginBottom(24)
                 .setMarginTop(30)
                 .setCornerRadius(0f)
-                .setAutoDismissDuration(3000)
+                .setAutoDismissDuration(2000)
                 .build()
                 .apply {
                     with(getContentView()) {
@@ -268,6 +269,9 @@ class HomeFragment : TopMainFragment(), View.OnClickListener, View.OnLongClickLi
                 }
             }
             R.id.img_down -> {
+                showPopupOptions(v)
+            }
+            R.id.line_full -> {
                 showPopupOptions(v)
             }
         }

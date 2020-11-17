@@ -54,7 +54,8 @@ public abstract class CommentItem extends SimpleRecyclerItem {
             int atColor = ContextCompat.getColor(AndroidX.INSTANCE.myApp(), R.color.comment_at);
             int color = ContextCompat.getColor(AndroidX.INSTANCE.myApp(), R.color.comment_name);
             String replay = data.getReplayText();
-            String ago = Java8TimeKt.ago(data.getTime() * 1000L, System.currentTimeMillis());
+
+            String ago = Java8TimeKt.ago(data.getTime() * 1000L, System.currentTimeMillis()-1);
             comment = new MySpannable(replay + data.getContent() + "\u3000" + ago)
                     .findAndSpan(replay, () -> new ForegroundColorSpan(atColor))
                     .findAndSpan(ago, () -> new ForegroundColorSpan(color));

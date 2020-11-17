@@ -1,6 +1,7 @@
 package com.mobile.app.bomber.tik.video;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.location.Location;
@@ -10,12 +11,15 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.core.widget.NestedScrollView;
 
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.mobile.app.bomber.common.base.Msg;
@@ -114,6 +118,12 @@ public class VideoUploadActivity extends MyBaseActivity implements View.OnClickL
         binding.llShareQqLayout.setOnClickListener(this);
         binding.llShareWechatLayout.setOnClickListener(this);
         binding.tvLocation.setOnClickListener(this);
+        binding.getRoot().setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                hideInputKeyboard(getCurrentFocus());
+            }
+        });
     }
 
     private void clickLocation() {
@@ -225,6 +235,7 @@ public class VideoUploadActivity extends MyBaseActivity implements View.OnClickL
             } else {
                 Msg.INSTANCE.handleSourceException(source.requireError());
             }
+            finish();
         });
         if (binding.checkboxRelease.isChecked()) FileUtil.saveFileToLocal(sourceVideoFile);
     }
@@ -305,6 +316,16 @@ public class VideoUploadActivity extends MyBaseActivity implements View.OnClickL
 //            binding.mShowBtnLayout.addView(view);
 //        }
     }
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        hideInputKeyboard(getCurrentFocus());
+        return super.onTouchEvent(event);
+    }
 
+
+    protected void hideInputKeyboard(View v) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+    }
 
 }
