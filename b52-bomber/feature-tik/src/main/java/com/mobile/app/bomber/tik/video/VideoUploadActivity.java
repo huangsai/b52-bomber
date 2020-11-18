@@ -1,7 +1,6 @@
 package com.mobile.app.bomber.tik.video;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.location.Location;
@@ -12,13 +11,11 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.core.widget.NestedScrollView;
 
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.mobile.app.bomber.common.base.Msg;
@@ -122,13 +119,7 @@ public class VideoUploadActivity extends MyBaseActivity implements View.OnClickL
         binding.llShareQqLayout.setOnClickListener(this);
         binding.llShareWechatLayout.setOnClickListener(this);
         binding.tvLocation.setOnClickListener(this);
-        binding.getRoot().setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                hideInputKeyboard(getCurrentFocus());
-//                if (isSoftInputShowing(this)) hideSoftInput(this);
-            }
-        });
+        binding.editDes.setOnClickListener(this);
     }
 
     private void clickLocation() {
@@ -258,14 +249,12 @@ public class VideoUploadActivity extends MyBaseActivity implements View.OnClickL
             clickWechatShareLayout();
         } else if (id == R.id.ll_share_qq_layout) {
             clickQQShareLayout();
-        } else if (id == R.id.scroll) {
-//            clickQQShareLayout();
-            hideInputKeyboard(getCurrentFocus());
+        } else if (id == R.id.editDes) {
+            hideInputKeyboard();
         }
     }
 
     private void initLabelsData() {
-//        String[] hotWords = getResources().getStringArray(R.array.upload_labels);
         videoViewModel.getVideoTags().observe(this, source -> {
             if (source instanceof Source.Success) {
                 List<String> keywords = source.requireData();
@@ -297,45 +286,15 @@ public class VideoUploadActivity extends MyBaseActivity implements View.OnClickL
                 Msg.INSTANCE.handleSourceException(source.requireError());
             }
         });
-
-//        String[] hotWords = getResources().getStringArray(R.array.upload_labels);
-//        for (String hotWord : hotWords) {
-//                TextView view = (TextView) LayoutInflater.from(this).inflate(R.layout.item_tag_tv, binding.mShowBtnLayout, false);
-//                view.setText("#" + hotWord);
-//                view.setTag(hotWord);
-//                view.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        String keyword = (String) view.getTag();
-//                        if (view.isSelected()) {
-//                            view.setSelected(false);
-//                            labelList.remove(keyword);
-//                            return;
-//                        }
-//                        if (labelList.size() >= 3) {
-//                            Msg.INSTANCE.toast("最多只能选择3个");
-//                            return;
-//                        }
-//                        view.setSelected(true);
-//                        labelList.add(keyword);
-//                    }
-//                });
-//            binding.mShowBtnLayout.addView(view);
-//        }
     }
-//    @Override
-//    public boolean onTouchEvent(MotionEvent event) {
-//        hideInputKeyboard(getCurrentFocus());
-//        return super.onTouchEvent(event);
-//    }
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        if (isSoftInputShowing(this)) hideSoftInput(this);
+        hideInputKeyboard();
         return super.dispatchTouchEvent(ev);
     }
 
-    protected void hideInputKeyboard(View v) {
+    protected void hideInputKeyboard() {
         if (isSoftInputShowing(this)) hideSoftInput(this);
     }
 
