@@ -41,3 +41,7 @@
 -keep public class com.mobile.app.bomber.movie.MovieFragment { *; }
 -keep class com.trinity.** { *; }
 -keep class com.tencent.mars.xlog.** { *; }
+# Required to preserve the Flurry SDK
+-keep class com.flurry.** { *; }
+-dontwarn com.flurry.**
+-keepattributes *Annotation*,EnclosingMethod,Signature
