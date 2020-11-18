@@ -109,8 +109,13 @@ data class ApiVideo(
             @Json(name = "username") var username: String,
             @Json(name = "pic") var profile: String?,
             @Json(name = "aid") var adId: Long?,
-            @Json(name = "addownloadurl") var adUrl: String?
+            @Json(name = "addownloadurl") var adUrl: String?,
+            @Json(name = "status") val status: Int?
     ) : Serializable {
+
+        fun isChecking(): Boolean {
+            return status == 2
+        }
 
         fun distanceText(): String {
             val value = distance.nullSafe()
