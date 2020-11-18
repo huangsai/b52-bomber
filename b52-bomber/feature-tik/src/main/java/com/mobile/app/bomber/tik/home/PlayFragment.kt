@@ -128,6 +128,7 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
             }
         })
         bindData()
+
         return binding.root
     }
 
@@ -366,11 +367,14 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
     override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
         when (playbackState) {
             Player.STATE_IDLE -> {
+                binding.viewPlayer.keepScreenOn = false
             }
             Player.STATE_BUFFERING -> {
                 binding.progress.visibility = View.VISIBLE
+                binding.viewPlayer.keepScreenOn = true
             }
             Player.STATE_READY -> {
+                binding.viewPlayer.keepScreenOn = true
                 if (AndroidX.appDialogCount.value!! > 0 && playWhenReady) {
                     forcePausePlayer()
                     return
@@ -383,6 +387,7 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
                 binding.imgPlay.isVisible = !playWhenReady
             }
             Player.STATE_ENDED -> {
+                binding.viewPlayer.keepScreenOn = false
             }
         }
     }
