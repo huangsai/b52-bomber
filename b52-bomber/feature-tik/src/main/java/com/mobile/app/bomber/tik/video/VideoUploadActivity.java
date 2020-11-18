@@ -39,6 +39,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.mobile.app.bomber.common.base.tool.ActivityUtilsKt.isSoftInputShowing;
+import static com.mobile.guava.android.context.ActivityExtKt.hideSoftInput;
+
 /**
  * 使用它作为视频上传
  */
@@ -122,6 +125,7 @@ public class VideoUploadActivity extends MyBaseActivity implements View.OnClickL
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
                 hideInputKeyboard(getCurrentFocus());
+//                if (isSoftInputShowing(this)) hideSoftInput(this);
             }
         });
     }
@@ -163,7 +167,7 @@ public class VideoUploadActivity extends MyBaseActivity implements View.OnClickL
         switch (requestCode) {
             case 105:
                 if (grantResults.length > 0 &&
-                        grantResults[0]+grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                        grantResults[0] + grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                     LocationLiveData.INSTANCE.lookupLocation(this, this);
                 } else {
                     alertPermission(R.string.alert_msg_permission_location);
@@ -254,6 +258,9 @@ public class VideoUploadActivity extends MyBaseActivity implements View.OnClickL
             clickWechatShareLayout();
         } else if (id == R.id.ll_share_qq_layout) {
             clickQQShareLayout();
+        } else if (id == R.id.scroll) {
+//            clickQQShareLayout();
+            hideInputKeyboard(getCurrentFocus());
         }
     }
 
@@ -316,16 +323,20 @@ public class VideoUploadActivity extends MyBaseActivity implements View.OnClickL
 //            binding.mShowBtnLayout.addView(view);
 //        }
     }
+//    @Override
+//    public boolean onTouchEvent(MotionEvent event) {
+//        hideInputKeyboard(getCurrentFocus());
+//        return super.onTouchEvent(event);
+//    }
+
     @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        hideInputKeyboard(getCurrentFocus());
-        return super.onTouchEvent(event);
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (isSoftInputShowing(this)) hideSoftInput(this);
+        return super.dispatchTouchEvent(ev);
     }
 
-
     protected void hideInputKeyboard(View v) {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+        if (isSoftInputShowing(this)) hideSoftInput(this);
     }
 
 }
