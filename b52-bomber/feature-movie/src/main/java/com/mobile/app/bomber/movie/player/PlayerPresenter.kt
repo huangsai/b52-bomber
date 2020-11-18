@@ -204,6 +204,7 @@ class PlayerPresenter(
                     playerActivity.requestNormalScreenWithPortrait()
                 } else {
                     playerActivity.requestFullScreenWithLandscape()
+
                 }
             }
             R.id.btn_speed -> showVideoOptions(v, 1)
@@ -289,14 +290,18 @@ class PlayerPresenter(
     override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
         when (playbackState) {
             Player.STATE_IDLE -> {
+                binding.viewPlayer.keepScreenOn = false
             }
             Player.STATE_BUFFERING -> {
+                binding.viewPlayer.keepScreenOn = true
                 binding.progress.visibility = View.VISIBLE
             }
             Player.STATE_READY -> {
+                binding.viewPlayer.keepScreenOn = true
                 binding.progress.visibility = View.INVISIBLE
             }
             Player.STATE_ENDED -> {
+                binding.viewPlayer.keepScreenOn = false
                 playDuration()
             }
         }
