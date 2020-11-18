@@ -2,7 +2,6 @@ apply from: "../gradle/jvm_module.gradle"
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.flurry.android:analytics:12.9.0@aar'
     api dep.company.guavaJvm
     api dep.company.guavaData
 }

@@ -48,5 +48,4 @@ dependencies {
     implementation project(':feature-tik')
     implementation project(':feature-movie')
     implementation project(':feature-auth')
-    implementation 'com.flurry.android:analytics:12.9.0@aar'
 }

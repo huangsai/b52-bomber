@@ -215,8 +215,7 @@ class CommentPresenter(
             }
         }
     }
-    昨天修改我的页面视频排版问题，修改全部频道圆角和排版问题，改视频内存泄漏的问题
-    今天打算把第三方的崩溃收集平台接好
+
     override fun load(view: ImageView, holder: AdapterViewHolder) {
         GlideApp.with(AndroidX.myApp)
                 .load(holder.item<CommentItem>().data.pic)

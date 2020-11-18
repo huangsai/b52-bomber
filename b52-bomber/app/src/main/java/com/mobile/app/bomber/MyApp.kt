@@ -14,14 +14,11 @@ class MyApp : MultiDexApplication() {
         RunnerX.setup(this, BuildConfig.DEBUG)
 //        Ipv6X.setup(this,true)
         FlurryAgent.Builder()
-                .withLogEnabled(true)
-                .build(this, "BM6DYJYMWNFT6TNJCPMB");
-//        FlurryAgent.Builder()
-//                .withDataSaleOptOut(false) //CCPA - the default value is false
-//                .withCaptureUncaughtExceptions(true)
-//                .withIncludeBackgroundSessionsInMetrics(true)
-//                .withLogLevel(Log.VERBOSE)
-//                .withPerformanceMetrics(FlurryPerformance.ALL)
-//                .build(this, FLURRY_API_KEY)
+                .withDataSaleOptOut(true) //CCPA - the default value is false
+                .withCaptureUncaughtExceptions(true)
+                .withIncludeBackgroundSessionsInMetrics(true)
+                .withLogLevel(Log.VERBOSE)
+                .withPerformanceMetrics(FlurryPerformance.ALL)
+                .build(this, "BM6DYJYMWNFT6TNJCPMB")
     }
 }

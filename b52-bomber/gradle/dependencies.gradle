@@ -64,6 +64,7 @@ buildscript {
             'theSdk'           : '0.0.7',
             'pacificAdapter'   : '3.0.3',
             'exoplayer'        : '2.12.1',
+            'flurry'           : '12.9.0@aar',
 
             'androidX'         : [
                     'compose'                   : '1.0.0-alpha07',
@@ -183,6 +184,7 @@ buildscript {
             'flexbox'          : "com.google.android:flexbox:${versions.flexbox}",
             'fabric'           : "io.fabric.sdk.android:gradle:${versions.fabric}",
             'store'            : "com.dropbox.mobile.store:store4:${versions.store}",
+            'flurry'           : "com.flurry.android:analytics:${versions.flurry}",
             'kotlin'           : [
                     'stdlibJdk8': "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${versions.kotlin}",
                     'stdlibJdk7': "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}",

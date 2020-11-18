@@ -166,4 +166,5 @@ dependencies {
     implementation dep.company.extNet
 
     implementation dep.pacificAdapter
+    implementation dep.flurry
 }

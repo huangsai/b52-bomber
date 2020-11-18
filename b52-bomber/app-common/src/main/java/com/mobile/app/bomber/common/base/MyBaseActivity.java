@@ -13,6 +13,7 @@ import androidx.annotation.StringRes;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.flurry.android.FlurryAgent;
 import com.mobile.app.bomber.common.R;
 import com.mobile.guava.android.mvvm.AndroidX;
 import com.mobile.guava.android.mvvm.BaseActivity;
@@ -100,5 +101,17 @@ public abstract class MyBaseActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         hideLoading();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FlurryAgent.onStartSession(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        FlurryAgent.onEndSession(this);
     }
 }
