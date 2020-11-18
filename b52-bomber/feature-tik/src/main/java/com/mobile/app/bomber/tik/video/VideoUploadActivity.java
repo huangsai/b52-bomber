@@ -9,7 +9,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -27,12 +26,14 @@ import com.mobile.app.bomber.common.base.MyBaseActivity;
 import com.mobile.app.bomber.common.base.tool.FileUtil;
 import com.mobile.app.bomber.common.base.tool.ShareUtils;
 import com.mobile.app.bomber.common.base.tool.SingleClick;
+import com.mobile.app.bomber.runner.RunnerX;
 import com.mobile.app.bomber.tik.R;
 import com.mobile.app.bomber.tik.base.AppRouterUtils;
 import com.mobile.app.bomber.tik.databinding.ActivityVideoUploadBinding;
 import com.mobile.app.bomber.tik.home.LocationLiveData;
 import com.mobile.ext.glide.GlideApp;
 import com.mobile.guava.android.mvvm.RouterKt;
+import com.mobile.guava.jvm.coroutines.Bus;
 import com.mobile.guava.jvm.domain.Source;
 
 import java.io.File;
@@ -229,13 +230,12 @@ public class VideoUploadActivity extends MyBaseActivity implements View.OnClickL
                 Msg.INSTANCE.toast("上传成功");
                 if (shareWechatBool) {
                     ShareUtils.shareToWechat(VideoUploadActivity.this);
-                    return;
                 }
                 if (shareQQBool) {
                     ShareUtils.shareToQQ(VideoUploadActivity.this);
-                    return;
                 }
                 finish();
+                Bus.INSTANCE.offer(RunnerX.BUS_VIDEO_UPLOAD_SUCCESS);
             } else {
                 Msg.INSTANCE.handleSourceException(source.requireError());
             }

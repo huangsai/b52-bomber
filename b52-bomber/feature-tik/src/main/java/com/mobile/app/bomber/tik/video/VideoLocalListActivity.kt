@@ -8,18 +8,22 @@ import android.view.View
 import android.widget.ImageView
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
-import com.mobile.guava.android.ui.view.recyclerview.TestedGridItemDecoration
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.mobile.app.bomber.common.base.MyBaseActivity
+import com.mobile.app.bomber.common.base.tool.SingleClick
+import com.mobile.app.bomber.runner.RunnerX
+import com.mobile.app.bomber.tik.R
+import com.mobile.app.bomber.tik.databinding.ActivityVideoLocalBinding
+import com.mobile.app.bomber.tik.video.items.VideoLocalItem
+import com.mobile.ext.glide.GlideApp
+import com.mobile.guava.android.ui.view.recyclerview.TestedGridItemDecoration
+import com.pacific.adapter.AdapterImageLoader
+import com.pacific.adapter.AdapterUtils
+import com.pacific.adapter.AdapterViewHolder
+import com.pacific.adapter.RecyclerAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import com.mobile.app.bomber.tik.R
-import com.mobile.ext.glide.GlideApp
-import com.mobile.app.bomber.common.base.MyBaseActivity
-import com.mobile.app.bomber.common.base.tool.SingleClick
-import com.mobile.app.bomber.tik.databinding.ActivityVideoLocalBinding
-import com.mobile.app.bomber.tik.video.items.VideoLocalItem
-import com.pacific.adapter.*
 import java.util.*
 
 class VideoLocalListActivity : MyBaseActivity(), AdapterImageLoader, View.OnClickListener {
@@ -34,6 +38,13 @@ class VideoLocalListActivity : MyBaseActivity(), AdapterImageLoader, View.OnClic
         setContentView(binding.root)
         binding.videoLocalBack.setOnClickListener { finish() }
         initRecyclerView()
+    }
+
+    override fun onBusEvent(event: Pair<Int, Any>) {
+        super.onBusEvent(event)
+        if (event.first == RunnerX.BUS_VIDEO_UPLOAD_SUCCESS) {
+            finish()
+        }
     }
 
     private fun initRecyclerView() {
