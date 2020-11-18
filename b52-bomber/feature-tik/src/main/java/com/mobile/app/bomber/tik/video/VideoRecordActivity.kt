@@ -3,20 +3,21 @@ package com.mobile.app.bomber.tik.video
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
-import com.mobile.guava.android.mvvm.newStartActivity
-import com.trinity.OnRecordingListener
-import com.trinity.camera.Facing
-import com.trinity.camera.Flash
-import com.trinity.record.TrinityRecord
-import com.mobile.app.bomber.tik.R
-import com.mobile.app.bomber.common.base.MyBaseActivity
 import com.mobile.app.bomber.common.base.Msg
+import com.mobile.app.bomber.common.base.MyBaseActivity
 import com.mobile.app.bomber.common.base.tool.SingleClick
+import com.mobile.app.bomber.runner.RunnerX
+import com.mobile.app.bomber.tik.R
 import com.mobile.app.bomber.tik.databinding.ActivityVideoRecordBinding
 import com.mobile.app.bomber.tik.video.VideoRecordButtonPresenter.Companion.STATUS_INIT
 import com.mobile.app.bomber.tik.video.VideoRecordButtonPresenter.Companion.STATUS_START
 import com.mobile.app.bomber.tik.video.VideoRecordButtonPresenter.Companion.STATUS_STOP
 import com.mobile.guava.android.mvvm.AndroidX
+import com.mobile.guava.android.mvvm.newStartActivity
+import com.trinity.OnRecordingListener
+import com.trinity.camera.Facing
+import com.trinity.camera.Flash
+import com.trinity.record.TrinityRecord
 import org.joor.Reflect
 import java.text.SimpleDateFormat
 import java.util.*
@@ -48,6 +49,13 @@ class VideoRecordActivity : MyBaseActivity(), View.OnClickListener, OnRecordingL
         setContentView(binding.root)
         initView()
         initRecord()
+    }
+
+    override fun onBusEvent(event: Pair<Int, Any>) {
+        super.onBusEvent(event)
+        if (event.first == RunnerX.BUS_VIDEO_UPLOAD_SUCCESS) {
+            finish()
+        }
     }
 
     override fun onResume() {

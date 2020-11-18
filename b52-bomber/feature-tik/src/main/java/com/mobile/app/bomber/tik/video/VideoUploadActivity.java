@@ -1,7 +1,6 @@
 package com.mobile.app.bomber.tik.video;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.location.Location;
@@ -9,17 +8,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.core.widget.NestedScrollView;
 
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.mobile.app.bomber.common.base.Msg;
@@ -27,17 +23,22 @@ import com.mobile.app.bomber.common.base.MyBaseActivity;
 import com.mobile.app.bomber.common.base.tool.FileUtil;
 import com.mobile.app.bomber.common.base.tool.ShareUtils;
 import com.mobile.app.bomber.common.base.tool.SingleClick;
+import com.mobile.app.bomber.runner.RunnerX;
 import com.mobile.app.bomber.tik.R;
 import com.mobile.app.bomber.tik.base.AppRouterUtils;
 import com.mobile.app.bomber.tik.databinding.ActivityVideoUploadBinding;
 import com.mobile.app.bomber.tik.home.LocationLiveData;
 import com.mobile.ext.glide.GlideApp;
 import com.mobile.guava.android.mvvm.RouterKt;
+import com.mobile.guava.jvm.coroutines.Bus;
 import com.mobile.guava.jvm.domain.Source;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.mobile.app.bomber.common.base.tool.ActivityUtilsKt.isSoftInputShowing;
+import static com.mobile.guava.android.context.ActivityExtKt.hideSoftInput;
 
 /**
  * 使用它作为视频上传
@@ -118,12 +119,7 @@ public class VideoUploadActivity extends MyBaseActivity implements View.OnClickL
         binding.llShareQqLayout.setOnClickListener(this);
         binding.llShareWechatLayout.setOnClickListener(this);
         binding.tvLocation.setOnClickListener(this);
-        binding.getRoot().setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                hideInputKeyboard(getCurrentFocus());
-            }
-        });
+        binding.editDes.setOnClickListener(this);
     }
 
     private void clickLocation() {
@@ -163,7 +159,7 @@ public class VideoUploadActivity extends MyBaseActivity implements View.OnClickL
         switch (requestCode) {
             case 105:
                 if (grantResults.length > 0 &&
-                        grantResults[0]+grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                        grantResults[0] + grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                     LocationLiveData.INSTANCE.lookupLocation(this, this);
                 } else {
                     alertPermission(R.string.alert_msg_permission_location);
@@ -225,13 +221,12 @@ public class VideoUploadActivity extends MyBaseActivity implements View.OnClickL
                 Msg.INSTANCE.toast("上传成功");
                 if (shareWechatBool) {
                     ShareUtils.shareToWechat(VideoUploadActivity.this);
-                    return;
                 }
                 if (shareQQBool) {
                     ShareUtils.shareToQQ(VideoUploadActivity.this);
-                    return;
                 }
                 finish();
+                Bus.INSTANCE.offer(RunnerX.BUS_VIDEO_UPLOAD_SUCCESS);
             } else {
                 Msg.INSTANCE.handleSourceException(source.requireError());
             }
@@ -254,11 +249,12 @@ public class VideoUploadActivity extends MyBaseActivity implements View.OnClickL
             clickWechatShareLayout();
         } else if (id == R.id.ll_share_qq_layout) {
             clickQQShareLayout();
+        } else if (id == R.id.editDes) {
+            hideInputKeyboard();
         }
     }
 
     private void initLabelsData() {
-//        String[] hotWords = getResources().getStringArray(R.array.upload_labels);
         videoViewModel.getVideoTags().observe(this, source -> {
             if (source instanceof Source.Success) {
                 List<String> keywords = source.requireData();
@@ -290,42 +286,16 @@ public class VideoUploadActivity extends MyBaseActivity implements View.OnClickL
                 Msg.INSTANCE.handleSourceException(source.requireError());
             }
         });
-
-//        String[] hotWords = getResources().getStringArray(R.array.upload_labels);
-//        for (String hotWord : hotWords) {
-//                TextView view = (TextView) LayoutInflater.from(this).inflate(R.layout.item_tag_tv, binding.mShowBtnLayout, false);
-//                view.setText("#" + hotWord);
-//                view.setTag(hotWord);
-//                view.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        String keyword = (String) view.getTag();
-//                        if (view.isSelected()) {
-//                            view.setSelected(false);
-//                            labelList.remove(keyword);
-//                            return;
-//                        }
-//                        if (labelList.size() >= 3) {
-//                            Msg.INSTANCE.toast("最多只能选择3个");
-//                            return;
-//                        }
-//                        view.setSelected(true);
-//                        labelList.add(keyword);
-//                    }
-//                });
-//            binding.mShowBtnLayout.addView(view);
-//        }
     }
+
     @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        hideInputKeyboard(getCurrentFocus());
-        return super.onTouchEvent(event);
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        hideInputKeyboard();
+        return super.dispatchTouchEvent(ev);
     }
 
-
-    protected void hideInputKeyboard(View v) {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+    protected void hideInputKeyboard() {
+        if (isSoftInputShowing(this)) hideSoftInput(this);
     }
 
 }

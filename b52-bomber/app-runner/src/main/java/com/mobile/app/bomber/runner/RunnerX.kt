@@ -31,6 +31,8 @@ object RunnerX {
     const val BUS_SEARCH_RESULT = 102
     const val BUS_VIDEO_UPDATE = 103
     const val BUS_CLOSE_ALL_DIALOG = 104
+    const val BUS_VIDEO_UPLOAD_SUCCESS = 105
+
 
     lateinit var component: RunnerComponent
         private set

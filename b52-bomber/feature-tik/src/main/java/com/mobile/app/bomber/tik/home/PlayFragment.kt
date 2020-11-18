@@ -523,7 +523,10 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
 
     override fun onBusEvent(event: Pair<Int, Any>) {
         if (event.first == RunnerX.BUS_VIDEO_UPDATE) {
-            updateVideo()
+            val aid: Long = 0
+            if (video?.adId!! == aid) {
+                updateVideo()
+             }
             return
         }
     }
