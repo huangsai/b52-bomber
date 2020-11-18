@@ -11,6 +11,7 @@ import com.mobile.app.bomber.movie.base.animRotate
 import com.mobile.app.bomber.movie.databinding.MovieActivityPlayerBinding
 import com.mobile.app.bomber.movie.player.items.ActorItem
 import com.mobile.ext.glide.GlideApp
+import com.mobile.guava.android.mvvm.AndroidX
 import com.mobile.guava.android.ui.view.expandable.ExpandableLayout2
 import com.mobile.guava.jvm.domain.Source
 import com.mobile.guava.jvm.extension.exhaustive
@@ -113,7 +114,7 @@ class SourcePresenter(
     }
 
     override fun load(view: ImageView, holder: AdapterViewHolder) {
-        GlideApp.with(playerActivity)
+        GlideApp.with(AndroidX.myApp)
                 .load("")
                 .placeholder(R.drawable.jq_icon_40)
                 .into(view)

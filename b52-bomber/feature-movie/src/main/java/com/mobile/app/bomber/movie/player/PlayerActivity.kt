@@ -128,7 +128,6 @@ class PlayerActivity : BaseActivity() {
 
     companion object {
 
-        @JvmStatic
         fun start(activity: Activity, movieId: Long) {
             Values.put("PlayerActivity_movieId", movieId)
             activity.newStartActivity(PlayerActivity::class.java)

@@ -124,7 +124,7 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
             if (source instanceof Source.Success) {
                 ApiAdMsg data = source.requireData();
                 if (!TextUtils.isEmpty(data.getContent())) {
-                    RouterKt.showDialogFragment(this, PopupAdDialogFragment.newInstance(data));
+                    RouterKt.showDialogFragment(this, PopupAdDialogFragment.Companion.newInstance(data));
                 }
             }
         });
