@@ -2,6 +2,8 @@ package com.mobile.app.bomber.tik.home
 
 import android.graphics.Rect
 import android.os.Bundle
+import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,6 +51,7 @@ import io.reactivex.rxjava3.disposables.Disposable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import okhttp3.internal.userAgent
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
@@ -64,6 +67,9 @@ class CommentInputDialogFragment : BaseBottomSheetDialogFragment(), View.OnClick
     private lateinit var behavior: BottomSheetBehavior<FrameLayout>
     private lateinit var video: ApiVideo.Video
     private var action: Int = 0
+    private var atd: Long = 0
+    private var vid: Long = 0
+
     private val adapter = RecyclerAdapter()
     private var comment: ApiComment.Comment? = null
     private var textDisposable: Disposable? = null
@@ -176,7 +182,7 @@ class CommentInputDialogFragment : BaseBottomSheetDialogFragment(), View.OnClick
             3 -> binding.layoutEmoji.expand(false)
             4 -> {
                 showIme()
-                binding.editComment.hint = "回复 @" + comment?.username+"："
+                binding.editComment.hint = "回复 @" + comment?.username + "："
             }
             else -> throw IllegalStateException()
         }
@@ -295,6 +301,10 @@ class CommentInputDialogFragment : BaseBottomSheetDialogFragment(), View.OnClick
     }
 
     private fun createComment() {
+        if (video.isChecking()){
+            Msg.toast("视频还未审核不能发评论，请等待审核通过")
+            return
+        }
         val content = buildContent()
         if (content.isNullOrEmpty()) {
             Msg.toast("评论内容不能为空")
@@ -303,17 +313,24 @@ class CommentInputDialogFragment : BaseBottomSheetDialogFragment(), View.OnClick
         lifecycleScope.launch(Dispatchers.IO) {
             val toCommendId = comment?.id ?: 0L
             val toUserId = comment?.uid ?: 0L
+
             val at = atUsers.map { it.userId }.joinToString(",")
+//            val type = video.adId == atd ? 0 : 1
+            val type = if (video.adId == atd) {
+                0
+            } else {
+                1
+            }
             val atList = atUsers.map { it.toAt() }
             val newComment = ApiComment.Comment(
-                    PrefsManager.getUserId(), video.videoId, 0L, 0,
-                    System.currentTimeMillis() / 1000L, PrefsManager.getLoginName(),
+                    PrefsManager.getUserId(), if (type == 0) video.videoId else video.adId!!, 0L, 0,
+                    (System.currentTimeMillis()) / 1000L -1, PrefsManager.getLoginName(),
                     PrefsManager.getHeadPicUrl(), content, toCommendId, toUserId,
                     comment?.username ?: "", comment?.pic ?: "",
                     false, atList, null
             )
             val source = model.createComment(
-                    video.videoId, content, toCommendId, toUserId, at
+                    if (type == 0) video.videoId else video.adId!!, content, toCommendId, toUserId, at, type.toLong()
             )
             withContext(Dispatchers.Main) {
                 when (source) {

@@ -54,6 +54,7 @@ class CommentDialogFragment : BaseBottomSheetDialogFragment(), View.OnClickListe
 
     private val adapter = RecyclerAdapter()
     private val model: HomeViewModel by viewModels { AppRouterUtils.viewModelFactory() }
+    private var atd: Long = 0
 
     private lateinit var video: ApiVideo.Video
     private lateinit var behavior: BottomSheetBehavior<FrameLayout>
@@ -101,8 +102,13 @@ class CommentDialogFragment : BaseBottomSheetDialogFragment(), View.OnClickListe
     }
 
     private fun loadComments() {
+        val type = if (video.adId == atd) {
+            0
+        } else {
+            1
+        }
         lifecycleScope.launch(Dispatchers.IO) {
-            val source = model.comments(video.videoId)
+            val source = model.comments(if (type == 0) video.videoId else video.adId!!,type.toLong())
             val list = ArrayList<SimpleRecyclerItem>()
 
             var childIndex: Int
@@ -119,7 +125,7 @@ class CommentDialogFragment : BaseBottomSheetDialogFragment(), View.OnClickListe
                             childIndex++
                         }
                         childIndex == CommentItem.SLOT_COUNT -> {
-                            list.add(CommentItem.TypeC(o))
+                            list.add(CommentItem.TypeC(o,video))
                             childIndex++
                         }
                     }
@@ -280,8 +286,13 @@ class CommentDialogFragment : BaseBottomSheetDialogFragment(), View.OnClickListe
 
     private fun likeComment(item: CommentItem) {
         setLikingState(item)
+        val type = if (video.adId == atd) {
+            0
+        } else {
+            1
+        }
         lifecycleScope.launch(Dispatchers.IO) {
-            val source = model.likeComment(item.data)
+            val source = model.likeComment(item.data,type.toLong())
             withContext(Dispatchers.Main) {
                 when (source) {
                     is Source.Success -> {

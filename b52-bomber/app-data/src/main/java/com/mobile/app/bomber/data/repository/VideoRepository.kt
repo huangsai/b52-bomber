@@ -16,6 +16,7 @@ class VideoRepository @Inject constructor(
         db: AppDatabase,
         appPrefsManager: AppPrefsManager
 ) : BaseRepository(dataService, db, appPrefsManager) {
+    private var atd: Long = 0
 
     suspend fun videosOfHot(pager: Pager) = queryVideos(pager, "blank", "hot")
 
@@ -110,7 +111,12 @@ class VideoRepository @Inject constructor(
     }
 
     suspend fun likeVideo(video: ApiVideo.Video): Source<ApiLike> {
-        val req = ApiLike.Req(userId, token, video.videoId, if (video.isLiking) -1 else 1)
+        val type = if (video.adId == atd) {
+            0
+        } else {
+            1
+        }
+        val req = ApiLike.Req(userId, token, if (type == 0) video.videoId else video.adId!!, if (video.isLiking) -1 else 1, type.toLong())
         return try {
             dataService.likeVideo(req).toSource()
         } catch (e: Exception) {
@@ -149,7 +155,16 @@ class VideoRepository @Inject constructor(
     }
 
     suspend fun videoById(videoId: Long): Source<ApiVideo.Video> {
-        val call = dataService.videoById(userId, token, videoId)
+        var Tourist:String  = ""
+        var TouristUid:Long  = 0
+        if (!appPrefsManager.isLogin()) {
+            TouristUid = 0
+            Tourist = "blank"
+        } else {
+            TouristUid = userId
+            Tourist = token
+        }
+        val call = dataService.videoById(TouristUid, Tourist, videoId)
         return try {
             call.execute().toSource {
                 it.video

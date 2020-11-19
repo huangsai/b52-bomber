@@ -69,6 +69,7 @@ class UserRepository @Inject constructor(
                     if (loginType == 2) {
                         appPrefsManager.setIsLogin(true)
                         aboutUsers()
+                        getUserInfo(data.uid!!,true,2)
                     } else if (loginType == 1) {
                         appPrefsManager.setIsLogin(false)
                     }
@@ -78,6 +79,7 @@ class UserRepository @Inject constructor(
             errorSource(e)
         }
     }
+
 
     //快捷登录 登录类型 1游客 2手机号
     suspend fun fastLogin(): Source<ApiToken> {
@@ -121,12 +123,15 @@ class UserRepository @Inject constructor(
         }
     }
 
-    suspend fun getUserInfo(uid: Long): Source<ApiUser> {
+    suspend fun getUserInfo(uid: Long,isLogin:Boolean,selfUid: Long): Source<ApiUser> {
         val call = dataService.user(uid)
+        var userID: Long = 2
         return try {
             call.execute().toSource().apply {
                 if (this is Source.Success && data.code == 0) {
-                    saveUserInfo(requireData())
+                    if (isLogin ==true && selfUid ==userID){
+                        saveUserInfo(requireData())
+                    }
                 }
             }
         } catch (e: Exception) {
@@ -226,12 +231,12 @@ class UserRepository @Inject constructor(
     }
 
     suspend fun ranksOfUser(type: String, time: Long, pager: Pager): Source<List<ApiRank.Rank>> {
-        var islogin : String? = null
-        var uid : Long? = 0
+        var islogin: String? = null
+        var uid: Long? = 0
         if (!appPrefsManager.isLogin()) {
             islogin = "blank"
             uid = 0
-        }else{
+        } else {
             islogin = token
             uid = userId
         }

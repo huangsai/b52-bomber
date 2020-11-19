@@ -101,11 +101,12 @@ interface DataService {
     @POST("/video/sharevideo/")
     fun shareVideo(@Body body: ApiVideo.ReqShare): Call<Nope>
 
-    @GET("/video/getvideocommentslist/{uid}/{fastkey}/{videoid}/")
+    @GET("/video/getvideocommentslist/{uid}/{fastkey}/{videoid}/{type}/")
     fun comments(
             @Path("uid") uid: Long,
             @Path("fastkey") token: String,
-            @Path("videoid") videoid: Long
+            @Path("videoid") videoid: Long,
+            @Path("type") type: Long
     ): Call<ApiComment>
 
     @POST("/video/videocomments/")
