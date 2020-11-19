@@ -316,7 +316,7 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
 
     private fun likeVideo() {
         if (video.isChecking()){
-            Msg.toast("视频还未审核不能点赞，请等待审核通过")
+            Msg.toast("视频还未审核不能进行操作，请等待审核通过")
             return
         }
         val oldVideo = video.copy()
