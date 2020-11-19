@@ -34,7 +34,8 @@ class CommentRepository @Inject constructor(
             content: String,
             toCommendId: Long,
             toUserId: Long,
-            at: String
+            at: String,
+            type: Long
     ): Source<ApiCreateComment> {
         val req = ApiCreateComment.Req(
                 appPrefsManager.getUserId(),
@@ -43,7 +44,8 @@ class CommentRepository @Inject constructor(
                 toCommendId,
                 toUserId,
                 content,
-                at
+                at,
+                type
         )
         return try {
             dataService.createComment(req).toSource()

@@ -55,7 +55,9 @@ data class ApiLike(
             @Json(name = "uid") val uid: Long,
             @Json(name = "fastkey") val token: String,
             @Json(name = "videoid") val videoId: Long,
-            @Json(name = "like") val likeOrNot: Long
+            @Json(name = "like") val likeOrNot: Long,
+            @Json(name = "type") val type: Long
+
     )
 
     @JsonClass(generateAdapter = true)
@@ -275,7 +277,9 @@ data class ApiCreateComment(
             @Json(name = "targetid") val toCommentId: Long,
             @Json(name = "targetuid") val toUserId: Long,
             @Json(name = "comments") val content: String,
-            @Json(name = "atuids") val at: String
+            @Json(name = "atuids") val at: String,
+            @Json(name = "type") val type: Long
+
     )
 }
 

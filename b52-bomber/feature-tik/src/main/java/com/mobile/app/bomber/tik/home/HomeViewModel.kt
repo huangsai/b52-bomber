@@ -28,11 +28,13 @@ class HomeViewModel @Inject constructor() : MyBaseViewModel() {
         ensureWorkThread()
         return videoRepository.videosOfNew(pager)
     }
+
     @WorkerThread
     suspend fun videosOfCommend(pager: Pager): Source<List<ApiVideo.Video>> {
         ensureWorkThread()
         return videoRepository.videosOfCommend(pager)
     }
+
     @WorkerThread
     suspend fun videosOfFollow(pager: Pager): Source<List<ApiVideo.Video>> {
         ensureWorkThread()
@@ -59,10 +61,10 @@ class HomeViewModel @Inject constructor() : MyBaseViewModel() {
 
     @WorkerThread
     suspend fun createComment(
-            videoId: Long, content: String, toCommendId: Long, toUserId: Long, at: String
+            videoId: Long, content: String, toCommendId: Long, toUserId: Long, at: String, type: Long
     ): Source<ApiCreateComment> {
         ensureWorkThread()
-        return commentRepository.createComment(videoId, content, toCommendId, toUserId, at)
+        return commentRepository.createComment(videoId, content, toCommendId, toUserId, at,type)
     }
 
     @WorkerThread
@@ -98,7 +100,7 @@ class HomeViewModel @Inject constructor() : MyBaseViewModel() {
     @WorkerThread
     suspend fun playDuration(videoId: Long, aid: Long?, duration: Long): Source<Nope> {
         ensureWorkThread()
-        return videoRepository.playDuration(videoId,aid, duration)
+        return videoRepository.playDuration(videoId, aid, duration)
     }
 
     @WorkerThread

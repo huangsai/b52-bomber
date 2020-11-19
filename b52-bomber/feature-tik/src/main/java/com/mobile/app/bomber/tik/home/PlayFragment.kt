@@ -250,7 +250,6 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
                 }
             })
             R.id.txt_comment -> {
-                Msg.toast("222"+PrefsManager.getLoginName())
                 if (PrefsManager.getLoginName().isNullOrEmpty()){
                     getUserInfo()
                 }
