@@ -108,7 +108,7 @@ class CommentDialogFragment : BaseBottomSheetDialogFragment(), View.OnClickListe
             1
         }
         lifecycleScope.launch(Dispatchers.IO) {
-            val source = model.comments(if (type == 0) video.videoId else video.adId!!)
+            val source = model.comments(if (type == 0) video.videoId else video.adId!!,type.toLong())
             val list = ArrayList<SimpleRecyclerItem>()
 
             var childIndex: Int
@@ -286,8 +286,13 @@ class CommentDialogFragment : BaseBottomSheetDialogFragment(), View.OnClickListe
 
     private fun likeComment(item: CommentItem) {
         setLikingState(item)
+        val type = if (video.adId == atd) {
+            0
+        } else {
+            1
+        }
         lifecycleScope.launch(Dispatchers.IO) {
-            val source = model.likeComment(item.data)
+            val source = model.likeComment(item.data,type.toLong())
             withContext(Dispatchers.Main) {
                 when (source) {
                     is Source.Success -> {

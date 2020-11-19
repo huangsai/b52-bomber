@@ -65,7 +65,9 @@ data class ApiLike(
             @Json(name = "uid") val uid: Long,
             @Json(name = "fastkey") val token: String,
             @Json(name = "commentsid") val commentId: Long,
-            @Json(name = "like") val likeOrNot: Long
+            @Json(name = "like") val likeOrNot: Long,
+            @Json(name = "type") val type: Long
+
     )
 }
 

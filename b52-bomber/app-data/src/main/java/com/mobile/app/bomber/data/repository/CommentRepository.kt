@@ -19,9 +19,9 @@ class CommentRepository @Inject constructor(
         appPrefsManager: AppPrefsManager
 ) : BaseRepository(dataService, db, appPrefsManager) {
 
-    suspend fun comments(videoId: Long): Source<List<ApiComment.Comment>> {
+    suspend fun comments(videoId: Long,type:Long): Source<List<ApiComment.Comment>> {
         val token = appPrefsManager.getToken().ifEmpty { "blank" }
-        val call = dataService.comments(appPrefsManager.getUserId(), token, videoId)
+        val call = dataService.comments(appPrefsManager.getUserId(), token, videoId,type)
         return try {
             call.toSource { it.comments.orEmpty() }
         } catch (e: Exception) {
@@ -54,12 +54,14 @@ class CommentRepository @Inject constructor(
         }
     }
 
-    suspend fun likeComment(comment: ApiComment.Comment): Source<Nope> {
+    suspend fun likeComment(comment: ApiComment.Comment,type: Long): Source<Nope> {
         val req = ApiLike.ReqComment(
                 appPrefsManager.getUserId(),
                 appPrefsManager.getToken(),
                 comment.id,
-                if (comment.isLiking) 1 else -1
+                if (comment.isLiking) 1 else -1,
+                type
+
         )
         return try {
             dataService.likeComment(req).toSource()

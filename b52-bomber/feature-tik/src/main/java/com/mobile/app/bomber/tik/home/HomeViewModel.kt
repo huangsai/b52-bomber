@@ -54,9 +54,9 @@ class HomeViewModel @Inject constructor() : MyBaseViewModel() {
     }
 
     @WorkerThread
-    suspend fun likeComment(comment: ApiComment.Comment): Source<Nope> {
+    suspend fun likeComment(comment: ApiComment.Comment,type:Long): Source<Nope> {
         ensureWorkThread()
-        return commentRepository.likeComment(comment)
+        return commentRepository.likeComment(comment,type)
     }
 
     @WorkerThread
@@ -68,9 +68,9 @@ class HomeViewModel @Inject constructor() : MyBaseViewModel() {
     }
 
     @WorkerThread
-    suspend fun comments(videoId: Long): Source<List<ApiComment.Comment>> {
+    suspend fun comments(videoId: Long,type: Long): Source<List<ApiComment.Comment>> {
         ensureWorkThread()
-        return commentRepository.comments(videoId)
+        return commentRepository.comments(videoId,type)
     }
 
     @WorkerThread
