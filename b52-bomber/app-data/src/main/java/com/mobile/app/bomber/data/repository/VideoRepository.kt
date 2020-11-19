@@ -149,7 +149,16 @@ class VideoRepository @Inject constructor(
     }
 
     suspend fun videoById(videoId: Long): Source<ApiVideo.Video> {
-        val call = dataService.videoById(userId, token, videoId)
+        var Tourist:String  = ""
+        var TouristUid:Long  = 0
+        if (!appPrefsManager.isLogin()) {
+            TouristUid = 0
+            Tourist = "blank"
+        } else {
+            TouristUid = userId
+            Tourist = token
+        }
+        val call = dataService.videoById(TouristUid, Tourist, videoId)
         return try {
             call.execute().toSource {
                 it.video

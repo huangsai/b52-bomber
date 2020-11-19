@@ -19,6 +19,7 @@ import com.mobile.app.bomber.tik.databinding.ItemCommentABinding;
 import com.mobile.app.bomber.tik.databinding.ItemCommentBBinding;
 import com.mobile.app.bomber.tik.databinding.ItemCommentCBinding;
 import com.mobile.guava.android.mvvm.AndroidX;
+import com.mobile.guava.android.mvvm.Msg;
 import com.mobile.guava.android.ui.screen.ScreenUtilsKt;
 import com.mobile.guava.android.ui.view.text.MySpannable;
 import com.mobile.guava.jvm.date.Java8TimeKt;
@@ -168,8 +169,8 @@ public abstract class CommentItem extends SimpleRecyclerItem {
         private int showingCount;
         private int lastShowingPager;
 
-        public TypeC(@NonNull ApiComment.Comment data) {
-            super(data, 3,null);
+        public TypeC(@NonNull ApiComment.Comment data,ApiVideo.Video video) {
+            super(data, 3,video);
             list = data.getChildren().subList(SLOT_COUNT, data.getChildren().size());
             Preconditions.checkArgument(list.size() > 0, "");
             hidingCount = list.size();

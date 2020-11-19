@@ -119,7 +119,7 @@ class CommentDialogFragment : BaseBottomSheetDialogFragment(), View.OnClickListe
                             childIndex++
                         }
                         childIndex == CommentItem.SLOT_COUNT -> {
-                            list.add(CommentItem.TypeC(o))
+                            list.add(CommentItem.TypeC(o,video))
                             childIndex++
                         }
                     }
