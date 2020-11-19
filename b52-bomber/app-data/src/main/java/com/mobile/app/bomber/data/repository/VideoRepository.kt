@@ -3,8 +3,8 @@ package com.mobile.app.bomber.data.repository
 import com.mobile.app.bomber.data.db.AppDatabase
 import com.mobile.app.bomber.data.files.AppPrefsManager
 import com.mobile.app.bomber.data.http.entities.*
-import com.mobile.guava.data.toSource
 import com.mobile.app.bomber.data.http.service.DataService
+import com.mobile.guava.data.toSource
 import com.mobile.guava.jvm.domain.Source
 import retrofit2.Call
 import javax.inject.Inject
@@ -41,6 +41,7 @@ class VideoRepository @Inject constructor(
         )
         return callApiVideo(call, pager)
     }
+
     suspend fun fixedAd(): Source<ApiFixedad> {
         val call = dataService.getFixedad()
         return try {
@@ -52,7 +53,7 @@ class VideoRepository @Inject constructor(
 
     suspend fun videosOfUser(pager: Pager, _userId: Long): Source<List<ApiVideo.Video>> {
         if (pager.isReachedTheEnd) return Source.Success(emptyList())
-        val call = dataService.videosOfUser(_userId, pager.requestPage, pager.pageSize)
+        val call = dataService.videosOfUser(_userId, pager.requestPage, pager.pageSize, userId, orBlankToken)
         return callApiVideo(call, pager)
     }
 
@@ -66,10 +67,11 @@ class VideoRepository @Inject constructor(
             pager: Pager
     ): Source<List<ApiVideo.Video>> {
         val call = dataService.queryCommendVideos(
-                userId, orBlankToken,pager.requestPage,pager.pageSize
+                userId, orBlankToken, pager.requestPage, pager.pageSize
         )
         return callCommendApiVideo(call)
     }
+
     private suspend fun queryVideos(
             pager: Pager, label: String, sort: String
     ): Source<List<ApiVideo.Video>> {
@@ -83,13 +85,13 @@ class VideoRepository @Inject constructor(
     private suspend fun callCommendApiVideo(
             call: Call<ApiVideo>
     ): Source<List<ApiVideo.Video>> {
-         return try {
-             call.execute().toSource{
-                 it.videos.orEmpty()
-             }
-         } catch (e: Exception) {
-             errorSource(e)
-         }
+        return try {
+            call.execute().toSource {
+                it.videos.orEmpty()
+            }
+        } catch (e: Exception) {
+            errorSource(e)
+        }
     }
 
     private suspend fun callApiVideo(
@@ -147,7 +149,16 @@ class VideoRepository @Inject constructor(
     }
 
     suspend fun videoById(videoId: Long): Source<ApiVideo.Video> {
-        val call = dataService.videoById(userId, token, videoId)
+        var Tourist:String  = ""
+        var TouristUid:Long  = 0
+        if (!appPrefsManager.isLogin()) {
+            TouristUid = 0
+            Tourist = "blank"
+        } else {
+            TouristUid = userId
+            Tourist = token
+        }
+        val call = dataService.videoById(TouristUid, Tourist, videoId)
         return try {
             call.execute().toSource {
                 it.video

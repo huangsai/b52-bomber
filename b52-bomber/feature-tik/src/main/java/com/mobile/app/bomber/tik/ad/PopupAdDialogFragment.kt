@@ -64,9 +64,7 @@ class PopupAdDialogFragment : BaseAppCompatDialogFragment(), View.OnClickListene
     }
 
     companion object {
-
-        @JvmStatic
-        fun newInstance(apiAdMsg: ApiAdMsg): PopupAdDialogFragment = PopupAdDialogFragment().apply {
+        fun newInstance(apiAdMsg: ApiAdMsg) = PopupAdDialogFragment().apply {
             Values.put("PopupAdDialogFragment", apiAdMsg)
         }
     }

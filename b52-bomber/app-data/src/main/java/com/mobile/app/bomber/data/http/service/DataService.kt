@@ -141,11 +141,13 @@ interface DataService {
             @Path("uid") uid: Long
     ): Call<ApiUserCount>
 
-    @GET("/video/getuservideolist/{uid}/{page}/{size}/")
+    @GET("/video/getuservideolist/{toUid}/{page}/{size}/{uid}/{fastKey}/")
     fun videosOfUser(
-            @Path("uid") uid: Long,
+            @Path("toUid") toUid: Long,
             @Path("page") page: Int,
-            @Path("size") pageSize: Int
+            @Path("size") pageSize: Int,
+            @Path("uid") uid: Long,
+            @Path("fastKey") fastKey: String
     ): Call<ApiVideo>
 
     @GET("/video/getuserlikevideolist/{uid}/{page}/{size}/")

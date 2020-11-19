@@ -7,25 +7,17 @@ import com.squareup.moshi.JsonClass
 import java.io.Serializable
 
 const val HOST_TAG_TEST = 0 //测试服
-const val HOST_TAG_DEV = 1 //开发服
-const val HOST_TAG_RELEASE = 2 //正式服
+const val HOST_TAG_RELEASE = 1 //正式服
 
 const val HOST_TAG = HOST_TAG_TEST
 
 //测试环境  http://117.50.119.233  http://119.28.18.13
-//正式环境  http://api.zomppga.tokyo:444
 const val HOST_TEST = "http://172.31.9.97/"
 const val HOST_TEST_UPLOAD = "http://172.31.10.18:8080"
 
-//开发环境
-const val HOST_DEV = "http://192.168.2.120:"
-
-//正式环境
+//正式环境  http://api.zomppga.tokyo:444
 const val HOST_RELEASE = "https://weiseapi.zkangcn.com"
 const val HOST_RELEASE_UPLOAD = "https://weisesp.pumiaox2.com"
-
-//视频解码地址
-const val DECODE_URL = "${HOST_TEST}8080" //不同环境下需要修改
 
 @JsonClass(generateAdapter = true)
 data class Nope(@Json(name = "retCode") val code: Int)
@@ -117,8 +109,13 @@ data class ApiVideo(
             @Json(name = "username") var username: String,
             @Json(name = "pic") var profile: String?,
             @Json(name = "aid") var adId: Long?,
-            @Json(name = "addownloadurl") var adUrl: String?
+            @Json(name = "addownloadurl") var adUrl: String?,
+            @Json(name = "status") val status: Int?
     ) : Serializable {
+
+        fun isChecking(): Boolean {
+            return status == 2
+        }
 
         fun distanceText(): String {
             val value = distance.nullSafe()
@@ -403,7 +400,7 @@ data class ApiAd(
         @Json(name = "id") val id: Long,
         @Json(name = "imageurl") val image: ImageUrl,
         @Json(name = "linkurl") val url: String,
-        @Json(name = "tyep") val type: Int,
+        @Json(name = "type") val type: Int,
         @Json(name = "weight") val weight: Int,
         @Json(name = "staytime") val startTime: Long
 ) {

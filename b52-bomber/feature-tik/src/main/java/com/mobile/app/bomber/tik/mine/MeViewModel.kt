@@ -12,8 +12,8 @@ import javax.inject.Inject
 
 class MeViewModel @Inject constructor() : MyBaseViewModel() {
 
-    fun getUserInfo(uid: Long): LiveData<Source<ApiUser>> {
-        return flow { emit(userRepository.getUserInfo(uid)) }.asLiveData(Dispatchers.IO)
+    fun getUserInfo(uid: Long,selfUid: Long): LiveData<Source<ApiUser>> {
+        return flow { emit(userRepository.getUserInfo(uid,true,selfUid)) }.asLiveData(Dispatchers.IO)
     }
 
     fun updateBirthday(birthday: String): LiveData<Source<Nope>> {

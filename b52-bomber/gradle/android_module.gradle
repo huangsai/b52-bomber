@@ -163,6 +163,8 @@ dependencies {
     implementation dep.company.extGlide
     implementation dep.company.extRxjava3
     implementation dep.company.extExo
+    implementation dep.company.extNet
 
     implementation dep.pacificAdapter
+    implementation dep.flurry
 }

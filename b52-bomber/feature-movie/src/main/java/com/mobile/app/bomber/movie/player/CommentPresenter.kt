@@ -17,6 +17,7 @@ import com.mobile.app.bomber.movie.base.requireLogin
 import com.mobile.app.bomber.movie.databinding.MovieActivityPlayerBinding
 import com.mobile.app.bomber.movie.player.items.CommentItem
 import com.mobile.ext.glide.GlideApp
+import com.mobile.guava.android.mvvm.AndroidX
 import com.mobile.guava.jvm.domain.Source
 import com.mobile.guava.jvm.extension.exhaustive
 import com.pacific.adapter.AdapterUtils
@@ -72,7 +73,7 @@ class CommentPresenter(
                     binding.layoutGameAd.visibility = View.GONE
                 } else {
                     binding.layoutGameAd.visibility = View.VISIBLE
-                    GlideApp.with(playerActivity)
+                    GlideApp.with(AndroidX.myApp)
                             .load(ad?.img)
                             .placeholder(R.drawable.jq_icon_40)
                             .into(binding.includeGameAd.imgIcon)
@@ -216,7 +217,7 @@ class CommentPresenter(
     }
 
     override fun load(view: ImageView, holder: AdapterViewHolder) {
-        GlideApp.with(playerActivity)
+        GlideApp.with(AndroidX.myApp)
                 .load(holder.item<CommentItem>().data.pic)
                 .placeholder(R.drawable.jq_icon_40)
                 .into(view)

@@ -17,7 +17,6 @@
             android:clipToPadding="false"
             android:fadingEdge="vertical|horizontal"
             android:overScrollMode="always"
-            android:paddingTop="@dimen/size_74dp"
             android:scrollbars="vertical" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

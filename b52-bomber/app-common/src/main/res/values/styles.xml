@@ -26,7 +26,7 @@
     </style>
 
     <style name="My_CheckBox" parent="@android:style/Widget.Material.CompoundButton.CheckBox" tools:targetApi="lollipop">
-        <item name="android:colorControlActivated">#ffffff</item>
+        <item name="android:colorControlActivated">#545454</item>
         <item name="android:colorControlNormal">#ffffff</item>
     </style>
 

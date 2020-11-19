@@ -27,14 +27,18 @@ import com.mobile.app.bomber.tik.databinding.FragmentHomeBinding
 import com.mobile.app.bomber.tik.login.LoginActivity
 import com.mobile.app.bomber.tik.search.SearchActivity
 import com.mobile.app.bomber.tik.video.VideoRecordActivity
+import com.mobile.ext.net.HttpInputDialogFragment
+import com.mobile.ext.net.OnDialogDismissListener
 import com.mobile.guava.android.mvvm.AndroidX
 import com.mobile.guava.android.mvvm.newStartActivity
+import com.mobile.guava.android.mvvm.showDialogFragment
 import com.mobile.guava.android.ui.view.recyclerview.enforceSingleScrollDirection
 import com.mobile.guava.android.ui.view.viewpager.recyclerView
+import com.mobile.guava.jvm.Guava
 import com.skydoves.balloon.Balloon
 import com.skydoves.balloon.BalloonAnimation
 
-class HomeFragment : TopMainFragment(), View.OnClickListener {
+class HomeFragment : TopMainFragment(), View.OnClickListener, View.OnLongClickListener {
 
     private val tabTitles = arrayOf("关注", "推荐")
 
@@ -88,11 +92,14 @@ class HomeFragment : TopMainFragment(), View.OnClickListener {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         binding.imgSearch.setOnClickListener(this)
         binding.imgCamera.setOnClickListener(this)
+        if (Guava.isDebug) {
+            binding.imgCamera.setOnLongClickListener(this)
+        }
         binding.imgDown.setOnClickListener(this)
         binding.viewPager.recyclerView.enforceSingleScrollDirection()
         binding.viewPager.offscreenPageLimit = 2
         binding.viewPager.adapter = adapter
-
+        binding.lineFull.setOnClickListener(this)
         currentPosition = 1
         binding.viewPager.setCurrentItem(currentPosition, false)
 
@@ -115,7 +122,7 @@ class HomeFragment : TopMainFragment(), View.OnClickListener {
                 .setMarginBottom(24)
                 .setMarginTop(30)
                 .setCornerRadius(0f)
-                .setAutoDismissDuration(3000)
+                .setAutoDismissDuration(2000)
                 .build()
                 .apply {
                     with(getContentView()) {
@@ -136,7 +143,7 @@ class HomeFragment : TopMainFragment(), View.OnClickListener {
             if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
                     + ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_COARSE_LOCATION)
                     == PackageManager.PERMISSION_GRANTED) {
-                LocationLiveData.lookupLocation(this,requireContext())
+                LocationLiveData.lookupLocation(this, requireContext())
             }
             if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.READ_PHONE_STATE)
                     + ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
@@ -148,7 +155,7 @@ class HomeFragment : TopMainFragment(), View.OnClickListener {
                         101)
             }
         } else {
-            LocationLiveData.lookupLocation(this,requireContext())
+            LocationLiveData.lookupLocation(this, requireContext())
         }
     }
 
@@ -202,7 +209,7 @@ class HomeFragment : TopMainFragment(), View.OnClickListener {
                     }
                 }
                 if (hasLocationPermission) {
-                    LocationLiveData.lookupLocation(this,requireContext())
+                    LocationLiveData.lookupLocation(this, requireContext())
                     if (!hasPhoneStatePermission) {
                         (activity as MyBaseActivity).alertPermission(R.string.alert_msg_permission_phone_state)
                     }
@@ -217,7 +224,7 @@ class HomeFragment : TopMainFragment(), View.OnClickListener {
             102 -> {
                 if (grantResults.size > 0 &&
                         grantResults[0] + grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                    LocationLiveData.lookupLocation(this,requireContext())
+                    LocationLiveData.lookupLocation(this, requireContext())
                     newStartActivity(NearByActivity::class.java)
                 } else {
                     (activity as MyBaseActivity).alertPermission(R.string.alert_msg_permission_location)
@@ -264,9 +271,23 @@ class HomeFragment : TopMainFragment(), View.OnClickListener {
             R.id.img_down -> {
                 showPopupOptions(v)
             }
+            R.id.line_full -> {
+                showPopupOptions(v)
+            }
         }
     }
 
+    override fun onLongClick(p0: View?): Boolean {
+        val dialogFragment = HttpInputDialogFragment.newInstance(
+                object : OnDialogDismissListener {
+                    override fun onDismiss(vararg args: String) {
+                        PrefsManager.setHttpAddress(args[0])
+                        PrefsManager.setHttpAddressUpload(args[1])
+                    }
+                })
+        this.showDialogFragment(dialogFragment)
+        return true
+    }
 
     fun selectFragment(position: Int) {
         binding.viewPager.setCurrentItem(position, false)
@@ -300,5 +321,6 @@ class HomeFragment : TopMainFragment(), View.OnClickListener {
             }
         }
     }
+
 
 }

@@ -25,11 +25,15 @@ import com.google.android.exoplayer2.source.MediaSource
 import com.mobile.app.bomber.common.base.Msg
 import com.mobile.app.bomber.common.base.MyBaseFragment
 import com.mobile.app.bomber.common.base.tool.SingleClick
+import com.mobile.app.bomber.data.http.entities.ApiUser
 import com.mobile.app.bomber.data.http.entities.ApiVideo
 import com.mobile.app.bomber.runner.RunnerX
+import com.mobile.app.bomber.runner.base.PrefsManager
+import com.mobile.app.bomber.runner.base.PrefsManager.isLogin
 import com.mobile.app.bomber.tik.R
 import com.mobile.app.bomber.tik.base.*
 import com.mobile.app.bomber.tik.databinding.FragmentPlayBinding
+import com.mobile.app.bomber.tik.mine.MeViewModel
 import com.mobile.app.bomber.tik.mine.UserDetailActivity
 import com.mobile.ext.glide.GlideApp
 import com.mobile.guava.android.mvvm.AndroidX
@@ -57,6 +61,8 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
     private var isAdVideo = false
     private lateinit var gestureDetector: GestureDetectorCompat
     private lateinit var thumbDrawable: Drawable
+    private lateinit var videoChange: ApiVideo.Video
+    protected var mApiUser: ApiUser? = null
 
     private var currentWindow = 0
     private var shareURl: String = ""
@@ -66,6 +72,7 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
     private var isPlayerPlaying = false
     private var markedPlayCount = false
     private var markedPlayDuration = false
+    private var meViewModel: MeViewModel? = null
 
     private val model by viewModels<HomeViewModel> { AppRouterUtils.viewModelFactory() }
 
@@ -95,6 +102,7 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
         gestureDetector = GestureDetectorCompat(requireContext(), onGestureListener)
         Timber.d("videoUrl : " + video.decodeVideoUrl())
         GoogleExo.preload(Uri.parse(video.decodeVideoUrl()))
+
     }
 
     override fun onCreateView(
@@ -106,6 +114,7 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
         binding.layoutContent.setOnTouchListener { _, event ->
             gestureDetector.onTouchEvent(event)
         }
+        meViewModel = AppRouterUtils.viewModels(this, MeViewModel::class.java)
         binding.txtShare.setOnClickListener(this)
         binding.txtLiked.setOnClickListener(this)
         binding.txtComment.setOnClickListener(this)
@@ -127,6 +136,7 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
             }
         })
         bindData()
+
         return binding.root
     }
 
@@ -147,7 +157,17 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
         }
         releasePlayer()
     }
-
+    private fun getUserInfo() {
+        if (isLogin()) {
+            meViewModel?.getUserInfo(PrefsManager.getUserId(),2)?.observe(viewLifecycleOwner, Observer { apiUserSource: Source<ApiUser> ->
+                if (apiUserSource is Source.Success) {
+                    val apiUser = apiUserSource.requireData()
+                    this.mApiUser = apiUser
+                    PrefsManager.setLoginName(apiUser.username)
+                  }
+            })
+        }
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         binding.layoutContent.setOnTouchListener(null)
@@ -230,6 +250,10 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
                 }
             })
             R.id.txt_comment -> {
+                Msg.toast("222"+PrefsManager.getLoginName())
+                if (PrefsManager.getLoginName().isNullOrEmpty()){
+                    getUserInfo()
+                }
                 Values.put("CommentDialogFragment", video)
                 showDialogFragment(CommentDialogFragment.newInstance())
             }
@@ -365,11 +389,14 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
     override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
         when (playbackState) {
             Player.STATE_IDLE -> {
+                binding.viewPlayer.keepScreenOn = false
             }
             Player.STATE_BUFFERING -> {
                 binding.progress.visibility = View.VISIBLE
+                binding.viewPlayer.keepScreenOn = true
             }
             Player.STATE_READY -> {
+                binding.viewPlayer.keepScreenOn = true
                 if (AndroidX.appDialogCount.value!! > 0 && playWhenReady) {
                     forcePausePlayer()
                     return
@@ -382,6 +409,7 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
                 binding.imgPlay.isVisible = !playWhenReady
             }
             Player.STATE_ENDED -> {
+                binding.viewPlayer.keepScreenOn = false
             }
         }
     }
@@ -517,7 +545,10 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
 
     override fun onBusEvent(event: Pair<Int, Any>) {
         if (event.first == RunnerX.BUS_VIDEO_UPDATE) {
-            updateVideo()
+            val aid: Long = 0
+            if (video?.adId!! == aid) {
+                updateVideo()
+              }
             return
         }
     }

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.util.Preconditions;
 import com.mobile.app.bomber.data.http.entities.ApiComment;
+import com.mobile.app.bomber.data.http.entities.ApiVideo;
 import com.mobile.app.bomber.data.repository.MappersKt;
 import com.mobile.app.bomber.runner.base.PrefsManager;
 import com.mobile.app.bomber.tik.R;
@@ -18,6 +19,7 @@ import com.mobile.app.bomber.tik.databinding.ItemCommentABinding;
 import com.mobile.app.bomber.tik.databinding.ItemCommentBBinding;
 import com.mobile.app.bomber.tik.databinding.ItemCommentCBinding;
 import com.mobile.guava.android.mvvm.AndroidX;
+import com.mobile.guava.android.mvvm.Msg;
 import com.mobile.guava.android.ui.screen.ScreenUtilsKt;
 import com.mobile.guava.android.ui.view.text.MySpannable;
 import com.mobile.guava.jvm.date.Java8TimeKt;
@@ -35,17 +37,20 @@ public abstract class CommentItem extends SimpleRecyclerItem {
 
     @NonNull
     public final ApiComment.Comment data;
+    public final ApiVideo.Video video;
+
     public final int type;
     public final boolean isMe;
     protected MySpannable comment;
 
-    public CommentItem(@NonNull ApiComment.Comment data, int type) {
+    public CommentItem(@NonNull ApiComment.Comment data, int type, ApiVideo.Video video) {
         this.type = type;
         this.data = data;
+        this.video = video;
         if (type == 3) {
             this.isMe = false;
         } else {
-            this.isMe = PrefsManager.INSTANCE.getUserId() == data.getUid();
+            this.isMe = video.getOwner() == data.getUid();
         }
     }
 
@@ -54,7 +59,8 @@ public abstract class CommentItem extends SimpleRecyclerItem {
             int atColor = ContextCompat.getColor(AndroidX.INSTANCE.myApp(), R.color.comment_at);
             int color = ContextCompat.getColor(AndroidX.INSTANCE.myApp(), R.color.comment_name);
             String replay = data.getReplayText();
-            String ago = Java8TimeKt.ago(data.getTime() * 1000L, System.currentTimeMillis());
+
+            String ago = Java8TimeKt.ago(data.getTime() * 1000L, System.currentTimeMillis() + 1);
             comment = new MySpannable(replay + data.getContent() + "\u3000" + ago)
                     .findAndSpan(replay, () -> new ForegroundColorSpan(atColor))
                     .findAndSpan(ago, () -> new ForegroundColorSpan(color));
@@ -68,8 +74,8 @@ public abstract class CommentItem extends SimpleRecyclerItem {
 
     public static class TypeA extends CommentItem {
 
-        public TypeA(@NonNull ApiComment.Comment data) {
-            super(data, 1);
+        public TypeA(@NonNull ApiComment.Comment data, ApiVideo.Video video) {
+            super(data, 1,video);
         }
 
         @Override
@@ -113,8 +119,8 @@ public abstract class CommentItem extends SimpleRecyclerItem {
 
     public static class TypeB extends CommentItem {
 
-        public TypeB(@NonNull ApiComment.Comment data) {
-            super(data, 2);
+        public TypeB(@NonNull ApiComment.Comment data, ApiVideo.Video video) {
+            super(data, 2,video);
         }
 
         @Override
@@ -163,8 +169,8 @@ public abstract class CommentItem extends SimpleRecyclerItem {
         private int showingCount;
         private int lastShowingPager;
 
-        public TypeC(@NonNull ApiComment.Comment data) {
-            super(data, 3);
+        public TypeC(@NonNull ApiComment.Comment data,ApiVideo.Video video) {
+            super(data, 3,video);
             list = data.getChildren().subList(SLOT_COUNT, data.getChildren().size());
             Preconditions.checkArgument(list.size() > 0, "");
             hidingCount = list.size();
