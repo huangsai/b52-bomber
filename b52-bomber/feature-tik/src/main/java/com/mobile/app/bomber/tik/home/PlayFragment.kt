@@ -61,7 +61,6 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
     private var isAdVideo = false
     private lateinit var gestureDetector: GestureDetectorCompat
     private lateinit var thumbDrawable: Drawable
-    private lateinit var videoChange: ApiVideo.Video
     protected var mApiUser: ApiUser? = null
 
     private var currentWindow = 0
@@ -316,6 +315,10 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
     }
 
     private fun likeVideo() {
+        if (video.isChecking()){
+            Msg.toast("视频还未审核不能点赞，请等待审核通过")
+            return
+        }
         val oldVideo = video.copy()
         switchLikingState()
         lifecycleScope.launch(Dispatchers.IO) {

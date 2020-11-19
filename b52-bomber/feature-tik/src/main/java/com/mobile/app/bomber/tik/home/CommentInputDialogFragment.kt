@@ -301,6 +301,10 @@ class CommentInputDialogFragment : BaseBottomSheetDialogFragment(), View.OnClick
     }
 
     private fun createComment() {
+        if (video.isChecking()){
+            Msg.toast("视频还未审核不能发评论，请等待审核通过")
+            return
+        }
         val content = buildContent()
         if (content.isNullOrEmpty()) {
             Msg.toast("评论内容不能为空")
