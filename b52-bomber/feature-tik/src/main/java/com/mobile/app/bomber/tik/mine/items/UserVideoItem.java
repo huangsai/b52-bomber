@@ -1,13 +1,14 @@
 package com.mobile.app.bomber.tik.mine.items;
 
+import android.view.View;
+
 import androidx.annotation.NonNull;
 
-import com.pacific.adapter.AdapterViewHolder;
-import com.pacific.adapter.SimpleRecyclerItem;
 import com.mobile.app.bomber.data.http.entities.ApiVideo;
-
 import com.mobile.app.bomber.tik.R;
 import com.mobile.app.bomber.tik.databinding.FragmentMeVideoItemBinding;
+import com.pacific.adapter.AdapterViewHolder;
+import com.pacific.adapter.SimpleRecyclerItem;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -26,6 +27,8 @@ public class UserVideoItem extends SimpleRecyclerItem {
         holder.attachImageLoader(R.id.iv_item);
         binding.ivLikeStatus.setSelected(data.isLiking());
         binding.tvLikeCount.setText(String.valueOf(data.getLikeCount()));
+        binding.imgPlay.setVisibility(data.isChecking() ? View.GONE : View.VISIBLE);
+        binding.videoStatus.setVisibility(data.isChecking() ? View.VISIBLE : View.GONE);
         holder.attachOnClickListener(R.id.layout_user_video_item);
     }
 
