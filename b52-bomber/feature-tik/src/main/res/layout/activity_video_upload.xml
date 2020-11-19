@@ -43,7 +43,7 @@
             android:id="@+id/topView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="10dp">
 
             <ImageView
                 android:id="@+id/record_cover_img"
@@ -53,7 +53,6 @@
                 android:scaleType="centerCrop" />
 
             <EditText
-
                 android:id="@+id/editDes"
                 android:layout_width="match_parent"
                 android:layout_height="180dp"
@@ -66,7 +65,7 @@
                 android:hint="添加视频描述。。。"
                 android:maxLength="22"
                 android:textColor="#bab8c0"
-                android:textColorHint="#848388"
+                android:textColorHint="@color/color_text_848388"
                 android:textSize="15dp" />
 
             <TextView
@@ -75,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/editDes"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="11dp"
                 android:text="0/22"
                 android:textColor="#bab8c0"
                 android:textSize="16dp" />
@@ -105,7 +104,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="10dp"
-                android:background="#000000" />
+                />
 
 
             <TextView
@@ -136,8 +135,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:text="分享至"
-                android:textColor="#bab8c0"
-                android:textSize="16dp"></TextView>
+                android:textColor="@color/color_text_848388"
+                android:textSize="16dp"/>
 
             <LinearLayout
                 android:id="@+id/solocal"
@@ -181,7 +180,7 @@
                                 android:gravity="center"
                                 android:text="微信"
                                 android:textColor="@drawable/share_text_color"
-                                android:textSize="16dp"></TextView>
+                                android:textSize="16dp"/>
                         </RelativeLayout>
 
                     </RelativeLayout>
