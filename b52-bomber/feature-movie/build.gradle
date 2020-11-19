@@ -44,5 +44,5 @@ dependencies {
     implementation 'com.github.rubensousa:previewseekbar-exoplayer:2.11.4.0'
     implementation 'dev.chrisbanes:insetter:0.3.1'
     implementation 'dev.chrisbanes:insetter-ktx:0.3.1'
-    implementation "com.github.skydoves:balloon:1.2.2"
+    implementation "com.github.skydoves:balloon:1.2.5"
 }
