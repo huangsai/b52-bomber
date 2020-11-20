@@ -1,24 +1,22 @@
 package com.mobile.app.bomber.tik.mine;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LiveData;
 
 import com.mobile.app.bomber.common.base.Msg;
 import com.mobile.app.bomber.common.base.MyBaseActivity;
-import com.mobile.app.bomber.common.base.tool.FileUtil;
 import com.mobile.app.bomber.common.base.tool.SingleClick;
 import com.mobile.app.bomber.data.http.entities.ApiUser;
 import com.mobile.app.bomber.data.http.entities.Nope;
@@ -29,6 +27,8 @@ import com.mobile.app.bomber.tik.base.AppRouterUtils;
 import com.mobile.app.bomber.tik.base.GlideExtKt;
 import com.mobile.app.bomber.tik.databinding.ActivityEditinfoBinding;
 import com.mobile.app.bomber.tik.login.LoginActivity;
+import com.mobile.ext.file.FileSelector;
+import com.mobile.ext.file.FileUtils;
 import com.mobile.guava.android.mvvm.RouterKt;
 import com.mobile.guava.data.Values;
 import com.mobile.guava.jvm.domain.Source;
@@ -45,6 +45,28 @@ public class EditInfoActivity extends MyBaseActivity
 
     private MeViewModel meViewModel;
     private ActivityEditinfoBinding binding;
+
+    private final ActivityResultLauncher<Intent> launcher = FileSelector.INSTANCE.registerPicResultCallback(
+            this, new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == RESULT_OK) {
+                        Uri uri;
+                        File file;
+                        if (FileSelector.INSTANCE.getCameraPicFile() == null) {
+                            //选择图片
+                            uri = result.getData().getData();
+                            file = FileUtils.INSTANCE.getFile(EditInfoActivity.this, uri);
+                        } else {
+                            //拍照
+                            uri = FileSelector.INSTANCE.getCameraPicUri(EditInfoActivity.this);
+                            file = FileSelector.INSTANCE.getCameraPicFile();
+                        }
+                        if (uri != null) binding.hHead.setImageURI(uri);
+                        if (file != null) updateHeadPicUrl(file);
+                    }
+                }
+            });
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -172,30 +194,6 @@ public class EditInfoActivity extends MyBaseActivity
             String result_value = data.getStringExtra("result");
             binding.wechatNum.setText(result_value);
         }
-
-        if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == 1) {  // 拍照
-                Bundle extras = data.getExtras();
-                Bitmap photoBit = (Bitmap) extras.get("data");
-                binding.hHead.setImageBitmap(photoBit);
-                String path = FileUtil.saveBitmapToFile(photoBit, "headPic");
-                File photoFile = new File(path);
-                updateHeadPicUrl(photoFile);
-
-            } else if (requestCode == 2) { // 相册
-                Uri uri = data.getData();
-                String[] pojo = {MediaStore.Images.Media.DATA};
-                Cursor cursor = managedQuery(uri, pojo, null, null, null);
-                if (cursor != null) {
-                    int colunm_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-                    cursor.moveToFirst();
-                    String path = cursor.getString(colunm_index);
-                    final File file = new File(path);
-                    binding.hHead.setImageURI(uri);
-                    updateHeadPicUrl(file);
-                }
-            }
-        }
     }
 
     public void updateHeadPicUrl(File file) {
@@ -281,14 +279,11 @@ public class EditInfoActivity extends MyBaseActivity
     }
 
     private void takeCamera() {
-        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-        startActivityForResult(intent, 1);
+        FileSelector.INSTANCE.takeCamera(this, launcher);
     }
 
-
     private void choosePhoto() {
-        Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);//调用android的图库
-        startActivityForResult(i, 2);
+        FileSelector.INSTANCE.selectPic(launcher);
     }
 
     @Override
@@ -312,7 +307,6 @@ public class EditInfoActivity extends MyBaseActivity
     public void onSelectNoDisplay() {
         binding.genders.setText("不显示");
     }
-
 
 }
 
