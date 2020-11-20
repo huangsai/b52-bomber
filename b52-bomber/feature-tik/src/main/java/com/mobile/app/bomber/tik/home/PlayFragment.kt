@@ -35,8 +35,10 @@ import com.mobile.app.bomber.tik.base.*
 import com.mobile.app.bomber.tik.databinding.FragmentPlayBinding
 import com.mobile.app.bomber.tik.mine.MeViewModel
 import com.mobile.app.bomber.tik.mine.UserDetailActivity
+import com.mobile.app.bomber.tik.mine.UserDetailMoreDialogFragment.Companion.newInstance
 import com.mobile.ext.glide.GlideApp
 import com.mobile.guava.android.mvvm.AndroidX
+import com.mobile.guava.android.mvvm.BaseBottomSheetDialogFragment
 import com.mobile.guava.android.mvvm.showDialogFragment
 import com.mobile.guava.android.ui.view.text.MySpannable
 import com.mobile.guava.data.Values
@@ -51,7 +53,7 @@ import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListener,
-        SeekBar.OnSeekBarChangeListener {
+        SeekBar.OnSeekBarChangeListener, UserShareDialogFragment.CallBack {
 
     private var _binding: FragmentPlayBinding? = null
     private val binding get() = _binding!!
@@ -156,17 +158,19 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
         }
         releasePlayer()
     }
+
     private fun getUserInfo() {
         if (isLogin()) {
-            meViewModel?.getUserInfo(PrefsManager.getUserId(),2)?.observe(viewLifecycleOwner, Observer { apiUserSource: Source<ApiUser> ->
+            meViewModel?.getUserInfo(PrefsManager.getUserId(), 2)?.observe(viewLifecycleOwner, Observer { apiUserSource: Source<ApiUser> ->
                 if (apiUserSource is Source.Success) {
                     val apiUser = apiUserSource.requireData()
                     this.mApiUser = apiUser
                     PrefsManager.setLoginName(apiUser.username)
-                  }
+                }
             })
         }
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         binding.layoutContent.setOnTouchListener(null)
@@ -249,7 +253,7 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
                 }
             })
             R.id.txt_comment -> {
-                if (PrefsManager.getLoginName().isNullOrEmpty()){
+                if (PrefsManager.getLoginName().isNullOrEmpty()) {
                     getUserInfo()
                 }
                 Values.put("CommentDialogFragment", video)
@@ -315,7 +319,7 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
     }
 
     private fun likeVideo() {
-        if (video.isChecking()){
+        if (video.isChecking()) {
             Msg.toast("视频还未审核不能进行操作，请等待审核通过")
             return
         }
@@ -506,29 +510,8 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
     }
 
     private fun shareAppURl() {
-        lifecycleScope.launch(Dispatchers.IO) {
-            val source = model.shareAppUrl()
-            withContext(Dispatchers.Main) {
-                when (source) {
-                    is Source.Success -> {
-                        var downurl = source.requireData()
-                        shareURl = downurl.downloadUrl
-                        content = downurl.desc
-                        if (TextUtils.isEmpty(shareURl)) {
-                            Msg.toast("暂时不能分享")
-                        } else {
-                            ShareDialogFragment.goSystemShareSheet(requireActivity(), shareURl, "点击一下 立即拥有 ")//"在xx世界最流行的色情视频app中免费观看各种视频，国产网红、日本av、欧美色情应有尽有。")
-                        }
-                    }
-                    is Source.Error -> {
-                        Msg.toast("暂时不能分享")
-                        Msg.handleSourceException(source.requireError())
-                    }
-                }.exhaustive
-            }
-        }
+        this.showDialogFragment(UserShareDialogFragment.newInstance(this))
     }
-
 
     private fun shareVideo(videoId: Long) {
         lifecycleScope.launch(Dispatchers.IO) {
@@ -550,7 +533,7 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
             val aid: Long = 0
             if (video?.adId!! == aid) {
                 updateVideo()
-              }
+            }
             return
         }
     }
@@ -579,6 +562,55 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
                 putInt("position", position)
             }
             Values.put("PlayFragment_$position", video)
+        }
+    }
+
+    override fun onShareText() {
+        lifecycleScope.launch(Dispatchers.IO) {
+            val source = model.shareAppUrl()
+            withContext(Dispatchers.Main) {
+                when (source) {
+                    is Source.Success -> {
+                        var downurl = source.requireData()
+                        shareURl = downurl.downloadUrl
+                        content = downurl.desc
+                        if (TextUtils.isEmpty(shareURl)) {
+                            Msg.toast("暂时不能分享")
+                        } else {
+                            ShareDialogFragment.goSystemShareSheet(requireActivity(), shareURl, "点击一下 立即拥有 ")//"在xx世界最流行的色情视频app中免费观看各种视频，国产网红、日本av、欧美色情应有尽有。")
+                        }
+                    }
+                    is Source.Error -> {
+                        Msg.toast("暂时不能分享")
+                        Msg.handleSourceException(source.requireError())
+                    }
+                }.exhaustive
+            }
+        }
+
+    }
+
+    override fun onShareImage() {
+        lifecycleScope.launch(Dispatchers.IO) {
+            val source = model.shareAppUrl()
+            withContext(Dispatchers.Main) {
+                when (source) {
+                    is Source.Success -> {
+                        var downurl = source.requireData()
+                        shareURl = downurl.downloadUrl
+                        content = downurl.desc
+                        if (TextUtils.isEmpty(shareURl)) {
+                            Msg.toast("暂时不能分享")
+                        } else {
+                            ShareDialogFragment.goSystemShareSheet(requireActivity(), shareURl, "点击一下 立即拥有 ")//"在xx世界最流行的色情视频app中免费观看各种视频，国产网红、日本av、欧美色情应有尽有。")
+                        }
+                    }
+                    is Source.Error -> {
+                        Msg.toast("暂时不能分享")
+                        Msg.handleSourceException(source.requireError())
+                    }
+                }.exhaustive
+            }
         }
     }
 }

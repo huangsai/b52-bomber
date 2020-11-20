@@ -7,6 +7,7 @@ import com.mobile.app.bomber.common.base.Msg
 class UserDetailMoreDialogFragment : BaseBottomControlDialogFragment() {
 
     companion object {
+
         @JvmStatic
         fun newInstance(): UserDetailMoreDialogFragment = UserDetailMoreDialogFragment()
     }

@@ -68,6 +68,19 @@ class SplashDialogFragment : BaseAppCompatDialogFragment(), View.OnClickListener
         } else if (ad.image.sixteen.isNotEmpty()) {
             imgeUrl = ad.image.sixteen;
         }
+        if ((!ad.image.eighteen.isNullOrEmpty() && !ad.image.twentyone.isNullOrEmpty()) ||
+                !ad.image.eighteen.isNullOrEmpty() && !ad.image.sixteen.isNullOrEmpty() ||
+                !ad.image.twentyone.isNullOrEmpty() && !ad.image.sixteen.isNullOrEmpty())
+        {
+            if (result == 9 / 18) { // 9:18分辨率
+                imgeUrl = ad.image.eighteen
+            } else if (result == 9 / 21) { //9:21分辨率
+                imgeUrl = ad.image.twentyone;
+            } else {
+                imgeUrl = ad.image.sixteen;
+            }
+        }
+
         GlideApp.with(this)
                 .load(decodeImgUrl(imgeUrl))
                 .listener(this)
