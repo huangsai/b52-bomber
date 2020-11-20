@@ -2,7 +2,7 @@
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/size_16dp"
+    android:layout_margin="@dimen/size_8dp"
     android:background="@drawable/video_tag_selector"
     android:paddingLeft="12dp"
     android:gravity="center"
