@@ -16,9 +16,7 @@ class TopMovieLikeItem(val data: ApiMovie.Movie) : SimpleRecyclerItem() {
             binding.txtDesc.text = "视频简介 暂无"
         } else {
             binding.txtDesc.text = data.desc
-
         }
-        binding.txtDesc.text = data.desc
         holder.attachOnClickListener(R.id.item_top_movie_ver)
         holder.attachImageLoader(R.id.img_cover)
     }
