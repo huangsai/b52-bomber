@@ -40,7 +40,7 @@ import com.skydoves.balloon.BalloonAnimation
 
 class HomeFragment : TopMainFragment(), View.OnClickListener, View.OnLongClickListener {
 
-    private val tabTitles = arrayOf("关注", "推荐")
+    private val tabTitles = arrayOf("关注", "推出")
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
