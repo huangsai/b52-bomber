@@ -21,7 +21,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
-                android:layout_marginTop="@dimen/font_20sp"
                 android:text="账号"
                 android:textColor="#848388"
                 android:textSize="14sp" />
@@ -84,7 +83,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
-                android:layout_marginTop="@dimen/font_20sp"
                 android:text="关于"
                 android:textColor="#848388"
                 android:textSize="14sp" />
