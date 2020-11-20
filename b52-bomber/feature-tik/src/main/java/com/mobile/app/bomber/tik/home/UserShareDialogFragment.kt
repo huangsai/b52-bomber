@@ -22,14 +22,12 @@ class UserShareDialogFragment(private var callback: UserShareDialogFragment.Call
     override fun onFirstClick() {
         super.onFirstClick()
         callback?.onShareText()
-        Msg.toast("分享")
-    }
+     }
 
     override fun onSecondClick() {
         super.onSecondClick()
         callback?.onShareImage()
-        Msg.toast("图片")
-    }
+     }
 
     interface CallBack {
         fun onShareText()

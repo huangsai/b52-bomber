@@ -1,10 +1,15 @@
 package com.mobile.app.bomber.tik.home
 
 import android.app.Activity
+import android.graphics.Bitmap
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.net.Uri
+
 import android.os.Bundle
+import android.os.Handler
+import android.os.StrictMode
+import android.os.StrictMode.VmPolicy
 import android.text.TextUtils
 import android.text.style.StyleSpan
 import android.view.*
@@ -24,7 +29,10 @@ import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.source.MediaSource
 import com.mobile.app.bomber.common.base.Msg
 import com.mobile.app.bomber.common.base.MyBaseFragment
+import com.mobile.app.bomber.common.base.tool.FileUtil
+import com.mobile.app.bomber.common.base.tool.HttpUtils
 import com.mobile.app.bomber.common.base.tool.SingleClick
+import com.mobile.app.bomber.common.base.tool.ZXingUtils
 import com.mobile.app.bomber.data.http.entities.ApiUser
 import com.mobile.app.bomber.data.http.entities.ApiVideo
 import com.mobile.app.bomber.runner.RunnerX
@@ -35,10 +43,8 @@ import com.mobile.app.bomber.tik.base.*
 import com.mobile.app.bomber.tik.databinding.FragmentPlayBinding
 import com.mobile.app.bomber.tik.mine.MeViewModel
 import com.mobile.app.bomber.tik.mine.UserDetailActivity
-import com.mobile.app.bomber.tik.mine.UserDetailMoreDialogFragment.Companion.newInstance
 import com.mobile.ext.glide.GlideApp
 import com.mobile.guava.android.mvvm.AndroidX
-import com.mobile.guava.android.mvvm.BaseBottomSheetDialogFragment
 import com.mobile.guava.android.mvvm.showDialogFragment
 import com.mobile.guava.android.ui.view.text.MySpannable
 import com.mobile.guava.data.Values
@@ -51,6 +57,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
+import java.io.File
 
 class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListener,
         SeekBar.OnSeekBarChangeListener, UserShareDialogFragment.CallBack {
@@ -68,13 +75,14 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
     private var currentWindow = 0
     private var shareURl: String = ""
     private var content: String = ""
-
+    private var bgUrl: String = ""
+    private var urlAndBitmap: Bitmap? = null
+    private var logobitmap:Bitmap? = null
     private var playbackPosition: Long = 0
     private var isPlayerPlaying = false
     private var markedPlayCount = false
     private var markedPlayDuration = false
     private var meViewModel: MeViewModel? = null
-
     private val model by viewModels<HomeViewModel> { AppRouterUtils.viewModelFactory() }
 
     private val onGestureListener = object : GestureDetector.SimpleOnGestureListener() {
@@ -564,7 +572,6 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
             Values.put("PlayFragment_$position", video)
         }
     }
-
     override fun onShareText() {
         lifecycleScope.launch(Dispatchers.IO) {
             val source = model.shareAppUrl()
@@ -574,10 +581,11 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
                         var downurl = source.requireData()
                         shareURl = downurl.downloadUrl
                         content = downurl.desc
-                        if (TextUtils.isEmpty(shareURl)) {
+                        bgUrl = downurl.bgUrl
+                        if (TextUtils.isEmpty(shareURl) || TextUtils.isEmpty(bgUrl)) {
                             Msg.toast("暂时不能分享")
                         } else {
-                            ShareDialogFragment.goSystemShareSheet(requireActivity(), shareURl, "点击一下 立即拥有 ")//"在xx世界最流行的色情视频app中免费观看各种视频，国产网红、日本av、欧美色情应有尽有。")
+                            ShareDialogFragment.goSystemShareSheet(requireActivity(), shareURl, "点击一下 立即拥有 ", null)//"在xx世界最流行的色情视频app中免费观看各种视频，国产网红、日本av、欧美色情应有尽有。")
                         }
                     }
                     is Source.Error -> {
@@ -599,10 +607,34 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
                         var downurl = source.requireData()
                         shareURl = downurl.downloadUrl
                         content = downurl.desc
-                        if (TextUtils.isEmpty(shareURl)) {
+                        bgUrl = downurl.bgUrl
+
+                        if (TextUtils.isEmpty(shareURl) || TextUtils.isEmpty(bgUrl)) {
                             Msg.toast("暂时不能分享")
                         } else {
-                            ShareDialogFragment.goSystemShareSheet(requireActivity(), shareURl, "点击一下 立即拥有 ")//"在xx世界最流行的色情视频app中免费观看各种视频，国产网红、日本av、欧美色情应有尽有。")
+                            StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
+                                    .detectDiskReads()
+                                    .detectDiskWrites()
+                                    .detectNetwork() // or .detectAll() for all detectable problems
+                                    .penaltyLog()
+                                    .build())
+                            StrictMode.setVmPolicy(VmPolicy.Builder()
+                                    .detectLeakedSqlLiteObjects()
+                                    .detectLeakedClosableObjects()
+                                    .penaltyLog()
+                                    .penaltyDeath()
+                                    .build())
+
+                            urlAndBitmap = HttpUtils.getNetWorkBitmap(bgUrl)
+                            val handler = Handler()
+                            val runnable = Runnable { // TODO Auto-generated method stub
+                                val logobitmap: Bitmap = ZXingUtils.createQRImage(shareURl, 80, 100, null);
+                                val bitmap: Bitmap = ZXingUtils.addLogo(urlAndBitmap,logobitmap)
+                                val coverFilePath = FileUtil.saveBitmapToFile(bitmap, "bg_image")
+                                val coverFile = File(coverFilePath)
+                                ShareDialogFragment.goSystemShareSheet(requireActivity(), shareURl, "点击一下 立即拥有 ", coverFile)//
+                            }
+                            handler.postDelayed(runnable, 2000)
                         }
                     }
                     is Source.Error -> {

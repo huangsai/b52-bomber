@@ -579,7 +579,9 @@ data class ApiVersion(
 data class ApiDownLoadUrl(
         @Json(name = "retCode") val code: Int,
         @Json(name = "desc") val desc: String,
-        @Json(name = "shareUrl") val downloadUrl: String
+        @Json(name = "shareUrl") val downloadUrl: String,
+        @Json(name = "bgUrl") val bgUrl: String
+
 )
 
 

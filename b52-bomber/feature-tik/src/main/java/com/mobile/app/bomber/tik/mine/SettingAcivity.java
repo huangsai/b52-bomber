@@ -86,7 +86,7 @@ public class SettingAcivity extends MyBaseActivity implements View.OnClickListen
                     if (TextUtils.isEmpty(shareUrl)) {
                         Msg.INSTANCE.toast("暂时不能分享");
                     } else {
-                        ShareDialogFragment.goSystemShareSheet(this, shareUrl, "点击一下 立即拥有 ");//"在xx世界最流行的色情视频app中免费观看各种视频，国产网红、日本av、欧美色情应有尽有.");
+                        ShareDialogFragment.goSystemShareSheet(this, shareUrl, "点击一下 立即拥有 ",null);//"在xx世界最流行的色情视频app中免费观看各种视频，国产网红、日本av、欧美色情应有尽有.");
                     }
                 } else {
                     Msg.INSTANCE.toast("暂时不能分享");

@@ -12,4 +12,5 @@ aspectjx {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     api project(':app-runner')
+    implementation 'com.google.zxing:core:3.3.0'
 }
