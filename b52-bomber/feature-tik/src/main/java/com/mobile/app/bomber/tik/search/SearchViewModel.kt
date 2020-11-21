@@ -42,18 +42,11 @@ class SearchViewModel @Inject constructor() : MyBaseViewModel() {
     fun search(key: String, page: Pager): LiveData<Source<List<ApiVideo.Video>>> {
         return flow { emit(tikSearchRepository.searchTikVideoList(key, page)) }
                 .asLiveData(Dispatchers.IO)
-
-//        return liveData(Dispatchers.IO) {
-//            emit(tikSearchRepository.searchTikVideoList(key, page))
-//        }
     }
 
     fun getHotKeyTop(): LiveData<Source<List<String>>> {
         return flow { emit(tikSearchRepository.getHotKeyTopN()) }
                 .asLiveData(Dispatchers.IO)
-//        return liveData(Dispatchers.IO) {
-//            emit(tikSearchRepository.searchTikVideoList(key, page))
-//        }
     }
 
     fun searchUserList(key: String): LiveData<Source<List<ApiAtUser.User>>> {
