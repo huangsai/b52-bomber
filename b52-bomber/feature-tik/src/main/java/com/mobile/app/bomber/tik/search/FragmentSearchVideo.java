@@ -121,9 +121,6 @@ public class FragmentSearchVideo extends MyBaseFragment implements SwipeRefreshL
     @Override
     public void onBusEvent(@NotNull Pair<Integer, ?> event) {
         super.onBusEvent(event);
-//        if (event.getFirst() == RunnerX.INSTANCE.BUS_SEARCH_RESULT) {
-//            refreshData();
-//        }
     }
 
     @Override
