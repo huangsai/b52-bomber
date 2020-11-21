@@ -2,10 +2,10 @@ package com.mobile.app.bomber.tik.home
 
 import android.app.Activity
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.net.Uri
-
 import android.os.Bundle
 import android.os.Handler
 import android.os.StrictMode
@@ -29,10 +29,7 @@ import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.source.MediaSource
 import com.mobile.app.bomber.common.base.Msg
 import com.mobile.app.bomber.common.base.MyBaseFragment
-import com.mobile.app.bomber.common.base.tool.FileUtil
-import com.mobile.app.bomber.common.base.tool.HttpUtils
-import com.mobile.app.bomber.common.base.tool.SingleClick
-import com.mobile.app.bomber.common.base.tool.ZXingUtils
+import com.mobile.app.bomber.common.base.tool.*
 import com.mobile.app.bomber.data.http.entities.ApiUser
 import com.mobile.app.bomber.data.http.entities.ApiVideo
 import com.mobile.app.bomber.runner.RunnerX
@@ -40,6 +37,7 @@ import com.mobile.app.bomber.runner.base.PrefsManager
 import com.mobile.app.bomber.runner.base.PrefsManager.isLogin
 import com.mobile.app.bomber.tik.R
 import com.mobile.app.bomber.tik.base.*
+import com.mobile.app.bomber.tik.base.chrome
 import com.mobile.app.bomber.tik.databinding.FragmentPlayBinding
 import com.mobile.app.bomber.tik.mine.MeViewModel
 import com.mobile.app.bomber.tik.mine.UserDetailActivity
@@ -77,7 +75,7 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
     private var content: String = ""
     private var bgUrl: String = ""
     private var urlAndBitmap: Bitmap? = null
-    private var logobitmap:Bitmap? = null
+    private var logobitmap: Bitmap? = null
     private var playbackPosition: Long = 0
     private var isPlayerPlaying = false
     private var markedPlayCount = false
@@ -572,6 +570,7 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
             Values.put("PlayFragment_$position", video)
         }
     }
+
     override fun onShareText() {
         lifecycleScope.launch(Dispatchers.IO) {
             val source = model.shareAppUrl()
@@ -628,9 +627,8 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
                             urlAndBitmap = HttpUtils.getNetWorkBitmap(bgUrl)
                             val handler = Handler()
                             val runnable = Runnable { // TODO Auto-generated method stub
-//                                val logobitmap: Bitmap = ZXingUtils.createQRImage(shareURl, 80, 100, null);
-                                val logobitmap: Bitmap  = ZXingUtils.generateBitmap(shareURl,300,450)
-                                val bitmap: Bitmap = ZXingUtils.addTwoLogo(urlAndBitmap,logobitmap)
+                                val logoQR: Bitmap = QRCodeUtil.createQRCode(shareURl, 560 + 50, 580 + 70)
+                                val bitmap: Bitmap = QRCodeUtil.addTwoLogo(urlAndBitmap, logoQR)
                                 val coverFilePath = FileUtil.saveBitmapToFile(bitmap, "bg_image")
                                 val coverFile = File(coverFilePath)
                                 ShareDialogFragment.goSystemShareSheet(requireActivity(), shareURl, "点击一下 立即拥有 ", coverFile)//
