@@ -628,8 +628,9 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
                             urlAndBitmap = HttpUtils.getNetWorkBitmap(bgUrl)
                             val handler = Handler()
                             val runnable = Runnable { // TODO Auto-generated method stub
-                                val logobitmap: Bitmap = ZXingUtils.createQRImage(shareURl, 80, 100, null);
-                                val bitmap: Bitmap = ZXingUtils.addLogo(urlAndBitmap,logobitmap)
+//                                val logobitmap: Bitmap = ZXingUtils.createQRImage(shareURl, 80, 100, null);
+                                val logobitmap: Bitmap  = ZXingUtils.generateBitmap(shareURl,300,450)
+                                val bitmap: Bitmap = ZXingUtils.addTwoLogo(urlAndBitmap,logobitmap)
                                 val coverFilePath = FileUtil.saveBitmapToFile(bitmap, "bg_image")
                                 val coverFile = File(coverFilePath)
                                 ShareDialogFragment.goSystemShareSheet(requireActivity(), shareURl, "点击一下 立即拥有 ", coverFile)//
