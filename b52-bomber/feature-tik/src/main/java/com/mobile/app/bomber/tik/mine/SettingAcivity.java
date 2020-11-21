@@ -134,7 +134,7 @@ public class SettingAcivity extends MyBaseActivity implements View.OnClickListen
 
     private void dialogFragmet(Integer flg, String url, String BgUrl) {
         if (flg == 1) {
-            ShareDialogFragment.goSystemShareSheet(this, url, "点击一下 立即拥有 ", null);//
+            ShareDialogFragment.goSystemShareSheet(this, url, "点击一下 立即拥有 ");//
         } else {
             StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
                     .detectDiskReads()
@@ -166,7 +166,7 @@ public class SettingAcivity extends MyBaseActivity implements View.OnClickListen
     }
 
     private void dialogFragmetContent(Integer flg, File coverFile) {
-        ShareDialogFragment.goSystemShareSheet(this, shareUrl, "点击一下 立即拥有 ", coverFile);
+        ShareDialogFragment.goSystemShareSheet(this, shareUrl, "点击一下 立即拥有 ");
 
     }
 

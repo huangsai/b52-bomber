@@ -159,7 +159,6 @@ class HomeFragment : TopMainFragment(), View.OnClickListener, View.OnLongClickLi
         }
     }
 
-
     private fun requestPermissionLocation() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {  //>=6.0
             if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
