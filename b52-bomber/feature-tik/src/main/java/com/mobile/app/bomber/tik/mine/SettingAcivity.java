@@ -1,7 +1,10 @@
 package com.mobile.app.bomber.tik.mine;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
+import android.os.StrictMode;
 import android.text.TextUtils;
 import android.view.View;
 
@@ -11,27 +14,33 @@ import com.mobile.app.bomber.common.base.Msg;
 import com.mobile.app.bomber.common.base.MyBaseActivity;
 import com.mobile.app.bomber.common.base.tool.AppUtil;
 import com.mobile.app.bomber.common.base.tool.CacheDataUtil;
+import com.mobile.app.bomber.common.base.tool.FileUtil;
+import com.mobile.app.bomber.common.base.tool.HttpUtils;
+import com.mobile.app.bomber.common.base.tool.QRCodeUtil;
 import com.mobile.app.bomber.common.base.tool.SingleClick;
 import com.mobile.app.bomber.data.http.entities.ApiDownLoadUrl;
 import com.mobile.app.bomber.tik.R;
 import com.mobile.app.bomber.tik.base.AppRouterUtils;
 import com.mobile.app.bomber.tik.databinding.ActivitySettingEditinfoBinding;
 import com.mobile.app.bomber.tik.home.ShareDialogFragment;
+import com.mobile.app.bomber.tik.home.UserShareDialogFragment;
 import com.mobile.app.bomber.tik.login.LoginActivity;
 import com.mobile.app.bomber.tik.login.LoginViewModel;
 import com.mobile.guava.android.mvvm.RouterKt;
 import com.mobile.guava.data.Values;
 import com.mobile.guava.jvm.domain.Source;
 
+import java.io.File;
 import java.lang.ref.WeakReference;
 
 
-public class SettingAcivity extends MyBaseActivity implements View.OnClickListener {
+public class SettingAcivity extends MyBaseActivity implements View.OnClickListener, UserShareDialogFragment.CallBack {
 
     private LoginViewModel model;
     private ActivitySettingEditinfoBinding binding;
     private String shareUrl;
     private String content;
+    private String bgUrl;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,29 +87,97 @@ public class SettingAcivity extends MyBaseActivity implements View.OnClickListen
             RouterKt.newStartActivity(this, LoginActivity.class);
             finish();
         } else if (id == R.id.share) {
-            model.shareAppUrl().observe(this, source -> {
-                if (source instanceof Source.Success) {
-                    ApiDownLoadUrl url = source.requireData();
-                    shareUrl = url.getDownloadUrl();
-                    content = url.getDesc();
-                    if (TextUtils.isEmpty(shareUrl)) {
-                        Msg.INSTANCE.toast("暂时不能分享");
-                    } else {
-                        ShareDialogFragment.goSystemShareSheet(this, shareUrl, "点击一下 立即拥有 ",null);//"在xx世界最流行的色情视频app中免费观看各种视频，国产网红、日本av、欧美色情应有尽有.");
-                    }
-                } else {
-                    Msg.INSTANCE.toast("暂时不能分享");
-                    Msg.INSTANCE.handleSourceException(source.requireError());
-                }
-            });
-//            new MyThread(this,shareUrl).start();
-
-//            try {
-//                Thread.sleep(1000);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
+            RouterKt.showDialogFragment(this, UserShareDialogFragment.newInstance(this));
         }
+    }
+
+    private void DialogFragmetText() {
+        model.shareAppUrl().observe(this, source -> {
+            if (source instanceof Source.Success) {
+                ApiDownLoadUrl url = source.requireData();
+                shareUrl = url.getDownloadUrl();
+                content = url.getDesc();
+                if (TextUtils.isEmpty(shareUrl)) {
+                    Msg.INSTANCE.toast("暂时不能分享");
+                } else {
+                    dialogFragmet(1, shareUrl, null);
+                }
+            } else {
+                Msg.INSTANCE.toast("暂时不能分享");
+                Msg.INSTANCE.handleSourceException(source.requireError());
+            }
+        });
+    }
+
+
+    private void DialogFragmetImage() {
+        Msg.INSTANCE.toast("555");
+
+        model.shareAppUrl().observe(this, source -> {
+            if (source instanceof Source.Success) {
+                ApiDownLoadUrl url = source.requireData();
+                shareUrl = url.getDownloadUrl();
+                content = url.getDesc();
+                bgUrl = url.getBgUrl();
+                if (TextUtils.isEmpty(shareUrl)) {
+                    Msg.INSTANCE.toast("暂时不能分享");
+                } else {
+                    dialogFragmet(2, bgUrl, bgUrl);
+                }
+            } else {
+                Msg.INSTANCE.toast("暂时不能分享");
+                Msg.INSTANCE.handleSourceException(source.requireError());
+            }
+        });
+    }
+
+
+    private void dialogFragmet(Integer flg, String url, String BgUrl) {
+        if (flg == 1) {
+            ShareDialogFragment.goSystemShareSheet(this, url, "点击一下 立即拥有 ", null);//
+        } else {
+            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+                    .detectDiskReads()
+                    .detectDiskWrites()
+                    .detectNetwork()
+                    .penaltyLog()
+                    .build());
+
+            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+                    .detectLeakedSqlLiteObjects()
+                    .detectLeakedClosableObjects()
+                    .penaltyDeath()
+                    .build());
+            Bitmap urlAndBitmap = HttpUtils.getNetWorkBitmap(BgUrl);
+            Handler handler = new Handler();
+            Runnable runnable = new Runnable() {
+                @Override
+                public void run() {
+                    Bitmap logoQR = QRCodeUtil.createQRCode(shareUrl, 560 + 50, 580 + 70);
+                    Bitmap bitmap = QRCodeUtil.addTwoLogo(urlAndBitmap, logoQR);
+                    String coverFilePath = FileUtil.saveBitmapToFile(bitmap, "bg_image");
+                    File coverFile = new File(coverFilePath);
+                    dialogFragmetContent(2, coverFile);
+                }
+            };
+            handler.postDelayed(runnable, 2000);
+        }
+
+    }
+
+    private void dialogFragmetContent(Integer flg, File coverFile) {
+        ShareDialogFragment.goSystemShareSheet(this, shareUrl, "点击一下 立即拥有 ", coverFile);
+
+    }
+
+    @Override
+    public void onShareText() {
+        DialogFragmetText();
+    }
+
+    @Override
+    public void onShareImage() {
+        DialogFragmetImage();
     }
 
     private static class MyThread extends Thread {
