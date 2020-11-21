@@ -54,9 +54,9 @@ class TikSearchRepository @Inject constructor(
     }
 
     suspend fun getHotKeyTopN(): Source<List<String>> {
-        if (!appPrefsManager.isLogin()) {
-            return Source.Error(sourceException403)
-        }
+//        if (!appPrefsManager.isLogin()) {
+//            return Source.Error(sourceException403)
+//        }
         val call = dataService.getHotKey();
         return try {
             call.execute().toSource() {
@@ -68,9 +68,9 @@ class TikSearchRepository @Inject constructor(
     }
 
     suspend fun searchTikVideoList(keyword: String, pager: Pager): Source<List<ApiVideo.Video>> {
-        if (!appPrefsManager.isLogin()) {
-            return Source.Error(sourceException403)
-        }
+//        if (!appPrefsManager.isLogin()) {
+//            return Source.Error(sourceException403)
+//        }
         if (pager.isReachedTheEnd) return Source.Success(emptyList())
         pager.isBusy = true
         val call = dataService.searchVideo(userId, keyword, pager.requestPage, pager.pageSize, Any())
@@ -79,9 +79,9 @@ class TikSearchRepository @Inject constructor(
 
 
     suspend fun searchTikUserList(keyword: String): Source<List<ApiAtUser.User>> {
-        if (!appPrefsManager.isLogin()) {
-            return Source.Error(sourceException403)
-        }
+//        if (!appPrefsManager.isLogin()) {
+//            return Source.Error(sourceException403)
+//        }
 //        if (pager.isReachedTheEnd) return Source.Success(emptyList())
 //        pager.isBusy = true
         val call = dataService.searchTikUsers(keyword)
