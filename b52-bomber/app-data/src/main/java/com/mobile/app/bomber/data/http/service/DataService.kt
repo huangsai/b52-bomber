@@ -231,6 +231,9 @@ interface DataService {
     fun getVersion(@Path("platform") platform: Int): Call<ApiVersion>
 
     @GET("/sys/getShareUrl/")
+    fun getShareUrl(): Call<ApiShareUrl>
+
+    @GET("/sys/getDownLoadUrl/")
     fun getDownLoadUrl(): Call<ApiDownLoadUrl>
 
     @GET("/sys/getFixedad/")

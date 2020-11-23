@@ -92,7 +92,7 @@ public class SettingAcivity extends MyBaseActivity implements View.OnClickListen
     }
 
     private void DialogFragmetText() {
-        model.shareAppUrl().observe(this, source -> {
+        model.downLoadUrl().observe(this, source -> {
             if (source instanceof Source.Success) {
                 ApiDownLoadUrl url = source.requireData();
                 shareUrl = url.getDownloadUrl();
@@ -113,7 +113,7 @@ public class SettingAcivity extends MyBaseActivity implements View.OnClickListen
     private void DialogFragmetImage() {
         Msg.INSTANCE.toast("555");
 
-        model.shareAppUrl().observe(this, source -> {
+        model.downLoadUrl().observe(this, source -> {
             if (source instanceof Source.Success) {
                 ApiDownLoadUrl url = source.requireData();
                 shareUrl = url.getDownloadUrl();
@@ -134,7 +134,7 @@ public class SettingAcivity extends MyBaseActivity implements View.OnClickListen
 
     private void dialogFragmet(Integer flg, String url, String BgUrl) {
         if (flg == 1) {
-            ShareDialogFragment.goSystemShareSheet(this, url, "点击一下 立即拥有 ");//
+            ShareDialogFragment.goSystemShareSheet(this, url, "点击一下 立即拥有 ",null);//
         } else {
             StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
                     .detectDiskReads()
@@ -166,7 +166,7 @@ public class SettingAcivity extends MyBaseActivity implements View.OnClickListen
     }
 
     private void dialogFragmetContent(Integer flg, File coverFile) {
-        ShareDialogFragment.goSystemShareSheet(this, shareUrl, "点击一下 立即拥有 ");
+        ShareDialogFragment.goSystemShareSheet(this, shareUrl, "点击一下 立即拥有 ",coverFile);
 
     }
 

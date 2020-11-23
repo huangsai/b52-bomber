@@ -135,9 +135,9 @@ class VideoRepository @Inject constructor(
         }
     }
 
-    suspend fun playDuration(videoId: Long, aid: Long?, duration: Long): Source<Nope> {
+    suspend fun playDuration(videoId: Long, aid: Long?, duration: Long,type: Long): Source<Nope> {
         val req = ApiDurationReq(
-                userId, appPrefsManager.getDeviceId(), 1, videoId, aid, duration / 1000L
+                userId, appPrefsManager.getDeviceId(), 1, videoId, aid, duration / 1000L,type
         )
         return try {
             dataService.playDuration(req).execute().toSource()
@@ -176,7 +176,7 @@ class VideoRepository @Inject constructor(
 
     suspend fun getDownloadUrl(): Source<ApiDownLoadUrl> {
         return try {
-            dataService.getDownLoadUrl().toSource()
+            dataService.getShareUrl().toSource()
         } catch (e: Exception) {
             errorSource(e)
         }

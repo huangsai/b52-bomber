@@ -46,8 +46,13 @@ class LoginViewModel @Inject constructor() : MyBaseViewModel() {
         return flow { emit(adRepository.ad(type)) }
                 .asLiveData(Dispatchers.IO)
     }
-    fun shareAppUrl(): LiveData<Source<ApiDownLoadUrl>> {
-        return flow { emit(shareRepository.getDownloadUrl()) }
+    fun shareAppUrl(): LiveData<Source<ApiShareUrl>> {
+        return flow { emit(shareRepository.getShareUrl()) }
+                .asLiveData(Dispatchers.IO)
+    }
+
+    fun downLoadUrl(): LiveData<Source<ApiDownLoadUrl>> {
+        return flow { emit(shareRepository.getDownLoadUrl()) }
                 .asLiveData(Dispatchers.IO)
     }
 

@@ -3,6 +3,7 @@ package com.mobile.app.bomber.data.repository
 import com.mobile.app.bomber.data.db.AppDatabase
 import com.mobile.app.bomber.data.files.AppPrefsManager
 import com.mobile.app.bomber.data.http.entities.ApiDownLoadUrl
+import com.mobile.app.bomber.data.http.entities.ApiShareUrl
 import com.mobile.app.bomber.data.http.entities.ApiVersion
 import com.mobile.guava.data.toSource
 import com.mobile.app.bomber.data.http.service.DataService
@@ -17,7 +18,14 @@ class ShareRepository @Inject constructor(
         appPrefsManager: AppPrefsManager
 ) : BaseRepository(dataService, db, appPrefsManager) {
 
-    suspend fun getDownloadUrl(): Source<ApiDownLoadUrl> {
+    suspend fun getShareUrl(): Source<ApiShareUrl> {
+        return try {
+            dataService.getShareUrl().toSource()
+        } catch (e: Exception) {
+            errorSource(e)
+        }
+    }
+    suspend fun getDownLoadUrl(): Source<ApiDownLoadUrl> {
         return try {
             dataService.getDownLoadUrl().toSource()
         } catch (e: Exception) {

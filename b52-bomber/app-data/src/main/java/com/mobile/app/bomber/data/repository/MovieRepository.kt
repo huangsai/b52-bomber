@@ -166,9 +166,9 @@ class MovieRepository @Inject constructor(
         }
     }
 
-    suspend fun getDownloadUrl(): Source<ApiDownLoadUrl> {
+    suspend fun getShareUrl(): Source<ApiShareUrl> {
         return try {
-            dataService.getDownLoadUrl().toSource()
+            dataService.getShareUrl().toSource()
         } catch (e: Exception) {
             errorSource(e)
         }

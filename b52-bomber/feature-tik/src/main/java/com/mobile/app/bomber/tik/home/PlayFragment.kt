@@ -69,7 +69,7 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
     private lateinit var gestureDetector: GestureDetectorCompat
     private lateinit var thumbDrawable: Drawable
     protected var mApiUser: ApiUser? = null
-
+    private var atd: Long = 0
     private var currentWindow = 0
     private var shareURl: String = ""
     private var content: String = ""
@@ -456,10 +456,15 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
     }
 
     private fun playDuration(duration: Long) {
+        val type = if (video.adId == atd) {
+            0
+        } else {
+            1
+        }
         if (!markedPlayDuration) {
             markedPlayDuration = true
             lifecycleScope.launch(Dispatchers.IO) {
-                val source = model.playDuration(video.videoId, video.adId, duration)
+                val source = model.playDuration(video.videoId, video.adId, duration, type.toLong())
                 Timber.d(source.toString())
             }
         }
@@ -578,7 +583,7 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
                 when (source) {
                     is Source.Success -> {
                         var downurl = source.requireData()
-                        shareURl = downurl.downloadUrl
+                        shareURl = downurl.shareUrl
                         content = downurl.desc
                         bgUrl = downurl.bgUrl
                         if (TextUtils.isEmpty(shareURl) || TextUtils.isEmpty(bgUrl)) {
@@ -604,7 +609,7 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
                 when (source) {
                     is Source.Success -> {
                         var downurl = source.requireData()
-                        shareURl = downurl.downloadUrl
+                        shareURl = downurl.shareUrl
                         content = downurl.desc
                         bgUrl = downurl.bgUrl
 

@@ -529,7 +529,8 @@ data class ApiDurationReq(
         @Json(name = "channelId") val channelId: Int,
         @Json(name = "videoId") val videoId: Long,
         @Json(name = "duration") val duration: Long?,
-        @Json(name = "aid") val aid: Long
+        @Json(name = "aid") val aid: Long,
+        @Json(name = "type") val type: Long
 )
 
 @JsonClass(generateAdapter = true)
@@ -579,12 +580,19 @@ data class ApiVersion(
 data class ApiDownLoadUrl(
         @Json(name = "retCode") val code: Int,
         @Json(name = "desc") val desc: String,
-        @Json(name = "shareUrl") val downloadUrl: String,
+        @Json(name = "appDownloads") val downloadUrl: String,
         @Json(name = "bgUrl") val bgUrl: String
 
 )
 
+@JsonClass(generateAdapter = true)
+data class ApiShareUrl(
+        @Json(name = "retCode") val code: Int,
+        @Json(name = "desc") val desc: String,
+        @Json(name = "shareUrl") val shareUrl: String,
+        @Json(name = "bgUrl") val bgUrl: String
 
+)
 @JsonClass(generateAdapter = true)
 data class ApiFixedad(
         @Json(name = "retCode") val code: Int,

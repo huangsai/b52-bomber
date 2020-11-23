@@ -98,9 +98,9 @@ class HomeViewModel @Inject constructor() : MyBaseViewModel() {
     }
 
     @WorkerThread
-    suspend fun playDuration(videoId: Long, aid: Long?, duration: Long): Source<Nope> {
+    suspend fun playDuration(videoId: Long, aid: Long?, duration: Long,type: Long): Source<Nope> {
         ensureWorkThread()
-        return videoRepository.playDuration(videoId, aid, duration)
+        return videoRepository.playDuration(videoId, aid, duration,type)
     }
 
     @WorkerThread
@@ -110,8 +110,8 @@ class HomeViewModel @Inject constructor() : MyBaseViewModel() {
     }
 
     @WorkerThread
-    suspend fun shareAppUrl(): Source<ApiDownLoadUrl> {
+    suspend fun shareAppUrl(): Source<ApiShareUrl> {
         ensureWorkThread()
-        return shareRepository.getDownloadUrl()
+        return shareRepository.getShareUrl()
     }
 }
