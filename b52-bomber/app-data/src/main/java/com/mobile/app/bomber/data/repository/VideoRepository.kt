@@ -176,7 +176,7 @@ class VideoRepository @Inject constructor(
 
     suspend fun getDownloadUrl(): Source<ApiDownLoadUrl> {
         return try {
-            dataService.getShareUrl().toSource()
+            dataService.getDownLoadUrl().toSource()
         } catch (e: Exception) {
             errorSource(e)
         }

@@ -12,7 +12,7 @@ const val HOST_TAG_RELEASE = 1 //正式服
 const val HOST_TAG = HOST_TAG_TEST
 
 //测试环境  http://117.50.119.233  http://119.28.18.13
-const val HOST_TEST = "http://172.31.9.97/"
+const val HOST_TEST = "http://172.31.10.18/"
 const val HOST_TEST_UPLOAD = "http://172.31.10.18:8080"
 
 //正式环境  http://api.zomppga.tokyo:444

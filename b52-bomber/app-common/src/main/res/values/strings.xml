@@ -2,4 +2,24 @@
 <resources>
     <string name="base_alert_title">温馨提示</string>
     <string name="base_alert_known">确定</string>
+
+    <style name="ShareRoundBottomSheetDialog" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/ShareBottomSheet</item>
+    </style>
+    <style name="ShareBottomSheet" parent="Theme.Design.BottomSheetDialog">
+        <item name="shapeAppearanceOverlay">@style/ShareBottomSheetShapeAppearanceOverlay</item>
+    </style>
+
+    <style name="ShareBottomSheetShapeAppearanceOverlay">
+        <item name="cornerSize">@dimen/size_0dp</item>
+        <item name="cornerFamilyTopLeft">rounded</item>
+        <item name="cornerSizeTopLeft">@dimen/size_12dp</item>
+        <item name="cornerFamilyTopRight">rounded</item>
+        <item name="cornerSizeTopRight">@dimen/size_12dp</item>
+    </style>
+
+    <style name="NoDimBottomSheetDialog" parent="ShareRoundBottomSheetDialog">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
 </resources>

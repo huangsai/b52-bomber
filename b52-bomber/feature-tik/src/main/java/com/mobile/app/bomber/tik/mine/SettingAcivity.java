@@ -1,6 +1,7 @@
 package com.mobile.app.bomber.tik.mine;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -19,6 +20,7 @@ import com.mobile.app.bomber.common.base.tool.HttpUtils;
 import com.mobile.app.bomber.common.base.tool.QRCodeUtil;
 import com.mobile.app.bomber.common.base.tool.SingleClick;
 import com.mobile.app.bomber.data.http.entities.ApiDownLoadUrl;
+import com.mobile.app.bomber.data.http.entities.ApiShareUrl;
 import com.mobile.app.bomber.tik.R;
 import com.mobile.app.bomber.tik.base.AppRouterUtils;
 import com.mobile.app.bomber.tik.databinding.ActivitySettingEditinfoBinding;
@@ -31,6 +33,8 @@ import com.mobile.guava.data.Values;
 import com.mobile.guava.jvm.domain.Source;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.lang.ref.WeakReference;
 
 
@@ -41,6 +45,7 @@ public class SettingAcivity extends MyBaseActivity implements View.OnClickListen
     private String shareUrl;
     private String content;
     private String bgUrl;
+    private Bitmap urlMap;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,6 +53,8 @@ public class SettingAcivity extends MyBaseActivity implements View.OnClickListen
         binding = ActivitySettingEditinfoBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         model = AppRouterUtils.viewModels(this, LoginViewModel.class);
+//        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
+//        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectLeakedSqlLiteObjects().detectLeakedClosableObjects().penaltyLog().penaltyDeath().build());
         initView();
 
     }
@@ -92,10 +99,10 @@ public class SettingAcivity extends MyBaseActivity implements View.OnClickListen
     }
 
     private void DialogFragmetText() {
-        model.downLoadUrl().observe(this, source -> {
+        model.shareAppUrl().observe(this, source -> {
             if (source instanceof Source.Success) {
-                ApiDownLoadUrl url = source.requireData();
-                shareUrl = url.getDownloadUrl();
+                ApiShareUrl url = source.requireData();
+                shareUrl = url.getShareUrl();
                 content = url.getDesc();
                 if (TextUtils.isEmpty(shareUrl)) {
                     Msg.INSTANCE.toast("暂时不能分享");
@@ -111,18 +118,16 @@ public class SettingAcivity extends MyBaseActivity implements View.OnClickListen
 
 
     private void DialogFragmetImage() {
-        Msg.INSTANCE.toast("555");
-
-        model.downLoadUrl().observe(this, source -> {
+        model.shareAppUrl().observe(this, source -> {
             if (source instanceof Source.Success) {
-                ApiDownLoadUrl url = source.requireData();
-                shareUrl = url.getDownloadUrl();
+                ApiShareUrl url = source.requireData();
+                shareUrl = url.getShareUrl();
                 content = url.getDesc();
                 bgUrl = url.getBgUrl();
                 if (TextUtils.isEmpty(shareUrl)) {
                     Msg.INSTANCE.toast("暂时不能分享");
                 } else {
-                    dialogFragmet(2, bgUrl, bgUrl);
+                    dialogFragmet(2, shareUrl, bgUrl);
                 }
             } else {
                 Msg.INSTANCE.toast("暂时不能分享");
@@ -148,13 +153,51 @@ public class SettingAcivity extends MyBaseActivity implements View.OnClickListen
                     .detectLeakedClosableObjects()
                     .penaltyDeath()
                     .build());
-            Bitmap urlAndBitmap = HttpUtils.getNetWorkBitmap(BgUrl);
+//            final Bitmap[] urlAndBitmap = new Bitmap[1];
+//            Handler dhandler = new Handler();
+//            Runnable drunnable = new Runnable() {
+//                @Override
+//                public void run() {
+//                   urlAndBitmap[0] = HttpUtils.getNetWorkBitmap(BgUrl);
+//
+////                    Bitmap logoQR = QRCodeUtil.createQRCode(url, 560 + 50, 580 + 70);
+////                    Bitmap bitmap = QRCodeUtil.addTwoLogo(urlAndBitmap, logoQR);
+////                    String coverFilePath = FileUtil.saveBitmapToFile(bitmap, "bg_image");
+////                    File coverFile = new File(coverFilePath);
+////                    dialogFragmetContent(2, coverFile);
+//                }
+//            };
+//            dhandler.postDelayed(drunnable, 2000);
+//
+//
+            Bitmap urlMap = HttpUtils.getNetWorkBitmap(BgUrl);
+            if (urlMap == null){
+                Msg.INSTANCE.toast("地址无效,无法分享");
+                return;
+            }
+//            FileInputStream fs = null;
+//            try {
+//                fs = new FileInputStream(urlAndBitmap);
+//            } catch (FileNotFoundException e) {
+//                e.printStackTrace();
+//            }
+
+//             urlAndBitmap  = BitmapFactory.decodeStream(fs);
+
+
+//            Bitmap logoQR = QRCodeUtil.createQRCode(url, 560 + 50, 580 + 70);
+//            Bitmap bitmap1 = QRCodeUtil.addTwoLogo(bitmap, logoQR);
+//            String coverFilePath = FileUtil.saveBitmapToFile(bitmap1, "bg_image");
+//            File coverFile = new File(coverFilePath);
+//            dialogFragmetContent(2, coverFile);
             Handler handler = new Handler();
             Runnable runnable = new Runnable() {
                 @Override
                 public void run() {
-                    Bitmap logoQR = QRCodeUtil.createQRCode(shareUrl, 560 + 50, 580 + 70);
-                    Bitmap bitmap = QRCodeUtil.addTwoLogo(urlAndBitmap, logoQR);
+
+
+                    Bitmap logoQR = QRCodeUtil.createQRCode(url, 560 + 50, 580 + 70);
+                    Bitmap bitmap = QRCodeUtil.addTwoLogo(urlMap, logoQR);
                     String coverFilePath = FileUtil.saveBitmapToFile(bitmap, "bg_image");
                     File coverFile = new File(coverFilePath);
                     dialogFragmetContent(2, coverFile);

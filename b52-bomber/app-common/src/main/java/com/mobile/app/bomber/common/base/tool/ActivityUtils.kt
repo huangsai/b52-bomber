@@ -3,12 +3,32 @@ package com.mobile.app.bomber.common.base.tool
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Rect
+import android.net.Uri
+import android.os.StrictMode
+import android.os.StrictMode.VmPolicy
+import java.io.File
 
-fun Activity.shareToSystem(data: String) {
+fun Activity.shareToSystem(data: String, Subtitle: String, url: File?) {
     Intent().apply {
-        action = Intent.ACTION_SEND
-        putExtra(Intent.EXTRA_TEXT, data)
-        type = "text/plain"
+
+//        action = Intent.ACTION_SEND
+//        putExtra(Intent.EXTRA_TEXT, data)
+//        type = "text/plain"
+        if (url == null) {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_SUBJECT, Subtitle)
+            putExtra(Intent.EXTRA_TEXT, Subtitle + data)
+            type = "text/plain"
+        } else {
+            val uri = Uri.fromFile(url)
+            val builder = VmPolicy.Builder()
+            StrictMode.setVmPolicy(builder.build())
+            builder.detectFileUriExposure()
+            action = Intent.ACTION_SEND
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            putExtra(Intent.EXTRA_STREAM, uri)
+            type = "image/*"
+        }
     }.also {
         startActivity(Intent.createChooser(it, null))
     }

@@ -2,7 +2,6 @@ package com.mobile.app.bomber.tik.home
 
 import android.app.Activity
 import android.graphics.Bitmap
-import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.net.Uri
@@ -28,8 +27,12 @@ import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.source.MediaSource
 import com.mobile.app.bomber.common.base.Msg
+import com.mobile.app.bomber.common.base.Msg.toast
 import com.mobile.app.bomber.common.base.MyBaseFragment
-import com.mobile.app.bomber.common.base.tool.*
+import com.mobile.app.bomber.common.base.tool.FileUtil
+import com.mobile.app.bomber.common.base.tool.HttpUtils
+import com.mobile.app.bomber.common.base.tool.QRCodeUtil
+import com.mobile.app.bomber.common.base.tool.SingleClick
 import com.mobile.app.bomber.data.http.entities.ApiUser
 import com.mobile.app.bomber.data.http.entities.ApiVideo
 import com.mobile.app.bomber.runner.RunnerX
@@ -37,7 +40,6 @@ import com.mobile.app.bomber.runner.base.PrefsManager
 import com.mobile.app.bomber.runner.base.PrefsManager.isLogin
 import com.mobile.app.bomber.tik.R
 import com.mobile.app.bomber.tik.base.*
-import com.mobile.app.bomber.tik.base.chrome
 import com.mobile.app.bomber.tik.databinding.FragmentPlayBinding
 import com.mobile.app.bomber.tik.mine.MeViewModel
 import com.mobile.app.bomber.tik.mine.UserDetailActivity
@@ -589,7 +591,7 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
                         if (TextUtils.isEmpty(shareURl) || TextUtils.isEmpty(bgUrl)) {
                             Msg.toast("暂时不能分享")
                         } else {
-                            ShareDialogFragment.goSystemShareSheet(requireActivity(), shareURl, "点击一下 立即拥有 ")//"在xx世界最流行的色情视频app中免费观看各种视频，国产网红、日本av、欧美色情应有尽有。")
+                            ShareDialogFragment.goSystemShareSheet(requireActivity(), shareURl, "点击一下 立即拥有 ",null)//"在xx世界最流行的色情视频app中免费观看各种视频，国产网红、日本av、欧美色情应有尽有。")
                         }
                     }
                     is Source.Error -> {
@@ -630,13 +632,17 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
                                     .build())
 
                             urlAndBitmap = HttpUtils.getNetWorkBitmap(bgUrl)
+                            if (urlAndBitmap == null) {
+                                toast("地址无效,无法分享")
+                                return@withContext
+                            }
                             val handler = Handler()
                             val runnable = Runnable { // TODO Auto-generated method stub
                                 val logoQR: Bitmap = QRCodeUtil.createQRCode(shareURl, 560 + 50, 580 + 70)
                                 val bitmap: Bitmap = QRCodeUtil.addTwoLogo(urlAndBitmap, logoQR)
                                 val coverFilePath = FileUtil.saveBitmapToFile(bitmap, "bg_image")
                                 val coverFile = File(coverFilePath)
-                                ShareDialogFragment.goSystemShareSheet(requireActivity(), shareURl, "点击一下 立即拥有 ")//
+                                ShareDialogFragment.goSystemShareSheet(requireActivity(), shareURl, "点击一下 立即拥有 ",coverFile)//
                             }
                             handler.postDelayed(runnable, 2000)
                         }
