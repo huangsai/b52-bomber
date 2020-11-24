@@ -11,6 +11,8 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.mobile.app.bomber.common.base.Msg;
 import com.mobile.app.bomber.common.base.MyBaseActivity;
 import com.mobile.app.bomber.common.base.tool.AppUtil;
@@ -139,7 +141,7 @@ public class SettingAcivity extends MyBaseActivity implements View.OnClickListen
 
     private void dialogFragmet(Integer flg, String url, String BgUrl) {
         if (flg == 1) {
-            //ShareDialogFragment.goSystemShareSheet(this, url, "点击一下 立即拥有 ",null);//
+            ShareDialogFragment.goSystemShareSheet(this, url, "点击一下 立即拥有 ",null);//
         } else {
             StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
                     .detectDiskReads()
@@ -153,48 +155,17 @@ public class SettingAcivity extends MyBaseActivity implements View.OnClickListen
                     .detectLeakedClosableObjects()
                     .penaltyDeath()
                     .build());
-//            final Bitmap[] urlAndBitmap = new Bitmap[1];
-//            Handler dhandler = new Handler();
-//            Runnable drunnable = new Runnable() {
-//                @Override
-//                public void run() {
-//                   urlAndBitmap[0] = HttpUtils.getNetWorkBitmap(BgUrl);
-//
-////                    Bitmap logoQR = QRCodeUtil.createQRCode(url, 560 + 50, 580 + 70);
-////                    Bitmap bitmap = QRCodeUtil.addTwoLogo(urlAndBitmap, logoQR);
-////                    String coverFilePath = FileUtil.saveBitmapToFile(bitmap, "bg_image");
-////                    File coverFile = new File(coverFilePath);
-////                    dialogFragmetContent(2, coverFile);
-//                }
-//            };
-//            dhandler.postDelayed(drunnable, 2000);
-//
-//
+
             Bitmap urlMap = HttpUtils.getNetWorkBitmap(BgUrl);
             if (urlMap == null){
                 Msg.INSTANCE.toast("地址无效,无法分享");
                 return;
             }
-//            FileInputStream fs = null;
-//            try {
-//                fs = new FileInputStream(urlAndBitmap);
-//            } catch (FileNotFoundException e) {
-//                e.printStackTrace();
-//            }
 
-//             urlAndBitmap  = BitmapFactory.decodeStream(fs);
-
-
-//            Bitmap logoQR = QRCodeUtil.createQRCode(url, 560 + 50, 580 + 70);
-//            Bitmap bitmap1 = QRCodeUtil.addTwoLogo(bitmap, logoQR);
-//            String coverFilePath = FileUtil.saveBitmapToFile(bitmap1, "bg_image");
-//            File coverFile = new File(coverFilePath);
-//            dialogFragmetContent(2, coverFile);
             Handler handler = new Handler();
             Runnable runnable = new Runnable() {
                 @Override
                 public void run() {
-
 
                     Bitmap logoQR = QRCodeUtil.createQRCode(url, 560 + 50, 580 + 70);
                     Bitmap bitmap = QRCodeUtil.addTwoLogo(urlMap, logoQR);

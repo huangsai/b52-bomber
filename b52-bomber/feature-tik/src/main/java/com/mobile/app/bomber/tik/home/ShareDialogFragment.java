@@ -1,13 +1,19 @@
 package com.mobile.app.bomber.tik.home;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.DialogFragment;
 
 import com.mobile.app.bomber.common.base.tool.ClipBoardUtil;
@@ -19,6 +25,8 @@ import com.mobile.guava.android.mvvm.BaseBottomSheetDialogFragment;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.io.File;
 
 public class ShareDialogFragment extends BaseBottomSheetDialogFragment
         implements View.OnClickListener {
@@ -73,12 +81,24 @@ public class ShareDialogFragment extends BaseBottomSheetDialogFragment
         return fragment;
     }
 
-    public static void goSystemShareSheet(Activity activity, String data, String Subtitle) {
+    public static void goSystemShareSheet(Activity activity, String data, String Subtitle, File url) {
+
         Intent sendIntent = new Intent();
-        sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_SUBJECT, Subtitle);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, Subtitle + data);
-        sendIntent.setType("text/plain");
+        if (url == null) {
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_SUBJECT, Subtitle);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, Subtitle + data);
+            sendIntent.setType("text/plain");
+        } else {
+            Uri uri = Uri.fromFile(url);
+            StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+            StrictMode.setVmPolicy(builder.build());
+            builder.detectFileUriExposure();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            sendIntent.putExtra(Intent.EXTRA_STREAM, uri);
+            sendIntent.setType("image/*");
+        }
         Intent shareIntent = Intent.createChooser(sendIntent, null);
         activity.startActivity(shareIntent);
     }

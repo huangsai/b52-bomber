@@ -235,11 +235,7 @@ class CommentPresenter(
     }
 
     private fun shareAppURl() {
-//        this.showDialogFragment(UserShareDialogFragment.newInstance(this))
-
         playerActivity.showDialogFragment(ShareDialogFragment.newInstance(this))
-
-
     }
 
     override fun onShareText() {

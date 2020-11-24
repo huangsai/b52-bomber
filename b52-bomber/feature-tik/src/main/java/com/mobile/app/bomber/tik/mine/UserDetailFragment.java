@@ -40,6 +40,8 @@ import java.util.List;
 public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
     private MeViewModel meViewModel;
     private FragmentUserDetailBinding binding;
+    private MyAdapter adapter;
+    private TabLayoutMediator tabLayoutMediator;
     private ApiUserCount mApiUserCount;
     protected ApiUser mApiUser;
     private List<String> indexTitle = new ArrayList<>();
@@ -84,12 +86,12 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
         if (selfId == 2){
             userId = PrefsManager.INSTANCE.getUserId();
         }
-        MyAdapter adapter = new MyAdapter(requireActivity(), userId, this);
+        adapter = new MyAdapter(requireActivity(), userId, this);
         binding.viewPager.setAdapter(adapter);
         binding.viewPager.setOffscreenPageLimit(2);
         binding.swipeRefresh.setOnRefreshListener(this);
         binding.swipeRefresh.setRefreshing(true);
-        TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(binding.layoutTab, binding.viewPager, (tab, position) -> tab.setText(indexTitle.get(position)));
+        tabLayoutMediator = new TabLayoutMediator(binding.layoutTab, binding.viewPager, (tab, position) -> tab.setText(indexTitle.get(position)));
         tabLayoutMediator.attach();
     }
 
@@ -144,7 +146,11 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
                     } else {
                         binding.userCopyWechat.setVisibility(View.VISIBLE);
                     }
-                    binding.userWechat.setText("微信号：" + apiUser.getWechat());
+                    if (TextUtils.isEmpty(apiUser.getSign())) {
+                        binding.userSign.setText("这个人很懒,什么也没写");
+                    } else {
+                        binding.userSign.setText(apiUser.getSign());
+                    }
                     String birString = AppUtil.handleAgeStr(apiUser.getBirthday());
                     if (TextUtils.isEmpty(birString)) {
                         binding.userAge.setVisibility(View.GONE);
@@ -152,11 +158,20 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
                         binding.userAge.setVisibility(View.VISIBLE);
                         binding.userAge.setText(birString);
                     }
+                    if (TextUtils.isEmpty(apiUser.getWechat())) {
+                        binding.userAge.setVisibility(View.GONE);
+                        binding.userWechat.setText("微信号：weise00");
+                    } else {
+                        binding.userAge.setVisibility(View.VISIBLE);
+                        binding.userWechat.setText("微信号：" + apiUser.getWechat());
+                      }
                     GlideExtKt.loadProfile(this, apiUser.getPic(), binding.userProfile);
-                    binding.userSign.setText(apiUser.getSign());
                 } else {
                     binding.userId.setText("ID：" + 0);
+                    binding.userWechat.setText("微信号：weise00");
                     binding.userGender.setText("女");
+                    binding.userName.setText("test0");
+                    binding.userSign.setText("这个人很懒,什么也没写");
                     binding.userAge.setText("19");
                 }
             });
