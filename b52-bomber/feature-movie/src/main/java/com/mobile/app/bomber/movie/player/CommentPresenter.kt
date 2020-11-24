@@ -1,6 +1,9 @@
 package com.mobile.app.bomber.movie.player
 
 import android.app.Activity
+import android.graphics.Bitmap
+import android.os.Handler
+import android.os.StrictMode
 import android.text.InputType
 import android.text.TextUtils
 import android.view.View
@@ -9,8 +12,7 @@ import androidx.activity.result.ActivityResultCallback
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mobile.app.bomber.common.base.Msg
-import com.mobile.app.bomber.common.base.tool.shareToSystem
-import com.mobile.app.bomber.data.http.entities.Pager
+import com.mobile.app.bomber.common.base.tool.*
 import com.mobile.app.bomber.movie.R
 import com.mobile.app.bomber.movie.base.Phrase3
 import com.mobile.app.bomber.movie.base.requireLogin
@@ -18,6 +20,7 @@ import com.mobile.app.bomber.movie.databinding.MovieActivityPlayerBinding
 import com.mobile.app.bomber.movie.player.items.CommentItem
 import com.mobile.ext.glide.GlideApp
 import com.mobile.guava.android.mvvm.AndroidX
+import com.mobile.guava.android.mvvm.showDialogFragment
 import com.mobile.guava.jvm.domain.Source
 import com.mobile.guava.jvm.extension.exhaustive
 import com.pacific.adapter.AdapterUtils
@@ -27,16 +30,17 @@ import com.pacific.adapter.SimpleRecyclerItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.File
 
 class CommentPresenter(
         binding: MovieActivityPlayerBinding,
         playerActivity: PlayerActivity,
         model: PlayerViewModel
-) : BasePlayerPresenter(binding, playerActivity, model) {
-
-    private val pager = Pager()
+) : BasePlayerPresenter(binding, playerActivity, model), ShareDialogFragment.CallBack {
     private val adapter = RecyclerAdapter()
     private var commentCount = 0
+    private var urlAndBitmap: Bitmap? = null
+    private var bgUrl: String = ""
 
     init {
         binding.editComment.inputType = InputType.TYPE_NULL
@@ -64,8 +68,15 @@ class CommentPresenter(
                 val random = (Math.random() * 100).toInt() //生成的随机数
                 nullorEmpty = (8000 + movie.playNum * 100 + random).toString()
             }
+
+            var likes = "0"
+            if (movie.playNum.toString().isNullOrEmpty()) {
+                likes = "0"
+            } else {
+                likes = movie.likes.toString()
+            }
             binding.txtDesc.text = (nullorEmpty + "次播放，影片简介 >")
-            binding.txtLike.text = ("点赞  " + movie.likes.toString())
+            binding.txtLike.text = ("点赞  " + likes)
             if (ad == null) {
                 binding.layoutGameAd.visibility = View.GONE
             } else {
@@ -224,17 +235,71 @@ class CommentPresenter(
     }
 
     private fun shareAppURl() {
+//        this.showDialogFragment(UserShareDialogFragment.newInstance(this))
+
+        playerActivity.showDialogFragment(ShareDialogFragment.newInstance(this))
+
+
+    }
+
+    override fun onShareText() {
         playerActivity.lifecycleScope.launch(Dispatchers.IO) {
             val source = model.shareAppUrl()
             withContext(Dispatchers.Main) {
                 when (source) {
                     is Source.Success -> {
                         var downurl = source.requireData()
-                        val shareURl = downurl.downloadUrl
+                        val shareURl = downurl.shareUrl
+                        var bgUrl = downurl.bgUrl
                         if (TextUtils.isEmpty(shareURl)) {
                             Msg.toast("暂时不能分享")
                         } else {
-                            playerActivity.shareToSystem("点击一下 立即拥有 " + shareURl)
+                            playerActivity.shareToSystem("点击一下 立即拥有", shareURl, null)
+                        }
+                    }
+                    is Source.Error -> {
+                        Msg.toast("暂时不能分享")
+                        Msg.handleSourceException(source.requireError())
+                    }
+                }.exhaustive
+            }
+        }
+    }
+
+    override fun onShareImage() {
+        playerActivity.lifecycleScope.launch(Dispatchers.IO) {
+            val source = model.shareAppUrl()
+            withContext(Dispatchers.Main) {
+                when (source) {
+                    is Source.Success -> {
+                        var downurl = source.requireData()
+                        val shareURl = downurl.shareUrl
+                        var bgUrl = downurl.bgUrl
+                        if (TextUtils.isEmpty(shareURl)) {
+                            Msg.toast("暂时不能分享")
+                        } else {
+                            StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
+                                    .detectDiskReads()
+                                    .detectDiskWrites()
+                                    .detectNetwork() // or .detectAll() for all detectable problems
+                                    .penaltyLog()
+                                    .build())
+                            StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder()
+                                    .detectLeakedSqlLiteObjects()
+                                    .detectLeakedClosableObjects()
+                                    .penaltyLog()
+                                    .penaltyDeath()
+                                    .build())
+                            urlAndBitmap = HttpUtils.getNetWorkBitmap(bgUrl)
+                            val handler = Handler()
+                            val runnable = Runnable { // TODO Auto-generated method stub
+                                val logoQR: Bitmap = QRCodeUtil.createQRCode(shareURl, 560 + 50, 580 + 70)
+                                val bitmap: Bitmap = QRCodeUtil.addTwoLogo(urlAndBitmap, logoQR)
+                                val coverFilePath = FileUtil.saveBitmapToFile(bitmap, "bg_image")
+                                val coverFile = File(coverFilePath)
+                                playerActivity.shareToSystem("点击一下 立即拥有", shareURl, coverFile)
+                            }
+                            handler.postDelayed(runnable, 2000)
                         }
                     }
                     is Source.Error -> {
