@@ -272,9 +272,9 @@ class CommentPresenter(
             withContext(Dispatchers.Main) {
                 when (source) {
                     is Source.Success -> {
-                        var downurl = source.requireData()
+                        val downurl = source.requireData()
                         val shareURl = downurl.shareUrl
-                        var bgUrl = downurl.bgUrl
+                        val bgUrl = downurl.bgUrl
                         if (TextUtils.isEmpty(shareURl)) {
                             Msg.toast("暂时不能分享")
                         } else {

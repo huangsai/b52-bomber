@@ -4,19 +4,16 @@ import android.Manifest
 import android.app.Activity
 import android.content.pm.PackageManager
 import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.ActivityResultCallback
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
-import com.mobile.app.bomber.common.base.MyBaseActivity
 import com.mobile.app.bomber.common.base.tool.SingleClick
 import com.mobile.app.bomber.runner.base.PrefsManager
 import com.mobile.app.bomber.tik.R
@@ -29,6 +26,8 @@ import com.mobile.app.bomber.tik.search.SearchActivity
 import com.mobile.app.bomber.tik.video.VideoRecordActivity
 import com.mobile.ext.net.HttpInputDialogFragment
 import com.mobile.ext.net.OnDialogDismissListener
+import com.mobile.ext.permission.PermissionCallback
+import com.mobile.ext.permission.PermissionRequest
 import com.mobile.guava.android.mvvm.AndroidX
 import com.mobile.guava.android.mvvm.newStartActivity
 import com.mobile.guava.android.mvvm.showDialogFragment
@@ -139,56 +138,31 @@ class HomeFragment : TopMainFragment(), View.OnClickListener, View.OnLongClickLi
     }
 
     private fun requestPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
-                    + ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_COARSE_LOCATION)
-                    == PackageManager.PERMISSION_GRANTED) {
-                LocationLiveData.lookupLocation(this, requireContext())
-            }
-            if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.READ_PHONE_STATE)
-                    + ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
-                    + ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_COARSE_LOCATION)
-                    == PackageManager.PERMISSION_GRANTED) {
+        PermissionRequest.request(this, 101, arrayOf(Manifest.permission.READ_PHONE_STATE, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION),
+                object : PermissionCallback {
+                    override fun passPermissions() {
+                        LocationLiveData.lookupLocation(this@HomeFragment, requireContext())
+                    }
+                })
 
-            } else {
-                requestPermissions(arrayOf(Manifest.permission.READ_PHONE_STATE, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION),
-                        101)
-            }
-        } else {
-            LocationLiveData.lookupLocation(this, requireContext())
-        }
     }
 
     private fun requestPermissionLocation() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {  //>=6.0
-            if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
-                    + ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_COARSE_LOCATION)
-                    == PackageManager.PERMISSION_GRANTED) {
-                newStartActivity(NearByActivity::class.java)
-            } else {
-                requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION),
-                        102)
-            }
-        } else {
-            newStartActivity(NearByActivity::class.java)
-        }
-
+        PermissionRequest.request(this, 102, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION),
+                object : PermissionCallback {
+                    override fun passPermissions() {
+                        newStartActivity(NearByActivity::class.java)
+                    }
+                })
     }
 
     private fun requestPermissionCamera() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.CAMERA)
-                    + ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    + ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.RECORD_AUDIO)
-                    == PackageManager.PERMISSION_GRANTED) {
-                newStartActivity(VideoRecordActivity::class.java)
-            } else {
-                requestPermissions(arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO),
-                        103)
-            }
-        } else {
-            newStartActivity(VideoRecordActivity::class.java)
-        }
+        PermissionRequest.request(this, 103, arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO),
+                object : PermissionCallback {
+                    override fun passPermissions() {
+                        newStartActivity(VideoRecordActivity::class.java)
+                    }
+                })
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String?>, grantResults: IntArray) {
@@ -210,23 +184,23 @@ class HomeFragment : TopMainFragment(), View.OnClickListener, View.OnLongClickLi
                 if (hasLocationPermission) {
                     LocationLiveData.lookupLocation(this, requireContext())
                     if (!hasPhoneStatePermission) {
-                        (activity as MyBaseActivity).alertPermission(R.string.alert_msg_permission_phone_state)
+                        PermissionRequest.alertPermission(R.string.alert_msg_permission_phone_state, activity)
                     }
                 } else {
                     if (!hasPhoneStatePermission) {
-                        (activity as MyBaseActivity).alertPermission(R.string.alert_msg_permission_location_and_phone)
+                        PermissionRequest.alertPermission(R.string.alert_msg_permission_location_and_phone, activity)
                     } else {
-                        (activity as MyBaseActivity).alertPermission(R.string.alert_msg_permission_location)
+                        PermissionRequest.alertPermission(R.string.alert_msg_permission_location, activity)
                     }
                 }
             }
             102 -> {
-                if (grantResults.size > 0 &&
+                if (grantResults.isNotEmpty() &&
                         grantResults[0] + grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                     LocationLiveData.lookupLocation(this, requireContext())
                     newStartActivity(NearByActivity::class.java)
                 } else {
-                    (activity as MyBaseActivity).alertPermission(R.string.alert_msg_permission_location)
+                    PermissionRequest.alertPermission(R.string.alert_msg_permission_location, requireActivity())
                 }
                 return
             }
@@ -250,7 +224,7 @@ class HomeFragment : TopMainFragment(), View.OnClickListener, View.OnLongClickLi
                 if (hasCameraPermission && hasWritePermission && hasRecordPermission) {
                     newStartActivity(VideoRecordActivity::class.java)
                 } else {
-                    (activity as MyBaseActivity).alertPermission(R.string.alert_msg_permission_camera_storage_record)
+                    PermissionRequest.alertPermission(R.string.alert_msg_permission_camera_storage_record, activity)
                 }
             }
         }

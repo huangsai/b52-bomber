@@ -29,6 +29,8 @@ import com.mobile.app.bomber.tik.base.AppRouterUtils;
 import com.mobile.app.bomber.tik.databinding.ActivityVideoUploadBinding;
 import com.mobile.app.bomber.tik.home.LocationLiveData;
 import com.mobile.ext.glide.GlideApp;
+import com.mobile.ext.permission.PermissionCallback;
+import com.mobile.ext.permission.PermissionRequest;
 import com.mobile.guava.android.mvvm.RouterKt;
 import com.mobile.guava.jvm.coroutines.Bus;
 import com.mobile.guava.jvm.domain.Source;
@@ -138,33 +140,20 @@ public class VideoUploadActivity extends MyBaseActivity implements View.OnClickL
     }
 
     private void requestPermissionLocation() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                    + ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-                    == PackageManager.PERMISSION_GRANTED) {
-                clickLocation();
-            } else {
-                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
-                        105);
-            }
-        } else {
-            clickLocation();
-        }
-
+        PermissionRequest.INSTANCE.request(this, 105, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
+                this::clickLocation);
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case 105:
-                if (grantResults.length > 0 &&
-                        grantResults[0] + grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                    LocationLiveData.INSTANCE.lookupLocation(this, this);
-                } else {
-                    alertPermission(R.string.alert_msg_permission_location);
-                }
-                break;
+        if (requestCode == 105) {
+            if (grantResults.length > 0 &&
+                    grantResults[0] + grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                LocationLiveData.INSTANCE.lookupLocation(this, this);
+            } else {
+                alertPermission(R.string.alert_msg_permission_location);
+            }
         }
     }
 

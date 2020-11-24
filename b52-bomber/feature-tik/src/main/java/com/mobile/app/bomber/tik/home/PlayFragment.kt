@@ -591,7 +591,7 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
                         if (TextUtils.isEmpty(shareURl) || TextUtils.isEmpty(bgUrl)) {
                             Msg.toast("暂时不能分享")
                         } else {
-                            ShareDialogFragment.goSystemShareSheet(requireActivity(), shareURl, "点击一下 立即拥有 ",null)//"在xx世界最流行的色情视频app中免费观看各种视频，国产网红、日本av、欧美色情应有尽有。")
+                            //ShareDialogFragment.goSystemShareSheet(requireActivity(), shareURl, "点击一下 立即拥有 ",null)//"在xx世界最流行的色情视频app中免费观看各种视频，国产网红、日本av、欧美色情应有尽有。")
                         }
                     }
                     is Source.Error -> {
@@ -642,7 +642,7 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
                                 val bitmap: Bitmap = QRCodeUtil.addTwoLogo(urlAndBitmap, logoQR)
                                 val coverFilePath = FileUtil.saveBitmapToFile(bitmap, "bg_image")
                                 val coverFile = File(coverFilePath)
-                                ShareDialogFragment.goSystemShareSheet(requireActivity(), shareURl, "点击一下 立即拥有 ",coverFile)//
+                                //ShareDialogFragment.goSystemShareSheet(requireActivity(), shareURl, "点击一下 立即拥有 ",coverFile)//
                             }
                             handler.postDelayed(runnable, 2000)
                         }

@@ -29,6 +29,8 @@ import com.mobile.app.bomber.tik.databinding.ActivityEditinfoBinding;
 import com.mobile.app.bomber.tik.login.LoginActivity;
 import com.mobile.ext.file.FileSelector;
 import com.mobile.ext.file.FileUtils;
+import com.mobile.ext.permission.PermissionCallback;
+import com.mobile.ext.permission.PermissionRequest;
 import com.mobile.guava.android.mvvm.RouterKt;
 import com.mobile.guava.data.Values;
 import com.mobile.guava.jvm.domain.Source;
@@ -214,33 +216,14 @@ public class EditInfoActivity extends MyBaseActivity
 
     @Override
     public void onTakeCamera() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
-                    + ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    == PackageManager.PERMISSION_GRANTED) {
-                takeCamera();
-            } else {
-                requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                        104);
-            }
-        } else {
-            takeCamera();
-        }
+        PermissionRequest.INSTANCE.request(this, 104, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                this::takeCamera);
     }
 
     @Override
     public void onChoosePhoto() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    == PackageManager.PERMISSION_GRANTED) {
-                choosePhoto();
-            } else {
-                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                        106);
-            }
-        } else {
-            choosePhoto();
-        }
+        PermissionRequest.INSTANCE.request(this, 106, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                this::choosePhoto);
     }
 
     @Override
@@ -264,13 +247,13 @@ public class EditInfoActivity extends MyBaseActivity
                 if (hasCameraPermission && hasWritePermission) {
                     takeCamera();
                 } else {
-                    alertPermission(R.string.alert_msg_permission_camera_storage);
+                    PermissionRequest.INSTANCE.alertPermission(R.string.alert_msg_permission_camera_storage,this);
                 }
                 break;
             case 106:
                 if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
                     //判断是否勾选禁止后不再询问
-                    alertPermission(R.string.alert_msg_permission_storage);
+                    PermissionRequest.INSTANCE.alertPermission(R.string.alert_msg_permission_storage,this);
                 } else {
                     choosePhoto();
                 }

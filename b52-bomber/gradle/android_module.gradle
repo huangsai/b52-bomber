@@ -164,6 +164,7 @@ dependencies {
     implementation dep.company.extRxjava3
     implementation dep.company.extExo
     implementation dep.company.extNet
+    implementation dep.company.extPermission
     implementation dep.company.extFile
 
     implementation dep.pacificAdapter

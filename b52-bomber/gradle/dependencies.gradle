@@ -263,7 +263,8 @@ buildscript {
                     'extRxjava3'    : "com.mobile.ext:ext-rxjava3:${versions.theExt}",
                     'extExo'        : "com.mobile.ext:ext-exo:${versions.theExt}",
                     'extNet'        : "com.mobile.ext:ext-net:${versions.theExt}",
-                    'extFile'        : "com.mobile.ext:ext-file:${versions.theExt}",
+                    'extPermission' : "com.mobile.ext:ext-permission:${versions.theExt}",
+                    'extFile'       : "com.mobile.ext:ext-file:${versions.theExt}",
                     'sdkIpv6'       : "com.mobile.sdk:sdk-ipv6:${versions.theSdk}",
                     'sdkSister'     : "com.mobile.sdk:sdk-sister:${versions.theSdk}"
             ],
