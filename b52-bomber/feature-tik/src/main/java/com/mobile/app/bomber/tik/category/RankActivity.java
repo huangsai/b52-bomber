@@ -16,11 +16,13 @@ import com.mobile.app.bomber.common.base.MyBaseActivity;
 import com.mobile.app.bomber.common.base.tool.SingleClick;
 import com.mobile.app.bomber.data.http.entities.ApiRank;
 import com.mobile.app.bomber.data.http.entities.Pager;
+import com.mobile.app.bomber.runner.base.PrefsManager;
 import com.mobile.app.bomber.tik.R;
 import com.mobile.app.bomber.tik.base.AppRouterUtils;
 import com.mobile.app.bomber.tik.base.GlideExtKt;
 import com.mobile.app.bomber.tik.category.items.RankItem;
 import com.mobile.app.bomber.tik.databinding.ActivityRankBinding;
+import com.mobile.app.bomber.tik.login.LoginActivity;
 import com.mobile.ext.glide.GlideApp;
 import com.mobile.guava.android.mvvm.RouterKt;
 import com.mobile.guava.android.ui.view.recyclerview.EndlessRecyclerViewScrollListener;
@@ -114,6 +116,10 @@ public class RankActivity extends MyBaseActivity implements View.OnClickListener
             return;
         }
         if (id == R.id.btn_follow) {
+            if (!PrefsManager.INSTANCE.isLogin()) {
+                RouterKt.newStartActivity(this, LoginActivity.class);
+                return;
+            }
             AdapterViewHolder holder = AdapterUtils.INSTANCE.getHolder(v);
             RankItem item = holder.item();
             follow(item.data, holder.getBindingAdapterPosition());

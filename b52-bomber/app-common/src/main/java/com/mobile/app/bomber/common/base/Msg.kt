@@ -8,11 +8,11 @@ import com.mobile.guava.jvm.domain.SourceException
 object Msg {
 
     fun toast(msg: String) {
-        Toast.makeText(AndroidX.myApp, msg, Toast.LENGTH_LONG).show()
+        Toast.makeText(AndroidX.myApp, msg, Toast.LENGTH_SHORT).show()
     }
 
     fun toast(@StringRes msg: Int) {
-        Toast.makeText(AndroidX.myApp, msg, Toast.LENGTH_LONG).show()
+        Toast.makeText(AndroidX.myApp, msg, Toast.LENGTH_SHORT).show()
     }
 
     fun handleSourceException(e: Throwable) {
