@@ -61,7 +61,7 @@ public abstract class CommentItem extends SimpleRecyclerItem {
             String replay = data.getReplayText();
 
             String ago = Java8TimeKt.ago(data.getTime() * 1000L, System.currentTimeMillis());
-            if (ago == "0秒前" || ago.equals("0秒前")){
+            if (ago.equals("0秒前")){
                 ago = "1秒前";
             }
             comment = new MySpannable(replay + data.getContent() + "\u3000" + ago)

@@ -4,41 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_comment_b"
     style="@style/MatchWrap"
+    android:background="@color/comment_background"
     android:minHeight="@dimen/toolbar_height">
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5" />
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/img_profile"
         android:layout_width="@dimen/size_32dp"
         android:layout_height="@dimen/size_32dp"
+        android:layout_marginTop="3dp"
         android:layout_marginLeft="@dimen/size_36dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         android:paddingLeft="1dp"
         android:paddingTop="1dp"
         android:paddingRight="1dp"
         android:paddingBottom="1dp"
         app:strokeColor="#ffffff"
         app:strokeWidth="1dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearanceOverlay="@style/CircleImageView" />
 
     <TextView
         android:id="@+id/txt_name"
         style="@style/WrapWrap"
-        android:layout_marginLeft="@dimen/size_6dp"
-        android:layout_marginBottom="@dimen/size_4dp"
+        android:layout_marginLeft="@dimen/size_12dp"
         android:textColor="@color/comment_name"
         android:textSize="@dimen/font_16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintLeft_toRightOf="@+id/img_profile"
+        app:layout_constraintTop_toTopOf="@+id/img_profile"
         tools:text="TextView" />
 
     <TextView
@@ -61,9 +54,11 @@
         style="@style/ConWrap"
         android:textColor="@android:color/white"
         android:textSize="@dimen/font_16sp"
+        android:layout_marginBottom="3dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="@+id/txt_name"
-        app:layout_constraintTop_toBottomOf="@+id/guideline"
-        app:layout_constraintRight_toLeftOf="@id/txt_like"
+        app:layout_constraintRight_toLeftOf="@+id/txt_like"
+        app:layout_constraintTop_toBottomOf="@+id/txt_name"
         tools:text="TextView" />
 
     <TextView
@@ -73,8 +68,8 @@
         android:gravity="center_horizontal"
         android:paddingLeft="@dimen/size_16dp"
         android:paddingRight="@dimen/size_10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/img_profile"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/img_profile" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

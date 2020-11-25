@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_comment_c"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/toolbar_height"
-    tools:background="@android:color/black">
+    android:layout_height="@dimen/toolbar_height">
 
     <View
         android:id="@+id/view_line"

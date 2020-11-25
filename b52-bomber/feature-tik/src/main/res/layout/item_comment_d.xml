@@ -7,4 +7,4 @@
     android:gravity="center"
     android:text="@string/comment_no_more"
     android:textColor="#848388"
-    tools:background="@android:color/black" />
+ />
