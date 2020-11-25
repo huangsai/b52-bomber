@@ -79,7 +79,7 @@ public class UserDetailActivity extends MyBaseActivity implements View.OnClickLi
 
     private void followDone(long userId) {
         boolean isUnFollow = !binding.userBtnFollow.getText().toString().equals("+关注");
-        meViewModel.follow(userId, !isUnFollow ? 1 : 0).observe(this, apiFollowSource -> {
+        meViewModel.follow(userId, !isUnFollow ? 0 : 1).observe(this, apiFollowSource -> {
             if (apiFollowSource instanceof Source.Success) {
                 handleFollowStatusView(isUnFollow);
             } else {
