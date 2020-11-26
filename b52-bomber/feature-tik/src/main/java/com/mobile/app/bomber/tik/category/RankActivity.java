@@ -22,7 +22,9 @@ import com.mobile.app.bomber.tik.base.AppRouterUtils;
 import com.mobile.app.bomber.tik.base.GlideExtKt;
 import com.mobile.app.bomber.tik.category.items.RankItem;
 import com.mobile.app.bomber.tik.databinding.ActivityRankBinding;
+import com.mobile.app.bomber.tik.home.PlayListActivity;
 import com.mobile.app.bomber.tik.login.LoginActivity;
+import com.mobile.app.bomber.tik.mine.UserDetailActivity;
 import com.mobile.ext.glide.GlideApp;
 import com.mobile.guava.android.mvvm.RouterKt;
 import com.mobile.guava.android.ui.view.recyclerview.EndlessRecyclerViewScrollListener;
@@ -123,6 +125,12 @@ public class RankActivity extends MyBaseActivity implements View.OnClickListener
             AdapterViewHolder holder = AdapterUtils.INSTANCE.getHolder(v);
             RankItem item = holder.item();
             follow(item.data, holder.getBindingAdapterPosition());
+            return;
+        }
+        if (id == R.id.img_profile) {
+            AdapterViewHolder holder = AdapterUtils.INSTANCE.getHolder(v);
+            RankItem item = holder.item();
+            UserDetailActivity.start(this,item.data.getUId());
             return;
         }
     }

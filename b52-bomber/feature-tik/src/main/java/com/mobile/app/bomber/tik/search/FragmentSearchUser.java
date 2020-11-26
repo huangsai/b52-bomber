@@ -110,7 +110,7 @@ public class FragmentSearchUser extends MyBaseFragment implements SwipeRefreshLa
                     items.add(searchVideoItem);
                 }
                 if (items.size() < 1 || items == null) {
-                    Msg.INSTANCE.toast("暂无数据");
+//                    Msg.INSTANCE.toast("暂无数据");
                 }
                 recyclerAdapter.replaceAll(items);
 

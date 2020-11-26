@@ -77,6 +77,8 @@ public class RankItem extends SimpleRecyclerItem {
         }
         holder.attachImageLoader(R.id.img_profile);
         holder.attachOnClickListener(R.id.btn_follow);
+        holder.attachOnClickListener(R.id.img_profile);
+
     }
 
     @Override
