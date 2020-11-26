@@ -113,6 +113,7 @@
         style="@style/movie_PlayerMovieActionText"
         android:layout_marginRight="@dimen/size_24dp"
         android:drawableTop="@drawable/jq_xiazai"
+        android:visibility="gone"
         android:text="@string/movie_player_movie_download"
         app:layout_constraintBottom_toBottomOf="@+id/txt_share"
         app:layout_constraintEnd_toStartOf="@+id/txt_bookmark" />

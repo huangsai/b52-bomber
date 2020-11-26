@@ -53,8 +53,10 @@ public class RankItem extends SimpleRecyclerItem {
         binding.txtCount.setText(countText);
         if (data.isFollowing()) {
             binding.btnFollow.setText("取消关注");
+            binding.btnFollow.setBackgroundResource(R.drawable.bg_ripple_gray);
         } else {
             binding.btnFollow.setText("+关注");
+            binding.btnFollow.setBackgroundResource(R.drawable.bg_ripple_red);
         }
         binding.progress.setProgress(progress);
         binding.vipText.setText(String.valueOf(index + 1));
@@ -68,10 +70,10 @@ public class RankItem extends SimpleRecyclerItem {
             binding.imgDown.setImageResource(R.drawable.baisesanjiaoxing);
         } else if (index == 2) {
             binding.imgVip.setVisibility(View.VISIBLE);
-            binding.imgDown.setImageResource(R.drawable.baisejindutiao);
+            binding.imgDown.setImageResource(R.drawable.rectangle_white);
         } else {
             binding.imgVip.setVisibility(View.GONE);
-            binding.imgDown.setImageResource(R.drawable.baisejindutiao);
+            binding.imgDown.setImageResource(R.drawable.rectangle_white);
         }
         holder.attachImageLoader(R.id.img_profile);
         holder.attachOnClickListener(R.id.btn_follow);
@@ -82,8 +84,10 @@ public class RankItem extends SimpleRecyclerItem {
         ItemRankBinding binding = holder.binding(ItemRankBinding::bind);
         if (data.isFollowing()) {
             binding.btnFollow.setText("取消关注");
+            binding.btnFollow.setBackgroundResource(R.drawable.bg_ripple_gray);
         } else {
             binding.btnFollow.setText("+关注");
+            binding.btnFollow.setBackgroundResource(R.drawable.bg_ripple_red);
         }
     }
 

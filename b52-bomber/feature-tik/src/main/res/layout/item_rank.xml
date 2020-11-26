@@ -103,7 +103,7 @@
         android:layout_width="@dimen/size_56dp"
         android:layout_height="@dimen/size_26dp"
         android:layout_marginRight="@dimen/size_12dp"
-        android:background="@drawable/bg_ripple_red_selector"
+        android:background="@drawable/bg_ripple_red"
         android:gravity="center"
         android:lines="1"
         android:maxLines="1"

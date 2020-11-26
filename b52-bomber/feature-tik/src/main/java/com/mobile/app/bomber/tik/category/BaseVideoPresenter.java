@@ -51,7 +51,7 @@ public abstract class BaseVideoPresenter extends SimpleRecyclerItem implements O
         this.viewHolder = holder;
         if (layoutManager == null) {
             itemDecoration = LinearItemDecoration.builder(holder.activity())
-                    .color(android.R.color.transparent, R.dimen.size_2dp)
+                    .color(android.R.color.transparent, R.dimen.size_6dp)
                     .horizontal()
                     .build();
             layoutManager = new LinearLayoutManager(
