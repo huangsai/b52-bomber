@@ -174,6 +174,10 @@ public class SearchActivity extends MyBaseActivity
      */
     public void handleSearchResult(String keyword) {
         //后期把data传过去,刷新搜索结果Fragment
+        if (keyword.length()>=6) {
+            Msg.INSTANCE.toast("输入内容过多，请删减");
+            return;
+        }
         if (keyword.trim().isEmpty()) {
             hideInputKeyboard(getCurrentFocus());
             Msg.INSTANCE.toast("请输入搜索内容");

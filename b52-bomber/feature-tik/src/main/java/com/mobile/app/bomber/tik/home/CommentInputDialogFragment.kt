@@ -125,6 +125,7 @@ class CommentInputDialogFragment : BaseBottomSheetDialogFragment(), View.OnClick
         binding.imgEmoji.setOnClickListener(this)
         binding.txtSend.setOnClickListener(this)
         binding.layoutAt.setOnExpansionUpdateListener(this)
+        binding.layoutEmoji.visibility = View.GONE
         dialog?.window?.decorView?.viewTreeObserver?.addOnGlobalLayoutListener(globalLayoutListener)
         applyEditorAfterTextChanged()
         applyAction()
