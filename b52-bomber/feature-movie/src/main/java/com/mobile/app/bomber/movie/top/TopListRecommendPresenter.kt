@@ -50,8 +50,6 @@ class TopListRecommendPresenter(
                 .placeholder(R.drawable.movie_default_cover)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(imageView)
-
-
     }
 
     override fun onRefresh() {

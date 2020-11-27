@@ -11,7 +11,7 @@ class TopMovieVerItem(val data: ApiMovie.Movie) : SimpleRecyclerItem() {
     override fun bind(holder: AdapterViewHolder) {
         val binding = holder.binding(MovieItemTopVerBinding::bind)
         binding.txtLabel.text = data.name
-        if (data.desc.isNullOrEmpty()) {
+        if (data.desc.isEmpty()|| data.desc == "") {
             binding.txtDesc.text = "视频简介 暂无"
         } else {
             binding.txtDesc.text = data.desc

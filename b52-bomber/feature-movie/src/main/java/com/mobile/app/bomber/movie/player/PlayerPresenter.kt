@@ -197,14 +197,12 @@ class PlayerPresenter(
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.progress -> binding.layoutGameAd.toggle()
             R.id.img_back -> playerActivity.onBackPressed()
             R.id.btn_fullscreen -> {
                 if (playerActivity.isLandscape()) {
                     playerActivity.requestNormalScreenWithPortrait()
                 } else {
                     playerActivity.requestFullScreenWithLandscape()
-
                 }
             }
             R.id.btn_speed -> showVideoOptions(v, 1)
