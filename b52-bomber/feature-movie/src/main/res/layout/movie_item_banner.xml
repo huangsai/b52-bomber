@@ -20,7 +20,7 @@
         android:id="@+id/banner_title"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/size_30dp"
-        android:layout_marginTop="@dimen/size_8dp"
+        android:layout_marginTop="@dimen/size_2dp"
         android:layout_marginLeft="@dimen/size_32dp"
         android:gravity="left|center_vertical"
         android:textColor="@color/color_text_919095"

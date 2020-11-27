@@ -106,7 +106,6 @@ class TopListFragment : MyBaseFragment(), View.OnClickListener, SwipeRefreshLayo
         list.add(listRecommendPresenter)
 
         adapter.addAll(list)
-
     }
 
     @SingleClick
@@ -131,8 +130,6 @@ class TopListFragment : MyBaseFragment(), View.OnClickListener, SwipeRefreshLayo
     }
 
     override fun onRefresh() {
-        adapter.clear()
-        load()
         binding.swipeRefresh.cancelRefreshing(1000)
         bannerPresenter.onRefresh()
         listNearPresenter.onRefresh()
