@@ -21,6 +21,7 @@ import com.mobile.app.bomber.runner.base.PrefsManager;
 import com.mobile.app.bomber.tik.R;
 import com.mobile.app.bomber.tik.base.AppRouterUtils;
 import com.mobile.app.bomber.tik.base.GlideExtKt;
+import com.mobile.app.bomber.tik.category.items.RankItem;
 import com.mobile.app.bomber.tik.databinding.FragmentAttentionFansBinding;
 import com.mobile.app.bomber.tik.mine.items.AttentionFansItem;
 import com.mobile.guava.data.Values;
@@ -164,6 +165,13 @@ public class AttentionFansFragment extends MyBaseFragment implements AdapterImag
     public void onClick(View v) {
         if (v.getId() == R.id.status_btn) {
             followedState((Button) v);
+            return;
+        }
+        if (v.getId() == R.id.img_profile){
+            AdapterViewHolder holder = AdapterUtils.INSTANCE.getHolder(v);
+            RankItem item = holder.item();
+            UserDetailActivity.start(getActivity(),item.data.getUId());
+            return;
         }
     }
 

@@ -1,5 +1,6 @@
 package com.mobile.app.bomber.tik.mine;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -9,6 +10,9 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.animation.Animator;
+import androidx.core.animation.AnimatorSet;
+import androidx.core.animation.ObjectAnimator;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -19,6 +23,7 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import com.mobile.app.bomber.common.base.Msg;
 import com.mobile.app.bomber.common.base.MyBaseFragment;
 import com.mobile.app.bomber.common.base.tool.AppUtil;
+import com.mobile.app.bomber.common.base.tool.FileUtil;
 import com.mobile.app.bomber.common.base.tool.SingleClick;
 import com.mobile.app.bomber.data.http.entities.ApiUser;
 import com.mobile.app.bomber.data.http.entities.ApiUserCount;
@@ -35,6 +40,7 @@ import com.mobile.guava.jvm.domain.Source;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,8 +54,10 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
     private List<String> indexTitle = new ArrayList<>();
     private long userId;
     private static long selfId;
+    private String imgPath;
 
-    public static UserDetailFragment newInstance(long userId,long selfID) {
+
+    public static UserDetailFragment newInstance(long userId, long selfID) {
         Values.INSTANCE.put("UserDetailFragment_userId", userId);
         selfId = selfID;
         return new UserDetailFragment();
@@ -82,9 +90,26 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
         binding.userFans.setOnClickListener(this);
         binding.userFollow.setOnClickListener(this);
 
+
+        binding.userProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(requireActivity(), SpaceImageDetailActivity.class);
+                int[] location = new int[2];
+                binding.userProfile.getLocationOnScreen(location);
+                intent.putExtra("locationX", location[0]);//必须
+                intent.putExtra("locationY", location[1]);//必须
+                intent.putExtra("width", binding.userProfile.getWidth());//必须
+                intent.putExtra("height", binding.userProfile.getHeight());//必须
+//                intent.putExtra("image", imgPath);//必须
+//                startActivity(intent);
+//                requireActivity().overridePendingTransition(0, 0);        //去掉activity的切换动画
+            }
+        });
+
         indexTitle.add("作品0");
         indexTitle.add("喜欢0");
-        if (selfId == 2){
+        if (selfId == 2) {
             userId = PrefsManager.INSTANCE.getUserId();
         }
         adapter = new MyAdapter(requireActivity(), userId, this);
@@ -121,10 +146,10 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
 
     private void getUserInfo() {
         if (PrefsManager.INSTANCE.isLogin()) {
-            if (selfId == 2){
+            if (selfId == 2) {
                 userId = PrefsManager.INSTANCE.getUserId();
             }
-            meViewModel.getUserInfo(userId,selfId).observe(getViewLifecycleOwner(), apiUserSource -> {
+            meViewModel.getUserInfo(userId, selfId).observe(getViewLifecycleOwner(), apiUserSource -> {
                 if (binding.swipeRefresh.isRefreshing()) binding.swipeRefresh.setRefreshing(false);
                 if (apiUserSource instanceof Source.Success) {
                     ApiUser apiUser = apiUserSource.requireData();
@@ -140,13 +165,14 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
                     }
                     binding.userName.setText(apiUser.getUsername());
                     binding.userId.setText("ID：" + apiUser.getUid());
-                    if (apiUser.getWechat().equals("") ||
-                            apiUser.getWechat().isEmpty() ||
-                            userId == PrefsManager.INSTANCE.getUserId()) {
-                        binding.userCopyWechat.setVisibility(View.GONE);
-                    } else {
-                        binding.userCopyWechat.setVisibility(View.VISIBLE);
-                    }
+
+//                    if (apiUser.getWechat().equals("") ||
+//                            apiUser.getWechat().isEmpty() ||
+//                            userId == PrefsManager.INSTANCE.getUserId()) {
+//                        binding.userCopyWechat.setVisibility(View.GONE);
+//                    } else {
+//                        binding.userCopyWechat.setVisibility(View.VISIBLE);
+//                    }
                     if (TextUtils.isEmpty(apiUser.getSign())) {
                         binding.userSign.setText("这个人很懒,什么也没写");
                     } else {
@@ -160,13 +186,12 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
                         binding.userAge.setText(birString);
                     }
                     if (TextUtils.isEmpty(apiUser.getWechat())) {
-                        binding.userAge.setVisibility(View.GONE);
                         binding.userWechat.setText("微信号：weise00");
                     } else {
-                        binding.userAge.setVisibility(View.VISIBLE);
                         binding.userWechat.setText("微信号：" + apiUser.getWechat());
-                      }
+                    }
                     GlideExtKt.loadProfile(this, apiUser.getPic(), binding.userProfile);
+//                    this.imgPath = FileUtil.saveBitmapToFile(binding.userProfile.getDrawingCache(), "header");
                 } else {
                     binding.userId.setText("ID：" + 0);
                     binding.userWechat.setText("微信号：weise00");
@@ -181,7 +206,7 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
 
     private void getUserCount() {
         if (PrefsManager.INSTANCE.isLogin()) {
-            if (selfId == 2){
+            if (selfId == 2) {
                 userId = PrefsManager.INSTANCE.getUserId();
             }
             meViewModel.getUserCount(userId).observe(getViewLifecycleOwner(), apiUserCountSource -> {
@@ -249,5 +274,4 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
             return 2;
         }
     }
-
 }

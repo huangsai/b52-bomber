@@ -122,16 +122,16 @@ public class EditInfoInputActivity extends MyBaseActivity implements View.OnClic
                 break;
             case TYPE_SIGN:
                 String desc = binding.editTextDesc.getText().toString().trim();
-                if (TextUtils.isEmpty(desc)) {
-                    Msg.INSTANCE.toast("内容不能为空");
+                if (desc.length() > 50 || desc.length() < 1) {
+                    Msg.INSTANCE.toast("简介不能小于1个字符且不能超过50字符");
                 } else {
                     modifyUserDesption(desc);
                 }
                 break;
             case TYPE_WECHAT:
                 String WXID = binding.editTextWechat.getText().toString().trim();
-                if (TextUtils.isEmpty(WXID)) {
-                    Msg.INSTANCE.toast("内容不能为空");
+                if (WXID.length() > 20 || WXID.length() < 6) {
+                    Msg.INSTANCE.toast("微信号不能小于6个字符且不能超过20个字符");
                 } else {
                     modifyUserWXID(WXID);
                 }

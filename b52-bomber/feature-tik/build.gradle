@@ -38,6 +38,7 @@ dependencies {
     implementation dep.exoplayer.smoothstreaming
     implementation dep.exoplayer.ui
     implementation dep.exoplayer.okhttp
+    implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     implementation 'com.mobile.sdk:sdk-ipv6:0.0.9'
     implementation 'com.daimajia.easing:library:2.0@aar'
     implementation 'com.daimajia.androidanimations:library:2.3@aar'

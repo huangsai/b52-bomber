@@ -85,6 +85,7 @@
         <activity android:name=".video.VideoUploadActivity" />
         <activity android:name=".category.CategoryActivity" />
         <activity android:name=".home.NearByActivity" />
+        <activity android:name=".mine.SpaceImageDetailActivity"></activity>
 
         <provider
             android:name="androidx.core.content.FileProvider"
