@@ -257,6 +257,7 @@ class CommentDialogFragment : BaseBottomSheetDialogFragment(), View.OnClickListe
                 adapter.add(CommentItem.TypeA(newComment, video))
             }
             binding.recycler.keepItemViewVisible(0, true)
+            binding.recycler.scrollToPosition(0)
         } else {
             val index = adapter.indexOf(commentItem!!)
             if (adapter.itemCount == index + 1) {

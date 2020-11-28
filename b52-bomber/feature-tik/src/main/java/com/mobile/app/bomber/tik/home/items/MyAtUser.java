@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import com.linkedin.android.spyglass.mentions.Mentionable;
 import com.mobile.app.bomber.data.http.entities.ApiAtUser;
 import com.mobile.app.bomber.data.http.entities.ApiComment;
+import com.mobile.app.bomber.data.http.entities.Atuids;
 
 import java.util.Objects;
 
@@ -36,6 +37,10 @@ public class MyAtUser implements Mentionable {
 
     public String getFullName() {
         return "@" + getUsername() + " ";
+    }
+
+    public Atuids toAtuids() {
+        return new Atuids(userId, username);
     }
 
     public ApiComment.At toAt() {

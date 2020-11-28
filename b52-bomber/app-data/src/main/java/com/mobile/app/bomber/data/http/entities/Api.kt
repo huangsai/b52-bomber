@@ -356,6 +356,12 @@ data class ApiComment(
     )
 }
 
+@JsonClass(generateAdapter = true)
+data class Atuids(
+        @Json(name = "uid") val uid: Long,
+        @Json(name = "username") val username: String,
+)
+
 
 @JsonClass(generateAdapter = true)
 data class ApiRank(

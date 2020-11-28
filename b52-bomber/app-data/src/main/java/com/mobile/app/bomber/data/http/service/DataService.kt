@@ -208,7 +208,7 @@ interface DataService {
     @POST("/video/postvideoplayduration/")
     fun playDuration(@Body body: ApiDurationReq): Call<Nope>
 
-    @GET("/video/user/searchuser/{keyword}/")
+    @GET("/user/searchuser/{keyword}/")
     fun searchUsers(@Path("keyword") keyword: String): Call<ApiAtUser>
 
 

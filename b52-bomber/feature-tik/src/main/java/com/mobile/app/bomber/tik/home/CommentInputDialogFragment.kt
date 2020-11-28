@@ -2,8 +2,6 @@ package com.mobile.app.bomber.tik.home
 
 import android.graphics.Rect
 import android.os.Bundle
-import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.gson.Gson
 import com.linkedin.android.spyglass.mentions.Mentionable
 import com.linkedin.android.spyglass.tokenization.QueryToken
 import com.linkedin.android.spyglass.tokenization.interfaces.QueryTokenReceiver
@@ -25,6 +24,7 @@ import com.mobile.app.bomber.common.base.Msg
 import com.mobile.app.bomber.common.base.tool.SingleClick
 import com.mobile.app.bomber.data.http.entities.ApiComment
 import com.mobile.app.bomber.data.http.entities.ApiVideo
+import com.mobile.app.bomber.data.http.entities.Atuids
 import com.mobile.app.bomber.runner.base.PrefsManager
 import com.mobile.app.bomber.tik.R
 import com.mobile.app.bomber.tik.base.AppRouterUtils
@@ -51,7 +51,6 @@ import io.reactivex.rxjava3.disposables.Disposable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import okhttp3.internal.userAgent
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
@@ -302,7 +301,7 @@ class CommentInputDialogFragment : BaseBottomSheetDialogFragment(), View.OnClick
     }
 
     private fun createComment() {
-        if (video.isChecking()){
+        if (video.isChecking()) {
             Msg.toast("视频还未审核不能发评论，请等待审核通过")
             return
         }
@@ -315,7 +314,7 @@ class CommentInputDialogFragment : BaseBottomSheetDialogFragment(), View.OnClick
             val toCommendId = comment?.id ?: 0L
             val toUserId = comment?.uid ?: 0L
 
-            val at = atUsers.map { it.userId }.joinToString(",")
+            val at = Gson().toJson(atUsers.map { it.toAtuids() })
 //            val type = video.adId == atd ? 0 : 1
             val type = if (video.adId == atd) {
                 0
@@ -325,7 +324,7 @@ class CommentInputDialogFragment : BaseBottomSheetDialogFragment(), View.OnClick
             val atList = atUsers.map { it.toAt() }
             val newComment = ApiComment.Comment(
                     PrefsManager.getUserId(), if (type == 0) video.videoId else video.adId!!, 0L, 0,
-                    (System.currentTimeMillis()) / 1000L -1, PrefsManager.getLoginName(),
+                    (System.currentTimeMillis()) / 1000L - 1, PrefsManager.getLoginName(),
                     PrefsManager.getHeadPicUrl(), content, toCommendId, toUserId,
                     comment?.username ?: "", comment?.pic ?: "",
                     false, atList, null

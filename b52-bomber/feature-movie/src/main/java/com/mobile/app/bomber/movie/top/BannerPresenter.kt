@@ -1,5 +1,6 @@
 package com.mobile.app.bomber.movie.top
 
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
@@ -45,8 +46,9 @@ class BannerPresenter(
                     is Source.Success -> {
                         mData = source.requireData()
                         if (isRefresh) {
-                            adapter?.setDatas(source.requireData())
-                            adapter?.notifyDataSetChanged()
+                            //adapter?.setDatas(source.requireData())
+                            //adapter?.notifyDataSetChanged()
+                            bindData(source.requireData())
                         } else {
                             bindData(source.requireData())
                         }
@@ -68,6 +70,7 @@ class BannerPresenter(
                     position: Int,
                     size: Int
             ) {
+                (holder.itemView as ImageView).scaleType = ImageView.ScaleType.FIT_XY
                 Glide.with(holder.itemView)
                         .load(data.imgUrl)
                         .placeholder(R.drawable.movie_default_cover)
