@@ -46,7 +46,7 @@ public class PlayListActivity extends MyBaseActivity implements View.OnClickList
         setContentView(binding.getRoot());
         final long videoId = Values.INSTANCE.take("PlayListActivity_videoId");
 
-        if (videoId > 0) {
+        if (videoId != -1L) {
             binding.progress.setVisibility(View.VISIBLE);
             playPosition = 0;
             model = AppRouterUtils.viewModels(this, MsgViewModel.class);
@@ -118,7 +118,7 @@ public class PlayListActivity extends MyBaseActivity implements View.OnClickList
     }
 
     public static void start(Activity activity, List<ApiVideo.Video> videos, int playPosition) {
-        Values.INSTANCE.put("PlayListActivity_videoId", 0L);
+        Values.INSTANCE.put("PlayListActivity_videoId", -1L);
         Values.INSTANCE.put("PlayListActivity", new ArrayList(videos));
         Values.INSTANCE.put("PlayListActivity_playPosition", playPosition);
         RouterKt.newStartActivity(activity, PlayListActivity.class);
@@ -130,7 +130,7 @@ public class PlayListActivity extends MyBaseActivity implements View.OnClickList
     }
 
     public static void start(Activity activity, String videoJson) {
-        Values.INSTANCE.put("PlayListActivity_videoId", 0L);
+        Values.INSTANCE.put("PlayListActivity_videoId", -1L);
         Values.INSTANCE.put("PlayListActivity_videoJson", videoJson);
         RouterKt.newStartActivity(activity, PlayListActivity.class);
     }

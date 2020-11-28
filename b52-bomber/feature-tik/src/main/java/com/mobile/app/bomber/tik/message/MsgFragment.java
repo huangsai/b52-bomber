@@ -208,8 +208,6 @@ public class MsgFragment extends TopMainFragment implements View.OnClickListener
 
             binding.layoutRefresh.setRefreshing(false);
         });
-
-
     }
 
     public static MsgFragment newInstance(int position) {
