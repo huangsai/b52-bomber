@@ -214,6 +214,7 @@ data class ApiFollow(
             @Json(name = "id") val id: Long,
             @Json(name = "followuid") val followUid: Long,
             @Json(name = "followtm") val followTime: Long,
+            @Json(name = "Uid") val uid: Long,
             @Json(name = "username") val username: String,
             @Json(name = "pic") val profile: String?,
             @Json(name = "sex") val gender: Int?,

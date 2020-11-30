@@ -83,7 +83,7 @@ public class AttentionFansActivity extends MyBaseActivity {
             Fragment fragment = null;
             switch (position) {
                 case 0://关注
-                    fragment = AttentionFansFragment.newInstance(TYPE_FOLLOW, mUserId);
+                    fragment = AttentionFollowFragment.newInstance(TYPE_FOLLOW, mUserId);
                     break;
                 case 1://粉丝
                     fragment = AttentionFansFragment.newInstance(TYPE_FANS, mUserId);

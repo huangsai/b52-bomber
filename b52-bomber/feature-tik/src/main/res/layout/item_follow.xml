@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/main_background"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingLeft="@dimen/size_18dp"
+    android:paddingTop="@dimen/size_10dp"
+    android:paddingRight="@dimen/size_18dp"
+    android:paddingBottom="@dimen/size_10dp">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/img_profile"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:paddingLeft="1dp"
+        android:paddingTop="1dp"
+        android:paddingRight="1dp"
+        android:paddingBottom="1dp"
+        app:strokeColor="#ffffff"
+        app:strokeWidth="1dp"
+        android:src="@drawable/default_profile"
+        app:shapeAppearanceOverlay="@style/CircleImageView" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/size_10dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/username_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="吴晓梅"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_14sp" />
+
+        <TextView
+            android:id="@+id/desc_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="关注了你"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_12sp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/time_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_5dp"
+            android:text="4-01"
+            android:textColor="#838488"
+            android:textSize="@dimen/font_10sp"
+            android:visibility="gone" />
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/status_btn"
+        android:layout_width="@dimen/size_70dp"
+        android:layout_height="@dimen/size_26dp"
+        android:background="@drawable/follow_btn_selector"
+        android:text="+关注"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_15sp" />
+</LinearLayout>

@@ -32,6 +32,8 @@ object RunnerX {
     const val BUS_VIDEO_UPDATE = 103
     const val BUS_CLOSE_ALL_DIALOG = 104
     const val BUS_VIDEO_UPLOAD_SUCCESS = 105
+    const val BUS_fragmentME = 106
+    const val BUS_Fragment_DTAIL = 107
 
 
     lateinit var component: RunnerComponent

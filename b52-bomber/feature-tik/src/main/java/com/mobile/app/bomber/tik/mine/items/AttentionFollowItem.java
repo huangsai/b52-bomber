@@ -1,38 +1,32 @@
 package com.mobile.app.bomber.tik.mine.items;
 
-import android.text.TextUtils;
-
 import androidx.annotation.NonNull;
 
-import com.pacific.adapter.AdapterViewHolder;
-import com.pacific.adapter.SimpleRecyclerItem;
 import com.mobile.app.bomber.data.http.entities.ApiFollow;
-
 import com.mobile.app.bomber.tik.R;
 import com.mobile.app.bomber.tik.databinding.ItemFansBinding;
+import com.mobile.app.bomber.tik.databinding.ItemFollowBinding;
+import com.pacific.adapter.AdapterViewHolder;
+import com.pacific.adapter.SimpleRecyclerItem;
 
 import org.jetbrains.annotations.NotNull;
 
-public class AttentionFansItem extends SimpleRecyclerItem {
+public class AttentionFollowItem extends SimpleRecyclerItem {
 
     @NonNull
     public final ApiFollow.Follow data;
 
     public boolean isDian;
 
-    public AttentionFansItem(@NonNull ApiFollow.Follow data, Boolean isFans) {
+    public AttentionFollowItem(@NonNull ApiFollow.Follow data, Boolean isFans) {
         this.data = data;
     }
 
     @Override
     public void bind(@NotNull AdapterViewHolder holder) {
-        ItemFansBinding binding = holder.binding(ItemFansBinding::bind);
+        ItemFollowBinding binding = holder.binding(ItemFollowBinding::bind);
         binding.usernameTv.setText(data.getUsername());
-//        if (isDian){
-//        binding.statusBtn.setText(data.isFollowing() ? "已关注" : "+关注");
-//        }else{
-            binding.statusBtn.setText(data.isFollowing() ? "互相关注" : "回关");
-//        }
+        binding.statusBtn.setText(data.isFollowing() ? "已关注" : "+关注");
         binding.statusBtn.setSelected(data.isFollowing());
         holder.attachImageLoader(R.id.img_profile);
         holder.attachOnClickListener(R.id.status_btn);
@@ -42,6 +36,6 @@ public class AttentionFansItem extends SimpleRecyclerItem {
 
     @Override
     public int getLayout() {
-        return R.layout.item_fans;
+        return R.layout.item_follow;
     }
 }

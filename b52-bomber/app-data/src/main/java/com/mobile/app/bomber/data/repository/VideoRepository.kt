@@ -18,9 +18,11 @@ class VideoRepository @Inject constructor(
 ) : BaseRepository(dataService, db, appPrefsManager) {
     private var atd: Long = 0
 
-    suspend fun videosOfHot(pager: Pager) = queryVideos(pager, "blank", "hot")
+    suspend fun videosOfHot(pager: Pager) = queryVideos(pager, "blank", "playcount")
 
     suspend fun videosOfNew(pager: Pager) = queryVideos(pager, "blank", "new")
+
+    suspend fun videosOfNewPlayCount(pager: Pager) = queryVideos(pager, "blank", "playcount")
 
     suspend fun videosOfCommend(pager: Pager) = queryCommendVideos(pager)
 

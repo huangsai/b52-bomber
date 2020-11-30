@@ -5,6 +5,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 
 import com.bumptech.glide.util.Preconditions;
+import com.mobile.app.bomber.runner.base.PrefsManager;
 import com.pacific.adapter.AdapterViewHolder;
 import com.pacific.adapter.SimpleRecyclerItem;
 import com.mobile.app.bomber.data.http.entities.ApiRank;
@@ -51,13 +52,20 @@ public class RankItem extends SimpleRecyclerItem {
         binding.txtUsername.setText(data.getUsername());
         int index = holder.getBindingAdapterPosition();
         binding.txtCount.setText(countText);
-        if (data.isFollowing()) {
-            binding.btnFollow.setText("取消关注");
-            binding.btnFollow.setBackgroundResource(R.drawable.bg_ripple_gray);
-        } else {
+        if (PrefsManager.INSTANCE.getUserId() == data.getUId()) {
             binding.btnFollow.setText("+关注");
-            binding.btnFollow.setBackgroundResource(R.drawable.bg_ripple_red);
+            binding.btnFollow.setBackgroundResource(R.drawable.bg_ripple_gray);
+            binding.btnFollow.setEnabled(false);
+        }else {
+            if (data.isFollowing()) {
+                binding.btnFollow.setText("取消关注");
+                binding.btnFollow.setBackgroundResource(R.drawable.bg_ripple_gray);
+            } else {
+                binding.btnFollow.setText("+关注");
+                binding.btnFollow.setBackgroundResource(R.drawable.bg_ripple_red);
+            }
         }
+
         binding.progress.setProgress(progress);
         binding.vipText.setText(String.valueOf(index + 1));
 
