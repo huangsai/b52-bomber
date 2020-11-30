@@ -38,7 +38,7 @@
         android:layout_width="@dimen/size_0dp"
         android:layout_height="@dimen/size_48dp"
         android:paddingLeft="@dimen/size_16dp"
-        android:paddingRight="@dimen/size_16dp"
+        android:paddingRight="@dimen/size_10dp"
         app:layout_constraintBottom_toTopOf="@+id/chk_forward"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
@@ -46,7 +46,7 @@
         <com.linkedin.android.spyglass.ui.MentionsEditText
             android:id="@+id/edit_comment"
             style="@style/ConWrap"
-            android:layout_marginRight="@dimen/size_16dp"
+            android:layout_marginRight="@dimen/size_10dp"
             android:background="@android:color/transparent"
             android:gravity="center_vertical"
             android:hint="@string/comment_hint"
@@ -64,6 +64,7 @@
             android:id="@+id/img_at"
             style="@style/CommonImage"
             android:src="@drawable/icon_aite"
+            android:padding="6dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

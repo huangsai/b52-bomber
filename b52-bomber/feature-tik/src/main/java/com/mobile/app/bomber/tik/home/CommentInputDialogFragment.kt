@@ -24,7 +24,6 @@ import com.mobile.app.bomber.common.base.Msg
 import com.mobile.app.bomber.common.base.tool.SingleClick
 import com.mobile.app.bomber.data.http.entities.ApiComment
 import com.mobile.app.bomber.data.http.entities.ApiVideo
-import com.mobile.app.bomber.data.http.entities.Atuids
 import com.mobile.app.bomber.runner.base.PrefsManager
 import com.mobile.app.bomber.tik.R
 import com.mobile.app.bomber.tik.base.AppRouterUtils
@@ -191,7 +190,7 @@ class CommentInputDialogFragment : BaseBottomSheetDialogFragment(), View.OnClick
     private fun loadAboutAtUserItems() {
         model.aboutUsers.map { AtUserItem(it) }.also {
             aboutAtUserItems.addAll(it)
-            adapter.replaceAll(aboutAtUserItems)
+            //adapter.replaceAll(aboutAtUserItems)
         }
     }
 

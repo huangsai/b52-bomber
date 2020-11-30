@@ -1,6 +1,7 @@
 package com.mobile.app.bomber.tik.mine;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,10 +22,8 @@ import com.mobile.app.bomber.runner.base.PrefsManager;
 import com.mobile.app.bomber.tik.R;
 import com.mobile.app.bomber.tik.base.AppRouterUtils;
 import com.mobile.app.bomber.tik.base.GlideExtKt;
-import com.mobile.app.bomber.tik.category.items.RankItem;
 import com.mobile.app.bomber.tik.databinding.FragmentAttentionFansBinding;
 import com.mobile.app.bomber.tik.mine.items.AttentionFansItem;
-import com.mobile.app.bomber.tik.mine.items.AttentionFollowItem;
 import com.mobile.guava.data.Values;
 import com.mobile.guava.jvm.domain.Source;
 import com.pacific.adapter.AdapterImageLoader;
