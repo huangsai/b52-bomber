@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.mobile.app.bomber.runner.RunnerX;
 import com.mobile.guava.android.mvvm.RouterKt;
 import com.mobile.app.bomber.runner.base.PrefsManager;
 import com.mobile.guava.data.Values;
@@ -19,12 +20,14 @@ import com.mobile.app.bomber.tik.base.AppRouterKt;
 import com.mobile.app.bomber.common.base.MyBaseFragment;
 import com.mobile.app.bomber.common.base.tool.SingleClick;
 import com.mobile.app.bomber.tik.databinding.FragmentMeBinding;
+import com.mobile.guava.jvm.coroutines.Bus;
 
 import org.jetbrains.annotations.NotNull;
 
 public class FragmentMe extends MyBaseFragment implements View.OnClickListener {
     private FragmentMeBinding binding;
     private UserDetailFragment userDetailFragment;
+    private static long selfId = 2;
 
     public static FragmentMe newInstance(int position) {
         Bundle args = new Bundle();
@@ -38,7 +41,7 @@ public class FragmentMe extends MyBaseFragment implements View.OnClickListener {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentMeBinding.inflate(inflater, container, false);
-        userDetailFragment = UserDetailFragment.newInstance(PrefsManager.INSTANCE.getUserId(),2);
+        userDetailFragment = UserDetailFragment.newInstance(PrefsManager.INSTANCE.getUserId(),selfId);
         addFragment(R.id.layout_container, userDetailFragment);
         return binding.getRoot();
     }
@@ -46,7 +49,8 @@ public class FragmentMe extends MyBaseFragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
-
+//        selfId =2;
+        Bus.INSTANCE.offer(RunnerX.BUS_fragmentME);
     }
 
     @Override

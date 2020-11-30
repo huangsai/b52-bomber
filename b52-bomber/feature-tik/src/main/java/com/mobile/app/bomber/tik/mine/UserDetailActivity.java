@@ -18,6 +18,10 @@ import com.mobile.guava.data.Values;
 import com.mobile.guava.jvm.coroutines.Bus;
 import com.mobile.guava.jvm.domain.Source;
 
+import org.jetbrains.annotations.NotNull;
+
+import kotlin.Pair;
+
 /**
  * 用户详情页
  */
@@ -26,9 +30,11 @@ public class UserDetailActivity extends MyBaseActivity implements View.OnClickLi
     private ActivityUserDetailBinding binding;
     private MeViewModel meViewModel;
     private long userId;
+    private static long selfID;
 
     public static void start(FragmentActivity activity, long userId) {
         Values.INSTANCE.put("UserDetailActivity_userId", userId);
+        selfID =0;
         RouterKt.newStartActivity(activity, UserDetailActivity.class);
     }
 
@@ -86,6 +92,12 @@ public class UserDetailActivity extends MyBaseActivity implements View.OnClickLi
                 Msg.INSTANCE.handleSourceException(apiFollowSource.requireError());
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Bus.INSTANCE.offer(RunnerX.BUS_Fragment_DTAIL);
     }
 
     @Override

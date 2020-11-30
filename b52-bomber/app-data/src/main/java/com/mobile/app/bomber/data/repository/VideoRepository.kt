@@ -18,9 +18,11 @@ class VideoRepository @Inject constructor(
 ) : BaseRepository(dataService, db, appPrefsManager) {
     private var atd: Long = 0
 
-    suspend fun videosOfHot(pager: Pager) = queryVideos(pager, "blank", "hot")
+    suspend fun videosOfHot(pager: Pager) = queryVideos(pager, "blank", "playcount")
 
     suspend fun videosOfNew(pager: Pager) = queryVideos(pager, "blank", "new")
+
+    suspend fun videosOfNewPlayCount(pager: Pager) = queryVideos(pager, "blank", "playcount")
 
     suspend fun videosOfCommend(pager: Pager) = queryCommendVideos(pager)
 
@@ -56,6 +58,24 @@ class VideoRepository @Inject constructor(
         if (pager.isReachedTheEnd) return Source.Success(emptyList())
         val call = dataService.videosOfUser(_userId, pager.requestPage, pager.pageSize, userId, orBlankToken)
         return callApiVideo(call, pager)
+    }
+
+    suspend fun videosOfUserCount(pager: Pager, _userId: Long): Source<ApiVideo> {
+        val call = dataService.videosOfUser(_userId, pager.requestPage, pager.pageSize, userId, orBlankToken)
+        return try {
+            call.execute().toSource()
+        } catch (e: Exception) {
+            errorSource(e)
+        }
+    }
+
+    suspend fun videosOfLikeCount(pager: Pager, _userId: Long): Source<ApiVideo> {
+        val call = dataService.videosOfLike(_userId, pager.requestPage, pager.pageSize)
+        return try {
+            call.execute().toSource()
+        } catch (e: Exception) {
+            errorSource(e)
+        }
     }
 
     suspend fun videosOfLike(pager: Pager, _userId: Long): Source<List<ApiVideo.Video>> {

@@ -21,7 +21,6 @@ import com.mobile.app.bomber.runner.base.PrefsManager;
 import com.mobile.app.bomber.tik.R;
 import com.mobile.app.bomber.tik.base.AppRouterUtils;
 import com.mobile.app.bomber.tik.base.GlideExtKt;
-import com.mobile.app.bomber.tik.category.items.RankItem;
 import com.mobile.app.bomber.tik.databinding.FragmentAttentionFansBinding;
 import com.mobile.app.bomber.tik.mine.items.AttentionFansItem;
 import com.mobile.app.bomber.tik.mine.items.AttentionFollowItem;
@@ -40,17 +39,17 @@ import java.util.List;
 /**
  * Created by ZZ on 2016/9/8.
  */
-public class AttentionFansFragment extends MyBaseFragment implements AdapterImageLoader, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class AttentionFollowFragment extends MyBaseFragment implements AdapterImageLoader, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
     private MeViewModel meViewModel;
     private FragmentAttentionFansBinding binding;
     private RecyclerAdapterEmpty recyclerAdapter;
     private int type;
     private long userId;
 
-    public static AttentionFansFragment newInstance(int type, long userId) {
+    public static AttentionFollowFragment newInstance(int type, long userId) {
         Values.INSTANCE.put("AttentionFansFragment_type", type);
         Values.INSTANCE.put("AttentionFansFragment_userId", userId);
-        return new AttentionFansFragment();
+        return new AttentionFollowFragment();
     }
 
     @Nullable
@@ -84,11 +83,8 @@ public class AttentionFansFragment extends MyBaseFragment implements AdapterImag
 
     private void loadData() {
         getUserCount();
-//        if (type == AttentionFansActivity.TYPE_FOLLOW) {
-//            getFollowsList();
-//        } else if (type == AttentionFansActivity.TYPE_FANS) {
-        getFansList();
-//        }
+        getFollowsList();
+//
     }
 
     private void getUserCount() {
@@ -108,15 +104,15 @@ public class AttentionFansFragment extends MyBaseFragment implements AdapterImag
         }
     }
 
-    private void getFansList() {
+    private void getFollowsList() {
         if (PrefsManager.INSTANCE.isLogin()) {
-            meViewModel.fanList().observe(getViewLifecycleOwner(), apiFansSource -> {
+            meViewModel.followList().observe(getViewLifecycleOwner(), apiFollowSource -> {
                 if (binding.swipeRefresh.isRefreshing()) binding.swipeRefresh.setRefreshing(false);
-                if (apiFansSource instanceof Source.Success) {
-                    List<ApiFollow.Follow> fans = apiFansSource.requireData();
-                    List<AttentionFansItem> items = new ArrayList();
-                    for (ApiFollow.Follow fan : fans) {
-                        AttentionFansItem attentionFansItem = new AttentionFansItem(fan, false);
+                if (apiFollowSource instanceof Source.Success) {
+                    List<ApiFollow.Follow> follows = apiFollowSource.requireData();
+                    List<AttentionFollowItem> items = new ArrayList();
+                    for (ApiFollow.Follow follow : follows) {
+                        AttentionFollowItem attentionFansItem = new AttentionFollowItem(follow, true);
                         items.add(attentionFansItem);
                     }
                     recyclerAdapter.replaceAll(items);
@@ -125,13 +121,15 @@ public class AttentionFansFragment extends MyBaseFragment implements AdapterImag
         }
     }
 
+
+
     public void followedState(Button button) {
-        AttentionFansItem item = AdapterUtils.INSTANCE.getHolder(button).item();
+        AttentionFollowItem item = AdapterUtils.INSTANCE.getHolder(button).item();
         ApiFollow.Follow data = item.data;
-        meViewModel.follow(data.getUid(), data.isFollowing() ? 1 : 0).observe(this, apiFollowSource -> {
+        meViewModel.follow(data.getFollowUid(), data.isFollowing() ? 1 : 0).observe(this, apiFollowSource -> {
             if (apiFollowSource instanceof Source.Success) {
                 data.setFollowing(!data.isFollowing());
-                recyclerAdapter.replace(item, new AttentionFansItem(data, true));
+                recyclerAdapter.replace(item, new AttentionFollowItem(data, true));
             } else {
                 Msg.INSTANCE.handleSourceException(apiFollowSource.requireError());
             }
@@ -140,7 +138,7 @@ public class AttentionFansFragment extends MyBaseFragment implements AdapterImag
 
     @Override
     public void load(@NotNull ImageView imageView, @NotNull AdapterViewHolder adapterViewHolder) {
-        AttentionFansItem item = adapterViewHolder.item();
+        AttentionFollowItem item = adapterViewHolder.item();
         GlideExtKt.loadProfile(this, item.data.getProfile(), imageView);
 
     }
@@ -154,12 +152,8 @@ public class AttentionFansFragment extends MyBaseFragment implements AdapterImag
         }
         if (v.getId() == R.id.img_profile) {
             AdapterViewHolder holder = AdapterUtils.INSTANCE.getHolder(v);
-            AttentionFansItem item = holder.item();
-//            if (type == AttentionFansActivity.TYPE_FOLLOW) {
-//                UserDetailActivity.start(getActivity(), item.data.getFollowUid());
-//            } else if (type == AttentionFansActivity.TYPE_FANS) {
-            UserDetailActivity.start(getActivity(), item.data.getUid());
-//            }
+            AttentionFollowItem item = holder.item();
+            UserDetailActivity.start(getActivity(), item.data.getFollowUid());
             return;
         }
     }

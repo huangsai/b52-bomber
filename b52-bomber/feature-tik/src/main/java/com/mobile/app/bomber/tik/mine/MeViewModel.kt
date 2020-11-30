@@ -74,6 +74,16 @@ class MeViewModel @Inject constructor() : MyBaseViewModel() {
                 .asLiveData(Dispatchers.IO)
     }
 
+    fun videosOfUserCount(pager: Pager, uid: Long): LiveData<Source<ApiVideo>> {
+        return flow { emit(videoRepository.videosOfUserCount(pager, uid)) }
+                .asLiveData(Dispatchers.IO)
+    }
+
+    fun videosOfLikeCount(pager: Pager, uid: Long): LiveData<Source<ApiVideo>> {
+        return flow { emit(videoRepository.videosOfLikeCount(pager, uid)) }
+                .asLiveData(Dispatchers.IO)
+    }
+
     fun videosOfLike(pager: Pager, uid: Long): LiveData<Source<List<ApiVideo.Video>>> {
         return flow { emit(videoRepository.videosOfLike(pager, uid)) }
                 .asLiveData(Dispatchers.IO)

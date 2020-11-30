@@ -116,6 +116,7 @@
                 android:background="@drawable/copy_setting"
                 android:gravity="center"
                 android:text="复制"
+                android:visibility="gone"
                 android:textColor="@color/white"
                 android:textSize="@dimen/font_12sp" />
         </LinearLayout>

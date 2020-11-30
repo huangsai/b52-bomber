@@ -44,6 +44,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import kotlin.Pair;
+
 public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
     private MeViewModel meViewModel;
     private FragmentUserDetailBinding binding;
@@ -54,6 +56,8 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
     private List<String> indexTitle = new ArrayList<>();
     private long userId;
     private static long selfId;
+    private static long detailID;
+
     private String imgPath;
 
 
@@ -63,8 +67,15 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
         return new UserDetailFragment();
     }
 
-    public void setUserId(long userId) {
-        Values.INSTANCE.put("UserDetailFragment_userId", userId);
+    @Override
+    public void onBusEvent(@NotNull Pair<Integer, ?> event) {
+        super.onBusEvent(event);
+        if (event.getFirst() == RunnerX.BUS_fragmentME) {
+            binding.userCopyWechat.setVisibility(View.GONE);
+        } else if(event.getFirst()==RunnerX.BUS_Fragment_DTAIL){
+            binding.userCopyWechat.setVisibility(View.VISIBLE);
+        }
+
     }
 
     @Nullable
@@ -180,9 +191,10 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
                     }
                     String birString = AppUtil.handleAgeStr(apiUser.getBirthday());
                     if (TextUtils.isEmpty(birString)) {
-                        binding.userAge.setVisibility(View.GONE);
+//                        binding.userAge.setVisibility(View.GONE);
+                        binding.userAge.setText("19");
                     } else {
-                        binding.userAge.setVisibility(View.VISIBLE);
+//                        binding.userAge.setVisibility(View.VISIBLE);
                         binding.userAge.setText(birString);
                     }
                     if (TextUtils.isEmpty(apiUser.getWechat())) {
