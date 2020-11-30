@@ -25,7 +25,6 @@
     <color name="home_tab_text_normal">#d1d8e3</color>
     <color name="home_tab_text_pressed">#FFFFFF</color>
     <color name="main_background">#060612</color>
-    <color name="home_background">#030312</color>
     <color name="comment_name">#848388</color>
     <color name="comment_background">#0D0B16</color>
     <color name="comment_line">#E5E5E6</color>
