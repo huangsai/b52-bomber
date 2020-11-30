@@ -15,9 +15,6 @@ public class AttentionFollowItem extends SimpleRecyclerItem {
 
     @NonNull
     public final ApiFollow.Follow data;
-
-    public boolean isDian;
-
     public AttentionFollowItem(@NonNull ApiFollow.Follow data, Boolean isFans) {
         this.data = data;
     }

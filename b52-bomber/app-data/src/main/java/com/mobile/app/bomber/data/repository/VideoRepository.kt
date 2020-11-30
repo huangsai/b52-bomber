@@ -60,6 +60,24 @@ class VideoRepository @Inject constructor(
         return callApiVideo(call, pager)
     }
 
+    suspend fun videosOfUserCount(pager: Pager, _userId: Long): Source<ApiVideo> {
+        val call = dataService.videosOfUser(_userId, pager.requestPage, pager.pageSize, userId, orBlankToken)
+        return try {
+            call.execute().toSource()
+        } catch (e: Exception) {
+            errorSource(e)
+        }
+    }
+
+    suspend fun videosOfLikeCount(pager: Pager, _userId: Long): Source<ApiVideo> {
+        val call = dataService.videosOfLike(_userId, pager.requestPage, pager.pageSize)
+        return try {
+            call.execute().toSource()
+        } catch (e: Exception) {
+            errorSource(e)
+        }
+    }
+
     suspend fun videosOfLike(pager: Pager, _userId: Long): Source<List<ApiVideo.Video>> {
         if (pager.isReachedTheEnd) return Source.Success(emptyList())
         val call = dataService.videosOfLike(_userId, pager.requestPage, pager.pageSize)

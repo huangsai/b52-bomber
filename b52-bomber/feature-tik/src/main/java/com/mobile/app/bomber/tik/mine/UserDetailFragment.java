@@ -191,9 +191,10 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
                     }
                     String birString = AppUtil.handleAgeStr(apiUser.getBirthday());
                     if (TextUtils.isEmpty(birString)) {
-                        binding.userAge.setVisibility(View.GONE);
+//                        binding.userAge.setVisibility(View.GONE);
+                        binding.userAge.setText("19");
                     } else {
-                        binding.userAge.setVisibility(View.VISIBLE);
+//                        binding.userAge.setVisibility(View.VISIBLE);
                         binding.userAge.setText(birString);
                     }
                     if (TextUtils.isEmpty(apiUser.getWechat())) {

@@ -80,8 +80,14 @@ public class UserVideoFragment extends MyBaseFragment implements AdapterImageLoa
         mVideos = new ArrayList<>();
         if (type == TYPE_VIDEO) {
             loadUserVideoData(userId);
+            if (userDetailFragment != null) {
+                loadUserVideoDataCount(userId);
+            }
         } else if (type == TYPE_LIKE) {
             loadLikeVideoData(userId);
+            if (userDetailFragment != null) {
+                loadLikeVideoDataCount(userId);
+            }
         }
     }
 
@@ -123,9 +129,7 @@ public class UserVideoFragment extends MyBaseFragment implements AdapterImageLoa
             if (listSource instanceof Source.Success) {
                 List<ApiVideo.Video> videos = listSource.requireData();
                 mVideos.addAll(videos);
-                if (userDetailFragment != null) {
-                    userDetailFragment.setUserLikeVideoCount(videos.size());
-                }
+
                 List<UserVideoItem> items = new ArrayList();
                 for (ApiVideo.Video video : videos) {
                     UserVideoItem myLikeVideoItem = new UserVideoItem(video);
@@ -148,9 +152,6 @@ public class UserVideoFragment extends MyBaseFragment implements AdapterImageLoa
             if (listSource instanceof Source.Success) {
                 List<ApiVideo.Video> videos = listSource.requireData();
                 mVideos.addAll(videos);
-                if (userDetailFragment != null) {
-                    userDetailFragment.setUserVideoCount(videos.size());
-                }
                 List<UserVideoItem> items = new ArrayList();
                 for (ApiVideo.Video video : videos) {
                     UserVideoItem myLikeVideoItem = new UserVideoItem(video);
@@ -165,6 +166,25 @@ public class UserVideoFragment extends MyBaseFragment implements AdapterImageLoa
                 if (pager.isReachedTheEnd()) {
                     Msg.INSTANCE.toast("已加载完数据");
                 }
+            }
+        });
+    }
+
+
+    public void loadUserVideoDataCount(long userId) {
+        meViewModel.videosOfUserCount(pager, userId).observe(getViewLifecycleOwner(), listSource -> {
+            if (listSource instanceof Source.Success) {
+                ApiVideo video = listSource.requireData();
+                userDetailFragment.setUserVideoCount(video.getTotalCount());
+            }
+        });
+    }
+
+    public void loadLikeVideoDataCount(long userId) {
+        meViewModel.videosOfLikeCount(pager, userId).observe(getViewLifecycleOwner(), listSource -> {
+            if (listSource instanceof Source.Success) {
+                ApiVideo video = listSource.requireData();
+                userDetailFragment.setUserLikeVideoCount(video.getTotalCount());
             }
         });
     }
@@ -188,8 +208,14 @@ public class UserVideoFragment extends MyBaseFragment implements AdapterImageLoa
             endlessListener.reset();
             if (type == TYPE_VIDEO) {
                 loadUserVideoData(userId);
+                if (userDetailFragment != null) {
+                    loadUserVideoDataCount(userId);
+                }
             } else if (type == TYPE_LIKE) {
                 loadLikeVideoData(userId);
+                if (userDetailFragment != null) {
+                    loadLikeVideoDataCount(userId);
+                }
             }
         }
     }
