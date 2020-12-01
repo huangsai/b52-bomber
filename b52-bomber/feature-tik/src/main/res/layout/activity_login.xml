@@ -22,7 +22,7 @@
             android:drawablePadding="5dp"
             android:paddingLeft="20dp"
             android:paddingTop="18dp"
-            android:src="@drawable/sy_quxiaochacha01"/>
+            android:src="@drawable/sy_quxiaochacha01" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -88,6 +88,8 @@
                 android:layout_height="@dimen/size_40dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/login_input_bg"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingLeft="@dimen/size_10dp"
@@ -122,6 +124,8 @@
                 android:layout_height="@dimen/size_40dp"
                 android:layout_below="@+id/layout_phone"
                 android:layout_marginTop="@dimen/size_10dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:orientation="horizontal">
 
                 <EditText
@@ -230,8 +234,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:visibility="gone"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"

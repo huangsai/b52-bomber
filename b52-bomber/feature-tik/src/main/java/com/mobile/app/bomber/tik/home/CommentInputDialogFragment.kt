@@ -264,7 +264,7 @@ class CommentInputDialogFragment : BaseBottomSheetDialogFragment(), View.OnClick
     }
 
     private fun buildContent(): String {
-        val content = binding.editComment.text.toString()
+        val content = binding.editComment.text.toString().trim()
         binding.editComment.setText("")
         return content
     }
