@@ -24,9 +24,6 @@ import com.mobile.app.bomber.tik.databinding.ActivityLoginBinding;
 
 import io.reactivex.rxjava3.disposables.Disposable;
 
-import static com.mobile.app.bomber.common.base.tool.ActivityUtilsKt.isSoftInputShowing;
-import static com.mobile.guava.android.context.ActivityExtKt.hideSoftInput;
-
 public class LoginActivity extends MyBaseActivity implements View.OnClickListener {
 
     private LoginViewModel loginViewModel;

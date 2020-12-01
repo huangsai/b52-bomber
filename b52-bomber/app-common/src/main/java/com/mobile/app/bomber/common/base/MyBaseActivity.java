@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 
 import com.flurry.android.FlurryAgent;
 import com.mobile.app.bomber.common.R;
+import com.mobile.guava.android.context.ActivityExtKt;
 import com.mobile.guava.android.mvvm.AndroidX;
 import com.mobile.guava.android.mvvm.BaseActivity;
 import com.mobile.guava.jvm.coroutines.Bus;
@@ -113,5 +114,11 @@ public abstract class MyBaseActivity extends BaseActivity {
     protected void onStop() {
         super.onStop();
         FlurryAgent.onEndSession(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        ActivityExtKt.hideSoftInput(this);
     }
 }
