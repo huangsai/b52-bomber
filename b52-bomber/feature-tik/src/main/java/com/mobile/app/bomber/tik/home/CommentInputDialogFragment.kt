@@ -190,7 +190,7 @@ class CommentInputDialogFragment : BaseBottomSheetDialogFragment(), View.OnClick
     private fun loadAboutAtUserItems() {
         model.aboutUsers.map { AtUserItem(it) }.also {
             aboutAtUserItems.addAll(it)
-            adapter.replaceAll(aboutAtUserItems)
+            // adapter.replaceAll(aboutAtUserItems)
         }
     }
 
@@ -264,7 +264,9 @@ class CommentInputDialogFragment : BaseBottomSheetDialogFragment(), View.OnClick
     }
 
     private fun buildContent(): String {
-        return binding.editComment.text.toString()
+        val content = binding.editComment.text.toString()
+        binding.editComment.setText("")
+        return content
     }
 
     override fun load(imageView: ImageView, holder: AdapterViewHolder) {
@@ -314,7 +316,6 @@ class CommentInputDialogFragment : BaseBottomSheetDialogFragment(), View.OnClick
             val toUserId = comment?.uid ?: 0L
 
             val at = Gson().toJson(atUsers.map { it.toAtuids() })
-//            val type = video.adId == atd ? 0 : 1
             val type = if (video.adId == atd) {
                 0
             } else {

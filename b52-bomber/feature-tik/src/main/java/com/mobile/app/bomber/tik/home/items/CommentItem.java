@@ -105,6 +105,7 @@ public abstract class CommentItem extends SimpleRecyclerItem {
             RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) binding.getRoot().getLayoutParams();
             params.width = ScreenUtilsKt.getScreen().x;
             binding.getRoot().setLayoutParams(params);
+            binding.getRoot().requestLayout();
         }
 
         @Override
@@ -150,6 +151,7 @@ public abstract class CommentItem extends SimpleRecyclerItem {
             RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) binding.getRoot().getLayoutParams();
             params.width = ScreenUtilsKt.getScreen().x;
             binding.getRoot().setLayoutParams(params);
+            binding.getRoot().requestLayout();
         }
 
         @Override

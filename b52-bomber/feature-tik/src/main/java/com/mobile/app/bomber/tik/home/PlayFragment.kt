@@ -19,10 +19,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
-import androidx.transition.Transition
-import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.bumptech.glide.request.target.SimpleTarget
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
 import com.google.android.exoplayer2.ExoPlaybackException
@@ -52,6 +49,7 @@ import com.mobile.guava.android.mvvm.showDialogFragment
 import com.mobile.guava.android.ui.view.text.MySpannable
 import com.mobile.guava.data.Values
 import com.mobile.guava.data.nullSafe
+import com.mobile.guava.jvm.Guava
 import com.mobile.guava.jvm.domain.Source
 import com.mobile.guava.jvm.extension.exhaustive
 import com.mobile.guava.jvm.math.MathUtils
@@ -113,8 +111,9 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
         isAdVideo = video.adId.nullSafe() > 0
         gestureDetector = GestureDetectorCompat(requireContext(), onGestureListener)
         Timber.d("videoUrl : " + video.decodeVideoUrl())
-        GoogleExo.preload(Uri.parse(video.decodeVideoUrl()))
-
+        if (!Guava.isDebug) {
+            GoogleExo.preload(Uri.parse(video.decodeVideoUrl()))
+        }
     }
 
     override fun onCreateView(
@@ -397,7 +396,9 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
             currentWindow = it.currentWindowIndex
             it.removeListener(this)
             it.stop(true)
-            it.release()
+            if (!Guava.isDebug) {
+                it.release()
+            }
         }
         player = null
         binding.imgCover.visibility = View.VISIBLE
@@ -594,7 +595,7 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
                         if (TextUtils.isEmpty(shareURl) || TextUtils.isEmpty(bgUrl)) {
                             Msg.toast("暂时不能分享")
                         } else {
-                            ShareDialogFragment.goSystemShareSheet(requireActivity(), shareURl, "点击一下 立即拥有 ",null)//"在xx世界最流行的色情视频app中免费观看各种视频，国产网红、日本av、欧美色情应有尽有。")
+                            ShareDialogFragment.goSystemShareSheet(requireActivity(), shareURl, "点击一下 立即拥有 ", null)//"在xx世界最流行的色情视频app中免费观看各种视频，国产网红、日本av、欧美色情应有尽有。")
                         }
                     }
                     is Source.Error -> {
@@ -645,7 +646,7 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
                                 val bitmap: Bitmap = QRCodeUtil.addTwoLogo(urlAndBitmap, logoQR)
                                 val coverFilePath = FileUtil.saveBitmapToFile(bitmap, "bg_image")
                                 val coverFile = File(coverFilePath)
-                                ShareDialogFragment.goSystemShareSheet(requireActivity(), shareURl, "点击一下 立即拥有 ",coverFile)//
+                                ShareDialogFragment.goSystemShareSheet(requireActivity(), shareURl, "点击一下 立即拥有 ", coverFile)//
                             }
                             handler.postDelayed(runnable, 2000)
                         }
