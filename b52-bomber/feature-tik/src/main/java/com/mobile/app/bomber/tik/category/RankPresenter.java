@@ -100,7 +100,8 @@ public class RankPresenter extends SimpleRecyclerItem implements View.OnClickLis
                 binding.imgPlayProfile.setImageResource(R.drawable.default_profile);
             } else {
                 ApiRank.Rank obj = list.get(0);
-                binding.txtPlayName.setText(obj.getUsername() + "\n" + "Top.1");
+                binding.txtPlayName.setText(obj.getUsername());
+                binding.txtPlayTop.setText("Top.1");
                 GlideExtKt.loadProfile(fragment, obj.getPicUrl(), binding.imgPlayProfile);
             }
         });
@@ -114,8 +115,8 @@ public class RankPresenter extends SimpleRecyclerItem implements View.OnClickLis
                 binding.imgLikeProfile.setImageResource(R.drawable.default_profile);
             } else {
                 ApiRank.Rank obj = list.get(0);
-                binding.txtLikeName.setText(obj.getUsername() + "\n" + "Top.1");
-
+                binding.txtLikeTop.setText("Top.1");
+                binding.txtLikeName.setText(obj.getUsername());
                 GlideExtKt.loadProfile(fragment, obj.getPicUrl(), binding.imgLikeProfile);
             }
 //            binding.layoutRefresh.setRefreshing(false);
