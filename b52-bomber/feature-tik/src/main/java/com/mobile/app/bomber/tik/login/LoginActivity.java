@@ -1,16 +1,15 @@
 package com.mobile.app.bomber.tik.login;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.Nullable;
 
 import com.mobile.app.bomber.runner.base.PrefsManager;
 import com.mobile.app.bomber.data.repository.SourceExtKt;
+import com.mobile.guava.android.ime.ImeUtils;
 import com.mobile.guava.jvm.domain.Source;
 
 import com.mobile.app.bomber.tik.BuildConfig;
@@ -51,6 +50,8 @@ public class LoginActivity extends MyBaseActivity implements View.OnClickListene
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        ImeUtils.hideIme(binding.tilLogin);
+        ImeUtils.hideIme(binding.etPassword);
         if (disposable != null && !disposable.isDisposed()) {
             disposable.dispose();
         }
@@ -73,7 +74,7 @@ public class LoginActivity extends MyBaseActivity implements View.OnClickListene
         binding.loginTypeFastRl.setVisibility(View.GONE);
         binding.loginTypePhoneRl.setVisibility(View.VISIBLE);
         if (BuildConfig.DEBUG) {
-            binding.tilLogin.setText("19965412404");//16776826168
+            binding.tilLogin.setText("16533907257");
         }
         binding.loginIvBack.setOnClickListener(this);
         binding.getPasss.setOnClickListener(this);
@@ -140,7 +141,6 @@ public class LoginActivity extends MyBaseActivity implements View.OnClickListene
     public void onClick(View v) {
         int id = v.getId();
         if (id == R.id.login_fast_back || id == R.id.login_iv_back) {
-            if (isSoftInputShowing(this)) hideSoftInput(this);
             finish();
         } else if (id == R.id.login_fast_btn) {
             handlerLoginFast();
@@ -161,5 +161,4 @@ public class LoginActivity extends MyBaseActivity implements View.OnClickListene
             handlerLoginPhone();
         }
     }
-
 }

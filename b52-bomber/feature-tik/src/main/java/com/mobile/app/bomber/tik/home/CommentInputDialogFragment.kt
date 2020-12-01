@@ -190,7 +190,7 @@ class CommentInputDialogFragment : BaseBottomSheetDialogFragment(), View.OnClick
     private fun loadAboutAtUserItems() {
         model.aboutUsers.map { AtUserItem(it) }.also {
             aboutAtUserItems.addAll(it)
-            //adapter.replaceAll(aboutAtUserItems)
+            adapter.replaceAll(aboutAtUserItems)
         }
     }
 
@@ -322,14 +322,29 @@ class CommentInputDialogFragment : BaseBottomSheetDialogFragment(), View.OnClick
             }
             val atList = atUsers.map { it.toAt() }
             val newComment = ApiComment.Comment(
-                    PrefsManager.getUserId(), if (type == 0) video.videoId else video.adId!!, 0L, 0,
-                    (System.currentTimeMillis()) / 1000L - 1, PrefsManager.getLoginName(),
-                    PrefsManager.getHeadPicUrl(), content, toCommendId, toUserId,
-                    comment?.username ?: "", comment?.pic ?: "",
-                    false, atList, null
+                    PrefsManager.getUserId(),
+                    if (type == 0) video.videoId else video.adId!!,
+                    0L,
+                    0,
+                    (System.currentTimeMillis()) / 1000L - 1,
+                    PrefsManager.getLoginName(),
+                    PrefsManager.getHeadPicUrl(),
+                    content,
+                    toCommendId,
+                    toUserId,
+                    comment?.username ?: "",
+                    comment?.pic ?: "",
+                    false,
+                    atList,
+                    null
             )
             val source = model.createComment(
-                    if (type == 0) video.videoId else video.adId!!, content, toCommendId, toUserId, at, type.toLong()
+                    if (type == 0) video.videoId else video.adId!!,
+                    content,
+                    toCommendId,
+                    toUserId,
+                    at,
+                    type.toLong()
             )
             withContext(Dispatchers.Main) {
                 when (source) {
