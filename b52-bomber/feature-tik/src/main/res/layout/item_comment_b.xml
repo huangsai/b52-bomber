@@ -66,6 +66,8 @@
         style="@style/WrapWrap"
         android:drawableTop="@drawable/comment_like"
         android:gravity="center_horizontal"
+        android:textColor="@color/comment_name"
+
         android:paddingLeft="@dimen/size_16dp"
         android:paddingRight="@dimen/size_10dp"
         app:layout_constraintBottom_toBottomOf="@+id/img_profile"
