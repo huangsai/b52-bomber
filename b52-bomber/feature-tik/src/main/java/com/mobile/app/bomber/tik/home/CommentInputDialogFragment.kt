@@ -2,13 +2,12 @@ package com.mobile.app.bomber.tik.home
 
 import android.graphics.Rect
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
+import android.view.*
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
-import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -66,6 +65,7 @@ class CommentInputDialogFragment : BaseBottomSheetDialogFragment(), View.OnClick
     private var action: Int = 0
     private var atd: Long = 0
     private var vid: Long = 0
+    private var keyBoard: Int = 0
 
     private val adapter = RecyclerAdapter()
     private var comment: ApiComment.Comment? = null
@@ -126,6 +126,21 @@ class CommentInputDialogFragment : BaseBottomSheetDialogFragment(), View.OnClick
         dialog?.window?.decorView?.viewTreeObserver?.addOnGlobalLayoutListener(globalLayoutListener)
         applyEditorAfterTextChanged()
         applyAction()
+        binding.editComment.setOnEditorActionListener(object : TextView.OnEditorActionListener {
+            /**
+             *
+             * @param v 被监听的对象
+             * @param actionId  动作标识符,如果值等于EditorInfo.IME_NULL，则回车键被按下。
+             * @param event    如果由输入键触发，这是事件；否则，这是空的(比如非输入键触发是空的)。
+             * @return 返回你的动作
+             */
+
+            override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
+//                Log.e("多行监听", actionId.toString() + "\t" + KeyEvent.KEYCODE_ENTER)
+                createComment()
+                return event != null && event.keyCode === KeyEvent.KEYCODE_ENTER
+            }
+        })
 
         loadAboutAtUserItems()
         return binding.root
@@ -205,7 +220,6 @@ class CommentInputDialogFragment : BaseBottomSheetDialogFragment(), View.OnClick
             else -> throw IllegalStateException()
         }
     }
-
 
 
     private fun loadAboutAtUserItems() {
@@ -332,7 +346,7 @@ class CommentInputDialogFragment : BaseBottomSheetDialogFragment(), View.OnClick
             Msg.toast("评论内容不能为空")
             return
         }
-        showLoadingDialg("正在发送",false)
+        showLoadingDialg("正在发送", false)
         lifecycleScope.launch(Dispatchers.IO) {
             val toCommendId = comment?.id ?: 0L
             val toUserId = comment?.uid ?: 0L
