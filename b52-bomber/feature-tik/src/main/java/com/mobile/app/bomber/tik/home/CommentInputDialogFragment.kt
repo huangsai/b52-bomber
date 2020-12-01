@@ -61,7 +61,6 @@ class CommentInputDialogFragment : BaseBottomSheetDialogFragment(), View.OnClick
     private var _binding: FragmentCommentInputDialogBinding? = null
     private val binding get() = _binding!!
     private val atUsers = ArrayList<MyAtUser>()
-
     private lateinit var behavior: BottomSheetBehavior<FrameLayout>
     private lateinit var video: ApiVideo.Video
     private var action: Int = 0
@@ -127,8 +126,28 @@ class CommentInputDialogFragment : BaseBottomSheetDialogFragment(), View.OnClick
         dialog?.window?.decorView?.viewTreeObserver?.addOnGlobalLayoutListener(globalLayoutListener)
         applyEditorAfterTextChanged()
         applyAction()
+
         loadAboutAtUserItems()
         return binding.root
+    }
+
+
+    private var loadingDialog: com.mobile.app.bomber.common.base.LoadingDialog? = null
+
+    fun showLoadingDialg(msg: String?, touch: Boolean) {
+        if (loadingDialog == null) {
+            loadingDialog = com.mobile.app.bomber.common.base.LoadingDialog()
+        } else {
+            loadingDialog!!.dismiss()
+        }
+        loadingDialog!!.setMsg(msg).setOnTouchOutside(touch).show(childFragmentManager, "loading")
+    }
+
+    fun hideLoading() {
+        if (loadingDialog != null) {
+            loadingDialog!!.dismiss()
+            loadingDialog = null
+        }
     }
 
     override fun onDestroyView() {
@@ -186,6 +205,8 @@ class CommentInputDialogFragment : BaseBottomSheetDialogFragment(), View.OnClick
             else -> throw IllegalStateException()
         }
     }
+
+
 
     private fun loadAboutAtUserItems() {
         model.aboutUsers.map { AtUserItem(it) }.also {
@@ -311,6 +332,7 @@ class CommentInputDialogFragment : BaseBottomSheetDialogFragment(), View.OnClick
             Msg.toast("评论内容不能为空")
             return
         }
+        showLoadingDialg("正在发送",false)
         lifecycleScope.launch(Dispatchers.IO) {
             val toCommendId = comment?.id ?: 0L
             val toUserId = comment?.uid ?: 0L
@@ -321,6 +343,7 @@ class CommentInputDialogFragment : BaseBottomSheetDialogFragment(), View.OnClick
             } else {
                 1
             }
+
             val atList = atUsers.map { it.toAt() }
             val newComment = ApiComment.Comment(
                     PrefsManager.getUserId(),
@@ -350,12 +373,15 @@ class CommentInputDialogFragment : BaseBottomSheetDialogFragment(), View.OnClick
             withContext(Dispatchers.Main) {
                 when (source) {
                     is Source.Success -> {
+                        hideLoading()
                         newComment.id = source.requireData().id
                         (parentFragment as CommentDialogFragment).onCreateComment(newComment)
                         Msg.toast("评论成功")
+
                         dismissAllowingStateLoss()
                     }
                     is Source.Error -> {
+                        hideLoading()
                         Msg.toast("评论失败")
                     }
                 }.exhaustive
