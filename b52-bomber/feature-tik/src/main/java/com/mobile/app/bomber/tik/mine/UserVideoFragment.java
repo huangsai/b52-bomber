@@ -53,7 +53,6 @@ public class UserVideoFragment extends MyBaseFragment implements AdapterImageLoa
     private long userId;
     private static long selfID;
     private int type;
-    private boolean isResume;
     private List<ApiVideo.Video> mVideos;
     private EndlessRecyclerViewScrollListener endlessListener;
     private Pager pager = new Pager();
@@ -81,12 +80,6 @@ public class UserVideoFragment extends MyBaseFragment implements AdapterImageLoa
         super.onViewCreated(view, savedInstanceState);
         type = Values.INSTANCE.take("UserVideoFragment_type");
         userId = Values.INSTANCE.take("UserVideoFragment_userId");
-//        System.out.println("++++++"+String.valueOf(userId));
-//        if (selfID == 2){
-//            userId = PrefsManager.INSTANCE.getUserId();
-//        }
-//        System.out.println("++++++++"+String.valueOf(userId));
-        isResume = false;
         userDetailFragment = Values.INSTANCE.take("UserVideoFragment_parentFragment");
         mVideos = new ArrayList<>();
         if (type == TYPE_VIDEO) {
@@ -217,28 +210,12 @@ public class UserVideoFragment extends MyBaseFragment implements AdapterImageLoa
         if (selfID == 2) {
             userId = PrefsManager.INSTANCE.getUserId();
         }
-//        pager.reset();
-//        recyclerAdapter.clear();
-//        endlessListener.reset();
-//        if (type == TYPE_VIDEO) {
-//            loadUserVideoData(userId);
-//            if (userDetailFragment != null) {
-//                loadUserVideoDataCount(userId);
-//            }
-//        } else if (type == TYPE_LIKE) {
-//            loadLikeVideoData(userId);
-//            if (userDetailFragment != null) {
-//                loadLikeVideoDataCount(userId);
-//            }
-//        }
-
     }
 
     @Override
     public void onBusEvent(@NotNull Pair<Integer, ?> event) {
         super.onBusEvent(event);
         if (event.getFirst() == RunnerX.BUS_FRAGMENT_ME_REFRESH) {
-            isResume =false;
             pager.reset();
             endlessListener.reset();
             if (type == TYPE_VIDEO) {

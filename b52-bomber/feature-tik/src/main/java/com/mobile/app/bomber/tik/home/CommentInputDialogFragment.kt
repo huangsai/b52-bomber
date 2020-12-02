@@ -19,6 +19,7 @@ import com.linkedin.android.spyglass.mentions.Mentionable
 import com.linkedin.android.spyglass.tokenization.QueryToken
 import com.linkedin.android.spyglass.tokenization.interfaces.QueryTokenReceiver
 import com.linkedin.android.spyglass.ui.MentionsEditText
+import com.mobile.app.bomber.common.base.LoadingDialog
 import com.mobile.app.bomber.common.base.Msg
 import com.mobile.app.bomber.common.base.tool.SingleClick
 import com.mobile.app.bomber.data.http.entities.ApiComment
@@ -149,7 +150,7 @@ class CommentInputDialogFragment : BaseBottomSheetDialogFragment(), View.OnClick
 
     fun showLoadingDialg(msg: String?, touch: Boolean) {
         if (loadingDialog == null) {
-            loadingDialog = com.mobile.app.bomber.common.base.LoadingDialog()
+            loadingDialog = LoadingDialog()
         } else {
             loadingDialog!!.dismiss()
         }
