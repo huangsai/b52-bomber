@@ -65,8 +65,6 @@ class CommentInputDialogFragment : BaseBottomSheetDialogFragment(), View.OnClick
     private var action: Int = 0
     private var atd: Long = 0
     private var vid: Long = 0
-    private var keyBoard: Int = 0
-
     private val adapter = RecyclerAdapter()
     private var comment: ApiComment.Comment? = null
     private var textDisposable: Disposable? = null
