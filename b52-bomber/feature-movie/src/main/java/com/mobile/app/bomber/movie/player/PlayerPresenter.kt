@@ -61,7 +61,7 @@ class PlayerPresenter(
     private var currentSpeed = 1
     private var currentBitRate = 0
     private var optionFlag = 0
-    private lateinit var player: SimpleExoPlayer
+    private var player: SimpleExoPlayer? = null
     private var markedPlayDuration = false
     private var originPlayerViewSize: Point? = null
 
@@ -95,8 +95,8 @@ class PlayerPresenter(
         player = SimpleExoPlayer.Builder(AndroidX.myApp)
                 .setUseLazyPreparation(false)
                 .build()//ExoPlayerX.player
-        player.repeatMode = Player.REPEAT_MODE_OFF
-        player.addListener(this)
+        player?.repeatMode = Player.REPEAT_MODE_OFF
+        player?.addListener(this)
         binding.viewPlayer.player = player
         binding.viewPlayer.setControllerVisibilityListener {
             if (it == View.VISIBLE) {
@@ -107,14 +107,15 @@ class PlayerPresenter(
         }
 
         // val sdCard = ensureFileSeparator(AndroidX.myApp.getExternalFilesDir(null)!!.absolutePath!!)
-         //ExoPlayerX.play((sdCard + "trailer.mp4").toUri())
+        //ExoPlayerX.play((sdCard + "trailer.mp4").toUri())
         playerActivity.data?.apply {
             val url = movie.movieUrl.toUri()
             val mediaItem: MediaItem = MediaItem.fromUri(url)
 
-            player.setMediaItem(mediaItem)
-            player.prepare()
-            player.play()
+            player?.setMediaItem(mediaItem)
+            player?.prepare()
+            player?.play()
+            binding.progress.visibility = View.VISIBLE
             //player?.play(url)
         }
 
@@ -129,20 +130,20 @@ class PlayerPresenter(
     }
 
     override fun onResume() {
-        //player.resume()
+        player?.playWhenReady = true
     }
 
     override fun onPause() {
-        player.pause()
+        player?.pause()
         playDuration()
     }
 
     override fun onDestroy() {
         handler?.removeCallbacks(run)
+        player?.removeListener(this)
+        player?.stop()
         handler = null
-        //player = null
-        player.removeListener(this)
-        player.stop()
+        player = null
         previewTimeBar.removeOnScrubListener(this)
         previewTimeBar.setPreviewLoader(null)
         binding.viewPlayer.player = null
@@ -166,9 +167,12 @@ class PlayerPresenter(
     }
 
     override fun loadPreview(currentPosition: Long, max: Long) {
-        if (player.isPlaying) {
-            player.pause()
+        player?.apply {
+            if (isPlaying) {
+                pause()
+            }
         }
+
         GlideApp.with(AndroidX.myApp)
                 .load(thumbnailsUrl)
                 .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
@@ -177,14 +181,14 @@ class PlayerPresenter(
     }
 
     override fun onScrubStart(previewBar: PreviewBar) {
-        player.pause()
+        player?.pause()
     }
 
     override fun onScrubMove(previewBar: PreviewBar, progress: Int, fromUser: Boolean) {
     }
 
     override fun onScrubStop(previewBar: PreviewBar) {
-        //player.resume()
+        player?.playWhenReady = true
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -274,7 +278,7 @@ class PlayerPresenter(
             if (optionFlag == 1) {
                 currentSpeed = index
                 btnSpeed.text = speeds[index]
-                player.setPlaybackParameters(PlaybackParameters(
+                player?.setPlaybackParameters(PlaybackParameters(
                         speeds[index].replace("x", "").safeToFloat(),
                         1.0f
                 ))
