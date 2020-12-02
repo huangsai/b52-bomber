@@ -97,5 +97,6 @@ public class HotVideoPresenter extends BaseVideoPresenter {
             binding.layoutRefresh.setRefreshing(false);
 
         });
+
     }
 }

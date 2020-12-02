@@ -1,6 +1,7 @@
 package com.mobile.app.bomber.tik.mine;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.mobile.app.bomber.runner.base.PrefsManager;
 import com.mobile.ext.glide.GlideApp;
 import com.mobile.app.bomber.common.base.Msg;
 import com.mobile.app.bomber.common.base.MyBaseFragment;
@@ -28,6 +30,7 @@ import com.mobile.app.bomber.tik.home.PlayListActivity;
 import com.mobile.app.bomber.tik.mine.items.UserVideoItem;
 import com.mobile.guava.android.ui.view.recyclerview.EndlessRecyclerViewScrollListener;
 import com.mobile.guava.android.ui.view.recyclerview.TestedGridItemDecoration;
+import com.mobile.guava.jvm.coroutines.Bus;
 import com.mobile.guava.jvm.domain.Source;
 import com.pacific.adapter.AdapterImageLoader;
 import com.pacific.adapter.AdapterUtils;
@@ -48,15 +51,17 @@ public class UserVideoFragment extends MyBaseFragment implements AdapterImageLoa
     private RecyclerAdapterEmpty recyclerAdapter;
     private MeViewModel meViewModel;
     private long userId;
+    private static long selfID;
     private int type;
-
+    private boolean isResume;
     private List<ApiVideo.Video> mVideos;
     private EndlessRecyclerViewScrollListener endlessListener;
     private Pager pager = new Pager();
     private UserDetailFragment userDetailFragment;
 
-    public static UserVideoFragment newInstance(int type, long userId, UserDetailFragment parentFragment) {
+    public static UserVideoFragment newInstance(int type, long userId, long self_userId, UserDetailFragment parentFragment) {
         Values.INSTANCE.put("UserVideoFragment_type", type);
+        selfID = self_userId;
         Values.INSTANCE.put("UserVideoFragment_userId", userId);
         Values.INSTANCE.put("UserVideoFragment_parentFragment", parentFragment);
         return new UserVideoFragment();
@@ -76,6 +81,12 @@ public class UserVideoFragment extends MyBaseFragment implements AdapterImageLoa
         super.onViewCreated(view, savedInstanceState);
         type = Values.INSTANCE.take("UserVideoFragment_type");
         userId = Values.INSTANCE.take("UserVideoFragment_userId");
+//        System.out.println("++++++"+String.valueOf(userId));
+//        if (selfID == 2){
+//            userId = PrefsManager.INSTANCE.getUserId();
+//        }
+//        System.out.println("++++++++"+String.valueOf(userId));
+        isResume = false;
         userDetailFragment = Values.INSTANCE.take("UserVideoFragment_parentFragment");
         mVideos = new ArrayList<>();
         if (type == TYPE_VIDEO) {
@@ -201,9 +212,33 @@ public class UserVideoFragment extends MyBaseFragment implements AdapterImageLoa
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        if (selfID == 2) {
+            userId = PrefsManager.INSTANCE.getUserId();
+        }
+//        pager.reset();
+//        recyclerAdapter.clear();
+//        endlessListener.reset();
+//        if (type == TYPE_VIDEO) {
+//            loadUserVideoData(userId);
+//            if (userDetailFragment != null) {
+//                loadUserVideoDataCount(userId);
+//            }
+//        } else if (type == TYPE_LIKE) {
+//            loadLikeVideoData(userId);
+//            if (userDetailFragment != null) {
+//                loadLikeVideoDataCount(userId);
+//            }
+//        }
+
+    }
+
+    @Override
     public void onBusEvent(@NotNull Pair<Integer, ?> event) {
         super.onBusEvent(event);
         if (event.getFirst() == RunnerX.BUS_FRAGMENT_ME_REFRESH) {
+            isResume =false;
             pager.reset();
             endlessListener.reset();
             if (type == TYPE_VIDEO) {

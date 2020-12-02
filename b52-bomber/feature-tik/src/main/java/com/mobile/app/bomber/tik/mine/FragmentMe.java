@@ -2,7 +2,6 @@ package com.mobile.app.bomber.tik.mine;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,11 +23,12 @@ import com.mobile.guava.jvm.coroutines.Bus;
 
 import org.jetbrains.annotations.NotNull;
 
+import kotlin.Pair;
+
 public class FragmentMe extends MyBaseFragment implements View.OnClickListener {
     private FragmentMeBinding binding;
     private UserDetailFragment userDetailFragment;
     private static long selfId = 2;
-
     public static FragmentMe newInstance(int position) {
         Bundle args = new Bundle();
         args.putInt("position", position);
@@ -36,6 +36,7 @@ public class FragmentMe extends MyBaseFragment implements View.OnClickListener {
         fragment.setArguments(args);
         return fragment;
     }
+
 
     @Nullable
     @Override
@@ -49,8 +50,8 @@ public class FragmentMe extends MyBaseFragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
-//        selfId =2;
         Bus.INSTANCE.offer(RunnerX.BUS_fragmentME);
+        Bus.INSTANCE.offer(RunnerX.BUS_FRAGMENT_ME_REFRESH);
     }
 
     @Override

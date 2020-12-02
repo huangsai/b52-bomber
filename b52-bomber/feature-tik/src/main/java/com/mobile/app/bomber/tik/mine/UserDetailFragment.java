@@ -56,8 +56,6 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
     private List<String> indexTitle = new ArrayList<>();
     private long userId;
     private static long selfId;
-    private static long detailID;
-
     private String imgPath;
 
 
@@ -72,10 +70,9 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
         super.onBusEvent(event);
         if (event.getFirst() == RunnerX.BUS_fragmentME) {
             binding.userCopyWechat.setVisibility(View.GONE);
-        } else if(event.getFirst()==RunnerX.BUS_Fragment_DTAIL){
+        } else if (event.getFirst() == RunnerX.BUS_Fragment_DTAIL) {
             binding.userCopyWechat.setVisibility(View.VISIBLE);
         }
-
     }
 
     @Nullable
@@ -87,11 +84,6 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
         return binding.getRoot();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        loadData();
-    }
 
     @Override
     public void onViewCreated(@NotNull View view, @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
@@ -100,8 +92,6 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
         binding.userLike.setOnClickListener(this);
         binding.userFans.setOnClickListener(this);
         binding.userFollow.setOnClickListener(this);
-
-
         binding.userProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -117,19 +107,17 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
 //                requireActivity().overridePendingTransition(0, 0);        //去掉activity的切换动画
             }
         });
-
-        indexTitle.add("作品0");
-        indexTitle.add("喜欢0");
-        if (selfId == 2) {
-            userId = PrefsManager.INSTANCE.getUserId();
-        }
-        adapter = new MyAdapter(requireActivity(), userId, this);
-        binding.viewPager.setAdapter(adapter);
-        binding.viewPager.setOffscreenPageLimit(2);
-        binding.swipeRefresh.setOnRefreshListener(this);
-        binding.swipeRefresh.setRefreshing(true);
-        tabLayoutMediator = new TabLayoutMediator(binding.layoutTab, binding.viewPager, (tab, position) -> tab.setText(indexTitle.get(position)));
-        tabLayoutMediator.attach();
+//        indexTitle.add("作品0");
+//        indexTitle.add("喜欢0");
+//
+//        adapter = new MyAdapter(requireActivity(), userId, this);
+//        binding.viewPager.setAdapter(adapter);
+//        binding.viewPager.setOffscreenPageLimit(2);
+//        binding.swipeRefresh.setOnRefreshListener(this);
+//        binding.swipeRefresh.setRefreshing(true);
+//        tabLayoutMediator = new TabLayoutMediator(binding.layoutTab, binding.viewPager, (tab, position) -> tab.setText(indexTitle.get(position)));
+//        tabLayoutMediator.attach();
+        loadViewPageData();
     }
 
     @SingleClick
@@ -150,16 +138,27 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
         }
     }
 
+    private void loadViewPageData(){
+        indexTitle.add("作品0");
+        indexTitle.add("喜欢0");
+        adapter = new MyAdapter(requireActivity(),userId,selfId,this);
+        binding.viewPager.setAdapter(adapter);
+        binding.viewPager.setOffscreenPageLimit(2);
+        binding.swipeRefresh.setRefreshing(true);
+        binding.swipeRefresh.setOnRefreshListener(this);
+        tabLayoutMediator = new TabLayoutMediator(binding.layoutTab, binding.viewPager, (tab, position) -> tab.setText(indexTitle.get(position)));
+        tabLayoutMediator.attach();
+    }
     private void loadData() {
+        if (selfId ==2){
+            userId = PrefsManager.INSTANCE.getUserId();
+        }
         getUserInfo();
         getUserCount();
     }
 
     private void getUserInfo() {
         if (PrefsManager.INSTANCE.isLogin()) {
-            if (selfId == 2) {
-                userId = PrefsManager.INSTANCE.getUserId();
-            }
             meViewModel.getUserInfo(userId, selfId).observe(getViewLifecycleOwner(), apiUserSource -> {
                 if (binding.swipeRefresh.isRefreshing()) binding.swipeRefresh.setRefreshing(false);
                 if (apiUserSource instanceof Source.Success) {
@@ -176,14 +175,6 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
                     }
                     binding.userName.setText(apiUser.getUsername());
                     binding.userId.setText("ID：" + apiUser.getUid());
-
-//                    if (apiUser.getWechat().equals("") ||
-//                            apiUser.getWechat().isEmpty() ||
-//                            userId == PrefsManager.INSTANCE.getUserId()) {
-//                        binding.userCopyWechat.setVisibility(View.GONE);
-//                    } else {
-//                        binding.userCopyWechat.setVisibility(View.VISIBLE);
-//                    }
                     if (TextUtils.isEmpty(apiUser.getSign())) {
                         binding.userSign.setText("这个人很懒,什么也没写");
                     } else {
@@ -191,10 +182,8 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
                     }
                     String birString = AppUtil.handleAgeStr(apiUser.getBirthday());
                     if (TextUtils.isEmpty(birString)) {
-//                        binding.userAge.setVisibility(View.GONE);
                         binding.userAge.setText("19");
                     } else {
-//                        binding.userAge.setVisibility(View.VISIBLE);
                         binding.userAge.setText(birString);
                     }
                     if (TextUtils.isEmpty(apiUser.getWechat())) {
@@ -218,9 +207,6 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
 
     private void getUserCount() {
         if (PrefsManager.INSTANCE.isLogin()) {
-            if (selfId == 2) {
-                userId = PrefsManager.INSTANCE.getUserId();
-            }
             meViewModel.getUserCount(userId).observe(getViewLifecycleOwner(), apiUserCountSource -> {
                 if (binding.swipeRefresh.isRefreshing()) binding.swipeRefresh.setRefreshing(false);
                 if (apiUserCountSource instanceof Source.Success) {
@@ -250,6 +236,11 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        loadData();
+    }
+    @Override
     public void onRefresh() {
         Bus.INSTANCE.offer(RunnerX.BUS_FRAGMENT_ME_REFRESH);
         loadData();
@@ -257,12 +248,14 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
 
     private static class MyAdapter extends FragmentStateAdapter {
 
-        private final long mUserId;
-        private final UserDetailFragment mUserDetailFragment;
+        private long mUserId;
+        private long self_id;
+        private UserDetailFragment mUserDetailFragment;
 
-        public MyAdapter(FragmentActivity activity, long userId, UserDetailFragment userDetailFragment) {
+        public MyAdapter(FragmentActivity activity,long mUserId,long selfID,UserDetailFragment userDetailFragment) {
             super(activity);
-            this.mUserId = userId;
+            this.self_id = selfID;
+            this.mUserId = mUserId;
             this.mUserDetailFragment = userDetailFragment;
         }
 
@@ -272,10 +265,10 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
             Fragment frament = null;
             switch (position) {
                 case 0:
-                    frament = UserVideoFragment.newInstance(UserVideoFragment.TYPE_VIDEO, mUserId, mUserDetailFragment);
+                    frament = UserVideoFragment.newInstance(UserVideoFragment.TYPE_VIDEO, this.mUserId,this.self_id, mUserDetailFragment);
                     break;
                 case 1:
-                    frament = UserVideoFragment.newInstance(UserVideoFragment.TYPE_LIKE, mUserId, mUserDetailFragment);
+                    frament = UserVideoFragment.newInstance(UserVideoFragment.TYPE_LIKE, this.mUserId,this.self_id, mUserDetailFragment);
                     break;
             }
             return frament;
