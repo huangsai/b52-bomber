@@ -48,14 +48,31 @@
             android:id="@+id/txt_play_name"
             style="@style/WrapWrap"
             android:layout_marginLeft="@dimen/size_8dp"
-            android:lines="2"
-            android:maxLines="2"
+            android:lines="1"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:maxEms="6"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/font_14sp"
+            app:layout_constraintLeft_toRightOf="@+id/img_play_profile"
+            app:layout_constraintTop_toTopOf="@+id/img_play_profile"
+            tools:text="路人甲" />
+
+
+        <TextView
+            android:id="@+id/txt_play_Top"
+            style="@style/WrapWrap"
+            android:layout_marginLeft="@dimen/size_8dp"
+            android:lines="1"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:maxEms="6"
             android:textColor="@android:color/white"
             android:textSize="@dimen/font_14sp"
             app:layout_constraintBottom_toBottomOf="@+id/img_play_profile"
             app:layout_constraintLeft_toRightOf="@+id/img_play_profile"
-            app:layout_constraintTop_toTopOf="@+id/img_play_profile"
-            tools:text="路人甲\nTop.1" />
+            app:layout_constraintTop_toBottomOf="@id/txt_play_name"
+            tools:text="" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -101,14 +118,32 @@
             android:id="@+id/txt_like_name"
             style="@style/WrapWrap"
             android:layout_marginLeft="@dimen/size_8dp"
-            android:lines="2"
-            android:maxLines="2"
+            android:lines="1"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:maxEms="6"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/font_14sp"
+            app:layout_constraintLeft_toRightOf="@+id/img_like_profile"
+            app:layout_constraintTop_toTopOf="@+id/img_like_profile"
+            tools:text="路人甲" />
+
+        <TextView
+            android:id="@+id/txt_like_Top"
+            style="@style/WrapWrap"
+            android:layout_marginLeft="@dimen/size_8dp"
+            android:lines="1"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:maxEms="6"
             android:textColor="@android:color/white"
             android:textSize="@dimen/font_14sp"
             app:layout_constraintBottom_toBottomOf="@+id/img_like_profile"
             app:layout_constraintLeft_toRightOf="@+id/img_like_profile"
-            app:layout_constraintTop_toTopOf="@+id/img_like_profile"
-            tools:text="路人甲\nTop.1" />
+            app:layout_constraintTop_toBottomOf="@id/txt_like_name"
+            tools:text="" />
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

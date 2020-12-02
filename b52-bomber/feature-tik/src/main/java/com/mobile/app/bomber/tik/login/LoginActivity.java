@@ -7,20 +7,18 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
-import com.mobile.app.bomber.runner.base.PrefsManager;
-import com.mobile.app.bomber.data.repository.SourceExtKt;
-import com.mobile.guava.android.ime.ImeUtils;
-import com.mobile.guava.jvm.domain.Source;
-
-import com.mobile.app.bomber.tik.BuildConfig;
-import com.mobile.app.bomber.tik.R;
-import com.mobile.app.bomber.tik.base.AppRouterUtils;
-import com.mobile.app.bomber.tik.base.GlideExtKt;
 import com.mobile.app.bomber.common.base.Msg;
 import com.mobile.app.bomber.common.base.MyBaseActivity;
 import com.mobile.app.bomber.common.base.tool.AppUtil;
 import com.mobile.app.bomber.common.base.tool.SingleClick;
+import com.mobile.app.bomber.data.repository.SourceExtKt;
+import com.mobile.app.bomber.runner.base.PrefsManager;
+import com.mobile.app.bomber.tik.BuildConfig;
+import com.mobile.app.bomber.tik.R;
+import com.mobile.app.bomber.tik.base.AppRouterUtils;
+import com.mobile.app.bomber.tik.base.GlideExtKt;
 import com.mobile.app.bomber.tik.databinding.ActivityLoginBinding;
+import com.mobile.guava.jvm.domain.Source;
 
 import io.reactivex.rxjava3.disposables.Disposable;
 
@@ -47,8 +45,6 @@ public class LoginActivity extends MyBaseActivity implements View.OnClickListene
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ImeUtils.hideIme(binding.tilLogin);
-        ImeUtils.hideIme(binding.etPassword);
         if (disposable != null && !disposable.isDisposed()) {
             disposable.dispose();
         }
