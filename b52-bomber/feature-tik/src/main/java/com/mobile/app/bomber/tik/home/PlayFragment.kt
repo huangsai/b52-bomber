@@ -49,7 +49,6 @@ import com.mobile.guava.android.mvvm.showDialogFragment
 import com.mobile.guava.android.ui.view.text.MySpannable
 import com.mobile.guava.data.Values
 import com.mobile.guava.data.nullSafe
-import com.mobile.guava.jvm.Guava
 import com.mobile.guava.jvm.domain.Source
 import com.mobile.guava.jvm.extension.exhaustive
 import com.mobile.guava.jvm.math.MathUtils
@@ -71,14 +70,13 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
     private var isAdVideo = false
     private lateinit var gestureDetector: GestureDetectorCompat
     private lateinit var thumbDrawable: Drawable
-    protected var mApiUser: ApiUser? = null
+    private var mApiUser: ApiUser? = null
     private var atd: Long = 0
     private var currentWindow = 0
     private var shareURl: String = ""
     private var content: String = ""
     private var bgUrl: String = ""
     private var urlAndBitmap: Bitmap? = null
-    private var logobitmap: Bitmap? = null
     private var playbackPosition: Long = 0
     private var isPlayerPlaying = false
     private var markedPlayCount = false
@@ -111,9 +109,7 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
         isAdVideo = video.adId.nullSafe() > 0
         gestureDetector = GestureDetectorCompat(requireContext(), onGestureListener)
         Timber.d("videoUrl : " + video.decodeVideoUrl())
-        if (!Guava.isDebug) {
-            GoogleExo.preload(Uri.parse(video.decodeVideoUrl()))
-        }
+        GoogleExo.preload(Uri.parse(video.decodeVideoUrl()))
     }
 
     override fun onCreateView(
@@ -391,14 +387,12 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
 
     private fun releasePlayer() {
         isPlayerPlaying = false
+        binding.viewPlayer.player = null
         player?.let {
             playbackPosition = it.currentPosition
             currentWindow = it.currentWindowIndex
             it.removeListener(this)
-            it.stop(true)
-            if (!Guava.isDebug) {
-                it.release()
-            }
+            it.release()
         }
         player = null
         binding.imgCover.visibility = View.VISIBLE
