@@ -3,6 +3,7 @@ package com.mobile.app.bomber.tik.mine;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import androidx.lifecycle.LiveData;
 
 import com.mobile.app.bomber.common.base.Msg;
 import com.mobile.app.bomber.common.base.MyBaseActivity;
+import com.mobile.app.bomber.common.base.tool.FileUtil;
 import com.mobile.app.bomber.common.base.tool.SingleClick;
 import com.mobile.app.bomber.data.http.entities.ApiUser;
 import com.mobile.app.bomber.data.http.entities.Nope;
@@ -47,6 +49,8 @@ public class EditInfoActivity extends MyBaseActivity
 
     private MeViewModel meViewModel;
     private ActivityEditinfoBinding binding;
+    private String bitmap;
+    private ApiUser mApiUser;
 
     private final ActivityResultLauncher<Intent> launcher = FileSelector.INSTANCE.registerPicResultCallback(
             this, new ActivityResultCallback<ActivityResult>() {
@@ -65,6 +69,7 @@ public class EditInfoActivity extends MyBaseActivity
                             file = FileSelector.INSTANCE.getCameraPicFile();
                         }
                         if (uri != null) binding.hHead.setImageURI(uri);
+                        bitmap = uri.getPath();
                         if (file != null) updateHeadPicUrl(file);
                     }
                 }
@@ -77,7 +82,7 @@ public class EditInfoActivity extends MyBaseActivity
         setContentView(binding.getRoot());
         meViewModel = AppRouterUtils.viewModels(this, MeViewModel.class);
 
-        ApiUser mApiUser = Values.INSTANCE.take("FragmentMe_user");
+        mApiUser = Values.INSTANCE.take("FragmentMe_user");
         if (mApiUser != null) {
             GlideExtKt.loadProfile(this, mApiUser.getPic(), binding.hHead);
             binding.editInfoName.setText(mApiUser.getUsername());
@@ -209,7 +214,7 @@ public class EditInfoActivity extends MyBaseActivity
                 }
                 return;
             }
-            Msg.INSTANCE.toast("修改成功");
+             Msg.INSTANCE.toast("修改成功");
         });
     }
 
@@ -269,9 +274,15 @@ public class EditInfoActivity extends MyBaseActivity
         FileSelector.INSTANCE.selectPic(launcher);
     }
 
-    @Override
-    public void onBrowseBigPic() {
-        Msg.INSTANCE.toast("查看大图");
+//    @Override
+//    public void onBrowseBigPic() {
+//        show_click(binding.hHead);
+//    }
+
+    public void show_click(View v){
+        Intent intent = new Intent(getApplicationContext(),ImageShower.class);
+        intent.putExtra("head",mApiUser.getPic());
+        startActivity(intent);
     }
 
     @Override

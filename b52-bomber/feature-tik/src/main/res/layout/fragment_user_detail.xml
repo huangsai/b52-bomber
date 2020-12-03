@@ -156,7 +156,7 @@
                 android:id="@+id/user_fans"
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
-                android:layout_marginStart="@dimen/size_40dp"
+                android:layout_marginStart="@dimen/size_60dp"
                 android:gravity="center"
                 android:text=""
                 android:textColor="#848388"
