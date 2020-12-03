@@ -18,7 +18,7 @@ class ChoosePicDialogFragment(private var callback: CallBack?) : BaseBottomContr
         super.onViewCreated(view, savedInstanceState)
         binding.moreDialogFirstText.text = "拍一张"
         binding.moreDialogSecondText.text = "相册选择"
-        binding.moreDialogThirdText.text = "查看大图"
+//        binding.moreDialogThirdText.text = "查看大图"
     }
 
     override fun onFirstClick() {
@@ -33,7 +33,7 @@ class ChoosePicDialogFragment(private var callback: CallBack?) : BaseBottomContr
 
     override fun onThirdClick() {
         super.onThirdClick()
-        callback?.onBrowseBigPic()
+//        callback?.onBrowseBigPic()
     }
 
     interface CallBack {
@@ -41,7 +41,7 @@ class ChoosePicDialogFragment(private var callback: CallBack?) : BaseBottomContr
 
         fun onChoosePhoto()
 
-        fun onBrowseBigPic()
+//        fun onBrowseBigPic()
     }
 
     override fun onDestroyView() {

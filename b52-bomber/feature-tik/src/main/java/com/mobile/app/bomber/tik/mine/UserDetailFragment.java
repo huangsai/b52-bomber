@@ -88,16 +88,9 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
         binding.userProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(requireActivity(), SpaceImageDetailActivity.class);
-                int[] location = new int[2];
-                binding.userProfile.getLocationOnScreen(location);
-                intent.putExtra("locationX", location[0]);//必须
-                intent.putExtra("locationY", location[1]);//必须
-                intent.putExtra("width", binding.userProfile.getWidth());//必须
-                intent.putExtra("height", binding.userProfile.getHeight());//必须
-//                intent.putExtra("image", imgPath);//必须
-//                startActivity(intent);
-//                requireActivity().overridePendingTransition(0, 0);        //去掉activity的切换动画
+                Intent intent = new Intent(getContext(),ImageShower.class);
+                intent.putExtra("head",mApiUser.getPic());
+                startActivity(intent);
             }
         });
 //        indexTitle.add("作品0");
@@ -186,6 +179,10 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
                         binding.userWechat.setText("微信号：" + apiUser.getWechat());
                     }
                     GlideExtKt.loadProfile(this, apiUser.getPic(), binding.userProfile);
+//                    File bit = new File(FileUtil.getCacheDir(getContext(), "test1").getAbsolutePath() + "/" + "aa");
+//
+//                    FileUtil.writeBitmap(bit, binding.userProfile.getDrawingCache());
+
 //                    this.imgPath = FileUtil.saveBitmapToFile(binding.userProfile.getDrawingCache(), "header");
                 } else {
                     binding.userId.setText("ID：" + 0);
@@ -237,8 +234,9 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
 
     @Override
     public void onRefresh() {
-        Bus.INSTANCE.offer(RunnerX.BUS_FRAGMENT_ME_REFRESH);
         loadData();
+//        Bus.INSTANCE.offer(RunnerX.BUS_FRAGMENT_ME_REFRESH,userId);
+
     }
 
     private static class MyAdapter extends FragmentStateAdapter {
