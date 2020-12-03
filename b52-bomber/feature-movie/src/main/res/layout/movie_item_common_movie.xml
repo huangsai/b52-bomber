@@ -32,7 +32,6 @@
         android:layout_marginTop="@dimen/size_5dp"
         android:gravity="center"
         android:text="影片描述"
-        android:visibility="gone"
         android:textColor="@color/color_text_919095"
         android:textSize="@dimen/font_10sp"
         app:layout_constraintLeft_toLeftOf="parent"

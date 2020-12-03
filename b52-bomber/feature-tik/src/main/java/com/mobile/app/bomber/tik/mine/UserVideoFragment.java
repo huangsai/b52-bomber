@@ -1,7 +1,6 @@
 package com.mobile.app.bomber.tik.mine;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,25 +11,24 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-import com.mobile.app.bomber.runner.base.PrefsManager;
-import com.mobile.ext.glide.GlideApp;
 import com.mobile.app.bomber.common.base.Msg;
 import com.mobile.app.bomber.common.base.MyBaseFragment;
 import com.mobile.app.bomber.common.base.RecyclerAdapterEmpty;
 import com.mobile.app.bomber.common.base.tool.SingleClick;
 import com.mobile.app.bomber.data.http.entities.ApiVideo;
 import com.mobile.app.bomber.data.http.entities.Pager;
-import com.mobile.guava.data.Values;
 import com.mobile.app.bomber.runner.RunnerX;
+import com.mobile.app.bomber.runner.base.PrefsManager;
 import com.mobile.app.bomber.tik.R;
 import com.mobile.app.bomber.tik.base.AppRouterUtils;
 import com.mobile.app.bomber.tik.base.GlideExtKt;
 import com.mobile.app.bomber.tik.databinding.FragmentMeVideoBinding;
 import com.mobile.app.bomber.tik.home.PlayListActivity;
 import com.mobile.app.bomber.tik.mine.items.UserVideoItem;
+import com.mobile.ext.glide.GlideApp;
 import com.mobile.guava.android.ui.view.recyclerview.EndlessRecyclerViewScrollListener;
 import com.mobile.guava.android.ui.view.recyclerview.TestedGridItemDecoration;
-import com.mobile.guava.jvm.coroutines.Bus;
+import com.mobile.guava.data.Values;
 import com.mobile.guava.jvm.domain.Source;
 import com.pacific.adapter.AdapterImageLoader;
 import com.pacific.adapter.AdapterUtils;
@@ -136,7 +134,7 @@ public class UserVideoFragment extends MyBaseFragment implements AdapterImageLoa
 
                 List<UserVideoItem> items = new ArrayList();
                 for (ApiVideo.Video video : videos) {
-                    UserVideoItem myLikeVideoItem = new UserVideoItem(video);
+                    UserVideoItem myLikeVideoItem = new UserVideoItem(video, 0);
                     items.add(myLikeVideoItem);
                 }
                 if (pager.isReachedTheEnd()) {
@@ -158,7 +156,7 @@ public class UserVideoFragment extends MyBaseFragment implements AdapterImageLoa
                 mVideos.addAll(videos);
                 List<UserVideoItem> items = new ArrayList();
                 for (ApiVideo.Video video : videos) {
-                    UserVideoItem myLikeVideoItem = new UserVideoItem(video);
+                    UserVideoItem myLikeVideoItem = new UserVideoItem(video, selfID);
                     items.add(myLikeVideoItem);
                 }
 

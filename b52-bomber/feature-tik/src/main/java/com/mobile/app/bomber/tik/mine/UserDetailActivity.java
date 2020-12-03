@@ -67,7 +67,7 @@ public class UserDetailActivity extends MyBaseActivity implements View.OnClickLi
     }
 
     public void handleFollowStatusView(boolean isUnFollow) {
-        binding.userBtnFollow.setText(isUnFollow ? "+关注" : "已关注");
+        binding.userBtnFollow.setText(isUnFollow ? "+关注" : "取消关注");
         binding.userBtnFollow.setSelected(!isUnFollow);
     }
 

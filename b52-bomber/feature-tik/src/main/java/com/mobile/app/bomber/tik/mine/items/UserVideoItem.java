@@ -16,9 +16,11 @@ public class UserVideoItem extends SimpleRecyclerItem {
 
     @NonNull
     public final ApiVideo.Video data;
+    private final long selfId;
 
-    public UserVideoItem(@NonNull ApiVideo.Video data) {
+    public UserVideoItem(@NonNull ApiVideo.Video data, long selfID) {
         this.data = data;
+        this.selfId = selfID;
     }
 
     @Override
@@ -29,6 +31,16 @@ public class UserVideoItem extends SimpleRecyclerItem {
         binding.tvLikeCount.setText(String.valueOf(data.getLikeCount()));
         binding.imgPlay.setVisibility(data.isChecking() ? View.GONE : View.VISIBLE);
         binding.videoStatus.setVisibility(data.isChecking() ? View.VISIBLE : View.GONE);
+        binding.tvPlayCount.setText((data.getPlayCount() + ""));
+        if (selfId == 2) {
+            binding.tvPlayCount.setVisibility(View.VISIBLE);
+            binding.tvLikeCount.setVisibility(View.GONE);
+            binding.ivLikeStatus.setVisibility(View.GONE);
+        } else {
+            binding.tvPlayCount.setVisibility(View.GONE);
+            binding.tvLikeCount.setVisibility(View.VISIBLE);
+            binding.ivLikeStatus.setVisibility(View.VISIBLE);
+        }
         holder.attachOnClickListener(R.id.layout_user_video_item);
     }
 

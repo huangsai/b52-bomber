@@ -57,8 +57,8 @@
 
         <Button
             android:id="@+id/user_btn_follow"
-            android:layout_width="60dp"
-            android:layout_height="25dp"
+            android:layout_width="@dimen/size_70dp"
+            android:layout_height="@dimen/size_26dp"
             android:layout_alignParentRight="true"
             android:layout_marginTop="@dimen/size_20dp"
             android:layout_marginEnd="@dimen/size_20dp"
