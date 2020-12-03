@@ -738,7 +738,7 @@ data class ApiMovie(
             @Json(name = "captions") val captions: Int,
             @Json(name = "score") val score: Int,
             @Json(name = "category") val category: String,
-            @Json(name = "desc") val desc: String,
+            @Json(name = "desc") val desc: String?,
             @Json(name = "propaganda") val propaganda: String,
             @Json(name = "name") val name: String,
             @Json(name = "cover") val cover: String,

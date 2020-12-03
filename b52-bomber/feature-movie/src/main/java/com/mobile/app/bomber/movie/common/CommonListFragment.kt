@@ -65,7 +65,7 @@ class CommonListFragment : MyBaseFragment(), AdapterImageLoader, View.OnClickLis
         label = arguments?.getString("label").toString()
         _binding = MovieFragmentCommonListBinding.inflate(inflater, container, false)
         val itemDecoration = LinearItemDecoration.builder(requireContext())
-                .color(android.R.color.transparent, R.dimen.size_24dp)
+                .color(android.R.color.transparent, R.dimen.size_12dp)
                 .build()
         binding.recycler.layoutManager = LinearLayoutManager(
                 requireContext(),

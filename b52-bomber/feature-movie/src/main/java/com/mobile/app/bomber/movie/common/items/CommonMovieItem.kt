@@ -1,6 +1,5 @@
 package com.mobile.app.bomber.movie.common.items
 
-import android.view.View
 import com.mobile.app.bomber.data.http.entities.ApiMovie
 import com.mobile.app.bomber.movie.R
 import com.mobile.app.bomber.movie.databinding.MovieItemCommonMovieBinding
@@ -14,8 +13,10 @@ class CommonMovieItem(val data: ApiMovie.Movie) : SimpleRecyclerItem() {
         holder.attachImageLoader(R.id.img_cover)
         binding.txtLabel.text = data.name
         binding.txtDesc.text = data.desc
-        if (data.desc.isNotEmpty()) {
-            binding.txtDesc.visibility = View.GONE
+        if (data.desc.isNullOrEmpty()) {
+            binding.txtDesc.text = "视频简介 暂无"
+        } else {
+            binding.txtDesc.text = data.desc
         }
     }
 
