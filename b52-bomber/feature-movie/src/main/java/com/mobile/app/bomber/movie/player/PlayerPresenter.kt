@@ -317,10 +317,11 @@ class PlayerPresenter(
         if (!markedPlayDuration) {
             markedPlayDuration = true
             player?.let {
+                val currentPosition = it.currentPosition
                 playerActivity.lifecycleScope.launch(Dispatchers.IO) {
                     model.postMoviePlayDurationRecord(
                             playerActivity.movieId.toInt(),
-                            it.currentPosition,
+                            currentPosition,
                             if (PrefsManager.isLogin()) PrefsManager.getUserId() else 0L
                     )
                 }
