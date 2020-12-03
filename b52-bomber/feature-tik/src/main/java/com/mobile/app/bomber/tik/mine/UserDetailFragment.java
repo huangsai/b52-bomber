@@ -3,27 +3,20 @@ package com.mobile.app.bomber.tik.mine;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.animation.Animator;
-import androidx.core.animation.AnimatorSet;
-import androidx.core.animation.ObjectAnimator;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
-import com.mobile.app.bomber.common.base.Msg;
 import com.mobile.app.bomber.common.base.MyBaseFragment;
 import com.mobile.app.bomber.common.base.tool.AppUtil;
-import com.mobile.app.bomber.common.base.tool.FileUtil;
 import com.mobile.app.bomber.common.base.tool.SingleClick;
 import com.mobile.app.bomber.data.http.entities.ApiUser;
 import com.mobile.app.bomber.data.http.entities.ApiUserCount;
@@ -40,7 +33,6 @@ import com.mobile.guava.jvm.domain.Source;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,6 +66,7 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
             binding.userCopyWechat.setVisibility(View.VISIBLE);
         }
     }
+
 
     @Nullable
     @Override
@@ -138,10 +131,10 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
         }
     }
 
-    private void loadViewPageData(){
+    private void loadViewPageData() {
         indexTitle.add("作品0");
         indexTitle.add("喜欢0");
-        adapter = new MyAdapter(requireActivity(),userId,selfId,this);
+        adapter = new MyAdapter(requireActivity(), userId, selfId, this);
         binding.viewPager.setAdapter(adapter);
         binding.viewPager.setOffscreenPageLimit(2);
         binding.swipeRefresh.setRefreshing(true);
@@ -149,8 +142,9 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
         tabLayoutMediator = new TabLayoutMediator(binding.layoutTab, binding.viewPager, (tab, position) -> tab.setText(indexTitle.get(position)));
         tabLayoutMediator.attach();
     }
+
     private void loadData() {
-        if (selfId ==2){
+        if (selfId == 2) {
             userId = PrefsManager.INSTANCE.getUserId();
         }
         getUserInfo();
@@ -240,6 +234,7 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
         super.onResume();
         loadData();
     }
+
     @Override
     public void onRefresh() {
         Bus.INSTANCE.offer(RunnerX.BUS_FRAGMENT_ME_REFRESH);
@@ -252,7 +247,7 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
         private long self_id;
         private UserDetailFragment mUserDetailFragment;
 
-        public MyAdapter(FragmentActivity activity,long mUserId,long selfID,UserDetailFragment userDetailFragment) {
+        public MyAdapter(FragmentActivity activity, long mUserId, long selfID, UserDetailFragment userDetailFragment) {
             super(activity);
             this.self_id = selfID;
             this.mUserId = mUserId;
@@ -265,10 +260,10 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
             Fragment frament = null;
             switch (position) {
                 case 0:
-                    frament = UserVideoFragment.newInstance(UserVideoFragment.TYPE_VIDEO, this.mUserId,this.self_id, mUserDetailFragment);
+                    frament = UserVideoFragment.newInstance(UserVideoFragment.TYPE_VIDEO, this.mUserId, this.self_id, mUserDetailFragment);
                     break;
                 case 1:
-                    frament = UserVideoFragment.newInstance(UserVideoFragment.TYPE_LIKE, this.mUserId,this.self_id, mUserDetailFragment);
+                    frament = UserVideoFragment.newInstance(UserVideoFragment.TYPE_LIKE, this.mUserId, this.self_id, mUserDetailFragment);
                     break;
             }
             return frament;
