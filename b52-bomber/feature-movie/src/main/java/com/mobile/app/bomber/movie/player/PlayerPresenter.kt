@@ -3,7 +3,6 @@ package com.mobile.app.bomber.movie.player
 import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.Point
-import android.os.Handler
 import android.view.View
 import android.widget.*
 import androidx.core.net.toUri
@@ -46,8 +45,7 @@ class PlayerPresenter(
     private val imgPreView: ImageView = binding.viewPlayer.findViewById(R.id.img_preview)
     private val previewTimeBar: PreviewTimeBar = binding.viewPlayer.findViewById(R.id.exo_progress)
     private val imgBack: ImageView = binding.viewPlayer.findViewById(R.id.img_back)
-    private var handler: Handler? = Handler()
-    private val run = Runnable {
+    private val hideControllerAction = Runnable {
         binding.viewPlayer.hideController()
     }
 
@@ -90,19 +88,19 @@ class PlayerPresenter(
     }
 
     override fun onCreate() {
-
-
         player = SimpleExoPlayer.Builder(AndroidX.myApp)
                 .setUseLazyPreparation(false)
-                .build()//ExoPlayerX.player
-        player?.repeatMode = Player.REPEAT_MODE_OFF
-        player?.addListener(this)
+                .build()
+                .also {
+                    it.repeatMode = Player.REPEAT_MODE_OFF
+                    it.addListener(this)
+                }
         binding.viewPlayer.player = player
         binding.viewPlayer.setControllerVisibilityListener {
             if (it == View.VISIBLE) {
-                handler?.postDelayed(run, 10000)
+                binding.viewPlayer.postDelayed(hideControllerAction, 10000)
             } else if (it == View.GONE) {
-                handler?.removeCallbacks(run)
+                binding.viewPlayer.removeCallbacks(hideControllerAction)
             }
         }
 
@@ -139,10 +137,12 @@ class PlayerPresenter(
     }
 
     override fun onDestroy() {
-        handler?.removeCallbacks(run)
-        player?.removeListener(this)
-        player?.stop()
-        handler = null
+        binding.viewPlayer.setControllerVisibilityListener(null)
+        binding.viewPlayer.removeCallbacks(hideControllerAction)
+        player?.let {
+            it.removeListener(this)
+            it.release()
+        }
         player = null
         previewTimeBar.removeOnScrubListener(this)
         previewTimeBar.setPreviewLoader(null)
@@ -318,9 +318,10 @@ class PlayerPresenter(
             markedPlayDuration = true
             player?.let {
                 val currentPosition = it.currentPosition
+                val movieId = playerActivity.movieId.toInt()
                 playerActivity.lifecycleScope.launch(Dispatchers.IO) {
                     model.postMoviePlayDurationRecord(
-                            playerActivity.movieId.toInt(),
+                            movieId,
                             currentPosition,
                             if (PrefsManager.isLogin()) PrefsManager.getUserId() else 0L
                     )
