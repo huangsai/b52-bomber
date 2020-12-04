@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.os.StrictMode
 import android.os.StrictMode.VmPolicy
 import android.text.TextUtils
@@ -20,6 +21,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.FutureTarget
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
 import com.google.android.exoplayer2.ExoPlaybackException
@@ -616,33 +620,23 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
                         if (TextUtils.isEmpty(shareURl) || TextUtils.isEmpty(bgUrl)) {
                             Msg.toast("暂时不能分享")
                         } else {
-                            StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
-                                    .detectDiskReads()
-                                    .detectDiskWrites()
-                                    .detectNetwork() // or .detectAll() for all detectable problems
-                                    .penaltyLog()
-                                    .build())
-                            StrictMode.setVmPolicy(VmPolicy.Builder()
-                                    .detectLeakedSqlLiteObjects()
-                                    .detectLeakedClosableObjects()
-                                    .penaltyLog()
-                                    .penaltyDeath()
-                                    .build())
+                            GlideApp.with(AndroidX.myApp).asBitmap().load(bgUrl).into(object : CustomTarget<Bitmap>() {
+                                override fun onLoadCleared(placeholder: Drawable?) {
 
-                            urlAndBitmap = HttpUtils.getNetWorkBitmap(bgUrl)
-                            if (urlAndBitmap == null) {
-                                toast("地址无效,无法分享")
-                                return@withContext
-                            }
-                            val handler = Handler()
-                            val runnable = Runnable { // TODO Auto-generated method stub
-                                val logoQR: Bitmap = QRCodeUtil.createQRCode(shareURl, 560 + 50, 580 + 70)
-                                val bitmap: Bitmap = QRCodeUtil.addTwoLogo(urlAndBitmap, logoQR)
-                                val coverFilePath = FileUtil.saveBitmapToFile(bitmap, "bg_image")
-                                val coverFile = File(coverFilePath)
-                                ShareDialogFragment.goSystemShareSheet(requireActivity(), shareURl, "点击一下 立即拥有 ", coverFile)//
-                            }
-                            handler.postDelayed(runnable, 2000)
+                                }
+
+                                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                                    if (resource == null) {
+                                        toast("地址无效,无法分享")
+                                        return
+                                    }
+                                    val logoQR: Bitmap = QRCodeUtil.createQRCode(shareURl, 560 + 50, 580 + 70)
+                                    val bitmap: Bitmap = QRCodeUtil.addTwoLogo(resource, logoQR)
+                                    val coverFilePath = FileUtil.saveBitmapToFile(bitmap, "bg_image")
+                                    val coverFile = File(coverFilePath)
+                                    ShareDialogFragment.goSystemShareSheet(requireActivity(), shareURl, "点击一下 立即拥有 ", coverFile)//
+                                }
+                            })
                         }
                     }
                     is Source.Error -> {

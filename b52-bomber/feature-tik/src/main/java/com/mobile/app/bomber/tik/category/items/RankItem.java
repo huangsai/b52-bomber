@@ -58,7 +58,7 @@ public class RankItem extends SimpleRecyclerItem {
             binding.btnFollow.setEnabled(false);
         }else {
             if (data.isFollowing()) {
-                binding.btnFollow.setText("已关注");
+                binding.btnFollow.setText("取消关注");
                 binding.btnFollow.setBackgroundResource(R.drawable.bg_ripple_gray);
             } else {
                 binding.btnFollow.setText("+关注");
@@ -93,7 +93,7 @@ public class RankItem extends SimpleRecyclerItem {
     public void bindPayloads(@NotNull AdapterViewHolder holder, @Nullable List<?> payloads) {
         ItemRankBinding binding = holder.binding(ItemRankBinding::bind);
         if (data.isFollowing()) {
-            binding.btnFollow.setText("已关注");
+            binding.btnFollow.setText("取消关注");
             binding.btnFollow.setBackgroundResource(R.drawable.bg_ripple_gray);
         } else {
             binding.btnFollow.setText("+关注");
