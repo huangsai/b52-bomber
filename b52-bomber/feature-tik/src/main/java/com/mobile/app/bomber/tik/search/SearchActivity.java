@@ -2,7 +2,9 @@ package com.mobile.app.bomber.tik.search;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -84,7 +86,23 @@ public class SearchActivity extends MyBaseActivity
         binding.swipeRefreshSearch.setRefreshing(true);
         binding.swipeRefreshSearch.setEnabled(true);
         binding.toolbar.etSearch.setOnEditorActionListener(this);
+        binding.toolbar.etSearch.addTextChangedListener(new TextWatcher() {
 
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() >= 120) {
+                    return;
+                }
+            }
+        });
         initHotSearchData();
         initSearchHistoryData();
         initSearchResultView();
@@ -174,10 +192,6 @@ public class SearchActivity extends MyBaseActivity
      */
     public void handleSearchResult(String keyword) {
         //后期把data传过去,刷新搜索结果Fragment
-        if (keyword.length()>=6) {
-            Msg.INSTANCE.toast("输入内容过多，请删减");
-            return;
-        }
         if (keyword.trim().isEmpty()) {
             hideInputKeyboard(getCurrentFocus());
             Msg.INSTANCE.toast("请输入搜索内容");

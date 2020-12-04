@@ -88,7 +88,6 @@ public class AttentionFollowFragment extends MyBaseFragment implements AdapterIm
     }
 
     private void getUserCount() {
-        if (PrefsManager.INSTANCE.isLogin()) {
             if (PrefsManager.INSTANCE.isLogin()) {
                 meViewModel.getUserCount(userId).observe(getViewLifecycleOwner(), apiUserCountSource -> {
                     if (binding.swipeRefresh.isRefreshing())
@@ -102,11 +101,11 @@ public class AttentionFollowFragment extends MyBaseFragment implements AdapterIm
                 });
             }
         }
-    }
+
 
     private void getFollowsList() {
         if (PrefsManager.INSTANCE.isLogin()) {
-            meViewModel.followList().observe(getViewLifecycleOwner(), apiFollowSource -> {
+            meViewModel.followList(userId).observe(getViewLifecycleOwner(), apiFollowSource -> {
                 if (binding.swipeRefresh.isRefreshing()) binding.swipeRefresh.setRefreshing(false);
                 if (apiFollowSource instanceof Source.Success) {
                     List<ApiFollow.Follow> follows = apiFollowSource.requireData();

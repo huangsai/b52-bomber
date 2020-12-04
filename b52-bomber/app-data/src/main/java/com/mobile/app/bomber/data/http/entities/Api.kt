@@ -645,6 +645,7 @@ data class ApiUsermsg(
             @Json(name = "msgType") val msgtype: Int,
             @Json(name = "uid") val uid: Int,
             @Json(name = "videoId") val videoid: Int,
+            @Json(name = "token") val token: String,
             @Json(name = "cover") val cover: String
     ) {
 
