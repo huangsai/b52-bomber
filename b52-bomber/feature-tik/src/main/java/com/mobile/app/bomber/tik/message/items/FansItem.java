@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import com.mobile.app.bomber.data.http.entities.ApiUsermsg;
 import com.mobile.app.bomber.tik.R;
 import com.mobile.app.bomber.tik.databinding.ItemFansBinding;
+import com.mobile.guava.jvm.date.Java8TimeKt;
 import com.pacific.adapter.AdapterViewHolder;
 import com.pacific.adapter.SimpleRecyclerItem;
 
@@ -21,11 +22,9 @@ public class FansItem extends SimpleRecyclerItem {
 
     @NonNull
     public final ApiUsermsg.Item data;
-    private final String time;
 
     public FansItem(@NonNull ApiUsermsg.Item data) {
         this.data = data;
-        this.time = new SimpleDateFormat("MM-dd").format(new Date(data.getCreatetime()));
     }
 
     @Override
@@ -40,7 +39,8 @@ public class FansItem extends SimpleRecyclerItem {
         }
 
         binding.timeTv.setVisibility(View.VISIBLE);
-        binding.timeTv.setText(time);
+        String ago = Java8TimeKt.ago(data.getCreatetime() * 1000L, System.currentTimeMillis());
+        binding.timeTv.setText(ago);
         binding.statusBtn.setText(data.getIsfollow() == 1 ? "互相关注" : "回关");
         binding.statusBtn.setSelected(data.getIsfollow() == 1);
         holder.attachImageLoader(R.id.img_profile);
