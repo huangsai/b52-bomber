@@ -130,8 +130,6 @@ public class UserVideoFragment extends MyBaseFragment implements AdapterImageLoa
         meViewModel.videosOfLike(pager, userId).observe(getViewLifecycleOwner(), listSource -> {
             if (listSource instanceof Source.Success) {
                 List<ApiVideo.Video> videos = listSource.requireData();
-                mVideos.addAll(videos);
-
                 List<UserVideoItem> items = new ArrayList();
                 for (ApiVideo.Video video : videos) {
                     UserVideoItem myLikeVideoItem = new UserVideoItem(video, 0);
@@ -139,11 +137,14 @@ public class UserVideoFragment extends MyBaseFragment implements AdapterImageLoa
                 }
                 if (pager.isReachedTheEnd()) {
                     Msg.INSTANCE.toast("已经加载完数据");
+                    System.out.println("11111");
                 }
                 if (pager.isFirstPage(2)) {
                     recyclerAdapter.replaceAll(items);
+                    mVideos  = videos;
                 } else {
                     recyclerAdapter.addAll(items);
+                    mVideos.addAll(videos);
                 }
             }
         });
@@ -153,17 +154,17 @@ public class UserVideoFragment extends MyBaseFragment implements AdapterImageLoa
         meViewModel.videosOfUser(pager, userId).observe(getViewLifecycleOwner(), listSource -> {
             if (listSource instanceof Source.Success) {
                 List<ApiVideo.Video> videos = listSource.requireData();
-                mVideos.addAll(videos);
                 List<UserVideoItem> items = new ArrayList();
                 for (ApiVideo.Video video : videos) {
                     UserVideoItem myLikeVideoItem = new UserVideoItem(video, selfID);
                     items.add(myLikeVideoItem);
                 }
-
                 if (pager.isFirstPage(2)) {
                     recyclerAdapter.replaceAll(items);
+                    mVideos  = videos;
                 } else {
                     recyclerAdapter.addAll(items);
+                    mVideos.addAll(videos);
                 }
                 if (pager.isReachedTheEnd()) {
                     Msg.INSTANCE.toast("已加载完数据");
@@ -209,7 +210,6 @@ public class UserVideoFragment extends MyBaseFragment implements AdapterImageLoa
             userId = PrefsManager.INSTANCE.getUserId();
         }
     }
-
     @Override
     public void onBusEvent(@NotNull Pair<Integer, ?> event) {
         super.onBusEvent(event);
