@@ -206,9 +206,9 @@ class UserRepository @Inject constructor(
         }
     }
 
-    suspend fun followList(): Source<List<ApiFollow.Follow>> {
+    suspend fun followList(uid: Long): Source<List<ApiFollow.Follow>> {
         val call = dataService.followList(
-                userId, token
+                uid, token
         )
         return try {
             call.execute().toSource { data ->
@@ -219,8 +219,8 @@ class UserRepository @Inject constructor(
         }
     }
 
-    suspend fun fanList(): Source<List<ApiFollow.Follow>> {
-        val call = dataService.fanList(userId, token)
+    suspend fun fanList(uid: Long): Source<List<ApiFollow.Follow>> {
+        val call = dataService.fanList(uid, token)
         return try {
             call.execute().toSource { data ->
                 data.follows.orEmpty()

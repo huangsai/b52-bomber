@@ -91,8 +91,7 @@ public class AttentionFansFragment extends MyBaseFragment implements AdapterImag
     }
 
     private void getUserCount() {
-        if (PrefsManager.INSTANCE.isLogin()) {
-            if (PrefsManager.INSTANCE.isLogin()) {
+             if (PrefsManager.INSTANCE.isLogin()) {
                 meViewModel.getUserCount(userId).observe(getViewLifecycleOwner(), apiUserCountSource -> {
                     if (binding.swipeRefresh.isRefreshing())
                         binding.swipeRefresh.setRefreshing(false);
@@ -105,11 +104,11 @@ public class AttentionFansFragment extends MyBaseFragment implements AdapterImag
                 });
             }
         }
-    }
+
 
     private void getFansList() {
         if (PrefsManager.INSTANCE.isLogin()) {
-            meViewModel.fanList().observe(getViewLifecycleOwner(), apiFansSource -> {
+            meViewModel.fanList(userId).observe(getViewLifecycleOwner(), apiFansSource -> {
                 if (binding.swipeRefresh.isRefreshing()) binding.swipeRefresh.setRefreshing(false);
                 if (apiFansSource instanceof Source.Success) {
                     List<ApiFollow.Follow> fans = apiFansSource.requireData();
