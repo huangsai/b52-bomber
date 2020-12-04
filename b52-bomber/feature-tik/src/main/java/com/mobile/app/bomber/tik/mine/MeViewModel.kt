@@ -54,13 +54,13 @@ class MeViewModel @Inject constructor() : MyBaseViewModel() {
                 .asLiveData(Dispatchers.IO)
     }
 
-    fun followList(): LiveData<Source<List<ApiFollow.Follow>>> {
-        return flow { emit(userRepository.followList()) }
+    fun followList(uid1: Long): LiveData<Source<List<ApiFollow.Follow>>> {
+        return flow { emit(userRepository.followList(uid1)) }
                 .asLiveData(Dispatchers.IO)
     }
 
-    fun fanList(): LiveData<Source<List<ApiFollow.Follow>>> {
-        return flow { emit(userRepository.fanList()) }
+    fun fanList(uid: Long): LiveData<Source<List<ApiFollow.Follow>>> {
+        return flow { emit(userRepository.fanList(uid)) }
                 .asLiveData(Dispatchers.IO)
     }
 
