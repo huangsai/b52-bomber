@@ -64,9 +64,10 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
             binding.userCopyWechat.setVisibility(View.GONE);
         } else if (event.getFirst() == RunnerX.BUS_Fragment_DTAIL) {
             binding.userCopyWechat.setVisibility(View.VISIBLE);
+        }else if (event.getFirst() == RunnerX.BUS_Login) {
+            onRefresh();
         }
     }
-
 
     @Nullable
     @Override

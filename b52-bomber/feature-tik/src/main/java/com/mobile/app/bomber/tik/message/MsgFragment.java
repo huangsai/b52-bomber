@@ -1,7 +1,6 @@
 package com.mobile.app.bomber.tik.message;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +17,7 @@ import com.mobile.app.bomber.common.base.Msg;
 import com.mobile.app.bomber.common.base.tool.SingleClick;
 import com.mobile.app.bomber.data.http.entities.ApiUsermsg;
 import com.mobile.app.bomber.data.http.entities.Pager;
+import com.mobile.app.bomber.runner.RunnerX;
 import com.mobile.app.bomber.runner.base.PrefsManager;
 import com.mobile.app.bomber.tik.R;
 import com.mobile.app.bomber.tik.base.AppRouterUtils;
@@ -37,11 +37,14 @@ import com.pacific.adapter.AdapterViewHolder;
 import com.pacific.adapter.OnDataSetChanged;
 import com.pacific.adapter.RecyclerAdapter;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import kotlin.Pair;
 import timber.log.Timber;
 
 public class MsgFragment extends TopMainFragment implements View.OnClickListener,
@@ -217,6 +220,15 @@ public class MsgFragment extends TopMainFragment implements View.OnClickListener
         fragment.setArguments(args);
         return fragment;
     }
+
+    @Override
+    public void onBusEvent(@NotNull Pair<Integer, ?> event) {
+        super.onBusEvent(event);
+        if (event.getFirst() == RunnerX.BUS_Login) {
+            onRefresh();
+        }
+    }
+
 }
 
 

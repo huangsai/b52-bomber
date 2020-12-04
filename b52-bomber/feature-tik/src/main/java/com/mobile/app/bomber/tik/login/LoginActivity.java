@@ -12,12 +12,14 @@ import com.mobile.app.bomber.common.base.MyBaseActivity;
 import com.mobile.app.bomber.common.base.tool.AppUtil;
 import com.mobile.app.bomber.common.base.tool.SingleClick;
 import com.mobile.app.bomber.data.repository.SourceExtKt;
+import com.mobile.app.bomber.runner.RunnerX;
 import com.mobile.app.bomber.runner.base.PrefsManager;
 import com.mobile.app.bomber.tik.BuildConfig;
 import com.mobile.app.bomber.tik.R;
 import com.mobile.app.bomber.tik.base.AppRouterUtils;
 import com.mobile.app.bomber.tik.base.GlideExtKt;
 import com.mobile.app.bomber.tik.databinding.ActivityLoginBinding;
+import com.mobile.guava.jvm.coroutines.Bus;
 import com.mobile.guava.jvm.domain.Source;
 
 import io.reactivex.rxjava3.disposables.Disposable;
@@ -84,6 +86,7 @@ public class LoginActivity extends MyBaseActivity implements View.OnClickListene
                     initLoginPhoneView();
                 return;
             }
+            Bus.INSTANCE.offer(RunnerX.BUS_Login);
             Msg.INSTANCE.toast("登录成功");
             finish();
             setResult(Activity.RESULT_OK);
@@ -123,6 +126,7 @@ public class LoginActivity extends MyBaseActivity implements View.OnClickListene
                 Msg.INSTANCE.handleSourceException(source.requireError());
                 return;
             }
+            Bus.INSTANCE.offer(RunnerX.BUS_Login);
             Msg.INSTANCE.toast("登录成功");
             setResult(Activity.RESULT_OK);
             finish();

@@ -32,8 +32,10 @@ public class MsgItem extends SimpleRecyclerItem {
 //        //binding.imgProfile.setImageResource(R.drawable.default_profile);
 //        binding.txtContent.setText("动漫合计，不容错过");
 //        binding.txtTime.setText("2020-08-28");
-
-        binding.txtTitle.setText((data.getFromuserinfo().get(0).getName()));
+        //有时data.getFromuserinfo()为空
+        if (data.getFromuserinfo() != null && data.getFromuserinfo().size() > 0) {
+            binding.txtTitle.setText((data.getFromuserinfo().get(0).getName()));
+        }
         switch (data.getMsgtype()) {
             case 1: {
                 binding.txtContent.setText("关注了你");

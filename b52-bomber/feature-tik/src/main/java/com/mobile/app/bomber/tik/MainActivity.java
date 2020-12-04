@@ -26,6 +26,7 @@ import com.mobile.app.bomber.data.http.entities.ApiAdMsg;
 import com.mobile.app.bomber.data.http.entities.ApiToken;
 import com.mobile.app.bomber.data.http.entities.ApiVersion;
 import com.mobile.app.bomber.data.repository.SourceExtKt;
+import com.mobile.app.bomber.runner.RunnerX;
 import com.mobile.app.bomber.runner.base.PrefsManager;
 import com.mobile.app.bomber.runner.features.FeatureRouter;
 import com.mobile.app.bomber.tik.ad.PopupAdDialogFragment;
@@ -44,6 +45,7 @@ import com.mobile.guava.android.mvvm.AndroidX;
 import com.mobile.guava.android.mvvm.RouterKt;
 import com.mobile.guava.android.ui.screen.ScreenUtilsKt;
 import com.mobile.guava.jvm.Guava;
+import com.mobile.guava.jvm.coroutines.Bus;
 import com.mobile.guava.jvm.domain.Source;
 
 import org.jetbrains.annotations.NotNull;
@@ -113,6 +115,7 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
                     RouterKt.newStartActivity(this, LoginActivity.class);
                 }
             } else {
+                Bus.INSTANCE.offer(RunnerX.BUS_Login);
             }
         });
     }

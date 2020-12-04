@@ -6,22 +6,21 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.mobile.app.bomber.common.base.tool.SingleClick;
 import com.mobile.app.bomber.data.http.entities.ApiUsermsg;
+import com.mobile.app.bomber.data.http.entities.ApiVideo;
+import com.mobile.app.bomber.tik.R;
+import com.mobile.app.bomber.tik.base.GlideExtKt;
+import com.mobile.app.bomber.tik.databinding.ItemLikeAtBinding;
+import com.mobile.app.bomber.tik.databinding.ItemLikeBinding;
+import com.mobile.app.bomber.tik.mine.UserDetailActivity;
+import com.mobile.ext.glide.GlideApp;
+import com.mobile.guava.android.ui.view.recyclerview.LinearItemDecoration;
+import com.mobile.guava.jvm.date.Java8TimeKt;
 import com.pacific.adapter.AdapterUtils;
 import com.pacific.adapter.AdapterViewHolder;
 import com.pacific.adapter.RecyclerAdapter;
 import com.pacific.adapter.SimpleRecyclerItem;
-import com.mobile.app.bomber.data.http.entities.ApiLikeList;
-import com.mobile.app.bomber.data.http.entities.ApiVideo;
-import com.mobile.guava.android.ui.view.recyclerview.LinearItemDecoration;
-
-import com.mobile.app.bomber.tik.R;
-import com.mobile.ext.glide.GlideApp;
-import com.mobile.app.bomber.tik.base.GlideExtKt;
-import com.mobile.app.bomber.common.base.tool.SingleClick;
-import com.mobile.app.bomber.tik.databinding.ItemLikeAtBinding;
-import com.mobile.app.bomber.tik.databinding.ItemLikeBinding;
-import com.mobile.app.bomber.tik.mine.UserDetailActivity;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -76,7 +75,8 @@ public class LikeItem extends SimpleRecyclerItem implements View.OnClickListener
     public void bind(@NotNull AdapterViewHolder holder) {
         binding = holder.binding(ItemLikeBinding::bind);
         binding.txtContent.setText(content);
-        binding.txtTime.setText("9-1");
+        String ago = Java8TimeKt.ago(data.getCreatetime() * 1000L, System.currentTimeMillis());
+        binding.txtTime.setText(ago);
         if (adapter.isEmpty()) {
             binding.recycler.setVisibility(View.GONE);
         } else {
