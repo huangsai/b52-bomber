@@ -2,6 +2,7 @@ package com.mobile.app.bomber.tik.message;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.mobile.app.bomber.common.base.Msg;
@@ -67,6 +68,8 @@ public class FansFragment extends BaseLikingFragment {
     }
 
     private void followed(View view) {
+        Button bt = (Button) view;
+        bt.setEnabled(false);
         AdapterViewHolder holder = AdapterUtils.INSTANCE.getHolder(view);
         ApiUsermsg.Item data = holder.<FansItem>item().data;
         final int position = holder.getBindingAdapterPosition();
@@ -78,10 +81,11 @@ public class FansFragment extends BaseLikingFragment {
                 } else {
                     data.setIsfollow(1);
                 }
-                adapter.notifyItemChanged(position, 0);
+                adapter.notifyItemChanged(position);
             } else {
                 Msg.INSTANCE.handleSourceException(source.requireError());
             }
+            bt.setEnabled(true);
         });
     }
 }

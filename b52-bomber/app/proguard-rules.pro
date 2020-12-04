@@ -39,6 +39,9 @@
 # ============================================================================================
 
 -keep public class com.mobile.app.bomber.movie.MovieFragment { *; }
+-keep public class com.mobile.app.bomber.tik.home.items.MyAtUser { *; }
+-keep public class com.mobile.app.bomber.data.http.entities.Atuids { *; }
+
 -keep class com.trinity.** { *; }
 -keep class com.tencent.mars.xlog.** { *; }
 # Required to preserve the Flurry SDK
