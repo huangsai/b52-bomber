@@ -2,6 +2,7 @@ package com.mobile.app.bomber.tik.mine;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -9,10 +10,13 @@ import android.os.StrictMode;
 import android.text.TextUtils;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.mobile.app.bomber.common.base.Msg;
 import com.mobile.app.bomber.common.base.MyBaseActivity;
 import com.mobile.app.bomber.common.base.tool.AppUtil;
@@ -30,6 +34,8 @@ import com.mobile.app.bomber.tik.home.ShareDialogFragment;
 import com.mobile.app.bomber.tik.home.UserShareDialogFragment;
 import com.mobile.app.bomber.tik.login.LoginActivity;
 import com.mobile.app.bomber.tik.login.LoginViewModel;
+import com.mobile.ext.glide.GlideApp;
+import com.mobile.guava.android.mvvm.AndroidX;
 import com.mobile.guava.android.mvvm.RouterKt;
 import com.mobile.guava.data.Values;
 import com.mobile.guava.jvm.domain.Source;
@@ -55,8 +61,6 @@ public class SettingAcivity extends MyBaseActivity implements View.OnClickListen
         binding = ActivitySettingEditinfoBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         model = AppRouterUtils.viewModels(this, LoginViewModel.class);
-//        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
-//        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectLeakedSqlLiteObjects().detectLeakedClosableObjects().penaltyLog().penaltyDeath().build());
         initView();
 
     }
@@ -141,46 +145,34 @@ public class SettingAcivity extends MyBaseActivity implements View.OnClickListen
 
     private void dialogFragmet(Integer flg, String url, String BgUrl) {
         if (flg == 1) {
-            ShareDialogFragment.goSystemShareSheet(this, url, "点击一下 立即拥有 ",null);//
+            ShareDialogFragment.goSystemShareSheet(this, url, "点击一下 立即拥有 ", null);//
         } else {
-            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-                    .detectDiskReads()
-                    .detectDiskWrites()
-                    .detectNetwork()
-                    .penaltyLog()
-                    .build());
+            GlideApp.with(AndroidX.INSTANCE.myApp()).asBitmap().load(bgUrl).into(new CustomTarget<Bitmap>() {
 
-            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
-                    .detectLeakedSqlLiteObjects()
-                    .detectLeakedClosableObjects()
-                    .penaltyDeath()
-                    .build());
-
-            Bitmap urlMap = HttpUtils.getNetWorkBitmap(BgUrl);
-            if (urlMap == null){
-                Msg.INSTANCE.toast("地址无效,无法分享");
-                return;
-            }
-
-            Handler handler = new Handler();
-            Runnable runnable = new Runnable() {
                 @Override
-                public void run() {
-
+                public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                    if (resource == null) {
+                        Msg.INSTANCE.toast("地址无效,无法分享");
+                        return;
+                    }
                     Bitmap logoQR = QRCodeUtil.createQRCode(url, 560 + 50, 580 + 70);
-                    Bitmap bitmap = QRCodeUtil.addTwoLogo(urlMap, logoQR);
+                    Bitmap bitmap = QRCodeUtil.addTwoLogo(resource, logoQR);
                     String coverFilePath = FileUtil.saveBitmapToFile(bitmap, "bg_image");
                     File coverFile = new File(coverFilePath);
                     dialogFragmetContent(2, coverFile);
                 }
-            };
-            handler.postDelayed(runnable, 2000);
+
+                @Override
+                public void onLoadCleared(@Nullable Drawable placeholder) {
+
+                }
+            });
         }
 
     }
 
     private void dialogFragmetContent(Integer flg, File coverFile) {
-        //ShareDialogFragment.goSystemShareSheet(this, shareUrl, "点击一下 立即拥有 ",coverFile);
+        ShareDialogFragment.goSystemShareSheet(this, shareUrl, "点击一下 立即拥有 ", coverFile);
 
     }
 

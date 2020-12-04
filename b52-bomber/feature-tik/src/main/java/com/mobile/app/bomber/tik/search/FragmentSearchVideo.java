@@ -22,6 +22,7 @@ import com.mobile.app.bomber.tik.R;
 import com.mobile.app.bomber.tik.base.AppRouterUtils;
 //import com.mobile.app.bomber.tik.databinding.FragmentSearchVideoBinding;
 import com.mobile.app.bomber.tik.databinding.FragmentSearchVideoBinding;
+import com.mobile.app.bomber.tik.home.PlayListActivity;
 import com.mobile.app.bomber.tik.mine.UserDetailActivity;
 import com.mobile.app.bomber.tik.search.items.SearchVideoItem;
 import com.mobile.guava.android.ui.view.recyclerview.EndlessRecyclerViewScrollListener;
@@ -70,7 +71,7 @@ public class FragmentSearchVideo extends MyBaseFragment implements SwipeRefreshL
             if (v.getId() == R.id.layout_video_item) {
                 holder = AdapterUtils.INSTANCE.getHolder(v);
                 item = holder.item();
-                UserDetailActivity.start(getActivity(), item.data.getOwner());
+                PlayListActivity.start(getActivity(), item.data.getVideoId());
             }
         });
         endless = new EndlessRecyclerViewScrollListener(

@@ -138,9 +138,10 @@
             android:textSize="@dimen/font_12sp" />
         <!--   点赞、粉丝、关注 -->
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/size_14dp"
+            android:layout_marginRight="@dimen/size_14dp"
             android:layout_marginTop="@dimen/size_10dp"
             android:orientation="horizontal">
 
@@ -148,6 +149,8 @@
                 android:id="@+id/user_like"
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
+                android:layout_weight="1"
+                android:layout_marginLeft="@dimen/size_10dp"
                 android:text=""
                 android:textColor="#848388"
                 android:textSize="@dimen/font_14sp" />
@@ -156,8 +159,9 @@
                 android:id="@+id/user_fans"
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
-                android:layout_marginStart="@dimen/size_60dp"
                 android:gravity="center"
+                android:layout_marginLeft="@dimen/size_50dp"
+                android:layout_weight="1"
                 android:text=""
                 android:textColor="#848388"
                 android:textSize="@dimen/font_14sp" />
@@ -166,7 +170,10 @@
                 android:id="@+id/user_follow"
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
-                android:layout_marginStart="@dimen/size_60dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_marginLeft="@dimen/size_50dp"
+                android:layout_marginRight="@dimen/size_10dp"
                 android:text=""
                 android:textColor="#848388"
                 android:textSize="@dimen/font_14sp" />

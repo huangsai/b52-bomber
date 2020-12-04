@@ -179,11 +179,6 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
                         binding.userWechat.setText("微信号：" + apiUser.getWechat());
                     }
                     GlideExtKt.loadProfile(this, apiUser.getPic(), binding.userProfile);
-//                    File bit = new File(FileUtil.getCacheDir(getContext(), "test1").getAbsolutePath() + "/" + "aa");
-//
-//                    FileUtil.writeBitmap(bit, binding.userProfile.getDrawingCache());
-
-//                    this.imgPath = FileUtil.saveBitmapToFile(binding.userProfile.getDrawingCache(), "header");
                 } else {
                     binding.userId.setText("ID：" + 0);
                     binding.userWechat.setText("微信号：weise00");

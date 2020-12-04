@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.os.StrictMode
 import android.os.StrictMode.VmPolicy
 import android.text.TextUtils
@@ -20,6 +21,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.FutureTarget
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
 import com.google.android.exoplayer2.ExoPlaybackException
@@ -49,7 +53,6 @@ import com.mobile.guava.android.mvvm.showDialogFragment
 import com.mobile.guava.android.ui.view.text.MySpannable
 import com.mobile.guava.data.Values
 import com.mobile.guava.data.nullSafe
-import com.mobile.guava.jvm.Guava
 import com.mobile.guava.jvm.domain.Source
 import com.mobile.guava.jvm.extension.exhaustive
 import com.mobile.guava.jvm.math.MathUtils
@@ -71,14 +74,13 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
     private var isAdVideo = false
     private lateinit var gestureDetector: GestureDetectorCompat
     private lateinit var thumbDrawable: Drawable
-    protected var mApiUser: ApiUser? = null
+    private var mApiUser: ApiUser? = null
     private var atd: Long = 0
     private var currentWindow = 0
     private var shareURl: String = ""
     private var content: String = ""
     private var bgUrl: String = ""
     private var urlAndBitmap: Bitmap? = null
-    private var logobitmap: Bitmap? = null
     private var playbackPosition: Long = 0
     private var isPlayerPlaying = false
     private var markedPlayCount = false
@@ -111,9 +113,7 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
         isAdVideo = video.adId.nullSafe() > 0
         gestureDetector = GestureDetectorCompat(requireContext(), onGestureListener)
         Timber.d("videoUrl : " + video.decodeVideoUrl())
-        if (!Guava.isDebug) {
-            GoogleExo.preload(Uri.parse(video.decodeVideoUrl()))
-        }
+        GoogleExo.preload(Uri.parse(video.decodeVideoUrl()))
     }
 
     override fun onCreateView(
@@ -391,14 +391,12 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
 
     private fun releasePlayer() {
         isPlayerPlaying = false
+        binding.viewPlayer.player = null
         player?.let {
             playbackPosition = it.currentPosition
             currentWindow = it.currentWindowIndex
             it.removeListener(this)
-            it.stop(true)
-            if (!Guava.isDebug) {
-                it.release()
-            }
+            it.release()
         }
         player = null
         binding.imgCover.visibility = View.VISIBLE
@@ -622,33 +620,23 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
                         if (TextUtils.isEmpty(shareURl) || TextUtils.isEmpty(bgUrl)) {
                             Msg.toast("暂时不能分享")
                         } else {
-                            StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
-                                    .detectDiskReads()
-                                    .detectDiskWrites()
-                                    .detectNetwork() // or .detectAll() for all detectable problems
-                                    .penaltyLog()
-                                    .build())
-                            StrictMode.setVmPolicy(VmPolicy.Builder()
-                                    .detectLeakedSqlLiteObjects()
-                                    .detectLeakedClosableObjects()
-                                    .penaltyLog()
-                                    .penaltyDeath()
-                                    .build())
+                            GlideApp.with(AndroidX.myApp).asBitmap().load(bgUrl).into(object : CustomTarget<Bitmap>() {
+                                override fun onLoadCleared(placeholder: Drawable?) {
 
-                            urlAndBitmap = HttpUtils.getNetWorkBitmap(bgUrl)
-                            if (urlAndBitmap == null) {
-                                toast("地址无效,无法分享")
-                                return@withContext
-                            }
-                            val handler = Handler()
-                            val runnable = Runnable { // TODO Auto-generated method stub
-                                val logoQR: Bitmap = QRCodeUtil.createQRCode(shareURl, 560 + 50, 580 + 70)
-                                val bitmap: Bitmap = QRCodeUtil.addTwoLogo(urlAndBitmap, logoQR)
-                                val coverFilePath = FileUtil.saveBitmapToFile(bitmap, "bg_image")
-                                val coverFile = File(coverFilePath)
-                                ShareDialogFragment.goSystemShareSheet(requireActivity(), shareURl, "点击一下 立即拥有 ", coverFile)//
-                            }
-                            handler.postDelayed(runnable, 2000)
+                                }
+
+                                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                                    if (resource == null) {
+                                        toast("地址无效,无法分享")
+                                        return
+                                    }
+                                    val logoQR: Bitmap = QRCodeUtil.createQRCode(shareURl, 560 + 50, 580 + 70)
+                                    val bitmap: Bitmap = QRCodeUtil.addTwoLogo(resource, logoQR)
+                                    val coverFilePath = FileUtil.saveBitmapToFile(bitmap, "bg_image")
+                                    val coverFile = File(coverFilePath)
+                                    ShareDialogFragment.goSystemShareSheet(requireActivity(), shareURl, "点击一下 立即拥有 ", coverFile)//
+                                }
+                            })
                         }
                     }
                     is Source.Error -> {
