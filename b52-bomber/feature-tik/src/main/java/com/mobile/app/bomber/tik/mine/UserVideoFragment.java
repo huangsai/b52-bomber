@@ -130,8 +130,6 @@ public class UserVideoFragment extends MyBaseFragment implements AdapterImageLoa
         meViewModel.videosOfLike(pager, userId).observe(getViewLifecycleOwner(), listSource -> {
             if (listSource instanceof Source.Success) {
                 List<ApiVideo.Video> videos = listSource.requireData();
-                mVideos.addAll(videos);
-
                 List<UserVideoItem> items = new ArrayList();
                 for (ApiVideo.Video video : videos) {
                     UserVideoItem myLikeVideoItem = new UserVideoItem(video, 0);
@@ -142,8 +140,10 @@ public class UserVideoFragment extends MyBaseFragment implements AdapterImageLoa
                 }
                 if (pager.isFirstPage(2)) {
                     recyclerAdapter.replaceAll(items);
+                    mVideos = videos;
                 } else {
                     recyclerAdapter.addAll(items);
+                    mVideos.addAll(videos);
                 }
             }
         });
@@ -153,17 +153,17 @@ public class UserVideoFragment extends MyBaseFragment implements AdapterImageLoa
         meViewModel.videosOfUser(pager, userId).observe(getViewLifecycleOwner(), listSource -> {
             if (listSource instanceof Source.Success) {
                 List<ApiVideo.Video> videos = listSource.requireData();
-                mVideos.addAll(videos);
                 List<UserVideoItem> items = new ArrayList();
                 for (ApiVideo.Video video : videos) {
                     UserVideoItem myLikeVideoItem = new UserVideoItem(video, selfID);
                     items.add(myLikeVideoItem);
                 }
-
                 if (pager.isFirstPage(2)) {
                     recyclerAdapter.replaceAll(items);
+                    mVideos = videos;
                 } else {
                     recyclerAdapter.addAll(items);
+                    mVideos.addAll(videos);
                 }
                 if (pager.isReachedTheEnd()) {
                     Msg.INSTANCE.toast("已加载完数据");
@@ -202,6 +202,22 @@ public class UserVideoFragment extends MyBaseFragment implements AdapterImageLoa
                 .into(imageView);
     }
 
+    private void loadData() {
+        pager.reset();
+        endlessListener.reset();
+        if (type == TYPE_VIDEO) {
+             loadUserVideoData(userId);
+            if (userDetailFragment != null) {
+                loadUserVideoDataCount(userId);
+            }
+        } else if (type == TYPE_LIKE) {
+            loadLikeVideoData(userId);
+            if (userDetailFragment != null) {
+                loadLikeVideoDataCount(userId);
+            }
+        }
+    }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -213,20 +229,9 @@ public class UserVideoFragment extends MyBaseFragment implements AdapterImageLoa
     @Override
     public void onBusEvent(@NotNull Pair<Integer, ?> event) {
         super.onBusEvent(event);
-        if (event.getFirst() == RunnerX.BUS_FRAGMENT_ME_REFRESH) {
-            pager.reset();
-            endlessListener.reset();
-            if (type == TYPE_VIDEO) {
-                loadUserVideoData(userId);
-                if (userDetailFragment != null) {
-                    loadUserVideoDataCount(userId);
-                }
-            } else if (type == TYPE_LIKE) {
-                loadLikeVideoData(userId);
-                if (userDetailFragment != null) {
-                    loadLikeVideoDataCount(userId);
-                }
-            }
+        if (event.getFirst() == RunnerX.BUS_FRAGMENT_ME_REFRESH || event.getFirst() == RunnerX.BUS_Login) {
+            onResume();
+            loadData();
         }
     }
 }

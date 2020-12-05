@@ -48,6 +48,16 @@ object PrefsManager : AppPrefsManager {
         return mmvk.encode(RunnerX.PREFS_TOKEN, token)
     }
 
+
+    override fun getRefresh(): String {
+        return mmvk.decodeString(RunnerX.BUS_FRAGMENT_ME_REFRESH_FIRST, "")
+    }
+
+    override fun setRefresh(token: String): Boolean {
+        return mmvk.encode(RunnerX.BUS_FRAGMENT_ME_REFRESH_FIRST, token)
+    }
+
+
     override fun getLoginName(): String {
         return mmvk.decodeString(RunnerX.PREFS_LOGIN_NAME, "")
     }

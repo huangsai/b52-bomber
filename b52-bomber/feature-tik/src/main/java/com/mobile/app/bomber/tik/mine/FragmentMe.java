@@ -50,9 +50,9 @@ public class FragmentMe extends MyBaseFragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
-        Bus.INSTANCE.offer(RunnerX.BUS_fragmentME);
-        Bus.INSTANCE.offer(RunnerX.BUS_FRAGMENT_ME_REFRESH);
-    }
+        PrefsManager.INSTANCE.setRefresh("100");
+     }
+
 
     @Override
     public void onViewCreated(@NotNull View view, @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {

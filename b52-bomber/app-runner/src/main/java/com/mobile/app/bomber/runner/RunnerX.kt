@@ -27,7 +27,9 @@ object RunnerX {
     const val PREFS_HTTP_ADDRESS = "httpAddress"
     const val PREFS_HTTP_ADDRESS_UPLOAD = "httpAddressUpload"
 
-    const val BUS_FRAGMENT_ME_REFRESH = 100
+    const val BUS_FRAGMENT_ME_REFRESH_FIRST = "BUS_FRAGMENT_ME_REFRESH"
+    const val BUS_FRAGMENT_ME_REFRESH = 200
+
     const val BUS_SEARCH_RESULT = 102
     const val BUS_VIDEO_UPDATE = 103
     const val BUS_CLOSE_ALL_DIALOG = 104

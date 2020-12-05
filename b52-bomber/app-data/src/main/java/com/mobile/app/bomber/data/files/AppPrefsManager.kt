@@ -12,6 +12,10 @@ interface AppPrefsManager {
 
     fun setToken(token: String): Boolean
 
+    fun getRefresh(): String
+
+    fun setRefresh(token: String): Boolean
+
     fun getLoginName(): String
 
     fun setLoginName(loginName: String): Boolean
