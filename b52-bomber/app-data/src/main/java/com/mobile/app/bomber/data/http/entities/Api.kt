@@ -545,7 +545,7 @@ data class ApipostUserMsg(
         @Json(name = "msgtype") val msgtype: Int,
         @Json(name = "timestemp") val timestemp: Int,
         @Json(name = "uid") val uid: Long,
-        @Json(name = "fastkey") val fastkey: String,
+        @Json(name = "fastkey") val fastkey: String
 )
 
 @JsonClass(generateAdapter = true)
@@ -645,7 +645,6 @@ data class ApiUsermsg(
             @Json(name = "msgType") val msgtype: Int,
             @Json(name = "uid") val uid: Int,
             @Json(name = "videoId") val videoid: Int,
-            @Json(name = "token") val token: String,
             @Json(name = "cover") val cover: String
     ) {
 
