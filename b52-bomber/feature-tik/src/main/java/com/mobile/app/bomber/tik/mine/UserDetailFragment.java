@@ -47,6 +47,7 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
     protected ApiUser mApiUser;
     private List<String> indexTitle = new ArrayList<>();
     private long userId;
+
     private static long selfId;
     private String imgPath;
 
@@ -60,13 +61,10 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
     @Override
     public void onBusEvent(@NotNull Pair<Integer, ?> event) {
         super.onBusEvent(event);
-        if (event.getFirst() == RunnerX.BUS_fragmentME) {
-            binding.userCopyWechat.setVisibility(View.GONE);
-        } else if (event.getFirst() == RunnerX.BUS_Fragment_DTAIL) {
-            binding.userCopyWechat.setVisibility(View.VISIBLE);
-        }else if (event.getFirst() == RunnerX.BUS_Login) {
-            onRefresh();
-        }
+
+//        if (event.getFirst() == RunnerX.BUS_Login) {
+//            onRefresh();
+//        }
     }
 
     @Nullable
@@ -89,8 +87,8 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
         binding.userProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(),ImageShower.class);
-                intent.putExtra("head",mApiUser.getPic());
+                Intent intent = new Intent(getContext(), ImageShower.class);
+                intent.putExtra("head", mApiUser.getPic());
                 startActivity(intent);
             }
         });
@@ -110,6 +108,9 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
     @SingleClick
     @Override
     public void onClick(View v) {
+        if (selfId == 2) {
+            userId = PrefsManager.INSTANCE.getUserId();
+        }
         int id = v.getId();
         if (id == R.id.user_copy_wechat) {
             if (mApiUser != null)
@@ -117,7 +118,9 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
         } else if (id == R.id.user_like) {
             showLikeDialog();
         } else if (id == R.id.user_fans) {
+
             if (userId == PrefsManager.INSTANCE.getUserId())
+
                 AttentionFansActivity.start(requireActivity(), AttentionFansActivity.TYPE_FANS, userId);
         } else if (id == R.id.user_follow) {
             if (userId == PrefsManager.INSTANCE.getUserId())
@@ -226,13 +229,17 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
     public void onResume() {
         super.onResume();
         loadData();
+        if (PrefsManager.INSTANCE.getRefresh().equals("100")) {
+            binding.userCopyWechat.setVisibility(View.GONE);
+        }else if(PrefsManager.INSTANCE.getRefresh().equals("101")) {
+            binding.userCopyWechat.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
     public void onRefresh() {
+        Bus.INSTANCE.offer(RunnerX.BUS_FRAGMENT_ME_REFRESH);
         loadData();
-//        Bus.INSTANCE.offer(RunnerX.BUS_FRAGMENT_ME_REFRESH,userId);
-
     }
 
     private static class MyAdapter extends FragmentStateAdapter {

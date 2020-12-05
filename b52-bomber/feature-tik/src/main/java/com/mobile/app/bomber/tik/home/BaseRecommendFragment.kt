@@ -61,7 +61,7 @@ abstract class BaseRecommendFragment : TopHomeFragment() {
                     val lastVisibleItemPosition: Int? = binding.viewPager.recyclerView.layoutManager?.itemCount
                     //说明是最后一条数据
                     if (lastVisibleItemPosition != null) {
-                        if (lastVisibleItemPosition  == binding.viewPager.adapter!!.itemCount) {
+                        if (lastVisibleItemPosition == binding.viewPager.adapter!!.itemCount) {
 //                            Msg.toast("加载更多数据")
                             refreshMoreData()
                         }
@@ -87,6 +87,7 @@ abstract class BaseRecommendFragment : TopHomeFragment() {
     }
 
     private fun refreshMoreData() {
+//        if (myAdapter.itemCount)
         if (!pager.isAvailable) return
         lifecycleScope.launch(Dispatchers.Default) {
             val source = if (isFollowingFragment) {
@@ -123,9 +124,26 @@ abstract class BaseRecommendFragment : TopHomeFragment() {
                     is Source.Success -> {
                         val data = source.requireData()
                         if (data.isNotEmpty()) {
+                            if (isFollowingFragment) {
+                                binding.viewPager.adapter = myAdapter
+                                if (pager.isFirstPage(2)) {
+                                     myAdapter.replaceAll(data)
+                                 } else {
+                                      myAdapter.addAll(data)
+                                 }
+                            }else{
+                                //if (pager.isFirstPage(2)) {
+                                binding.viewPager.adapter = myAdapter
+                                myAdapter.replaceAll(data)
+                                binding.txtEmpty.visibility = View.GONE
+                            }
 //                            if (pager.isFirstPage(2)) {
-                            binding.viewPager.adapter = myAdapter
-                            myAdapter.replaceAll(data)
+//                            binding.viewPager.adapter = myAdapter
+//                            myAdapter.replaceAll(data)
+//                            binding.txtEmpty.visibility = View.GONE
+                        } else {
+                            myAdapter.clear()
+                            binding.txtEmpty.visibility = View.VISIBLE
                         }
                     }
                     is Source.Error -> {

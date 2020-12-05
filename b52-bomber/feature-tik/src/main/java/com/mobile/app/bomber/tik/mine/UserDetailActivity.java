@@ -10,6 +10,7 @@ import com.mobile.app.bomber.common.base.Msg;
 import com.mobile.app.bomber.common.base.MyBaseActivity;
 import com.mobile.app.bomber.common.base.tool.SingleClick;
 import com.mobile.app.bomber.runner.RunnerX;
+import com.mobile.app.bomber.runner.base.PrefsManager;
 import com.mobile.app.bomber.tik.R;
 import com.mobile.app.bomber.tik.base.AppRouterUtils;
 import com.mobile.app.bomber.tik.databinding.ActivityUserDetailBinding;
@@ -34,7 +35,6 @@ public class UserDetailActivity extends MyBaseActivity implements View.OnClickLi
 
     public static void start(FragmentActivity activity, long userId) {
         Values.INSTANCE.put("UserDetailActivity_userId", userId);
-        selfID =0;
         RouterKt.newStartActivity(activity, UserDetailActivity.class);
     }
 
@@ -45,6 +45,11 @@ public class UserDetailActivity extends MyBaseActivity implements View.OnClickLi
         meViewModel = AppRouterUtils.viewModels(this, MeViewModel.class);
         setContentView(binding.getRoot());
         userId = Values.INSTANCE.take("UserDetailActivity_userId");
+        if (PrefsManager.INSTANCE.getUserId() == userId) {
+            binding.userBtnFollow.setVisibility(View.GONE);
+        } else {
+            binding.userBtnFollow.setVisibility(View.VISIBLE);
+        }
         followStatus(userId);
         UserDetailFragment userDetailFragment = UserDetailFragment.newInstance(userId, 0);
         addFragment(R.id.layout_container, userDetailFragment);
@@ -97,7 +102,7 @@ public class UserDetailActivity extends MyBaseActivity implements View.OnClickLi
     @Override
     protected void onResume() {
         super.onResume();
-        Bus.INSTANCE.offer(RunnerX.BUS_Fragment_DTAIL);
+        PrefsManager.INSTANCE.setRefresh("101");
     }
 
     @Override
