@@ -91,7 +91,7 @@ class NearbyFragment : RecyclerViewFragment(), AdapterImageLoader, View.OnClickL
         binding.recycler.adapter = null
         _binding = null
     }
-
+    //重写父类方法，加载背景图
     override fun load(imageView: ImageView, holder: AdapterViewHolder) {
         val data: ApiVideo.Video = holder.item<NearbyVideoItem>().data
         when (imageView.id) {
@@ -129,7 +129,7 @@ class NearbyFragment : RecyclerViewFragment(), AdapterImageLoader, View.OnClickL
             binding.txtEmpty.visibility = View.INVISIBLE
         }
     }
-
+   //重写load 方法。加载接口数据
     override fun load() {
         if (!pager.isAvailable) return
 
@@ -161,12 +161,12 @@ class NearbyFragment : RecyclerViewFragment(), AdapterImageLoader, View.OnClickL
             }
         }
     }
-
+    // 自动刷新
     override fun autoOnRefresh() {
         binding.layoutRefresh.isRefreshing = true
         onRefresh()
     }
-
+    //停止刷新
     override fun falseRefreshing() {
         binding.txtEmpty.postDelayed({
             binding.layoutRefresh.isRefreshing = false

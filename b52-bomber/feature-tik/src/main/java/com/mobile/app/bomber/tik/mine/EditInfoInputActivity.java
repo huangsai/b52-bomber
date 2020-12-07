@@ -25,9 +25,9 @@ import com.mobile.app.bomber.tik.databinding.ActivityEditinfoInputBinding;
 
 public class EditInfoInputActivity extends MyBaseActivity implements View.OnClickListener {
 
-    public static final int TYPE_NICK = 0;
-    public static final int TYPE_SIGN = 1;
-    public static final int TYPE_WECHAT = 2;
+    public static final int TYPE_NICK = 0; //昵称
+    public static final int TYPE_SIGN = 1;// 签名（简介）
+    public static final int TYPE_WECHAT = 2;//微信
     private int type;
 
     private MeViewModel meViewModel;
@@ -110,6 +110,7 @@ public class EditInfoInputActivity extends MyBaseActivity implements View.OnClic
         }
     }
 
+    //点击保存按钮-》调用修改接口
     private void handleSaveDone() {
         switch (type) {
             case TYPE_NICK:
@@ -139,6 +140,7 @@ public class EditInfoInputActivity extends MyBaseActivity implements View.OnClic
         }
     }
 
+    //昵称修改
     public void modifyNickname(String nickName) {
         meViewModel.updateNickname(nickName).observe(this, nopeSource -> {
             if (nopeSource instanceof Source.Success) {
@@ -154,6 +156,7 @@ public class EditInfoInputActivity extends MyBaseActivity implements View.OnClic
         });
     }
 
+    // 用户描述修改
     public void modifyUserDesption(String desc) {
         meViewModel.updateSign(desc).observe(this, nopeSource -> {
             if (nopeSource instanceof Source.Success) {
@@ -168,6 +171,7 @@ public class EditInfoInputActivity extends MyBaseActivity implements View.OnClic
         });
     }
 
+    //用户的微信id 修改
     public void modifyUserWXID(String WXID) {
         meViewModel.updateWechatID(WXID).observe(this, nopeSource -> {
             if (nopeSource instanceof Source.Success) {
@@ -195,6 +199,7 @@ public class EditInfoInputActivity extends MyBaseActivity implements View.OnClic
         hideInputKeyboard(getCurrentFocus());
         return super.onTouchEvent(event);
     }
+
     protected void hideInputKeyboard(View v) {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(v.getWindowToken(), 0);

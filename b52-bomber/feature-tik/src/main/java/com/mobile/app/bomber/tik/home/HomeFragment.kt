@@ -109,7 +109,7 @@ class HomeFragment : TopMainFragment(), View.OnClickListener, View.OnLongClickLi
         mediator.attach()
         return binding.root
     }
-
+   //弹框菜单框（分类、同城）
     private fun showPopupOptions(anchor: View) {
         balloon = Balloon.Builder(AndroidX.myApp)
                 .setLayout(R.layout.tik_home_pop_menu)
@@ -136,7 +136,7 @@ class HomeFragment : TopMainFragment(), View.OnClickListener, View.OnLongClickLi
                     show(anchor)
                 }
     }
-
+    // 请求定位权限
     private fun requestPermission() {
         PermissionRequest.request(this, 101, arrayOf(Manifest.permission.READ_PHONE_STATE, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION),
                 object : PermissionCallback {
@@ -155,7 +155,7 @@ class HomeFragment : TopMainFragment(), View.OnClickListener, View.OnLongClickLi
                     }
                 })
     }
-
+    // 请求相机权限
     private fun requestPermissionCamera() {
         PermissionRequest.request(this, 103, arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO),
                 object : PermissionCallback {
@@ -249,7 +249,7 @@ class HomeFragment : TopMainFragment(), View.OnClickListener, View.OnLongClickLi
             }
         }
     }
-
+    //处理自动服务器ip地址 切换管理
     override fun onLongClick(p0: View?): Boolean {
         val dialogFragment = HttpInputDialogFragment.newInstance(
                 object : OnDialogDismissListener {
