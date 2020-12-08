@@ -2,6 +2,7 @@ package com.mobile.app.bomber.movie.player
 
 import android.app.Activity
 import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.os.Handler
 import android.os.StrictMode
 import android.text.InputType
@@ -11,6 +12,8 @@ import android.widget.ImageView
 import androidx.activity.result.ActivityResultCallback
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.mobile.app.bomber.common.base.Msg
 import com.mobile.app.bomber.common.base.tool.*
 import com.mobile.app.bomber.movie.R
@@ -274,28 +277,48 @@ class CommentPresenter(
                         if (TextUtils.isEmpty(shareURl)) {
                             Msg.toast("暂时不能分享")
                         } else {
-                            StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
-                                    .detectDiskReads()
-                                    .detectDiskWrites()
-                                    .detectNetwork() // or .detectAll() for all detectable problems
-                                    .penaltyLog()
-                                    .build())
-                            StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder()
-                                    .detectLeakedSqlLiteObjects()
-                                    .detectLeakedClosableObjects()
-                                    .penaltyLog()
-                                    .penaltyDeath()
-                                    .build())
-                            urlAndBitmap = HttpUtils.getNetWorkBitmap(bgUrl)
-                            val handler = Handler()
-                            val runnable = Runnable { // TODO Auto-generated method stub
-                                val logoQR: Bitmap = QRCodeUtil.createQRCode(shareURl, 560 + 50, 580 + 70)
-                                val bitmap: Bitmap = QRCodeUtil.addTwoLogo(urlAndBitmap, logoQR)
-                                val coverFilePath = FileUtil.saveBitmapToFile(bitmap, "bg_image")
-                                val coverFile = File(coverFilePath)
-                                playerActivity.shareToSystem("点击一下 立即拥有", shareURl, coverFile)
-                            }
-                            handler.postDelayed(runnable, 2000)
+//                            StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
+//                                    .detectDiskReads()
+//                                    .detectDiskWrites()
+//                                    .detectNetwork() // or .detectAll() for all detectable problems
+//                                    .penaltyLog()
+//                                    .build())
+//                            StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder()
+//                                    .detectLeakedSqlLiteObjects()
+//                                    .detectLeakedClosableObjects()
+//                                    .penaltyLog()
+//                                    .penaltyDeath()
+//                                    .build())
+//                            urlAndBitmap = HttpUtils.getNetWorkBitmap(bgUrl)
+//                            val handler = Handler()
+//                            val runnable = Runnable { // TODO Auto-generated method stub
+//                                val logoQR: Bitmap = QRCodeUtil.createQRCode(shareURl, 560 + 50, 580 + 70)
+//                                val bitmap: Bitmap = QRCodeUtil.addTwoLogo(urlAndBitmap, logoQR)
+//                                val coverFilePath = FileUtil.saveBitmapToFile(bitmap, "bg_image")
+//                                val coverFile = File(coverFilePath)
+//                                playerActivity.shareToSystem("点击一下 立即拥有", shareURl, coverFile)
+//                            }
+//                            handler.postDelayed(runnable, 2000)
+
+
+                            GlideApp.with(AndroidX.myApp).asBitmap().load(bgUrl).into(object : CustomTarget<Bitmap>() {
+                                override fun onLoadCleared(placeholder: Drawable?) {
+
+                                }
+
+                                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                                    if (resource == null) {
+                                        Msg.toast("地址无效,无法分享")
+                                        return
+                                    }
+                                    val logoQR: Bitmap = QRCodeUtil.createQRCode(shareURl, 560 + 50, 580 + 70)
+                                    val bitmap: Bitmap = QRCodeUtil.addTwoLogo(resource, logoQR)
+                                    val coverFilePath = FileUtil.saveBitmapToFile(bitmap, "bg_image")
+                                    val coverFile = File(coverFilePath)
+                                    playerActivity.shareToSystem("点击一下 立即拥有", shareURl, coverFile)
+                                }
+                            })
+
                         }
                     }
                     is Source.Error -> {
