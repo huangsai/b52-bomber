@@ -89,59 +89,68 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/txt_desc" />
 
-    <TextView
-        android:id="@+id/txt_share"
-        style="@style/movie_PlayerMovieActionText"
-        android:layout_marginTop="@dimen/size_8dp"
-        android:layout_marginRight="@dimen/size_10dp"
-        android:drawableTop="@drawable/jq_fenxinag"
-        android:text="@string/movie_player_movie_share"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_desc" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_like"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/txt_desc">
 
-    <TextView
-        android:id="@+id/txt_bookmark"
-        style="@style/movie_PlayerMovieActionText"
-        android:layout_marginRight="@dimen/size_24dp"
-        android:drawableTop="@drawable/jq_shoucang"
-        android:text="@string/movie_player_movie_bookmark"
-        app:layout_constraintBottom_toBottomOf="@+id/txt_share"
-        app:layout_constraintEnd_toStartOf="@+id/img_detail_arrow" />
+        <TextView
+            android:id="@+id/txt_share"
+            style="@style/movie_PlayerMovieActionText"
+            android:layout_marginTop="@dimen/size_8dp"
+            android:layout_marginRight="@dimen/size_10dp"
+            android:drawableTop="@drawable/jq_fenxinag"
+            android:text="@string/movie_player_movie_share"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/txt_download"
-        style="@style/movie_PlayerMovieActionText"
-        android:layout_marginRight="@dimen/size_24dp"
-        android:drawableTop="@drawable/jq_xiazai"
-        android:visibility="gone"
-        android:text="@string/movie_player_movie_download"
-        app:layout_constraintBottom_toBottomOf="@+id/txt_share"
-        app:layout_constraintEnd_toStartOf="@+id/txt_bookmark" />
+        <TextView
+            android:id="@+id/txt_bookmark"
+            style="@style/movie_PlayerMovieActionText"
+            android:layout_marginRight="24dp"
+            android:drawableTop="@drawable/jq_shoucang"
+            android:text="@string/movie_player_movie_bookmark"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_share"
+            app:layout_constraintEnd_toStartOf="@+id/txt_share"
+            app:layout_constraintTop_toTopOf="@+id/txt_share" />
 
-    <TextView
-        android:id="@+id/txt_like"
-        style="@style/WrapWrap"
-        android:drawableLeft="@drawable/jq_dianzan_weixuanzhong"
-        android:drawablePadding="@dimen/size_8dp"
-        android:gravity="left|bottom"
-        android:text="@string/movie_player_movie_like"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/font_14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/txt_share"
-        app:layout_constraintStart_toStartOf="@+id/txt_title"
-        app:layout_constraintTop_toTopOf="@+id/txt_share" />
+        <TextView
+            android:id="@+id/txt_download"
+            style="@style/movie_PlayerMovieActionText"
+            android:layout_marginRight="@dimen/size_24dp"
+            android:drawableTop="@drawable/jq_xiazai"
+            android:text="@string/movie_player_movie_download"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_share"
+            app:layout_constraintEnd_toStartOf="@+id/txt_bookmark" />
 
-    <View
-        android:id="@+id/divider1"
-        android:layout_width="@dimen/size_0dp"
-        android:layout_height="@dimen/size_05dp"
-        android:layout_marginLeft="@dimen/size_10dp"
-        android:layout_marginTop="@dimen/size_10dp"
-        android:layout_marginRight="@dimen/size_10dp"
-        android:background="@color/movie_comment_hint"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_share" />
+        <TextView
+            android:id="@+id/txt_like"
+            style="@style/WrapWrap"
+            android:layout_marginStart="10dp"
+            android:drawableLeft="@drawable/jq_dianzan_weixuanzhong"
+            android:drawablePadding="@dimen/size_8dp"
+            android:gravity="left|bottom"
+            android:text="@string/movie_player_movie_like"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/font_14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_share"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/txt_share" />
+
+        <View
+            android:id="@+id/divider1"
+            android:layout_width="@dimen/size_0dp"
+            android:layout_height="@dimen/size_05dp"
+            android:layout_marginLeft="@dimen/size_10dp"
+            android:layout_marginTop="@dimen/size_10dp"
+            android:layout_marginRight="@dimen/size_10dp"
+            android:background="@color/movie_comment_hint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_share" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/txt_comment_title"
@@ -150,7 +159,7 @@
         android:text="@string/movie_player_comment_title"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="@+id/txt_title"
-        app:layout_constraintTop_toBottomOf="@+id/divider1" />
+        app:layout_constraintTop_toBottomOf="@+id/layout_like" />
 
     <TextView
         android:id="@+id/txt_comment_desc"
@@ -216,7 +225,6 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_desc"
         tools:visibility="gone" />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

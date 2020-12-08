@@ -5,6 +5,7 @@ import android.widget.ImageView
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mobile.app.bomber.common.base.Msg
+import com.mobile.app.bomber.common.base.tool.SingleClick
 import com.mobile.app.bomber.data.http.entities.ApiMovieDetailById
 import com.mobile.app.bomber.movie.R
 import com.mobile.app.bomber.movie.base.animRotate
@@ -93,6 +94,7 @@ class SourcePresenter(
         }
     }
 
+    @SingleClick
     override fun onClick(v: View) {
         when (v.id) {
             R.id.txt_desc -> {
@@ -102,6 +104,11 @@ class SourcePresenter(
                     binding.imgDetailArrow.animRotate(0f)
                 } else {
                     binding.imgDetailArrow.animRotate(180f)
+                }
+                if (binding.layoutLike.visibility == View.VISIBLE) {
+                    binding.layoutLike.visibility = View.GONE
+                } else {
+                    binding.layoutLike.visibility = View.VISIBLE
                 }
                 binding.includeMovieInfo.layoutMovieInfo.toggle()
             }

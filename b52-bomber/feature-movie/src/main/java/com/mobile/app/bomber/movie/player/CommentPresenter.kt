@@ -3,6 +3,7 @@ package com.mobile.app.bomber.movie.player
 import android.app.Activity
 import android.graphics.Bitmap
 import android.os.Handler
+import android.os.Looper
 import android.os.StrictMode
 import android.text.InputType
 import android.text.TextUtils
@@ -287,7 +288,7 @@ class CommentPresenter(
                                     .penaltyDeath()
                                     .build())
                             urlAndBitmap = HttpUtils.getNetWorkBitmap(bgUrl)
-                            val handler = Handler()
+                            val handler = Handler(Looper.getMainLooper())
                             val runnable = Runnable { // TODO Auto-generated method stub
                                 val logoQR: Bitmap = QRCodeUtil.createQRCode(shareURl, 560 + 50, 580 + 70)
                                 val bitmap: Bitmap = QRCodeUtil.addTwoLogo(urlAndBitmap, logoQR)
