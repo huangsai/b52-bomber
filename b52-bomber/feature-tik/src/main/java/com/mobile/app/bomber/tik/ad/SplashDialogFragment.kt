@@ -127,10 +127,10 @@ class SplashDialogFragment : BaseAppCompatDialogFragment(), View.OnClickListener
 
     @SingleClick
     override fun onClick(v: View?) {
-        if (Guava.isDebug) {
-            dismissAllowingStateLoss()
-            return
-        }
+//        if (Guava.isDebug) {
+//            dismissAllowingStateLoss()
+//            return
+//        }
         if (isAdFinished && v == binding.txtTimer) {
             dismissAllowingStateLoss()
             return
@@ -138,7 +138,7 @@ class SplashDialogFragment : BaseAppCompatDialogFragment(), View.OnClickListener
         if (v != binding.txtTimer) {
             chrome(ad.url)
         }
-        dismissAllowingStateLoss()
+//        dismissAllowingStateLoss()
     }
 
     companion object {
@@ -154,12 +154,12 @@ class SplashDialogFragment : BaseAppCompatDialogFragment(), View.OnClickListener
         override fun onFinish() {
             isAdFinished = true
             binding.txtTimer.setText(R.string.ad_close)
-            dismissAllowingStateLoss()
+//            dismissAllowingStateLoss()
         }
 
         override fun onTick(millisUntilFinished: Long) {
             val second = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished)
-            binding.txtTimer.text = ("跳过 " + second)
+            binding.txtTimer.text = ("" + second)
         }
     }
 }

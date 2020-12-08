@@ -34,6 +34,8 @@ public class CategoryFragment extends MyBaseFragment implements View.OnClickList
 
     private NewVideoPresenter newVideoPresenter;
     private HotVideoPresenter hotVideoPresenter;
+    private HotPlayCountPresenter hotPlayCountPresenter;
+
     private DiscoveryVideoPresenter discoveryPresenter;
     private RankPresenter rankPresenter;
     private TitleVideoPresenter titleVideoPresenter;
@@ -95,7 +97,9 @@ public class CategoryFragment extends MyBaseFragment implements View.OnClickList
         rankPresenter.onRefresh();
     }
 
-
+    /**
+     *  跳转到 搜索页面
+     */
     @SingleClick
     @Override
     public void onClick(View v) {
@@ -105,7 +109,9 @@ public class CategoryFragment extends MyBaseFragment implements View.OnClickList
             return;
         }
     }
-
+    /**
+     * 加载整个页面的数据
+     */
     private void load() {
         List<RecyclerItem> list = new ArrayList<>();
         list.add(new TitlePresenter("火爆活动", R.drawable.fl_huobaohuodong));
@@ -128,9 +134,14 @@ public class CategoryFragment extends MyBaseFragment implements View.OnClickList
         hotVideoPresenter = new HotVideoPresenter(this,binding);
         list.add(hotVideoPresenter);
 
+//        hotPlayCountPresenter = new HotPlayCountPresenter(this,binding);
+//        list.add(hotPlayCountPresenter);
+
         adapter.addAll(list);
     }
-
+    /**
+     * 初始化 分类页面 （fragment）
+     */
     public static CategoryFragment newInstance(int position) {
         Bundle args = new Bundle();
         args.putInt("position", position);

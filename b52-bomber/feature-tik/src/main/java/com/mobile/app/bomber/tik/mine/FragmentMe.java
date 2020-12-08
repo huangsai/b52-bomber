@@ -46,7 +46,9 @@ public class FragmentMe extends MyBaseFragment implements View.OnClickListener {
         addFragment(R.id.layout_container, userDetailFragment);
         return binding.getRoot();
     }
-
+    /**
+     * 设置tag值来决定是否隐藏复制按钮 （100代表个人中心，101代表从首页进入作者主页）
+     */
     @Override
     public void onResume() {
         super.onResume();
