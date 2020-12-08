@@ -34,7 +34,6 @@ public class CategoryFragment extends MyBaseFragment implements View.OnClickList
 
     private NewVideoPresenter newVideoPresenter;
     private HotVideoPresenter hotVideoPresenter;
-    private HotPlayCountPresenter hotPlayCountPresenter;
 
     private DiscoveryVideoPresenter discoveryPresenter;
     private RankPresenter rankPresenter;

@@ -53,7 +53,11 @@ class SearchActivity : MyBaseActivity(), TextWatcher, View.OnClickListener, OnEd
         binding.etSearch.setOnClickListener(this)
 
         adapter.onClickListener = this
-        binding.recycler.layoutManager = LinearLayoutManager(this)
+        binding.recycler.layoutManager = object : LinearLayoutManager(this, VERTICAL, false) {
+            override fun canScrollVertically(): Boolean {
+                return false
+            }
+        }
         binding.recycler.adapter = adapter
 
         mainItems = ArrayList()
