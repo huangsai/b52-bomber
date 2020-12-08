@@ -293,7 +293,6 @@ class CommentPresenter(
                                     val coverFilePath = FileUtil.saveBitmapToFile(bitmap, "bg_image")
                                     val coverFile = File(coverFilePath)
                                     playerActivity.shareToSystem("点击一下 立即拥有", shareURl, coverFile)
-                                    Msg.toast("暂时不能分享")
                                 }
                             })
                         }
