@@ -9,13 +9,11 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.mobile.app.bomber.common.base.Msg
 import com.mobile.app.bomber.common.base.MyBaseActivity
 import com.mobile.app.bomber.common.base.tool.SingleClick
-import com.mobile.app.bomber.data.repository.sourceException403
 import com.mobile.app.bomber.movie.MovieViewModel
 import com.mobile.app.bomber.movie.MovieX
 import com.mobile.app.bomber.movie.R
 import com.mobile.app.bomber.movie.databinding.MovieActivityTopLikeBinding
 import com.mobile.app.bomber.movie.top.TopTitlePresenter
-import com.mobile.app.bomber.movie.top.items.TopMovieHorItem
 import com.mobile.app.bomber.runner.base.PrefsManager
 import com.mobile.guava.android.ui.view.recyclerview.cancelRefreshing
 import com.mobile.guava.jvm.domain.Source

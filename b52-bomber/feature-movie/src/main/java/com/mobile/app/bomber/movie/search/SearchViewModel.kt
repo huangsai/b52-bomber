@@ -37,11 +37,11 @@ class SearchViewModel @Inject constructor() : MyBaseViewModel() {
         return movieSearchRepository.getKeys()
     }
 
-    @WorkerThread
-    suspend fun getKey(key: String): DbMovieSearchKey? {
-        ensureWorkThread()
-        return movieSearchRepository.getKey(key)
-    }
+//    @WorkerThread
+//    suspend fun getKey(key: String): DbMovieSearchKey? {
+//        ensureWorkThread()
+//        return movieSearchRepository.getKey(key)
+//    }
 
     @WorkerThread
     suspend fun addKey(key: String): DbMovieSearchKey {
@@ -55,9 +55,9 @@ class SearchViewModel @Inject constructor() : MyBaseViewModel() {
         return movieSearchRepository.clearKeys()
     }
 
-    @WorkerThread
-    fun deleteKey(obj: DbMovieSearchKey): Int {
-        ensureWorkThread()
-        return movieSearchRepository.deleteKey(obj)
-    }
+//    @WorkerThread
+//    fun deleteKey(obj: DbMovieSearchKey): Int {
+//        ensureWorkThread()
+//        return movieSearchRepository.deleteKey(obj)
+//    }
 }

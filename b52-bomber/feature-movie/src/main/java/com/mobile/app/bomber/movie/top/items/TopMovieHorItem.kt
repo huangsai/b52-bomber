@@ -1,6 +1,5 @@
 package com.mobile.app.bomber.movie.top.items
 
-import com.mobile.app.bomber.data.http.entities.ApiMovie
 import com.mobile.app.bomber.data.http.entities.ApiMovieHistory
 import com.mobile.app.bomber.movie.R
 import com.mobile.app.bomber.movie.databinding.MovieItemTopHorBinding

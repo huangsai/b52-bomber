@@ -18,12 +18,12 @@ class HistoryFriendPresenter(context: Context) : BaseMoviePresenter(context, tru
     override fun load() {
     }
 
-    override fun load(imageView: ImageView, holder: AdapterViewHolder) {
+    override fun load(view: ImageView, holder: AdapterViewHolder) {
         GlideApp.with(context)
                 .load("")
                 .placeholder(R.drawable.movie_default_cover)
                 .transition(DrawableTransitionOptions.withCrossFade())
-                .into(imageView)
+                .into(view)
     }
 
     override fun onRefresh() {

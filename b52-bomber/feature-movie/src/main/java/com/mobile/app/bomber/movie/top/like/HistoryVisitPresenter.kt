@@ -44,13 +44,13 @@ class HistoryVisitPresenter(
         }
     }
 
-    override fun load(imageView: ImageView, holder: AdapterViewHolder) {
-        val data = AdapterUtils.getHolder(imageView).item<TopMovieHorItem>().data
+    override fun load(view: ImageView, holder: AdapterViewHolder) {
+        val data = AdapterUtils.getHolder(view).item<TopMovieHorItem>().data
         GlideApp.with(context)
                 .load(data.cover)
                 .placeholder(R.drawable.movie_default_cover)
                 .transition(DrawableTransitionOptions.withCrossFade())
-                .into(imageView)
+                .into(view)
     }
 
     override fun onRefresh() {

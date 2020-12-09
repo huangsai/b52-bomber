@@ -8,7 +8,6 @@ import com.mobile.app.bomber.common.base.Msg
 import com.mobile.app.bomber.movie.MovieViewModel
 import com.mobile.app.bomber.movie.R
 import com.mobile.app.bomber.movie.player.PlayerActivity
-import com.mobile.app.bomber.movie.top.items.TopMovieHorItem
 import com.mobile.app.bomber.movie.top.items.TopMovieLikeItem
 import com.mobile.ext.glide.GlideApp
 import com.mobile.guava.jvm.domain.Source
@@ -45,13 +44,13 @@ class TopListLikePresenter(
         }
     }
 
-    override fun load(imageView: ImageView, holder: AdapterViewHolder) {
-        val data = AdapterUtils.getHolder(imageView).item<TopMovieLikeItem>().data
+    override fun load(view: ImageView, holder: AdapterViewHolder) {
+        val data = AdapterUtils.getHolder(view).item<TopMovieLikeItem>().data
         GlideApp.with(context)
                 .load(data.cover)
                 .placeholder(R.drawable.movie_default_cover)
                 .transition(DrawableTransitionOptions.withCrossFade())
-                .into(imageView)
+                .into(view)
     }
 
     override fun onRefresh() {

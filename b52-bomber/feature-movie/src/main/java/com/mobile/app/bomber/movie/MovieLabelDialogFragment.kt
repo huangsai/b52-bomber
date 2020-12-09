@@ -7,12 +7,9 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.TextView
 import com.mobile.app.bomber.common.base.tool.SingleClick
-import com.mobile.app.bomber.movie.base.views.MiddleGridItemDecoration
 import com.mobile.app.bomber.movie.databinding.MovieDialogLabelBinding
 import com.mobile.guava.android.mvvm.BaseAppCompatDialogFragment
 import com.mobile.guava.data.Values
-import com.pacific.adapter.AdapterUtils
-import com.pacific.adapter.RecyclerAdapter
 
 class MovieLabelDialogFragment : BaseAppCompatDialogFragment(), View.OnClickListener {
 
@@ -27,7 +24,6 @@ class MovieLabelDialogFragment : BaseAppCompatDialogFragment(), View.OnClickList
     private val binding: MovieDialogLabelBinding get() = _binding!!
 
     private var labels: ArrayList<String>? = null
-    private val adapter = RecyclerAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +44,7 @@ class MovieLabelDialogFragment : BaseAppCompatDialogFragment(), View.OnClickList
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-       // val items = ArrayList<MovieLabelItem>()
+        // val items = ArrayList<MovieLabelItem>()
 //        if (labels != null) {
 //            for (label: String in labels!!) {
 //                items.add(MovieLabelItem(label))
@@ -82,19 +78,19 @@ class MovieLabelDialogFragment : BaseAppCompatDialogFragment(), View.OnClickList
         )
     }
 
-    private fun initRecycler() {
-        val itemDecoration = MiddleGridItemDecoration(requireContext(), R.dimen.size_6dp)
-//        binding.recycler.layoutManager = GridLayoutManager(requireContext(), 5)
-//        binding.recycler.addItemDecoration(itemDecoration)
-//        adapter.onClickListener = this
-//        binding.recycler.adapter = adapter
-    }
+//    private fun initRecycler() {
+//        val itemDecoration = MiddleGridItemDecoration(requireContext(), R.dimen.size_6dp)
+////        binding.recycler.layoutManager = GridLayoutManager(requireContext(), 5)
+////        binding.recycler.addItemDecoration(itemDecoration)
+////        adapter.onClickListener = this
+////        binding.recycler.adapter = adapter
+//    }
 
     @SingleClick
     override fun onClick(v: View?) {
         if (v!!.id == R.id.item_label_text) {
-            val pos = AdapterUtils.getHolder(v).bindingAdapterPosition
-            val movieFragment: MovieFragment = requireParentFragment() as MovieFragment
+//            val pos = AdapterUtils.getHolder(v).bindingAdapterPosition
+//            val movieFragment: MovieFragment = requireParentFragment() as MovieFragment
 //            movieFragment.selectTab(pos)
         } else {
             dismissAllowingStateLoss()

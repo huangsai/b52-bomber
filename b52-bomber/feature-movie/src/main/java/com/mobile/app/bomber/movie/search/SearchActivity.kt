@@ -30,7 +30,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
-
+/**
+ * 剧情搜索结果页面
+ */
 class SearchActivity : MyBaseActivity(), TextWatcher, View.OnClickListener, OnEditorActionListener, View.OnTouchListener {
     private lateinit var binding: MovieActivitySearchBinding
     val model: SearchViewModel by viewModels { MovieX.component.viewModelFactory() }

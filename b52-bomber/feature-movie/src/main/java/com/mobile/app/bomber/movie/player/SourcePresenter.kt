@@ -16,7 +16,6 @@ import com.mobile.guava.android.mvvm.AndroidX
 import com.mobile.guava.android.ui.view.expandable.ExpandableLayout2
 import com.mobile.guava.jvm.domain.Source
 import com.mobile.guava.jvm.extension.exhaustive
-import com.pacific.adapter.AdapterUtils.getHolder
 import com.pacific.adapter.AdapterViewHolder
 import com.pacific.adapter.RecyclerAdapter
 import kotlinx.coroutines.Dispatchers
@@ -61,12 +60,12 @@ class SourcePresenter(
                     is Source.Success -> {
                         dataDetail = source.requireData()
                         detail = dataDetail!!.detail
-                        var nameArray = listOf<String>()
-                        var desc = detail!!.desc
-                        var listArray = dataDetail!!.detail.performer
-                        var nameList = nameArray.toMutableList()
-                        val items: ArrayList<ActorItem> = ArrayList<ActorItem>()
-                        if (listArray!!.isNullOrEmpty() || listArray!!.size < 1) {
+                        val nameArray = listOf<String>()
+                        val desc = detail!!.desc
+                        val listArray = dataDetail!!.detail.performer
+                        val nameList = nameArray.toMutableList()
+                        val items: ArrayList<ActorItem> = ArrayList()
+                        if (listArray!!.isNullOrEmpty() || listArray.isEmpty()) {
                             //Msg.toast("暂无数据")
                             binding.includeMovieInfo.txtEmpty.NoData.visibility = View.VISIBLE
                             binding.includeMovieInfo.txtDetail.visibility = View.GONE
@@ -77,8 +76,8 @@ class SourcePresenter(
                             binding.includeMovieInfo.txtEmpty.NoData.visibility = View.GONE
                             binding.includeMovieInfo.txtDetail.visibility = View.VISIBLE
                             binding.includeMovieInfo.txtLabel.visibility = View.VISIBLE
-                            var former: ApiMovieDetailById.Performer = listArray[i]
-                            var actorItem = ActorItem()
+                            val former: ApiMovieDetailById.Performer = listArray[i]
+                            val actorItem = ActorItem()
                             actorItem.getData(former)
                             nameList.add(former.name)
                             binding.includeMovieInfo.txtDetail.text = desc
@@ -113,8 +112,8 @@ class SourcePresenter(
                 binding.includeMovieInfo.layoutMovieInfo.toggle()
             }
             R.id.img_profile -> {
-                var holder = getHolder(v)
-                var item = holder.item<ActorItem>()
+//                val holder = getHolder(v)
+//                var item = holder.item<ActorItem>()
 //                Msg.toast("点击了   " + item.data!!.id)
             }
         }

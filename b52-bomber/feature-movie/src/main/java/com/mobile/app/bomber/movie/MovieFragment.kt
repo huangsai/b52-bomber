@@ -26,7 +26,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-
+/**
+ * 剧情页面
+ */
 class MovieFragment : MyBaseFragment(), ApiMovieFragment, View.OnClickListener, TabLayout.OnTabSelectedListener {
 
     private var isFisrtGetLabel = true
@@ -162,7 +164,7 @@ class MovieFragment : MyBaseFragment(), ApiMovieFragment, View.OnClickListener, 
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, selectedSize)
         textView.text = tab?.text
 
-        textView.setTextColor(getResources().getColor(R.color.color_text_ffcc00));
+        textView.setTextColor(getResources().getColor(R.color.color_text_ffcc00))
         tab?.customView = textView
     }
 

@@ -84,7 +84,7 @@ class TopListFragment : MyBaseFragment(), View.OnClickListener, SwipeRefreshLayo
             withContext(Dispatchers.Main) {
                 when (source) {
                     is Source.Success -> {
-                        var listData = source.requireData()
+                        val listData = source.requireData()
                         if (listData.isEmpty() || listData.size < 1) {
                             list.remove(bannerPresenter)
                             adapter.remove(bannerPresenter)
@@ -113,7 +113,7 @@ class TopListFragment : MyBaseFragment(), View.OnClickListener, SwipeRefreshLayo
         when (v.id) {
             R.id.item_title -> {
                 val pos = AdapterUtils.getHolder(v).bindingAdapterPosition
-                var presenter: TopTitlePresenter = adapter.get<RecyclerItem>(pos) as TopTitlePresenter
+                val presenter: TopTitlePresenter = adapter.get<RecyclerItem>(pos) as TopTitlePresenter
                 when {
                     presenter.name.contains("最近更新") -> {
                         newStartActivity(TopLastupdateActivity::class.java)

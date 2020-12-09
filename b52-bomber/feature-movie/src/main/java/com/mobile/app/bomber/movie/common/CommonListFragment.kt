@@ -5,13 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.google.android.material.tabs.TabLayout
 import com.mobile.app.bomber.common.base.Msg.handleSourceException
 import com.mobile.app.bomber.common.base.MyBaseFragment
 import com.mobile.app.bomber.common.base.RecyclerAdapterEmpty
@@ -74,7 +72,7 @@ class CommonListFragment : MyBaseFragment(), AdapterImageLoader, View.OnClickLis
                 .also {
                     endless = EndlessRecyclerViewScrollListener(it) { _, _ ->
                         if (pager.isAvailable) {
-                            load(false)
+                            load()
                         }
                     }
                     binding.recycler.addOnScrollListener(endless)
@@ -91,11 +89,11 @@ class CommonListFragment : MyBaseFragment(), AdapterImageLoader, View.OnClickLis
     override fun onResume() {
         super.onResume()
         if (onResumeCount == 1) {
-            load(true)
+            load()
         }
     }
 
-    private fun load(isFirstLoad: Boolean) {
+    private fun load() {
         if (!pager.isAvailable) return
         lifecycleScope.launch(Dispatchers.IO) {
             val source = model.getMovieListByLabel(pager, label)
@@ -115,20 +113,20 @@ class CommonListFragment : MyBaseFragment(), AdapterImageLoader, View.OnClickLis
         }
     }
 
-    override fun load(imageView: ImageView, holder: AdapterViewHolder) {
-        val data = AdapterUtils.getHolder(imageView).item<CommonMovieItem>().data
+    override fun load(view: ImageView, holder: AdapterViewHolder) {
+        val data = AdapterUtils.getHolder(view).item<CommonMovieItem>().data
         GlideApp.with(requireContext())
                 .load(data.cover)
                 .placeholder(R.drawable.movie_default_cover)
                 .transition(DrawableTransitionOptions.withCrossFade())
-                .into(imageView)
+                .into(view)
     }
 
     override fun onRefresh() {
         binding.swipeRefresh.cancelRefreshing(1000)
         pager.reset()
         endless.reset()
-        load(false)
+        load()
     }
 
     override fun onClick(v: View) {
