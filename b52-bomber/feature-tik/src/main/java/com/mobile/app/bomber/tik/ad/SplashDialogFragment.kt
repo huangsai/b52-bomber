@@ -25,7 +25,6 @@ import com.mobile.ext.glide.GlideApp
 import com.mobile.guava.android.mvvm.BaseAppCompatDialogFragment
 import com.mobile.guava.android.ui.screen.screen
 import com.mobile.guava.data.Values
-import com.mobile.guava.jvm.Guava
 import java.util.concurrent.TimeUnit
 
 class SplashDialogFragment : BaseAppCompatDialogFragment(), View.OnClickListener,
@@ -60,24 +59,23 @@ class SplashDialogFragment : BaseAppCompatDialogFragment(), View.OnClickListener
         ImmersionBar.with(this).init()
         val a = screen
         val result = a.x / a.y
-        var imgeUrl: String = ""
+        var imgeUrl = ""
         if (ad.image.eighteen.isNotEmpty()) { // 9:18分辨率
             imgeUrl = ad.image.eighteen
         } else if (ad.image.twentyone.isNotEmpty()) { //9:21分辨率
-            imgeUrl = ad.image.twentyone;
+            imgeUrl = ad.image.twentyone
         } else if (ad.image.sixteen.isNotEmpty()) {
-            imgeUrl = ad.image.sixteen;
+            imgeUrl = ad.image.sixteen
         }
         if ((!ad.image.eighteen.isNullOrEmpty() && !ad.image.twentyone.isNullOrEmpty()) ||
                 !ad.image.eighteen.isNullOrEmpty() && !ad.image.sixteen.isNullOrEmpty() ||
-                !ad.image.twentyone.isNullOrEmpty() && !ad.image.sixteen.isNullOrEmpty())
-        {
+                !ad.image.twentyone.isNullOrEmpty() && !ad.image.sixteen.isNullOrEmpty()) {
             if (result == 9 / 18) { // 9:18分辨率
                 imgeUrl = ad.image.eighteen
             } else if (result == 9 / 21) { //9:21分辨率
-                imgeUrl = ad.image.twentyone;
+                imgeUrl = ad.image.twentyone
             } else {
-                imgeUrl = ad.image.sixteen;
+                imgeUrl = ad.image.sixteen
             }
         }
 

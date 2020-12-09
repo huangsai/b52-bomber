@@ -60,13 +60,13 @@ class VideoLocalListActivity : MyBaseActivity(), AdapterImageLoader, View.OnClic
         }
     }
 
-    override fun load(imageView: ImageView, holder: AdapterViewHolder) {
+    override fun load(view: ImageView, holder: AdapterViewHolder) {
         val path = holder.item<VideoLocalItem>().data.path
         GlideApp.with(this)
                 .load(path)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .thumbnail(0.25f)
-                .into(imageView)
+                .into(view)
     }
 
     @SingleClick

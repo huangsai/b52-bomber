@@ -108,24 +108,24 @@ class CommentDialogFragment : BaseBottomSheetDialogFragment(), View.OnClickListe
             1
         }
         lifecycleScope.launch(Dispatchers.IO) {
-            val source = model.comments(if (type == 0) video.videoId else video.adId!!,type.toLong())
+            val source = model.comments(if (type == 0) video.videoId else video.adId!!, type.toLong())
             val list = ArrayList<SimpleRecyclerItem>()
 
             var childIndex: Int
             commentCount = 0
             source.dataOrNull().orEmpty().forEach { o ->
-                list.add(CommentItem.TypeA(o,video))
+                list.add(CommentItem.TypeA(o, video))
                 commentCount++
                 childIndex = 0
                 o.recursiveChildren(o).forEach { oo ->
                     when {
                         childIndex < CommentItem.SLOT_COUNT -> {
-                            list.add(CommentItem.TypeB(oo,video))
+                            list.add(CommentItem.TypeB(oo, video))
                             commentCount++
                             childIndex++
                         }
                         childIndex == CommentItem.SLOT_COUNT -> {
-                            list.add(CommentItem.TypeC(o,video))
+                            list.add(CommentItem.TypeC(o, video))
                             childIndex++
                         }
                     }
@@ -166,7 +166,7 @@ class CommentDialogFragment : BaseBottomSheetDialogFragment(), View.OnClickListe
             R.id.item_comment_c -> {
                 val holder = AdapterUtils.getHolder(v)
                 val typeC = holder.item<CommentItem.TypeC>()
-                val next = typeC.next().map { CommentItem.TypeB(it,video) }
+                val next = typeC.next().map { CommentItem.TypeB(it, video) }
                 val ppp = holder.bindingAdapterPosition
                 if (next.isEmpty()) {
                     adapter.removeAll(adapter.getAll().subList(ppp - typeC.size(), ppp))
@@ -231,9 +231,9 @@ class CommentDialogFragment : BaseBottomSheetDialogFragment(), View.OnClickListe
         return true
     }
 
-    override fun load(imageView: ImageView, holder: AdapterViewHolder) {
+    override fun load(view: ImageView, holder: AdapterViewHolder) {
         val item = holder.item<CommentItem>()
-        loadProfile(item.data.pic, imageView)
+        loadProfile(item.data.pic, view)
     }
 
     private fun showCommentInput(action: Int) {
@@ -252,7 +252,7 @@ class CommentDialogFragment : BaseBottomSheetDialogFragment(), View.OnClickListe
     fun onCreateComment(newComment: ApiComment.Comment) {
         if (commentItem == null) {
             if (adapter.itemCount > 0) {
-                adapter.add(0, CommentItem.TypeA(newComment,video))
+                adapter.add(0, CommentItem.TypeA(newComment, video))
             } else {
                 adapter.add(CommentItem.TypeA(newComment, video))
             }
@@ -261,9 +261,9 @@ class CommentDialogFragment : BaseBottomSheetDialogFragment(), View.OnClickListe
         } else {
             val index = adapter.indexOf(commentItem!!)
             if (adapter.itemCount == index + 1) {
-                adapter.add(CommentItem.TypeB(newComment,video))
+                adapter.add(CommentItem.TypeB(newComment, video))
             } else {
-                adapter.add(index + 1, CommentItem.TypeB(newComment,video))
+                adapter.add(index + 1, CommentItem.TypeB(newComment, video))
             }
             binding.recycler.keepItemViewVisible(index + 1, true)
         }
@@ -293,7 +293,7 @@ class CommentDialogFragment : BaseBottomSheetDialogFragment(), View.OnClickListe
             1
         }
         lifecycleScope.launch(Dispatchers.IO) {
-            val source = model.likeComment(item.data,type.toLong())
+            val source = model.likeComment(item.data, type.toLong())
             withContext(Dispatchers.Main) {
                 when (source) {
                     is Source.Success -> {

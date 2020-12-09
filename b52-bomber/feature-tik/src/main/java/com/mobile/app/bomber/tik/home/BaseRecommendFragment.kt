@@ -6,9 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.snackbar.Snackbar
 import com.mobile.app.bomber.common.base.Msg
 import com.mobile.app.bomber.common.base.adapter.BaseFragmentStateAdapter
 import com.mobile.app.bomber.common.base.tool.SingleClick
@@ -127,11 +125,11 @@ abstract class BaseRecommendFragment : TopHomeFragment() {
                             if (isFollowingFragment) {
                                 binding.viewPager.adapter = myAdapter
                                 if (pager.isFirstPage(2)) {
-                                     myAdapter.replaceAll(data)
-                                 } else {
-                                      myAdapter.addAll(data)
-                                 }
-                            }else{
+                                    myAdapter.replaceAll(data)
+                                } else {
+                                    myAdapter.addAll(data)
+                                }
+                            } else {
                                 //if (pager.isFirstPage(2)) {
                                 binding.viewPager.adapter = myAdapter
                                 myAdapter.replaceAll(data)
@@ -149,7 +147,7 @@ abstract class BaseRecommendFragment : TopHomeFragment() {
                     is Source.Error -> {
                         if (isFollowingFragment) {
                             if (source.requireError().is403()) {
-                                newStartActivity(LoginActivity::class.java);
+                                newStartActivity(LoginActivity::class.java)
                             } else {
                                 Msg.toast("加载关注数据失败")
                             }

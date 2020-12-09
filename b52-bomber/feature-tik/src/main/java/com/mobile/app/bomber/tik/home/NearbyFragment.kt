@@ -92,19 +92,19 @@ class NearbyFragment : RecyclerViewFragment(), AdapterImageLoader, View.OnClickL
         _binding = null
     }
     //重写父类方法，加载背景图
-    override fun load(imageView: ImageView, holder: AdapterViewHolder) {
+    override fun load(view: ImageView, holder: AdapterViewHolder) {
         val data: ApiVideo.Video = holder.item<NearbyVideoItem>().data
-        when (imageView.id) {
+        when (view.id) {
             R.id.img_cover -> {
                 GlideApp.with(this)
                         .load(decodeImgUrl(data.coverImageUrl))
                         .placeholder(R.drawable.nearby_absent)
                         .transition(DrawableTransitionOptions.withCrossFade())
                         .thumbnail(0.25f)
-                        .into(imageView)
+                        .into(view)
             }
             R.id.img_profile -> {
-                this.loadProfile(data.profile, imageView)
+                this.loadProfile(data.profile, view)
             }
         }
     }

@@ -1,14 +1,10 @@
 package com.mobile.app.bomber.tik.home
 
 import androidx.annotation.WorkerThread
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.asLiveData
+import com.mobile.app.bomber.common.base.MyBaseViewModel
 import com.mobile.app.bomber.data.http.entities.*
 import com.mobile.guava.android.ensureWorkThread
 import com.mobile.guava.jvm.domain.Source
-import com.mobile.app.bomber.common.base.MyBaseViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class HomeViewModel @Inject constructor() : MyBaseViewModel() {
@@ -21,12 +17,6 @@ class HomeViewModel @Inject constructor() : MyBaseViewModel() {
     ): Source<List<ApiVideo.Video>> {
         ensureWorkThread()
         return videoRepository.videosOfNearby(pager, latitude, longitude)
-    }
-
-    @WorkerThread
-    suspend fun videosOfNew(pager: Pager): Source<List<ApiVideo.Video>> {
-        ensureWorkThread()
-        return videoRepository.videosOfNew(pager)
     }
 
     @WorkerThread
@@ -54,9 +44,9 @@ class HomeViewModel @Inject constructor() : MyBaseViewModel() {
     }
 
     @WorkerThread
-    suspend fun likeComment(comment: ApiComment.Comment,type:Long): Source<Nope> {
+    suspend fun likeComment(comment: ApiComment.Comment, type: Long): Source<Nope> {
         ensureWorkThread()
-        return commentRepository.likeComment(comment,type)
+        return commentRepository.likeComment(comment, type)
     }
 
     @WorkerThread
@@ -64,13 +54,13 @@ class HomeViewModel @Inject constructor() : MyBaseViewModel() {
             videoId: Long, content: String, toCommendId: Long, toUserId: Long, at: String, type: Long
     ): Source<ApiCreateComment> {
         ensureWorkThread()
-        return commentRepository.createComment(videoId, content, toCommendId, toUserId, at,type)
+        return commentRepository.createComment(videoId, content, toCommendId, toUserId, at, type)
     }
 
     @WorkerThread
-    suspend fun comments(videoId: Long,type: Long): Source<List<ApiComment.Comment>> {
+    suspend fun comments(videoId: Long, type: Long): Source<List<ApiComment.Comment>> {
         ensureWorkThread()
-        return commentRepository.comments(videoId,type)
+        return commentRepository.comments(videoId, type)
     }
 
     @WorkerThread
@@ -98,9 +88,9 @@ class HomeViewModel @Inject constructor() : MyBaseViewModel() {
     }
 
     @WorkerThread
-    suspend fun playDuration(videoId: Long, aid: Long?, duration: Long,type: Long): Source<Nope> {
+    suspend fun playDuration(videoId: Long, aid: Long?, duration: Long, type: Long): Source<Nope> {
         ensureWorkThread()
-        return videoRepository.playDuration(videoId, aid, duration,type)
+        return videoRepository.playDuration(videoId, aid, duration, type)
     }
 
     @WorkerThread

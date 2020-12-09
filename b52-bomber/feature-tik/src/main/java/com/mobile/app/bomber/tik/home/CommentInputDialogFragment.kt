@@ -2,7 +2,6 @@ package com.mobile.app.bomber.tik.home
 
 import android.graphics.Rect
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.widget.FrameLayout
@@ -65,7 +64,6 @@ class CommentInputDialogFragment : BaseBottomSheetDialogFragment(), View.OnClick
     private lateinit var video: ApiVideo.Video
     private var action: Int = 0
     private var atd: Long = 0
-    private var vid: Long = 0
     private val adapter = RecyclerAdapter()
     private var comment: ApiComment.Comment? = null
     private var textDisposable: Disposable? = null
@@ -303,9 +301,9 @@ class CommentInputDialogFragment : BaseBottomSheetDialogFragment(), View.OnClick
         return content
     }
 
-    override fun load(imageView: ImageView, holder: AdapterViewHolder) {
+    override fun load(view: ImageView, holder: AdapterViewHolder) {
         val item: AtUserItem = holder.item()
-        this.loadProfile(item.data.profile, imageView)
+        this.loadProfile(item.data.profile, view)
     }
 
     private fun showIme() {

@@ -56,15 +56,4 @@ class MsgViewModel @Inject constructor() : MyBaseViewModel() {
         }
     }
 
-    fun clearKeys(): LiveData<Int> {
-        return liveData(Dispatchers.IO) {
-            emit(msgRepository.clearKeys())
-        }
-    }
-
-    fun deleteKey(obj: DbTikMessageKey): LiveData<Int> {
-        return liveData(Dispatchers.IO) {
-            emit(msgRepository.deleteKey(obj))
-        }
-    }
 }

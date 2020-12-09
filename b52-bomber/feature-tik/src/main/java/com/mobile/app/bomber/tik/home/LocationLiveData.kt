@@ -69,7 +69,7 @@ object LocationLiveData : LiveData<Location>(), LocationListener {
                 e.printStackTrace()
             }
             if (!addresses.isNullOrEmpty()) {
-                Timber.tag("LocationLiveData").d("address: %s", addresses.toString());
+                Timber.tag("LocationLiveData").d("address: %s", addresses.toString())
                 val address = addresses[0]
                 locationShowStr = address.locality
             }
@@ -78,7 +78,7 @@ object LocationLiveData : LiveData<Location>(), LocationListener {
     }
 
     override fun onLocationChanged(location: Location) {
-        location?.let {
+        location.let {
             PrefsManager.setLocation(it)
             postValue(it)
         }

@@ -58,13 +58,13 @@ open class VideoRecordButtonPresenter(binding: VideoRecordButtonLayoutBinding, c
     }
 
     private fun startAnimation() {
-        val scaleX = ObjectAnimator.ofFloat(binding.ivRing, "scaleX", 1.0f, 1.1f, 1.0f);//后几个参数是放大的倍数
-        val scaleY = ObjectAnimator.ofFloat(binding.ivRing, "scaleY", 1.0f, 1.1f, 1.0f);
-        scaleX.repeatCount = ValueAnimator.INFINITE;//永久循环
-        scaleY.repeatCount = ValueAnimator.INFINITE;
-        animationSetScale.duration = 800;//时间
-        animationSetScale.play(scaleX).with(scaleY);//两个动画同时开始
-        animationSetScale.start();//开始
+        val scaleX = ObjectAnimator.ofFloat(binding.ivRing, "scaleX", 1.0f, 1.1f, 1.0f)//后几个参数是放大的倍数
+        val scaleY = ObjectAnimator.ofFloat(binding.ivRing, "scaleY", 1.0f, 1.1f, 1.0f)
+        scaleX.repeatCount = ValueAnimator.INFINITE//永久循环
+        scaleY.repeatCount = ValueAnimator.INFINITE
+        animationSetScale.duration = 800//时间
+        animationSetScale.play(scaleX).with(scaleY)//两个动画同时开始
+        animationSetScale.start()//开始
     }
 
     private fun stopAnimation() {

@@ -33,7 +33,7 @@ class LoginViewModel @Inject constructor() : MyBaseViewModel() {
                 .asLiveData(Dispatchers.IO)
     }
 
-    fun adMsg(type :Int): LiveData<Source<ApiAdMsg>> {
+    fun adMsg(type: Int): LiveData<Source<ApiAdMsg>> {
         return flow { emit(adRepository.adMsg(type)) }
                 .asLiveData(Dispatchers.IO)
     }
@@ -42,10 +42,12 @@ class LoginViewModel @Inject constructor() : MyBaseViewModel() {
         return flow { emit(versionRepository.checkVersion()) }
                 .asLiveData(Dispatchers.IO)
     }
-    fun ad(type :Int): LiveData<Source<ApiAd>> {
+
+    fun ad(type: Int): LiveData<Source<ApiAd>> {
         return flow { emit(adRepository.ad(type)) }
                 .asLiveData(Dispatchers.IO)
     }
+
     fun shareAppUrl(): LiveData<Source<ApiShareUrl>> {
         return flow { emit(shareRepository.getShareUrl()) }
                 .asLiveData(Dispatchers.IO)

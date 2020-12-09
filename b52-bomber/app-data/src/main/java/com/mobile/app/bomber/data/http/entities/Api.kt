@@ -600,6 +600,7 @@ data class ApiShareUrl(
         @Json(name = "bgUrl") val bgUrl: String
 
 )
+
 @JsonClass(generateAdapter = true)
 data class ApiFixedad(
         @Json(name = "retCode") val code: Int,
@@ -615,12 +616,6 @@ data class ApiFixedad(
 
     )
 
-    @JsonClass(generateAdapter = true)
-    data class ResolutionData(
-            @Json(name = "sixteen") val sixteen: String,
-            @Json(name = "eighteen") val eighteen: String,
-            @Json(name = "twentyOne") val twentyOne: String
-    )
 }
 
 @JsonClass(generateAdapter = true)
@@ -763,11 +758,6 @@ data class ApiMovie(
             @Json(name = "label") val label: String,
     )
 
-    @JsonClass(generateAdapter = true)
-    data class Ad(
-            @Json(name = "img") val img: String,
-            @Json(name = "url") val url: String
-    )
 }
 
 @JsonClass(generateAdapter = true)
