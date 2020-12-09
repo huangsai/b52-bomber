@@ -60,6 +60,25 @@ class VideoRepository @Inject constructor(
         return callApiVideo(call, pager)
     }
 
+    suspend fun videosOfFavite(userId: Long,pager: Pager): Source<List<ApiMovieCollectionList.Movie>> {
+        if (pager.isReachedTheEnd) return Source.Success(emptyList())
+        pager.isBusy = true
+        val req = ApiCollectionReq(
+                userId, pager.requestPage, pager.pageSize
+        )
+        val call = dataService.getMovieCollectionList(req)
+        return try {
+            call.execute().toSource {
+                pager.nextPage(it.totalPage)
+                it.movieList.orEmpty()
+            }
+        } catch (e: Exception) {
+           pager.isBusy = false
+            errorSource(e)
+        }
+
+    }
+
     suspend fun videosOfUserCount(pager: Pager, _userId: Long): Source<ApiVideo> {
         val call = dataService.videosOfUser(_userId, pager.requestPage, pager.pageSize, userId, orBlankToken)
         return try {
@@ -77,6 +96,19 @@ class VideoRepository @Inject constructor(
             errorSource(e)
         }
     }
+
+    suspend fun videosOfCollec(pager: Pager, _userId: Long): Source<ApiMovieCollectionList> {
+        val req = ApiCollectionReq(
+                _userId, pager.requestPage, pager.pageSize
+        )
+        val call = dataService.getMovieCollectionList(req)
+        return try {
+            call.execute().toSource()
+        } catch (e: Exception) {
+            errorSource(e)
+        }
+    }
+
 
     suspend fun videosOfLike(pager: Pager, _userId: Long): Source<List<ApiVideo.Video>> {
         if (pager.isReachedTheEnd) return Source.Success(emptyList())

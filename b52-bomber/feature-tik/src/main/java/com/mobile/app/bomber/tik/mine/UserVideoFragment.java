@@ -44,6 +44,7 @@ import kotlin.Pair;
 public class UserVideoFragment extends MyBaseFragment implements AdapterImageLoader {
     public static final int TYPE_VIDEO = 0; //作品
     public static final int TYPE_LIKE = 1; //喜欢
+    public static final int TYPE_Favorites = 2; //喜欢
 
     private FragmentMeVideoBinding binding;
     private RecyclerAdapterEmpty recyclerAdapter;
