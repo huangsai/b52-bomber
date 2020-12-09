@@ -4,13 +4,9 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.ActivityResultCallback
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import com.mobile.app.bomber.common.base.Msg
-import com.mobile.app.bomber.common.base.MyBaseActivity
-import com.mobile.app.bomber.runner.base.PrefsManager
+
 //import com.mobile.app.bomber.tik.login.LoginActivity
 
 //private val okResult by lazy { ActivityResult(Activity.RESULT_OK, null) }

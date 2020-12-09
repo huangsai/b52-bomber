@@ -17,7 +17,7 @@ fun Activity.shareToSystem(data: String, Subtitle: String, url: File?) {
         if (url == null) {
             action = Intent.ACTION_SEND
             putExtra(Intent.EXTRA_SUBJECT, Subtitle)
-            putExtra(Intent.EXTRA_TEXT, Subtitle +" "+ data)
+            putExtra(Intent.EXTRA_TEXT, "$Subtitle $data")
             type = "text/plain"
         } else {
             val uri = Uri.fromFile(url)

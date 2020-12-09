@@ -74,8 +74,8 @@ public abstract class MyBaseActivity extends BaseActivity {
     /**
      * 不建议使用
      *
-     * @param containerViewId
-     * @param fragment
+     * @param containerViewId 被fragment替换的View
+     * @param fragment        添加的fragment
      */
     @Deprecated
     public void addFragment(int containerViewId, Fragment fragment) {

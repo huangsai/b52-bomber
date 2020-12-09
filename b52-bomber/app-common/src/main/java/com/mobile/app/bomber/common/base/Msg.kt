@@ -18,7 +18,7 @@ object Msg {
     fun handleSourceException(e: Throwable) {
         if (e is SourceException) {
             when (e.code) {
-                1, 2, 3, 5, 6, 11, 12 ,14 -> toast(e.message.orEmpty())
+                1, 2, 3, 5, 6, 11, 12, 14 -> toast(e.message.orEmpty())
                 else -> toast("操作失败")
             }
         } else
