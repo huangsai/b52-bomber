@@ -77,8 +77,8 @@ class DataModule : com.mobile.guava.data.DataModule {
 
     @Provides
     @Singleton
-    override fun provideRetrofit(okHttpClient: OkHttpClient, moshi: Moshi): Retrofit {
-        return delegate.provideRetrofit(okHttpClient, moshi)
+    override fun provideRetrofit(okHttpClient: OkHttpClient, json: Moshi): Retrofit {
+        return delegate.provideRetrofit(okHttpClient, json)
     }
 
     @Provides

@@ -4,7 +4,6 @@ import com.mobile.app.bomber.data.db.AppDatabase
 import com.mobile.app.bomber.data.db.entities.DbTikSearchKey
 import com.mobile.app.bomber.data.files.AppPrefsManager
 import com.mobile.app.bomber.data.http.entities.ApiAtUser
-import com.mobile.app.bomber.data.http.entities.ApiUser
 import com.mobile.app.bomber.data.http.entities.ApiVideo
 import com.mobile.app.bomber.data.http.entities.Pager
 import com.mobile.app.bomber.data.http.service.DataService
@@ -54,7 +53,7 @@ class TikSearchRepository @Inject constructor(
     }
 
     suspend fun getHotKeyTopN(): Source<List<String>> {
-        val call = dataService.getHotKey();
+        val call = dataService.getHotKey()
         return try {
             call.execute().toSource() {
                 it.KeyWords
@@ -75,7 +74,7 @@ class TikSearchRepository @Inject constructor(
     suspend fun searchTikUserList(keyword: String): Source<List<ApiAtUser.User>> {
         val call = dataService.searchTikUsers(keyword)
         return try {
-            call.execute().toSource(){
+            call.execute().toSource() {
                 it.users
             }
         } catch (e: Exception) {

@@ -9,7 +9,6 @@ import com.mobile.guava.android.mvvm.AndroidX
 import com.tencent.mmkv.MMKV
 import timber.log.Timber
 import java.util.*
-import kotlin.time.measureTime
 
 object PrefsManager : AppPrefsManager {
 

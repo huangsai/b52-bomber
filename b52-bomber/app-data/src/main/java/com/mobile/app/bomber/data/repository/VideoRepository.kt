@@ -155,9 +155,9 @@ class VideoRepository @Inject constructor(
         }
     }
 
-    suspend fun playDuration(videoId: Long, aid: Long?, duration: Long,type: Long): Source<Nope> {
+    suspend fun playDuration(videoId: Long, aid: Long?, duration: Long, type: Long): Source<Nope> {
         val req = ApiDurationReq(
-                userId, appPrefsManager.getDeviceId(), 1, videoId, aid, duration / 1000L,type
+                userId, appPrefsManager.getDeviceId(), 1, videoId, aid, duration / 1000L, type
         )
         return try {
             dataService.playDuration(req).execute().toSource()
@@ -175,8 +175,8 @@ class VideoRepository @Inject constructor(
     }
 
     suspend fun videoById(videoId: Long): Source<ApiVideo.Video> {
-        var Tourist:String  = ""
-        var TouristUid:Long  = 0
+        val Tourist: String
+        val TouristUid: Long
         if (!appPrefsManager.isLogin()) {
             TouristUid = 0
             Tourist = "blank"

@@ -114,7 +114,7 @@ abstract class BaseFragmentStateAdapter<T> : FragmentStateAdapter {
         }
     }
 
-    fun replaceAt(index: Int, element: T) {
+    private fun replaceAt(index: Int, element: T) {
         if (_data.set(index, element) != null) {
             notifyItemChanged(index)
         }

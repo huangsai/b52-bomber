@@ -3,10 +3,10 @@ package com.mobile.app.bomber.data.repository
 import com.mobile.app.bomber.data.db.AppDatabase
 import com.mobile.app.bomber.data.files.AppPrefsManager
 import com.mobile.app.bomber.data.http.entities.*
-import com.mobile.guava.data.nullSafe
-import com.mobile.guava.data.toSource
 import com.mobile.app.bomber.data.http.service.DataService
 import com.mobile.guava.data.bodyOrThrowException
+import com.mobile.guava.data.nullSafe
+import com.mobile.guava.data.toSource
 import com.mobile.guava.jvm.domain.Source
 import kotlinx.coroutines.async
 import kotlinx.coroutines.supervisorScope
@@ -69,7 +69,7 @@ class UserRepository @Inject constructor(
                     if (loginType == 2) {
                         appPrefsManager.setIsLogin(true)
                         aboutUsers()
-                        getUserInfo(data.uid!!,true,2)
+                        getUserInfo(data.uid!!, true, 2)
                     } else if (loginType == 1) {
                         appPrefsManager.setIsLogin(false)
                     }
@@ -123,13 +123,13 @@ class UserRepository @Inject constructor(
         }
     }
 
-    suspend fun getUserInfo(uid: Long,isLogin:Boolean,selfUid: Long): Source<ApiUser> {
+    suspend fun getUserInfo(uid: Long, isLogin: Boolean, selfUid: Long): Source<ApiUser> {
         val call = dataService.user(uid)
         var userID: Long = 2
         return try {
             call.execute().toSource().apply {
                 if (this is Source.Success && data.code == 0) {
-                    if (isLogin ==true && selfUid ==userID){
+                    if (isLogin == true && selfUid == userID) {
                         saveUserInfo(requireData())
                     }
                 }
