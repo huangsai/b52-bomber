@@ -74,7 +74,6 @@ class BannerPresenter(
                 Glide.with(holder.itemView)
                         .load(data.imgUrl)
                         .placeholder(R.drawable.movie_default_cover)
-                        .apply(RequestOptions.bitmapTransform(RoundedCorners(30)))
                         .into(holder.imageView)
             }
         }
