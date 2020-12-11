@@ -74,12 +74,19 @@ class PlayerActivity : MyBaseActivity(), View.OnClickListener {
         if (Util.SDK_INT < 24) {
             playerPresenter.onResume()
         }
+        if (binding.danmaku.isPrepared && binding.danmaku.isPaused) {
+            binding.danmaku.resume()
+        }
     }
+
 
     override fun onPause() {
         super.onPause()
         if (Util.SDK_INT < 24) {
             playerPresenter.onPause()
+        }
+        if (binding.danmaku.isPrepared) {
+            binding.danmaku.pause()
         }
     }
 
@@ -95,6 +102,7 @@ class PlayerActivity : MyBaseActivity(), View.OnClickListener {
         commentPresenter.onDestroy()
         sourcePresenter.onDestroy()
         playerPresenter.onDestroy()
+        binding.danmaku.release()
     }
 
     override fun onBackPressed() {
@@ -102,6 +110,7 @@ class PlayerActivity : MyBaseActivity(), View.OnClickListener {
             requestNormalScreenWithPortrait()
         } else {
             super.onBackPressed()
+            binding.danmaku.release()
         }
     }
 

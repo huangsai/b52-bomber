@@ -806,6 +806,7 @@ data class ApiMovieDetailById(
             @Json(name = "desc") val desc: String,
             @Json(name = "performer") val performer: List<Performer>?,
             @Json(name = "category") val category: List<Category>?,
+            @Json(name = "marquee") val marquee: Marquee?
     )
 
     @JsonClass(generateAdapter = true)
@@ -819,6 +820,14 @@ data class ApiMovieDetailById(
     data class Category(
             @Json(name = "id") val id: String,
             @Json(name = "name") val name: String
+    )
+
+    @JsonClass(generateAdapter = true)
+    data class Marquee(
+            @Json(name = "content") val content: String,
+            @Json(name = "num") val num: Int,
+            @Json(name = "interval") val interval: Int,
+            @Json(name = "speed") val speed: Int,
     )
 }
 

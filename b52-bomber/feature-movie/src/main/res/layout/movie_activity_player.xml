@@ -20,7 +20,17 @@
         app:shutter_background_color="@color/colorPrimary"
         app:use_controller="true"
         app:use_sensor_rotation="true" />
+    <master.flame.danmaku.ui.widget.DanmakuView
+        android:id="@+id/danmaku"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="36dp"
+        app:layout_constraintBottom_toBottomOf="@+id/view_player"
+        app:layout_constraintLeft_toLeftOf="@+id/view_player"
+        app:layout_constraintRight_toRightOf="@+id/view_player"
+        app:layout_constraintTop_toTopOf="@+id/view_player"
 
+        />
     <ProgressBar
         android:id="@+id/progress"
         style="?android:attr/progressBarStyleInverse"

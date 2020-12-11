@@ -45,4 +45,6 @@ dependencies {
     implementation 'dev.chrisbanes:insetter:0.3.1'
     implementation 'dev.chrisbanes:insetter-ktx:0.3.1'
     implementation "com.github.skydoves:balloon:1.2.5"
+    implementation 'com.github.ctiao:DanmakuFlameMaster:0.9.25'
+    implementation 'com.github.ctiao:ndkbitmap-armv7a:0.9.21'
 }
