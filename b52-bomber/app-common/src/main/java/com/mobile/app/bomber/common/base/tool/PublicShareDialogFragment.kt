@@ -4,11 +4,12 @@ import android.os.Bundle
 import android.view.View
 import com.mobile.app.bomber.common.base.Msg
 
-class ShareDialogFragment(private var callback: ShareDialogFragment.CallBack?) : BaseControlDialogFragment() {
+class PublicShareDialogFragment(private var callback:
+                                PublicShareDialogFragment.CallBack?) : BaseControlDialogFragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(callback: ShareDialogFragment.CallBack): ShareDialogFragment = ShareDialogFragment(callback)
+        fun newInstance(callback: PublicShareDialogFragment.CallBack): PublicShareDialogFragment = PublicShareDialogFragment(callback)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

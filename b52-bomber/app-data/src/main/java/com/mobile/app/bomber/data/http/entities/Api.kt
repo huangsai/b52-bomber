@@ -877,8 +877,8 @@ data class ApiMovieHistory(
 data class ApiCollectionReq(
         @Json(name = "uid") val uid: Long,
         @Json(name = "page") val page: Int,
-        @Json(name = "size") val size: Int,
-        @Json(name = "fastkey") val fastKey: String
+        @Json(name = "size") val size: Int
+//        @Json(name = "fastkey") val fastKey: String
 )
 
 @JsonClass(generateAdapter = true)
@@ -920,7 +920,6 @@ data class ApiMovieCollectionList(
             @Json(name = "downloadurl") val downloadurl: String,
             @Json(name = "duration") val duration: Int,
             @Json(name = "follow") val follow: Int,
-            @Json(name = "id") val id: Int,
             @Json(name = "isFollowed") val isFollowed: Boolean,
             @Json(name = "isLiked") val isLiked: Boolean,
             @Json(name = "isportait") val isportait: Int,

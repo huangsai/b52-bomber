@@ -133,6 +133,7 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
         binding.imgProfile.setOnClickListener(this)
         binding.layoutLink.setOnClickListener(this)
         binding.seekBar.setOnSeekBarChangeListener(this)
+        binding.imgOnlineGame.visibility = View.GONE
         // binding.imgMusic.visibility = View.GONE
         binding.seekBar.thumb.also {
             thumbDrawable = it

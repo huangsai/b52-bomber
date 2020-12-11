@@ -139,6 +139,16 @@ class CommentInputDialogFragment : BaseBottomSheetDialogFragment(), View.OnClick
             }
         })
 
+
+        binding.editComment.setOnKeyListener(object : View.OnKeyListener {
+            override fun onKey(v: View?, keyCode: Int, event: KeyEvent?): Boolean {
+                if (keyCode == KeyEvent.KEYCODE_DEL) {
+                    binding.layoutAt.collapse()
+                }
+                return false
+            }
+        })
+
         loadAboutAtUserItems()
         return binding.root
     }
@@ -403,6 +413,9 @@ class CommentInputDialogFragment : BaseBottomSheetDialogFragment(), View.OnClick
     override fun onExpansionUpdate(expansionFraction: Float, state: Int) {
         when (state) {
             ExpandableLayout2.State.COLLAPSED -> {
+                adapter.replaceAll(aboutAtUserItems)
+            }
+            ExpandableLayout2.State.EXPANDED -> {
                 adapter.replaceAll(aboutAtUserItems)
             }
         }

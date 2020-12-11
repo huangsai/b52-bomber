@@ -25,6 +25,7 @@ import com.mobile.ext.glide.GlideApp
 import com.mobile.guava.android.mvvm.BaseAppCompatDialogFragment
 import com.mobile.guava.android.ui.screen.screen
 import com.mobile.guava.data.Values
+import com.mobile.guava.jvm.Guava
 import java.util.concurrent.TimeUnit
 
 class SplashDialogFragment : BaseAppCompatDialogFragment(), View.OnClickListener,
@@ -152,7 +153,9 @@ class SplashDialogFragment : BaseAppCompatDialogFragment(), View.OnClickListener
         override fun onFinish() {
             isAdFinished = true
             binding.txtTimer.setText(R.string.ad_close)
-            dismissAllowingStateLoss()
+            if (Guava.isDebug) {
+                dismissAllowingStateLoss()
+            }
         }
 
         override fun onTick(millisUntilFinished: Long) {
