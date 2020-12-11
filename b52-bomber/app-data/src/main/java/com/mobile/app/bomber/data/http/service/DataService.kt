@@ -192,6 +192,7 @@ interface DataService {
     @POST("/user/postusermsg")
     fun postUserMsg(@Body body: ApipostUserMsg): Call<ApiUsermsg>
 
+    //删除评论
     @POST("/video/deletevideocomments/")
     fun deleteComment(@Body body: ApiComment.ReqDelete): Call<Nope>
 
@@ -202,16 +203,18 @@ interface DataService {
             @Path("videoid") videoId: Long
     ): Call<ApiVideoById>
 
+    //搜索用户
     @GET("/user/searchuser/{keyword}/")
     fun searchTikUsers(@Path("keyword") keyword: String): Call<ApiAtUser>
 
+    //播放时长
     @POST("/video/postvideoplayduration/")
     fun playDuration(@Body body: ApiDurationReq): Call<Nope>
 
     @GET("/user/searchuser/{keyword}/")
     fun searchUsers(@Path("keyword") keyword: String): Call<ApiAtUser>
 
-
+   //视频搜索
     @POST("/video/postSearchVideoUser/{uid}/{keyword}/{page}/{size}")
     fun searchVideo(
             @Path("uid") uId: Long,
@@ -221,21 +224,31 @@ interface DataService {
             @Body body: Any
     ): Call<ApiVideo>
 
+    // 热门词汇
     @GET("/video/getHotKeyTopN")
     fun getHotKey(): Call<ApiHotKey>
 
+    //标签
     @GET("/video/getTags")
     fun getTags(): Call<ApiTags>
 
+    //版本更新
     @GET("/sys/getVersion/{platform}/")
     fun getVersion(@Path("platform") platform: Int): Call<ApiVersion>
 
+    //分享
     @GET("/sys/getShareUrl/")
     fun getShareUrl(): Call<ApiShareUrl>
+
+    //分享回调接口（分享后通知是否分享成功）
+    @GET("/video/shareCall/{videoId}/")
+    fun shareCall(@Path("videoId") videoId: Long): Call<Nope>
+
 
     @GET("/sys/getDownLoadUrl/")
     fun getDownLoadUrl(): Call<ApiDownLoadUrl>
 
+    //短视频-》分类-》广告
     @GET("/sys/getFixedad/")
     fun getFixedad(): Call<ApiFixedad>
 
@@ -257,15 +270,19 @@ interface DataService {
             @Path("mid") mid: Int
     ): Call<Nope>
 
+    //长视频分类
     @GET("/video/getMovieCategory")
     fun getMovieLabel(): Call<ApiMovieLabel>
 
+    //长视频分类列表
     @POST("/video/postMovieListByCategory")
     fun getMovieListByLabel(@Body bode: ApiMovie.ReqLabel): Call<ApiMovie>
 
+    // 长视频推荐
     @GET("/video/getMovieRecomment/{uid}/")
     fun getMovieListRecommend(@Path("uid") uid: Long): Call<ApiMovie>
 
+    //长视频最近更新
     @GET("/video/getMovieLastUpdate/{param1}/{param2}/")
     fun getMovieLastUpdate(
             @Path("param1") page: Int,
@@ -280,6 +297,7 @@ interface DataService {
             @Path("fastKey") fastKey: String
     ): Call<ApiMovieDetail>
 
+    //长视频播放详情
     @GET("/video/getMovieDetailById/{mid}/")
     fun getMovieDetailById(
             @Path("mid") movieId: Long
@@ -294,6 +312,7 @@ interface DataService {
     @POST("/video/submitMovieCollection/")
     fun postMovieCollection(@Body bode: ApiMovieCollection): Call<Nope>
 
+    //历史观看
     @POST("/video/getMovieHistory/")
     fun getMovieHistory(@Body bode: ApiMovieHistory.Req): Call<ApiMovieHistory>
 

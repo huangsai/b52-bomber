@@ -40,7 +40,7 @@ class CommentPresenter(
         binding: MovieActivityPlayerBinding,
         playerActivity: PlayerActivity,
         model: PlayerViewModel
-) : BasePlayerPresenter(binding, playerActivity, model), ShareDialogFragment.CallBack {
+) : BasePlayerPresenter(binding, playerActivity, model), PublicShareDialogFragment.CallBack {
     private val adapter = RecyclerAdapter()
     private var commentCount = 0
     private var urlAndBitmap: Bitmap? = null
@@ -239,7 +239,7 @@ class CommentPresenter(
     }
 
     private fun shareAppURl() {
-        playerActivity.showDialogFragment(ShareDialogFragment.newInstance(this))
+        playerActivity.showDialogFragment(PublicShareDialogFragment.newInstance(this))
     }
 
     override fun onShareText() {
