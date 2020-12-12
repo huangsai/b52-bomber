@@ -137,7 +137,6 @@ public class UserVideoFavoriteFragment extends MyBaseFragment implements Adapter
                 }
                 if (pager.isReachedTheEnd()) {
                     Msg.INSTANCE.toast("已加载完数据");
-                    System.out.println("111");
                 }
             }
         });
