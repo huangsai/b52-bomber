@@ -1,31 +1,24 @@
 package com.mobile.app.bomber.tik.mine;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Looper;
-import android.os.StrictMode;
 import android.text.TextUtils;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
-import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.mobile.app.bomber.common.base.Msg;
 import com.mobile.app.bomber.common.base.MyBaseActivity;
 import com.mobile.app.bomber.common.base.tool.AppUtil;
 import com.mobile.app.bomber.common.base.tool.CacheDataUtil;
 import com.mobile.app.bomber.common.base.tool.FileUtil;
-import com.mobile.app.bomber.common.base.tool.HttpUtils;
 import com.mobile.app.bomber.common.base.tool.QRCodeUtil;
 import com.mobile.app.bomber.common.base.tool.SingleClick;
-import com.mobile.app.bomber.data.http.entities.ApiDownLoadUrl;
 import com.mobile.app.bomber.data.http.entities.ApiShareUrl;
 import com.mobile.app.bomber.tik.R;
 import com.mobile.app.bomber.tik.base.AppRouterUtils;
@@ -41,8 +34,6 @@ import com.mobile.guava.data.Values;
 import com.mobile.guava.jvm.domain.Source;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.lang.ref.WeakReference;
 
 
