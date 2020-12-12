@@ -256,7 +256,7 @@ interface DataService {
 
     @GET("/video/getRotationChart/{platform}/")
     fun getBanner(
-            @Path("platform") platform: Int,
+            @Path("platform") platform: Int
     ): Call<ApiMovieBanner>
 
     @GET("/video/getMovieHotKeyTopN")

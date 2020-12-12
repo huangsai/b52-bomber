@@ -360,7 +360,7 @@ data class ApiComment(
 @JsonClass(generateAdapter = true)
 data class Atuids(
         @Json(name = "uid") val uid: Long,
-        @Json(name = "username") val username: String,
+        @Json(name = "username") val username: String
 )
 
 
@@ -568,7 +568,7 @@ data class ApiTags(
 data class ApiVersion(
         @Json(name = "retCode") val code: Int,
         @Json(name = "desc") val desc: String,
-        @Json(name = "versions") val versions: Version,
+        @Json(name = "versions") val versions: Version
 ) {
     @JsonClass(generateAdapter = true)
     data class Version(
@@ -738,7 +738,7 @@ data class ApiMovie(
             @Json(name = "name") val name: String,
             @Json(name = "cover") val cover: String,
             @Json(name = "isportait") val isPortait: Int,
-            @Json(name = "byuid") val byUid: Long,
+            @Json(name = "byuid") val byUid: Long
     )
 
     @JsonClass(generateAdapter = true)
@@ -755,7 +755,7 @@ data class ApiMovie(
             @Json(name = "size") val size: Int,
             @Json(name = "sort") val sort: String,
             @Json(name = "fastkey") val fastKey: String,
-            @Json(name = "label") val label: String,
+            @Json(name = "label") val label: String
     )
 
 }
@@ -813,7 +813,7 @@ data class ApiMovieDetailById(
     data class Performer(
             @Json(name = "id") val id: String,
             @Json(name = "name") val name: String,
-            @Json(name = "img") val img: String,
+            @Json(name = "img") val img: String
     )
 
     @JsonClass(generateAdapter = true)
@@ -827,7 +827,7 @@ data class ApiMovieDetailById(
             @Json(name = "content") val content: String,
             @Json(name = "num") val num: Int,
             @Json(name = "interval") val interval: Int,
-            @Json(name = "speed") val speed: Int,
+            @Json(name = "speed") val speed: Int
     )
 }
 
@@ -855,12 +855,12 @@ data class ApiId(
 
 data class ApiMovieHistory(
         @Json(name = "retCode") val code: Int,
-        @Json(name = "movieList") val movies: List<History>?,
+        @Json(name = "movieList") val movies: List<History>?
 ) {
     @JsonClass(generateAdapter = true)
     data class Req(
             @Json(name = "fastKey") val fastKey: String,
-            @Json(name = "uid") val uid: Long,
+            @Json(name = "uid") val uid: Long
     )
 
     @JsonClass(generateAdapter = true)
@@ -904,7 +904,7 @@ data class ApiMovieCollectionList(
         @Json(name = "next") val next: Int,
         @Json(name = "retCode") val retCode: Int,
         @Json(name = "totalCount") val totalCount: Int,
-        @Json(name = "totalPage") val totalPage: Int,
+        @Json(name = "totalPage") val totalPage: Int
 ) {
 
     @JsonClass(generateAdapter = true)
