@@ -131,10 +131,9 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
     private void loadViewPageData() {
         indexTitle.add("作品0");
         indexTitle.add("喜欢0");
-        indexTitle.add("收藏0");
         adapter = new MyAdapter(requireActivity(), userId, selfId, this);
         binding.viewPager.setAdapter(adapter);
-        binding.viewPager.setOffscreenPageLimit(3);
+        binding.viewPager.setOffscreenPageLimit(2);
         binding.swipeRefresh.setRefreshing(true);
         binding.swipeRefresh.setOnRefreshListener(this);
         tabLayoutMediator = new TabLayoutMediator(binding.layoutTab, binding.viewPager, (tab, position) -> tab.setText(indexTitle.get(position)));
@@ -226,9 +225,6 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
         binding.layoutTab.getTabAt(1).setText("喜欢" + count);
     }
 
-    public void setUserLikeVideoFavorites(int count) {
-        binding.layoutTab.getTabAt(2).setText("收藏" + count);
-    }
     @Override
     public void onResume() {
         super.onResume();
@@ -270,16 +266,13 @@ public class UserDetailFragment extends MyBaseFragment implements SwipeRefreshLa
                 case 1:
                     frament = UserVideoFragment.newInstance(UserVideoFragment.TYPE_LIKE, this.mUserId, this.self_id, mUserDetailFragment);
                     break;
-                case 2:
-                    frament = UserVideoFavoriteFragment.newInstance(UserVideoFragment.TYPE_Favorites, this.mUserId, this.self_id, mUserDetailFragment);
-                    break;
             }
             return frament;
         }
 
         @Override
         public int getItemCount() {
-            return 3;
+            return 2;
         }
     }
 }
