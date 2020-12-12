@@ -27,12 +27,12 @@ public class AttentionFansItem extends SimpleRecyclerItem {
     @Override
     public void bind(@NotNull AdapterViewHolder holder) {
         ItemFansBinding binding = holder.binding(ItemFansBinding::bind);
-        binding.usernameTv.setText(data.getUsername());
-//        if (isDian){
-//        binding.statusBtn.setText(data.isFollowing() ? "已关注" : "+关注");
-//        }else{
-            binding.statusBtn.setText(data.isFollowing() ? "互相关注" : "回关");
-//        }
+        String username = data.getUsername();
+        if (username.isEmpty()) {
+            username = "微瑟00";
+        }
+        binding.usernameTv.setText(username);
+        binding.statusBtn.setText(data.isFollowing() ? "互相关注" : "回关");
         binding.statusBtn.setSelected(data.isFollowing());
         holder.attachImageLoader(R.id.img_profile);
         holder.attachOnClickListener(R.id.status_btn);

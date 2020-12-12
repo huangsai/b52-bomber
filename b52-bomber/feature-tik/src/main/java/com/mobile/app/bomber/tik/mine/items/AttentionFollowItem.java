@@ -22,7 +22,11 @@ public class AttentionFollowItem extends SimpleRecyclerItem {
     @Override
     public void bind(@NotNull AdapterViewHolder holder) {
         ItemFollowBinding binding = holder.binding(ItemFollowBinding::bind);
-        binding.usernameTv.setText(data.getUsername());
+        String username  = data.getUsername();
+        if (username.isEmpty()){
+            username = "微瑟00";
+        }
+        binding.usernameTv.setText(username);
         binding.statusBtn.setText(data.isFollowing() ? "取消关注" : "+关注");
         binding.statusBtn.setSelected(data.isFollowing());
         holder.attachImageLoader(R.id.img_profile);
