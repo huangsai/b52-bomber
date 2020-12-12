@@ -412,9 +412,9 @@ class CommentInputDialogFragment : BaseBottomSheetDialogFragment(), View.OnClick
 
     override fun onExpansionUpdate(expansionFraction: Float, state: Int) {
         when (state) {
-            ExpandableLayout2.State.COLLAPSED -> {
-                adapter.replaceAll(aboutAtUserItems)
-            }
+//            ExpandableLayout2.State.COLLAPSED -> {
+//                adapter.replaceAll(aboutAtUserItems)
+//            }
             ExpandableLayout2.State.EXPANDED -> {
                 adapter.replaceAll(aboutAtUserItems)
             }
