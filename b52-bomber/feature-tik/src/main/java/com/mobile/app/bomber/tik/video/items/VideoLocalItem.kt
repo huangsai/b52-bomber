@@ -6,7 +6,7 @@ import com.mobile.app.bomber.tik.R
 import com.mobile.app.bomber.tik.databinding.VideoLocalItemBinding
 import com.mobile.app.bomber.tik.video.MediaData
 import kotlin.math.roundToInt
-
+//初始化本地视频配置
 class VideoLocalItem(val data: MediaData) : SimpleRecyclerItem() {
 
     override fun bind(holder: AdapterViewHolder) {

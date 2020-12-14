@@ -26,6 +26,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.*
 
+/*
+  本地视频页面配置
+ */
 class VideoLocalListActivity : MyBaseActivity(), AdapterImageLoader, View.OnClickListener {
 
     private var _binding: ActivityVideoLocalBinding? = null
@@ -39,14 +42,13 @@ class VideoLocalListActivity : MyBaseActivity(), AdapterImageLoader, View.OnClic
         binding.videoLocalBack.setOnClickListener { finish() }
         initRecyclerView()
     }
-
     override fun onBusEvent(event: Pair<Int, Any>) {
         super.onBusEvent(event)
         if (event.first == RunnerX.BUS_VIDEO_UPLOAD_SUCCESS) {
             finish()
         }
     }
-
+   //初始化视图
     private fun initRecyclerView() {
         mAdapter = RecyclerAdapter()
         mAdapter?.imageLoader = this
@@ -59,7 +61,7 @@ class VideoLocalListActivity : MyBaseActivity(), AdapterImageLoader, View.OnClic
             loadVideo()
         }
     }
-
+    //加载视频封面
     override fun load(view: ImageView, holder: AdapterViewHolder) {
         val path = holder.item<VideoLocalItem>().data.path
         GlideApp.with(this)
@@ -76,7 +78,9 @@ class VideoLocalListActivity : MyBaseActivity(), AdapterImageLoader, View.OnClic
             VideoUploadActivity.start(this, path)
         }
     }
-
+    /*
+    *  加载手机本地视频
+    */
     private suspend fun loadVideo() {
         val medias = mutableListOf<MediaData>()
         val cursor = contentResolver.query(QUERY_URI,

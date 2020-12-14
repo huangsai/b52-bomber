@@ -3,18 +3,20 @@ package com.mobile.app.bomber.tik.video
 import android.os.Bundle
 import android.view.SurfaceView
 import android.view.View
-import com.trinity.core.TrinityCore
-import com.trinity.editor.*
-import com.trinity.listener.OnExportListener
-import com.mobile.app.bomber.tik.R
+import com.google.android.material.internal.ContextUtils.getActivity
 import com.mobile.app.bomber.common.base.Msg
 import com.mobile.app.bomber.common.base.MyBaseActivity
 import com.mobile.app.bomber.common.base.tool.SingleClick
+import com.mobile.app.bomber.tik.R
 import com.mobile.app.bomber.tik.databinding.ActivityVideoEditorBinding
 import com.mobile.guava.android.mvvm.AndroidX
+import com.trinity.core.TrinityCore
+import com.trinity.editor.*
+import com.trinity.listener.OnExportListener
 import org.joor.Reflect
 import timber.log.Timber
 
+//视频编辑页面 配置
 class VideoEditorActivity : MyBaseActivity(), View.OnClickListener, OnExportListener {
 
     private var _binding: ActivityVideoEditorBinding? = null
@@ -23,6 +25,7 @@ class VideoEditorActivity : MyBaseActivity(), View.OnClickListener, OnExportList
     private lateinit var mVideoEditor: TrinityVideoEditor
     private var mVideoExport: VideoExport? = null
     private var exportVideoPath: String? = null
+    private var comPressPath: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +34,7 @@ class VideoEditorActivity : MyBaseActivity(), View.OnClickListener, OnExportList
         initView()
         initPlay()
     }
-
+    //初始化视频配置
     private fun initPlay() {
         val mediasArrays = intent.getSerializableExtra("medias") as Array<*>
         mVideoEditor = TrinityCore.createEditor(AndroidX.myApp)
@@ -100,8 +103,11 @@ class VideoEditorActivity : MyBaseActivity(), View.OnClickListener, OnExportList
     override fun onExportCanceled() {
         Timber.tag("VideoEditorActivity").d("合成取消")
     }
-
+    fun videoCompression(){
+//        comPressPath = SiliCompressor.with(this).compressVideo(exportVideoPath, exportVideoPath)
+    }
     override fun onExportComplete() {
+        videoCompression()
         Timber.tag("VideoEditorActivity").d("合成完成")
         hideLoading()
         VideoUploadActivity.start(this, exportVideoPath)

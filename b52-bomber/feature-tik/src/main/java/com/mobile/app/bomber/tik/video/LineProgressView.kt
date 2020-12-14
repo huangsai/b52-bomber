@@ -10,7 +10,7 @@ import android.view.View
 import androidx.annotation.Nullable
 import com.mobile.app.bomber.tik.R
 import java.util.*
-
+//自定义视频录制进度条
 class LineProgressView : View {
 
     private var mPaint: Paint? = null
@@ -51,7 +51,7 @@ class LineProgressView : View {
     private fun init() {
         mPaint = Paint(Paint.ANTI_ALIAS_FLAG)
     }
-
+   //绘制图形
     override fun onDraw(canvas: Canvas) {
         drawBackground(canvas)
         drawContent(canvas)
