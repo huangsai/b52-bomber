@@ -26,6 +26,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+/**
+ * 轮播图
+ */
 class BannerPresenter(
         private val fragment: Fragment,
         private val model: MovieViewModel

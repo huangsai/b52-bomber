@@ -26,6 +26,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+/**
+ * 长视频播放页面
+ */
 class PlayerActivity : MyBaseActivity(), View.OnClickListener {
     private var _binding: MovieActivityPlayerBinding? = null
     private val binding get() = _binding!!

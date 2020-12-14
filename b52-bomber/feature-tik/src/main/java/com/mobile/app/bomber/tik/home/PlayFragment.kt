@@ -6,10 +6,6 @@ import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.os.StrictMode
-import android.os.StrictMode.VmPolicy
 import android.text.TextUtils
 import android.text.style.StyleSpan
 import android.view.*
@@ -21,7 +17,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.bumptech.glide.request.FutureTarget
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.daimajia.androidanimations.library.Techniques
@@ -34,7 +29,6 @@ import com.mobile.app.bomber.common.base.Msg
 import com.mobile.app.bomber.common.base.Msg.toast
 import com.mobile.app.bomber.common.base.MyBaseFragment
 import com.mobile.app.bomber.common.base.tool.FileUtil
-import com.mobile.app.bomber.common.base.tool.HttpUtils
 import com.mobile.app.bomber.common.base.tool.QRCodeUtil
 import com.mobile.app.bomber.common.base.tool.SingleClick
 import com.mobile.app.bomber.data.http.entities.ApiUser
