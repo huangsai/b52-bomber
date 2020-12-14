@@ -30,10 +30,10 @@ public class UserFavriteItem extends SimpleRecyclerItem {
         FragmentMeFavriteVideoItemBinding binding = holder.binding(FragmentMeFavriteVideoItemBinding::bind);
         holder.attachImageLoader(R.id.iv_item);
 //        binding.ivLikeStatus.setSelected(data.isLiking());
-        binding.tvLikeCount.setText(String.valueOf(data.getLike()));
+//        binding.tvLikeCount.setText(String.valueOf(data.getLike()));
 
 //        binding.videoStatus.setVisibility(data.isChecking() ? View.VISIBLE : View.GONE);
-        binding.tvPlayCount.setText((data.getPlaynum() + ""));
+        binding.tvPlayCount.setText(String.valueOf(data.getPlaynum()));
         holder.attachOnClickListener(R.id.layout_user_video_item);
     }
 

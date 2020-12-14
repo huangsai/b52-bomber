@@ -97,5 +97,29 @@ public class NewVideoPresenter extends BaseVideoPresenter {
             binding.layoutRefresh.setRefreshing(false);
 
         });
+
+//        fragment.model.videoOfNewPlayCount(pager).observe(fragment, source -> {
+//            if (source instanceof Source.Success) {
+//                List<NewVideoItem> items = source.requireData()
+//                        .stream()
+//                        .map(o -> new NewVideoItem(o))
+//                        .collect(Collectors.toList());
+//
+//                if (!items.isEmpty()) {
+//                    if (pager.isFirstPage(2)) {
+//                        videos.clear();
+//                        adapter.replaceAll(items);
+//                    } else {
+//                        adapter.addAll(items);
+//                    }
+//                    videos.addAll(source.requireData());
+//                }
+//                if (pager.isReachedTheEnd() && adapter.getItemCount() > 3) {
+//                    adapter.add(new TheEndItem());
+//                }
+//            }
+//            binding.layoutRefresh.setRefreshing(false);
+//
+//        });
     }
 }

@@ -37,7 +37,7 @@ public class AttentionFansActivity extends MyBaseActivity {
         Values.INSTANCE.put("AttentionFansActivity_userId", userId);
         RouterKt.newStartActivity(activity, AttentionFansActivity.class);
     }
-
+    //系统方法 （重写onCreate）初始化页面以及参数等配置
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +45,6 @@ public class AttentionFansActivity extends MyBaseActivity {
         setContentView(binding.getRoot());
         int type = Values.INSTANCE.take("AttentionFansActivity_type");
         long userId = Values.INSTANCE.take("AttentionFansActivity_userId");
-
         indexTitle.add("关注0");
         indexTitle.add("粉丝0");
 
@@ -62,12 +61,12 @@ public class AttentionFansActivity extends MyBaseActivity {
         });
         tabLayoutMediator.attach();
     }
-
+    //设置关注、粉丝导航栏 标题和 总个数
     public void setTabTitle(ApiUserCount apiUserCount) {
         binding.layoutTab.getTabAt(0).setText("关注" + apiUserCount.getFollowCount());
         binding.layoutTab.getTabAt(1).setText("粉丝" + apiUserCount.getFansCount());
     }
-
+    //初始化数据适配器
     private static class MyAdapter extends FragmentStateAdapter {
 
         private final long mUserId;

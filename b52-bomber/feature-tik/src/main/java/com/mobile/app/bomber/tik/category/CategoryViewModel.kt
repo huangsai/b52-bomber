@@ -21,6 +21,11 @@ class CategoryViewModel @Inject constructor() : MyBaseViewModel() {
                 .asLiveData(Dispatchers.IO)
     }
 
+//    fun videoOfNewPlayCount(pager: Pager): LiveData<Source<List<ApiVideo.Video>>> {
+//        return flow { emit(videoRepository.videosOfNewPlayCount(pager)) }
+//                .asLiveData(Dispatchers.IO)
+//    }
+
     fun videosOfLabel(pager: Pager, label: String): LiveData<Source<List<ApiVideo.Video>>> {
         return flow { emit(videoRepository.videosOfLabel(pager, label)) }
                 .asLiveData(Dispatchers.IO)

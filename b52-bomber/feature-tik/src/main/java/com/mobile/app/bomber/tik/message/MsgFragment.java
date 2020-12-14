@@ -205,10 +205,7 @@ public class MsgFragment extends TopMainFragment implements View.OnClickListener
                         this,
                         obj -> Timber.tag("db").d("增加成功%s", obj)
                 );
-                ;
             });
-
-
             binding.layoutRefresh.setRefreshing(false);
         });
     }
