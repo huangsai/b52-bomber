@@ -15,14 +15,14 @@ import com.mobile.app.bomber.tik.databinding.FragmentPopupAdDialogBinding
 
 class PopupAdDialogFragment : BaseAppCompatDialogFragment(), View.OnClickListener {
 
-    private lateinit var data: ApiAdMsg
+    private var data: ApiAdMsg.AdList?=null
     private var _binding: FragmentPopupAdDialogBinding? = null
     private val binding: FragmentPopupAdDialogBinding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         applyDialogCount = true
-        data = Values.take("PopupAdDialogFragment")!!
+//        data = Values.take("PopupAdDialogFragment")
     }
 
     override fun onCreateView(
@@ -32,8 +32,8 @@ class PopupAdDialogFragment : BaseAppCompatDialogFragment(), View.OnClickListene
     ): View? {
         dialog?.window?.setBackgroundDrawableResource(android.R.color.transparent)
         _binding = FragmentPopupAdDialogBinding.inflate(inflater, container, false)
-        binding.txtTitle.text = data.title
-        binding.txtContent.text = data.content
+        binding.txtTitle.text = data?.title
+        binding.txtContent.text = data?.content
         binding.imgClose.setOnClickListener(this)
         binding.btnLink.setOnClickListener(this)
         return binding.root
@@ -57,15 +57,16 @@ class PopupAdDialogFragment : BaseAppCompatDialogFragment(), View.OnClickListene
         when (v!!.id) {
             R.id.img_close -> dismiss()
             R.id.btn_link -> {
-                chrome(data.url)
+                chrome(data?.url)
                 dismiss()
             }
         }
     }
 
     companion object {
-        fun newInstance(apiAdMsg: ApiAdMsg) = PopupAdDialogFragment().apply {
-            Values.put("PopupAdDialogFragment", apiAdMsg)
+        fun newInstance(apiAdMsg: ApiAdMsg.AdList) = PopupAdDialogFragment().apply {
+//            Values.put("PopupAdDialogFragment", apiAdMsg)
+            this.data = apiAdMsg
         }
     }
 }

@@ -6,7 +6,6 @@
 
     <style name="HomeTabTextAppearance" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">@dimen/font_18sp</item>
-        <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/color_home_tab_text</item>
         <item name="textAllCaps">false</item>
     </style>

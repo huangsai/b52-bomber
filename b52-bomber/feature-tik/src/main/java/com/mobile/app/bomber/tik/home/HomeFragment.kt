@@ -4,15 +4,19 @@ import android.Manifest
 import android.app.Activity
 import android.content.pm.PackageManager
 import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.activity.result.ActivityResultCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.mobile.app.bomber.common.base.tool.SingleClick
 import com.mobile.app.bomber.runner.base.PrefsManager
@@ -37,7 +41,7 @@ import com.mobile.guava.jvm.Guava
 import com.skydoves.balloon.Balloon
 import com.skydoves.balloon.BalloonAnimation
 
-class HomeFragment : TopMainFragment(), View.OnClickListener, View.OnLongClickListener {
+class HomeFragment : TopMainFragment(), View.OnClickListener, View.OnLongClickListener, TabLayout.OnTabSelectedListener {
 
     private val tabTitles = arrayOf("关注", "推荐")
 
@@ -107,9 +111,12 @@ class HomeFragment : TopMainFragment(), View.OnClickListener, View.OnLongClickLi
             tab.text = tabTitles[position]
         }
         mediator.attach()
+        binding.layoutTab.addOnTabSelectedListener(this)
+
         return binding.root
     }
-   //弹框菜单框（分类、同城）
+
+    //弹框菜单框（分类、同城）
     private fun showPopupOptions(anchor: View) {
         balloon = Balloon.Builder(AndroidX.myApp)
                 .setLayout(R.layout.tik_home_pop_menu)
@@ -136,6 +143,7 @@ class HomeFragment : TopMainFragment(), View.OnClickListener, View.OnLongClickLi
                     show(anchor)
                 }
     }
+
     // 请求定位权限
     private fun requestPermission() {
         PermissionRequest.request(this, 101, arrayOf(Manifest.permission.READ_PHONE_STATE, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION),
@@ -155,6 +163,7 @@ class HomeFragment : TopMainFragment(), View.OnClickListener, View.OnLongClickLi
                     }
                 })
     }
+
     // 请求相机权限
     private fun requestPermissionCamera() {
         PermissionRequest.request(this, 103, arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO),
@@ -249,6 +258,7 @@ class HomeFragment : TopMainFragment(), View.OnClickListener, View.OnLongClickLi
             }
         }
     }
+
     //处理自动服务器ip地址 切换管理
     override fun onLongClick(p0: View?): Boolean {
         val dialogFragment = HttpInputDialogFragment.newInstance(
@@ -295,5 +305,22 @@ class HomeFragment : TopMainFragment(), View.OnClickListener, View.OnLongClickLi
         }
     }
 
+    override fun onTabReselected(tab: TabLayout.Tab?) {
+
+    }
+
+    override fun onTabUnselected(tab: TabLayout.Tab?) {
+        tab?.setCustomView(null)
+    }
+
+    override fun onTabSelected(tab: TabLayout.Tab?) {
+        val textView = TextView(activity)
+        val selectedSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, 18f, resources.displayMetrics)
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, selectedSize)
+        textView.text = tab?.text
+        textView.setTextColor(Color.WHITE)
+        textView.getPaint().setFakeBoldText(true);
+        tab?.customView = textView
+    }
 
 }

@@ -399,13 +399,24 @@ data class ApiFans(
 @JsonClass(generateAdapter = true)
 data class ApiAdMsg(
         @Json(name = "retCode") val code: Int,
-        @Json(name = "id") val id: Long,
-        @Json(name = "onlinestatus") val onlineStatus: Int,
-        @Json(name = "content") val content: String,
-        @Json(name = "title") val title: String,
-        @Json(name = "linkurl") val url: String,
-        @Json(name = "msgtype") val type: Int
-)
+        @Json(name = "list") val adlist: List<AdList>?
+
+//        @Json(name = "id") val id: Long,
+//        @Json(name = "onlinestatus") val onlineStatus: Int,
+//        @Json(name = "content") val content: String,
+//        @Json(name = "title") val title: String,
+//        @Json(name = "linkurl") val url: String,
+//        @Json(name = "msgtype") val type: Int
+) {
+    @JsonClass(generateAdapter = true)
+    data class AdList(
+            @Json(name = "id") val id: Long,
+            @Json(name = "content") val content: String,
+            @Json(name = "title") val title: String,
+            @Json(name = "url") val url: String
+    )
+}
+
 
 @JsonClass(generateAdapter = true)
 data class ApiAd(
