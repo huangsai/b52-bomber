@@ -19,6 +19,7 @@ import com.gyf.immersionbar.ImmersionBar;
 import com.mobile.app.bomber.common.base.Msg;
 import com.mobile.app.bomber.common.base.MyBaseActivity;
 import com.mobile.app.bomber.common.base.tool.AppUtil;
+import com.mobile.app.bomber.common.base.tool.CrashHandlerTool;
 import com.mobile.app.bomber.common.base.tool.SingleClick;
 import com.mobile.app.bomber.common.base.tool.UpdateManger;
 import com.mobile.app.bomber.data.http.entities.ApiAd;
@@ -52,6 +53,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
 
+import java.util.List;
+
 import kotlin.Pair;
 
 public class MainActivity extends MyBaseActivity implements View.OnClickListener,
@@ -67,6 +70,7 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         ImmersionBar.with(this).init();
+        CrashHandlerTool.getInstance().init(this, BuildConfig.DEBUG, true, 0, MainActivity.class);
         super.onCreate(savedInstanceState);
         ScreenUtilsKt.getScreen();
         binding = ActivityMainBinding.inflate(getLayoutInflater());
@@ -120,14 +124,19 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
         });
     }
 
+    //获取公告
     public void requestPopupAd() {
         model.adMsg(1).observe(this, source -> {
             login();
-            JSONObject jsonObject = new JSONObject();
             if (source instanceof Source.Success) {
                 ApiAdMsg data = source.requireData();
-                if (!TextUtils.isEmpty(data.getContent())) {
-                    RouterKt.showDialogFragment(this, PopupAdDialogFragment.Companion.newInstance(data));
+                List<ApiAdMsg.AdList> adList = data.getAdlist();
+                if (adList.size() < 1 || adList == null) return;
+                for (int i = adList.size() - 1; i >= 0; i--) {
+                    if (!TextUtils.isEmpty(adList.get(i).getContent())) {
+                        ApiAdMsg.AdList list = adList.get(i);
+                        RouterKt.showDialogFragment(this, PopupAdDialogFragment.Companion.newInstance(list));
+                    }
                 }
             }
         });
@@ -137,6 +146,7 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
         }
     }
 
+    //检测版本信息以及是否更新App
     private void requestCheckVersion() {
         String curVersion = AppUtil.getAppVersionName(getApplicationContext());
         model.ckVersino().observe(this, source -> {
@@ -231,13 +241,13 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
         @Override
         public Fragment createFragment(int position) {
             switch (position) {
-                case 1:
+                case 1:  //剧情
                     return FeatureRouter.INSTANCE.newMovieFragment(position);
-                case 2:
+                case 2:  //消息
                     return MsgFragment.newInstance(position);
-                case 3:
+                case 3:   //个人中心
                     return FragmentMe.newInstance(position);
-                default:
+                default:  // 首页
                     return HomeFragment.newInstance(position);
             }
         }

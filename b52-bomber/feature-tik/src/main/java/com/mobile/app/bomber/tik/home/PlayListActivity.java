@@ -12,6 +12,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.gyf.immersionbar.ImmersionBar;
 import com.mobile.app.bomber.common.base.Msg;
 import com.mobile.app.bomber.common.base.MyBaseActivity;
+import com.mobile.app.bomber.data.http.entities.ApiMovieCollectionList;
 import com.mobile.app.bomber.data.http.entities.ApiVideo;
 import com.mobile.app.bomber.tik.base.AppRouterUtils;
 import com.mobile.app.bomber.tik.databinding.ActivityPlayListBinding;
@@ -35,7 +36,10 @@ public class PlayListActivity extends MyBaseActivity implements View.OnClickList
     private MyAdapter adapter;
     private ActivityPlayListBinding binding;
     private List<ApiVideo.Video> videos;
+    private List<ApiMovieCollectionList.Movie> movies;
+
     private int playPosition;
+    private Long b = 0L;
     protected MsgViewModel model;
 
     @Override
@@ -45,7 +49,6 @@ public class PlayListActivity extends MyBaseActivity implements View.OnClickList
         binding = ActivityPlayListBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         final long videoId = Values.INSTANCE.take("PlayListActivity_videoId");
-
         if (videoId != -1L) {
             binding.progress.setVisibility(View.VISIBLE);
             playPosition = 0;
@@ -59,7 +62,13 @@ public class PlayListActivity extends MyBaseActivity implements View.OnClickList
                 parseVideoByJson(videoJson);
             } else {
                 playPosition = Values.INSTANCE.take("PlayListActivity_playPosition");
-                videos = Values.INSTANCE.take("PlayListActivity");
+//                final long indexB = Values.INSTANCE.take("PlayListActivity_index");
+//                this.b = indexB;
+//                if (indexB == 1) {
+//                    movies = Values.INSTANCE.take("PlayListActivity");
+//                } else {
+                    videos = Values.INSTANCE.take("PlayListActivity");
+//                }
                 bindData();
             }
         }
@@ -113,7 +122,11 @@ public class PlayListActivity extends MyBaseActivity implements View.OnClickList
 
         @Override
         public int getItemCount() {
-            return videos.size();
+//            if (b == 1) {
+//                return movies.size();
+//            } else {
+                return videos.size();
+//            }
         }
     }
 
@@ -123,8 +136,8 @@ public class PlayListActivity extends MyBaseActivity implements View.OnClickList
         Values.INSTANCE.put("PlayListActivity_playPosition", playPosition);
         RouterKt.newStartActivity(activity, PlayListActivity.class);
     }
-
     public static void start(Activity activity, long videoId) {
+        if (String.valueOf(videoId)==null)return;
         Values.INSTANCE.put("PlayListActivity_videoId", videoId);
         RouterKt.newStartActivity(activity, PlayListActivity.class);
     }
