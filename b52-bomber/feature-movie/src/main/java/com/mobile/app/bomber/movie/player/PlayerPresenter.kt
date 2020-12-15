@@ -114,6 +114,7 @@ class PlayerPresenter(
             player?.prepare()
             player?.play()
             binding.progress.visibility = View.VISIBLE
+            //爱奇艺 bilibili也没有做在退出后做缓存 这里不适合做缓存
             //player?.play(url)
         }
 

@@ -39,7 +39,6 @@
         android:singleLine="true"
         android:lines="1"
         android:maxLines="1"
-        android:maxEms="7"
         android:ellipsize="end"
         android:textColor="@color/color_text_919095"
         android:textSize="@dimen/font_10sp"
