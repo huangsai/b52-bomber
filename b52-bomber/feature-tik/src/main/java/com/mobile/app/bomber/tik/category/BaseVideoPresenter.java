@@ -66,8 +66,12 @@ public abstract class BaseVideoPresenter extends SimpleRecyclerItem implements O
                 return null;
             });
             RecyclerView recycler = getRecyclerView();
-            recycler.setLayoutManager(layoutManager);
-            recycler.addItemDecoration(itemDecoration);
+            if (recycler.getLayoutManager() == null)
+                recycler.setLayoutManager(layoutManager);
+            if (recycler.getItemDecorationCount() <= 0)
+                recycler.addItemDecoration(itemDecoration);
+//            recycler.setLayoutManager(layoutManager);
+//            recycler.addItemDecoration(itemDecoration);
             recycler.setAdapter(adapter);
             recycler.addOnScrollListener(endless);
             getEmptyView().setOnClickListener(v -> onRefresh());

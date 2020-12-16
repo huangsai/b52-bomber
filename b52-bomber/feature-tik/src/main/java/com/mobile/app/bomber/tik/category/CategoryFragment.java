@@ -1,6 +1,7 @@
 package com.mobile.app.bomber.tik.category;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +11,12 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.mobile.app.bomber.common.base.Msg;
 import com.mobile.app.bomber.common.base.MyBaseFragment;
+import com.mobile.app.bomber.data.http.entities.ApiFixedad;
+import com.mobile.app.bomber.tik.category.items.TitleVideoItem;
 import com.mobile.app.bomber.tik.login.LoginViewModel;
+import com.mobile.guava.jvm.domain.Source;
 import com.pacific.adapter.RecyclerAdapter;
 import com.pacific.adapter.RecyclerItem;
 import com.mobile.guava.android.mvvm.RouterKt;
@@ -38,7 +43,7 @@ public class CategoryFragment extends MyBaseFragment implements View.OnClickList
     private DiscoveryVideoPresenter discoveryPresenter;
     private RankPresenter rankPresenter;
     private TitleVideoPresenter titleVideoPresenter;
-
+    private LinearLayoutManager linearLayoutManager;
     public CategoryViewModel model;
     public LoginViewModel loginViewModel;
 
@@ -58,7 +63,8 @@ public class CategoryFragment extends MyBaseFragment implements View.OnClickList
         binding = FragmentCatetoryBinding.inflate(inflater, container, false);
         binding.recycler.setItemViewCacheSize(16);
         binding.recycler.setHasFixedSize(true);
-        binding.recycler.setLayoutManager(new LinearLayoutManager(getActivity()));
+        linearLayoutManager = new LinearLayoutManager(getActivity());
+        binding.recycler.setLayoutManager(linearLayoutManager);
         binding.recycler.setAdapter(adapter);
         // binding.imgSearch.setOnClickListener(this);
         binding.layoutRefresh.setOnRefreshListener(this);
@@ -88,16 +94,19 @@ public class CategoryFragment extends MyBaseFragment implements View.OnClickList
     @Override
     public void onRefresh() {
         RecyclerViewUtilsKt.cancelRefreshing(binding.layoutRefresh, 1000);
-        newVideoPresenter.onRefresh();
-        hotVideoPresenter.onRefresh();
-        titleVideoPresenter.onRefresh();
+        if (binding.recycler.getLayoutManager() == null) {
+            binding.recycler.setLayoutManager(linearLayoutManager);
+        }
+        adapter.clear();
+        load();
+
 
         // discoveryPresenter.onRefresh();
-        rankPresenter.onRefresh();
+//        rankPresenter.onRefresh();
     }
 
     /**
-     *  跳转到 搜索页面
+     * 跳转到 搜索页面
      */
     @SingleClick
     @Override
@@ -108,14 +117,34 @@ public class CategoryFragment extends MyBaseFragment implements View.OnClickList
             return;
         }
     }
+
     /**
      * 加载整个页面的数据
      */
     private void load() {
         List<RecyclerItem> list = new ArrayList<>();
-        list.add(new TitlePresenter("火爆活动", R.drawable.fl_huobaohuodong));
-        titleVideoPresenter = new TitleVideoPresenter(this,binding);
+        TitlePresenter titlePresenter = new TitlePresenter("火爆活动", R.drawable.fl_huobaohuodong);
+        list.add(titlePresenter);
+        titleVideoPresenter = new TitleVideoPresenter(this, binding);
         list.add(titleVideoPresenter);
+        this.model.fixedAd().observe(this, source -> {
+            if (source instanceof Source.Success) {
+                ApiFixedad ad = source.requireData();
+                ApiFixedad.FixedadObj obj = ad.getFixedadObj();
+                List<TitleVideoItem> videoItem = new ArrayList<TitleVideoItem>();
+                TitleVideoItem adItem = new TitleVideoItem(obj);
+                videoItem.add(adItem);
+                if (obj.getResolutionData().length() < 1) {
+                    list.remove(titleVideoPresenter);
+                    list.remove(titlePresenter);
+                    adapter.remove(titlePresenter);
+                    adapter.remove(titleVideoPresenter);
+                }
+            } else {
+                Msg.INSTANCE.handleSourceException(source.requireError());
+            }
+            binding.layoutRefresh.setRefreshing(false);
+        });
 
         // list.add(new TitlePresenter("发现精彩", R.drawable.fl_faxianjingcai));
         // discoveryPresenter = new DiscoveryVideoPresenter(this);
@@ -126,18 +155,15 @@ public class CategoryFragment extends MyBaseFragment implements View.OnClickList
         list.add(rankPresenter);
 
         list.add(new TitlePresenter("今日最新视频", R.drawable.fl_zuixinshiping));
-        newVideoPresenter = new NewVideoPresenter(this,binding);
+        newVideoPresenter = new NewVideoPresenter(this, binding);
         list.add(newVideoPresenter);
 
         list.add(new TitlePresenter("今日最热视频", R.drawable.fl_zuireshiping));
-        hotVideoPresenter = new HotVideoPresenter(this,binding);
+        hotVideoPresenter = new HotVideoPresenter(this, binding);
         list.add(hotVideoPresenter);
-
-//        hotPlayCountPresenter = new HotPlayCountPresenter(this,binding);
-//        list.add(hotPlayCountPresenter);
-
         adapter.addAll(list);
     }
+
     /**
      * 初始化 分类页面 （fragment）
      */
