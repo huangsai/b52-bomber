@@ -22,7 +22,6 @@ import com.bumptech.glide.request.transition.Transition
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
 import com.google.android.exoplayer2.ExoPlaybackException
-import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.source.MediaSource
@@ -75,7 +74,6 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
     private var shareURl: String = ""
     private var content: String = ""
     private var bgUrl: String = ""
-    private var urlAndBitmap: Bitmap? = null
     private var playbackPosition: Long = 0
     private var isPlayerPlaying = false
     private var markedPlayCount = false
@@ -192,7 +190,7 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
 
     private fun bindData() {
         updateVideoData()
-        binding.txtName.text = "@${video.username}"
+        binding.txtName.text = ("@${video.username}")
         val moment = video.moment()
         if (moment.isNullOrEmpty()) {
             binding.txtDesc.visibility = View.GONE
@@ -582,7 +580,7 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
             withContext(Dispatchers.Main) {
                 when (source) {
                     is Source.Success -> {
-                        var downurl = source.requireData()
+                        val downurl = source.requireData()
                         shareURl = downurl.shareUrl
                         content = downurl.desc
                         bgUrl = downurl.bgUrl
