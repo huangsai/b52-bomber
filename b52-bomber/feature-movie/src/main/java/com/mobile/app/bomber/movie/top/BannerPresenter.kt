@@ -4,8 +4,6 @@ import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.request.RequestOptions
 import com.mobile.app.bomber.common.base.Msg
 import com.mobile.app.bomber.common.base.tool.chrome
 import com.mobile.app.bomber.data.http.entities.ApiMovieBanner

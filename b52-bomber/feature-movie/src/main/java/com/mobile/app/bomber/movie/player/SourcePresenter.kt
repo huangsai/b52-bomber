@@ -1,7 +1,6 @@
 package com.mobile.app.bomber.movie.player
 
 import android.graphics.Color
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import androidx.lifecycle.lifecycleScope
@@ -35,6 +34,7 @@ import java.io.IOException
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
+
 
 class SourcePresenter(
         binding: MovieActivityPlayerBinding,
@@ -126,7 +126,6 @@ class SourcePresenter(
                         }
 
 
-
                     }
                     else -> Msg.handleSourceException(source.requireError())
                 }.exhaustive
@@ -190,7 +189,7 @@ class SourcePresenter(
 
         mContext = DanmakuContext.create()
         mContext!!.setDanmakuStyle(IDisplayer.DANMAKU_STYLE_STROKEN, 3f)
-                .setDuplicateMergingEnabled(false).setScrollSpeedFactor(1.2f).setScaleTextSize(1.2f)
+                .setDuplicateMergingEnabled(false).setScrollSpeedFactor(1.8f).setScaleTextSize(1.2f)
                 //        .setCacheStuffer(new BackgroundCacheStuffer())  // 绘制背景使用BackgroundCacheStuffer
                 .setMaximumLines(maxLinesPair)
                 .preventOverlapping(overlappingEnablePair).setDanmakuMargin(40)
@@ -217,13 +216,18 @@ class SourcePresenter(
         //创建一个弹幕对象，这里后面的属性是设置滚动方向的！
         val danmaku = mContext!!.mDanmakuFactory.createDanmaku(BaseDanmaku.TYPE_SCROLL_RL) ?: return
         //弹幕显示的文字
-        danmaku.text = marquee.content
+        val text = if (marquee.content.length > 60) {
+            marquee.content.substring(0, 60)
+        } else {
+            marquee.content
+        }
+        danmaku.text = text
         //设置相应的边距，这个设置的是四周的边距
         danmaku.padding = 5
         // 可能会被各种过滤器过滤并隐藏显示，若果是本机发送的弹幕，建议设置成1；
         danmaku.priority = 1
         //是否是直播弹幕
-        danmaku.isLive = false
+        danmaku.isLive = true
         danmaku.time = binding.danmaku.currentTime + 1200
         //设置文字大小
         danmaku.textSize = 40f
