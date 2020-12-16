@@ -22,6 +22,7 @@ import com.bumptech.glide.request.transition.Transition
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
 import com.google.android.exoplayer2.ExoPlaybackException
+import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.source.MediaSource
@@ -307,7 +308,7 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
                     }
                     is Source.Error -> {
                         switchFollowState()
-                        Msg.toast("关注失败")
+                        toast("关注失败")
                     }
                 }.exhaustive
             }
@@ -325,7 +326,7 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
 
     private fun likeVideo() {
         if (video.isChecking()) {
-            Msg.toast("视频还未审核不能进行操作，请等待审核通过")
+            toast("视频还未审核不能进行操作，请等待审核通过")
             return
         }
         val oldVideo = video.copy()
@@ -338,7 +339,7 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
                     }
                     is Source.Error -> {
                         switchLikingState()
-                        Msg.toast("操作失败")
+                        toast("操作失败")
                     }
                 }
             }
@@ -586,13 +587,13 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
                         content = downurl.desc
                         bgUrl = downurl.bgUrl
                         if (TextUtils.isEmpty(shareURl) || TextUtils.isEmpty(bgUrl)) {
-                            Msg.toast("暂时不能分享")
+                            toast("暂时不能分享")
                         } else {
                             ShareDialogFragment.goSystemShareSheet(requireActivity(), shareURl, "点击一下 立即拥有 ", null)//"在xx世界最流行的色情视频app中免费观看各种视频，国产网红、日本av、欧美色情应有尽有。")
                         }
                     }
                     is Source.Error -> {
-                        Msg.toast("暂时不能分享")
+                        toast("暂时不能分享")
                         Msg.handleSourceException(source.requireError())
                     }
                 }.exhaustive
@@ -613,7 +614,7 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
                         bgUrl = downurl.bgUrl
 
                         if (TextUtils.isEmpty(shareURl) || TextUtils.isEmpty(bgUrl)) {
-                            Msg.toast("暂时不能分享")
+                            toast("暂时不能分享")
                         } else {
                             GlideApp.with(AndroidX.myApp).asBitmap().load(bgUrl).into(object : CustomTarget<Bitmap>() {
                                 override fun onLoadCleared(placeholder: Drawable?) {
@@ -635,7 +636,7 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
                         }
                     }
                     is Source.Error -> {
-                        Msg.toast("暂时不能分享")
+                        toast("暂时不能分享")
                         Msg.handleSourceException(source.requireError())
                     }
                 }.exhaustive

@@ -50,6 +50,7 @@ abstract class BaseRecommendFragment : TopHomeFragment() {
         _binding = FragmentRecommendBinding.inflate(inflater, container, false)
         binding.layoutRefresh.setOnRefreshListener(this)
         binding.viewPager.orientation = ViewPager2.ORIENTATION_VERTICAL
+        binding.viewPager.offscreenPageLimit = 1
         binding.viewPager.adapter = myAdapter
         binding.viewPager.recyclerView.also {
             endless = EndlessRecyclerViewScrollListener(it.layoutManager!!) { _, _ ->

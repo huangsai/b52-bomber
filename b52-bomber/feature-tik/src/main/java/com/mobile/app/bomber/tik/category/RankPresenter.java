@@ -7,19 +7,15 @@ import androidx.annotation.Nullable;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.util.Preconditions;
-import com.mobile.app.bomber.runner.base.PrefsManager;
-import com.mobile.app.bomber.tik.databinding.FragmentCatetoryBinding;
-import com.mobile.app.bomber.tik.login.LoginActivity;
-import com.mobile.guava.android.mvvm.RouterKt;
-import com.pacific.adapter.AdapterViewHolder;
-import com.pacific.adapter.SimpleRecyclerItem;
 import com.mobile.app.bomber.data.http.entities.ApiRank;
 import com.mobile.app.bomber.data.http.entities.Pager;
-import com.mobile.guava.jvm.date.Java8TimeKt;
-
 import com.mobile.app.bomber.tik.R;
 import com.mobile.app.bomber.tik.base.GlideExtKt;
+import com.mobile.app.bomber.tik.databinding.FragmentCatetoryBinding;
 import com.mobile.app.bomber.tik.databinding.ItemCategoryRankBinding;
+import com.mobile.guava.jvm.date.Java8TimeKt;
+import com.pacific.adapter.AdapterViewHolder;
+import com.pacific.adapter.SimpleRecyclerItem;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -68,7 +64,7 @@ public class RankPresenter extends SimpleRecyclerItem implements View.OnClickLis
         final int id = v.getId();
         if (id == R.id.layout_play_count) {
 //            if (PrefsManager.INSTANCE.isLogin()) {
-                RankActivity.start(fragment.requireActivity(), 1);
+            RankActivity.start(fragment.requireActivity(), 1);
 //            }else {
 //                RouterKt.newStartActivity(fragment, LoginActivity.class);
 //            }
@@ -77,7 +73,7 @@ public class RankPresenter extends SimpleRecyclerItem implements View.OnClickLis
 
         if (id == R.id.layout_like_count) {
 //            if (PrefsManager.INSTANCE.isLogin()) {
-                RankActivity.start(fragment.requireActivity(), 2);
+            RankActivity.start(fragment.requireActivity(), 2);
 //            }else{
 //                RouterKt.newStartActivity(fragment, LoginActivity.class);
 //            }

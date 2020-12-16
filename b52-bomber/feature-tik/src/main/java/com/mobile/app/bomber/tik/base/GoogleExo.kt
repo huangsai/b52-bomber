@@ -49,11 +49,11 @@ object GoogleExo : CacheWriter.ProgressListener {
             ))
 
     val controlDispatcher = DefaultControlDispatcher()
-    var bufferSize = ByteArray(1024 * 1024)
+    var bufferSize = ByteArray(64 * 1024)
     fun preload(uri: Uri) {
         GlobalScope.launch(Dispatchers.IO) {
             try {
-                val requestCacheLength = (if (Guava.isDebug) 64L else 1024L) * 1024L
+                val requestCacheLength = (if (Guava.isDebug) 64L else 64L) * 1024L
                 val dataSpec = DataSpec.Builder()
                         .setUri(uri)
                         .setPosition(0L)

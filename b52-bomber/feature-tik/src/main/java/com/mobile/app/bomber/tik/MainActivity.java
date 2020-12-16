@@ -19,7 +19,6 @@ import com.gyf.immersionbar.ImmersionBar;
 import com.mobile.app.bomber.common.base.Msg;
 import com.mobile.app.bomber.common.base.MyBaseActivity;
 import com.mobile.app.bomber.common.base.tool.AppUtil;
-import com.mobile.app.bomber.common.base.tool.CrashHandlerTool;
 import com.mobile.app.bomber.common.base.tool.SingleClick;
 import com.mobile.app.bomber.common.base.tool.UpdateManger;
 import com.mobile.app.bomber.data.http.entities.ApiAd;
@@ -51,7 +50,6 @@ import com.mobile.guava.jvm.domain.Source;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.json.JSONObject;
 
 import java.util.List;
 
@@ -70,7 +68,7 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         ImmersionBar.with(this).init();
-        CrashHandlerTool.getInstance().init(this, BuildConfig.DEBUG, true, 0, MainActivity.class);
+        //CrashHandlerTool.getInstance().init(this, BuildConfig.DEBUG, true, 0, MainActivity.class);
         super.onCreate(savedInstanceState);
         ScreenUtilsKt.getScreen();
         binding = ActivityMainBinding.inflate(getLayoutInflater());
