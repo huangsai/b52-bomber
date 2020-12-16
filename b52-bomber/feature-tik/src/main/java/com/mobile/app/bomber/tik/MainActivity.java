@@ -89,7 +89,7 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
         binding.mainRg.setVisibility(View.VISIBLE);
     }
 
-
+    //获取闪屏页（启动页）广告
     private void requestSplashAd() {
         model.ad(3).observe(this, source -> {
             if (source instanceof Source.Success) {
@@ -104,7 +104,7 @@ public class MainActivity extends MyBaseActivity implements View.OnClickListener
             }
         });
     }
-
+   //登录
     private void login() {
         LiveData<Source<ApiToken>> result;
         if (PrefsManager.INSTANCE.isLogin()) {

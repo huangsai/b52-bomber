@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,11 +13,14 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.mobile.app.bomber.common.base.RecyclerAdapterEmpty;
 import com.mobile.app.bomber.data.http.entities.ApiAtUser;
+import com.mobile.app.bomber.data.http.entities.ApiFollow;
 import com.mobile.app.bomber.data.http.entities.ApiVideo;
 import com.mobile.app.bomber.data.http.entities.Pager;
 import com.mobile.app.bomber.runner.RunnerX;
 import com.mobile.app.bomber.tik.base.AppRouterUtils;
+import com.mobile.app.bomber.tik.mine.MeViewModel;
 import com.mobile.app.bomber.tik.mine.UserDetailActivity;
+import com.mobile.app.bomber.tik.mine.items.AttentionFansItem;
 import com.mobile.app.bomber.tik.search.items.SearchVideoItem;
 import com.mobile.guava.android.ui.view.recyclerview.EndlessRecyclerViewScrollListener;
 import com.mobile.guava.android.ui.view.recyclerview.LinearItemDecoration;
@@ -44,6 +48,7 @@ public class FragmentSearchUser extends MyBaseFragment implements SwipeRefreshLa
     private RecyclerAdapterEmpty recyclerAdapter;
     private String result;
     private SearchViewModel model;
+    private MeViewModel meViewModel;
     private AdapterViewHolder holder;
 
     private SearchUserItem item;
@@ -118,6 +123,19 @@ public class FragmentSearchUser extends MyBaseFragment implements SwipeRefreshLa
                 Msg.INSTANCE.handleSourceException(source.requireError());
             }
             RecyclerViewUtilsKt.cancelRefreshing(binding.layoutRefresh, 500L);
+        });
+    }
+
+    public void followedState(Button button) {
+        AttentionFansItem item = AdapterUtils.INSTANCE.getHolder(button).item();
+        ApiFollow.Follow data = item.data;
+        meViewModel.follow(data.getUid(), data.isFollowing() ? 1 : 0).observe(this, apiFollowSource -> {
+            if (apiFollowSource instanceof Source.Success) {
+                data.setFollowing(!data.isFollowing());
+                recyclerAdapter.replace(item, new AttentionFansItem(data, true));
+            } else {
+                Msg.INSTANCE.handleSourceException(apiFollowSource.requireError());
+            }
         });
     }
 

@@ -1,11 +1,13 @@
 package com.mobile.app.bomber.tik.search;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -16,6 +18,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.compose.ui.res.Resource;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -49,7 +52,7 @@ import java.util.List;
 import timber.log.Timber;
 
 public class SearchActivity extends MyBaseActivity
-        implements View.OnClickListener, SearchTitleBarPresenter.Callback, SwipeRefreshLayout.OnRefreshListener, TextView.OnEditorActionListener {
+        implements View.OnClickListener, SearchTitleBarPresenter.Callback, SwipeRefreshLayout.OnRefreshListener, TextView.OnEditorActionListener,TabLayout.OnTabSelectedListener {
 
     private ActivitySearchBinding binding;
     private RecyclerAdapter recyclerAdapter = new RecyclerAdapter();
@@ -128,7 +131,7 @@ public class SearchActivity extends MyBaseActivity
         binding.searchViewpager.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
         binding.searchViewpager.setCurrentItem(0, false);
 //        recyclerAdapter.setEmptyView(binding.layoutEmptyView.NoData, binding.);
-
+        binding.searchLayoutTab.addOnTabSelectedListener(this);
         TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(binding.searchLayoutTab, binding.searchViewpager, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
@@ -293,6 +296,27 @@ public class SearchActivity extends MyBaseActivity
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void onTabSelected(TabLayout.Tab tab) {
+
+    }
+
+    @Override
+    public void onTabUnselected(TabLayout.Tab tab) {
+        tab.setCustomView(null);
+
+    }
+
+    @Override
+    public void onTabReselected(TabLayout.Tab tab) {
+        TextView textView = new TextView(this);
+        float  selectedSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, 18f, getResources().getDisplayMetrics());
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, selectedSize);
+        textView.setText(tab.getText());
+        textView.setTextColor(0x848388);
+        tab.setCustomView(textView);
     }
 
     private static class FragmentTabAdapter extends FragmentStateAdapter {

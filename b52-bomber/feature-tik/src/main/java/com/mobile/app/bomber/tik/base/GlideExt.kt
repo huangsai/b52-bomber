@@ -25,6 +25,7 @@ fun Fragment.loadProfile(url: String?, imageView: ImageView) {
             .apply(sharedProfileRequestOptions)
             .thumbnail(0.25f)
             .into(imageView)
+
 }
 
 fun decodeImgUrl(url: String?): String {

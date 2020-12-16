@@ -87,7 +87,7 @@ public class PlayListActivity extends MyBaseActivity implements View.OnClickList
         videos = Collections.singletonList(model.parseVideo(videoJson));
         bindData();
     }
-
+    //根据video id 进行数据的绑定
     private void getVideoById(long videoId) {
         model.videoById(videoId).observe(this, source -> {
             if (source instanceof Source.Success) {
@@ -99,7 +99,7 @@ public class PlayListActivity extends MyBaseActivity implements View.OnClickList
             binding.progress.setVisibility(View.INVISIBLE);
         });
     }
-
+   //绑定页面数据
     private void bindData() {
         adapter = new MyAdapter();
         binding.viewPager.setOrientation(ViewPager2.ORIENTATION_VERTICAL);
