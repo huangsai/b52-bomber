@@ -22,7 +22,7 @@
 100%=00（全透明）
 -->
 <resources>
-    <color name="home_tab_text_normal">#d1d8e3</color>
+    <color name="home_tab_text_normal">#848388</color>
     <color name="home_tab_text_pressed">#FFFFFF</color>
     <color name="main_background">#060612</color>
     <color name="comment_name">#848388</color>

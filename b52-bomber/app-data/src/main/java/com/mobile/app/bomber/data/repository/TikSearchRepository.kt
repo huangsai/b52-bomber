@@ -11,6 +11,7 @@ import com.mobile.guava.data.toSource
 import com.mobile.guava.jvm.domain.Source
 import kotlinx.coroutines.flow.Flow
 import retrofit2.Call
+import sun.rmi.runtime.Log
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -72,7 +73,13 @@ class TikSearchRepository @Inject constructor(
 
 
     suspend fun searchTikUserList(keyword: String): Source<List<ApiAtUser.User>> {
-        val call = dataService.searchTikUsers(keyword)
+        var uids: Long = 0L
+        if (!appPrefsManager.isLogin()) {
+            uids = 0L
+        } else {
+            uids = appPrefsManager.getUserId()
+        }
+        val call = dataService.searchTikUsers(keyword, uids)
         return try {
             call.execute().toSource() {
                 it.users

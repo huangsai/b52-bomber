@@ -32,6 +32,8 @@ public class SearchUserItem extends SimpleRecyclerItem {
                 .load(data.getProfile())
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(binding.heartImage);
+        binding.fensiAtten.setText(data.getIsfollow() ? "取消关注" : "+关注");
+        binding.fensiAtten.setSelected(data.getIsfollow());
         holder.attachOnClickListener(R.id.layout_user_item);
         holder.attachOnClickListener(R.id.fensi_atten);
         binding.nofiNick.setText(data.getUsername());

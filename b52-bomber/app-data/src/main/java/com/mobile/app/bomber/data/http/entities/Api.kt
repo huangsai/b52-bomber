@@ -14,7 +14,6 @@ const val HOST_TAG = HOST_TAG_TEST
 //测试环境  http://117.50.119.233  http://119.28.18.13
 const val HOST_TEST = "http://172.31.10.18/"
 const val HOST_TEST_UPLOAD = "http://172.31.10.18:8080"
-
 //正式环境  http://api.zomppga.tokyo:444
 const val HOST_RELEASE = "https://weiseapi.zkangcn.com"
 const val HOST_RELEASE_UPLOAD = "https://weisesp.pumiaox2.com"
@@ -222,7 +221,7 @@ data class ApiFollow(
             @Json(name = "Isfollowed") var isFollowing: Boolean?
     ) {
         fun toUser(): ApiAtUser.User {
-            return ApiAtUser.User(followUid, gender, username, profile, sign, "", "")
+            return ApiAtUser.User(followUid, gender, username, profile, sign, "", "",true)
         }
     }
 }
@@ -536,7 +535,8 @@ data class ApiAtUser(
             @Json(name = "pic") val profile: String?,
             @Json(name = "sign") val sign: String?,
             @Json(name = "birthday") val birthday: String?,
-            @Json(name = "wechat") val wechat: String?
+            @Json(name = "wechat") val wechat: String?,
+            @Json(name = "isFollow") var isfollow: Boolean?
     )
 }
 

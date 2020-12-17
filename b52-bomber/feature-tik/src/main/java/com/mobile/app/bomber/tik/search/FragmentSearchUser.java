@@ -12,8 +12,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.mobile.app.bomber.common.base.RecyclerAdapterEmpty;
+import com.mobile.app.bomber.common.base.tool.SingleClick;
 import com.mobile.app.bomber.data.http.entities.ApiAtUser;
 import com.mobile.app.bomber.data.http.entities.ApiFollow;
+import com.mobile.app.bomber.data.http.entities.ApiUser;
 import com.mobile.app.bomber.data.http.entities.ApiVideo;
 import com.mobile.app.bomber.data.http.entities.Pager;
 import com.mobile.app.bomber.runner.RunnerX;
@@ -71,13 +73,18 @@ public class FragmentSearchUser extends MyBaseFragment implements SwipeRefreshLa
         binding.userRecycle.addItemDecoration(LinearItemDecoration.builder(requireContext()).bottomMargin(R.dimen.size_1dp).build());
         binding.userRecycle.setLayoutManager(layoutManager);
         model = AppRouterUtils.viewModels(this, SearchViewModel.class);
+        meViewModel = AppRouterUtils.viewModels(this, MeViewModel.class);
+
 //        binding.layoutEmptyView.NoData.setVisibility(View.VISIBLE);
         recyclerAdapter.setEmptyView(binding.layoutEmptyView.NoData, binding.userRecycle);
         recyclerAdapter.setOnClickListener(v -> {
+            if (v.getId() == R.id.fensi_atten) {
+                followedState((Button) v);
+                return;
+            }
             if (v.getId() == R.id.layout_user_item) {
 //                Msg.INSTANCE.toast("点击了用户条目");
                 holder = AdapterUtils.INSTANCE.getHolder(v);
-                int index = holder.getBindingAdapterPosition();
                 item = holder.item();
                 UserDetailActivity.start(getActivity(), item.data.getUid());
             }
@@ -88,13 +95,11 @@ public class FragmentSearchUser extends MyBaseFragment implements SwipeRefreshLa
                 binding.userRecycle.getLayoutManager(),
                 (count, view) -> {
                     if (pager.isAvailable()) {
-                        refreshData();
+//                        refreshData();
                     }
                     return null;
                 }
         );
-
-
         binding.userRecycle.addOnScrollListener(endless);
         binding.layoutRefresh.setRefreshing(true);
 
@@ -110,7 +115,7 @@ public class FragmentSearchUser extends MyBaseFragment implements SwipeRefreshLa
             if (source instanceof Source.Success) {
                 List<ApiAtUser.User> users = source.requireData();
                 List<SearchUserItem> items = new ArrayList<>();
-                for (ApiAtUser.User user: users) {
+                for (ApiAtUser.User user : users) {
                     SearchUserItem searchVideoItem = new SearchUserItem(user);
                     items.add(searchVideoItem);
                 }
@@ -118,7 +123,6 @@ public class FragmentSearchUser extends MyBaseFragment implements SwipeRefreshLa
 //                    Msg.INSTANCE.toast("暂无数据");
                 }
                 recyclerAdapter.replaceAll(items);
-
             } else {
                 Msg.INSTANCE.handleSourceException(source.requireError());
             }
@@ -127,12 +131,12 @@ public class FragmentSearchUser extends MyBaseFragment implements SwipeRefreshLa
     }
 
     public void followedState(Button button) {
-        AttentionFansItem item = AdapterUtils.INSTANCE.getHolder(button).item();
-        ApiFollow.Follow data = item.data;
-        meViewModel.follow(data.getUid(), data.isFollowing() ? 1 : 0).observe(this, apiFollowSource -> {
+        SearchUserItem item = AdapterUtils.INSTANCE.getHolder(button).item();
+        ApiAtUser.User data = item.data;
+        meViewModel.follow(item.data.getUid(), item.data.getIsfollow() ? 1 : 0).observe(getViewLifecycleOwner(), apiFollowSource -> {
             if (apiFollowSource instanceof Source.Success) {
-                data.setFollowing(!data.isFollowing());
-                recyclerAdapter.replace(item, new AttentionFansItem(data, true));
+                item.data.setIsfollow(!item.data.getIsfollow());
+                recyclerAdapter.replace(item, new SearchUserItem(data));
             } else {
                 Msg.INSTANCE.handleSourceException(apiFollowSource.requireError());
             }
