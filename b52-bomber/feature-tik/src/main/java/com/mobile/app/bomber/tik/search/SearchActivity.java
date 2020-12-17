@@ -315,7 +315,7 @@ public class SearchActivity extends MyBaseActivity
         float  selectedSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, 18f, getResources().getDisplayMetrics());
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, selectedSize);
         textView.setText(tab.getText());
-        textView.setTextColor(0x848388);
+        textView.setTextColor(Color.WHITE);
         tab.setCustomView(textView);
     }
 

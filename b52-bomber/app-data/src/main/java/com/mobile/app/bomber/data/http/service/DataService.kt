@@ -204,8 +204,8 @@ interface DataService {
     ): Call<ApiVideoById>
 
     //搜索用户
-    @GET("/user/searchuser/{keyword}/")
-    fun searchTikUsers(@Path("keyword") keyword: String): Call<ApiAtUser>
+    @GET("/user/searchuser/{name}/{uid}/")
+    fun searchTikUsers(@Path("name") keyword: String,@Path("uid") uid: Long): Call<ApiAtUser>
 
     //播放时长
     @POST("/video/postvideoplayduration/")

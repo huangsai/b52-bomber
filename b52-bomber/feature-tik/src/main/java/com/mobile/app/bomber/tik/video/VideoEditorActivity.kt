@@ -103,11 +103,7 @@ class VideoEditorActivity : MyBaseActivity(), View.OnClickListener, OnExportList
     override fun onExportCanceled() {
         Timber.tag("VideoEditorActivity").d("合成取消")
     }
-    fun videoCompression(){
-//        comPressPath = SiliCompressor.with(this).compressVideo(exportVideoPath, exportVideoPath)
-    }
     override fun onExportComplete() {
-        videoCompression()
         Timber.tag("VideoEditorActivity").d("合成完成")
         hideLoading()
         VideoUploadActivity.start(this, exportVideoPath)
