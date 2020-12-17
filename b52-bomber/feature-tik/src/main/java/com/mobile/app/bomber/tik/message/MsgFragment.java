@@ -124,7 +124,9 @@ public class MsgFragment extends TopMainFragment implements View.OnClickListener
     @Override
     public void load(@NonNull ImageView imageView, @NonNull AdapterViewHolder holder) {
         MsgItem item = holder.item();
-        GlideExtKt.loadProfile(this, item.data.getFromuserinfo().get(0).getPic(), imageView);
+        if (item.data.getFromuserinfo() != null) {
+            GlideExtKt.loadProfile(this, item.data.getFromuserinfo().get(0).getPic(), imageView);
+        }
     }
 
     @SingleClick

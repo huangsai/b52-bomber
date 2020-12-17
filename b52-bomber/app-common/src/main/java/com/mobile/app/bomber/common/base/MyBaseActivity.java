@@ -65,7 +65,7 @@ public abstract class MyBaseActivity extends BaseActivity {
     }
 
     public void hideLoading() {
-        if (loadingDialog != null) {
+        if (loadingDialog != null && !isDestroyed()) {
             loadingDialog.dismiss();
             loadingDialog = null;
         }
