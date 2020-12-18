@@ -88,6 +88,7 @@ public class VideoUploadActivity extends MyBaseActivity implements View.OnClickL
                     .into(binding.recordCoverImg);
             sourceVideoFile = new File(videoPath);
             if (sourceVideoFile != null) {
+                //生成缩略图
                 Bitmap coverBitmap = FileUtil.getLocalVideoBitmap(videoPath);
                 if (coverBitmap != null) {
                     String coverFilePath = FileUtil.saveBitmapToFile(coverBitmap, "cover");

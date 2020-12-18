@@ -106,6 +106,7 @@ public class FileUtil {
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         } catch (RuntimeException e) {
+            //如果setDataSource报错  bitmap取一张透明图片
             bitmap = Bitmap.createBitmap(100, 100,
                     Bitmap.Config.ARGB_8888);
             bitmap.eraseColor(Color.parseColor("#00000000"));

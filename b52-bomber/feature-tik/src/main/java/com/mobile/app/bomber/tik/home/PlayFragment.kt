@@ -454,6 +454,9 @@ class PlayFragment : MyBaseFragment(), View.OnClickListener, Player.EventListene
     }
 
     private fun playDuration(duration: Long) {
+        if (duration == 0L) {
+            return
+        }
         val type = if (video.adId == atd) {
             0
         } else {
