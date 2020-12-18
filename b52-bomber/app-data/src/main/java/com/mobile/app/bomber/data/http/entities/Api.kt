@@ -14,6 +14,7 @@ const val HOST_TAG = HOST_TAG_TEST
 //测试环境  http://117.50.119.233  http://119.28.18.13
 const val HOST_TEST = "http://172.31.10.18/"
 const val HOST_TEST_UPLOAD = "http://172.31.10.18:8080"
+
 //正式环境  http://api.zomppga.tokyo:444
 const val HOST_RELEASE = "https://weiseapi.zkangcn.com"
 const val HOST_RELEASE_UPLOAD = "https://weisesp.pumiaox2.com"
@@ -132,7 +133,8 @@ data class ApiVideo(
         }
 
         fun moment(): String {
-            return title.nullSafe() + label.nullSafe()
+//            return title.nullSafe() + label.nullSafe()
+            return title.nullSafe()
         }
 
         fun decodeVideoUrl(): String {
@@ -221,7 +223,7 @@ data class ApiFollow(
             @Json(name = "Isfollowed") var isFollowing: Boolean?
     ) {
         fun toUser(): ApiAtUser.User {
-            return ApiAtUser.User(followUid, gender, username, profile, sign, "", "",true)
+            return ApiAtUser.User(followUid, gender, username, profile, sign, "", "", true)
         }
     }
 }
