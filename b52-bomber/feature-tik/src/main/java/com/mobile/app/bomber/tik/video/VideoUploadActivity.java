@@ -87,14 +87,15 @@ public class VideoUploadActivity extends MyBaseActivity implements View.OnClickL
                     .thumbnail(0.25f)
                     .into(binding.recordCoverImg);
             sourceVideoFile = new File(videoPath);
-        }
-        if (sourceVideoFile != null) {
-            Bitmap coverBitmap = FileUtil.getLocalVideoBitmap(sourceVideoFile);
-            if (coverBitmap != null) {
-                String coverFilePath = FileUtil.saveBitmapToFile(coverBitmap, "cover");
-                coverFile = new File(coverFilePath);
+            if (sourceVideoFile != null) {
+                Bitmap coverBitmap = FileUtil.getLocalVideoBitmap(videoPath);
+                if (coverBitmap != null) {
+                    String coverFilePath = FileUtil.saveBitmapToFile(coverBitmap, "cover");
+                    coverFile = new File(coverFilePath);
+                }
             }
         }
+
         initLabelsData();
         binding.editDes.addTextChangedListener(new TextWatcher() {
             @Override

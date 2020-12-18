@@ -258,7 +258,7 @@ data class ApiFile(
             @Json(name = "fastkey") val token: String,
             @Json(name = "videourl") val url: String,
             @Json(name = "cover") val coverUrl: String,
-            @Json(name = "desc") val desc: String,
+            @Json(name = "title") val desc: String,
             @Json(name = "label") val label: String,
             @Json(name = "lat") val latitude: Double,
             @Json(name = "lng") val lng: Double
