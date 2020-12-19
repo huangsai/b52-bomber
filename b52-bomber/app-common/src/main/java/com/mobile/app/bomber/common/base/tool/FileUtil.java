@@ -1,8 +1,6 @@
 package com.mobile.app.bomber.common.base.tool;
 
 import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.media.MediaMetadataRetriever;
 import android.os.Environment;
 
 import com.mobile.app.bomber.common.base.Msg;
@@ -87,34 +85,6 @@ public class FileUtil {
             e.printStackTrace();
         }
         return null;
-    }
-
-
-    /**
-     * 获取视频文件的第一帧
-     *
-     * @param path 视频文件路径
-     */
-    public static Bitmap getLocalVideoBitmap(String path) {
-        Bitmap bitmap = null;
-        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-        try {
-            //根据文件路径获取缩略图
-            retriever.setDataSource(path);
-            //获得第一帧图片
-            bitmap = retriever.getFrameAtTime();
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        } catch (RuntimeException e) {
-            //如果setDataSource报错  bitmap取一张透明图片
-            bitmap = Bitmap.createBitmap(100, 100,
-                    Bitmap.Config.ARGB_8888);
-            bitmap.eraseColor(Color.parseColor("#00000000"));
-            e.printStackTrace();
-        } finally {
-            retriever.release();
-        }
-        return bitmap;
     }
 
     /**

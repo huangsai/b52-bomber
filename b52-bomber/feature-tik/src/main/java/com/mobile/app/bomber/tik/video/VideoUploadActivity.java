@@ -3,8 +3,8 @@ package com.mobile.app.bomber.tik.video;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,11 +13,12 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.mobile.app.bomber.common.base.Msg;
 import com.mobile.app.bomber.common.base.MyBaseActivity;
 import com.mobile.app.bomber.common.base.tool.FileUtil;
@@ -29,7 +30,6 @@ import com.mobile.app.bomber.tik.base.AppRouterUtils;
 import com.mobile.app.bomber.tik.databinding.ActivityVideoUploadBinding;
 import com.mobile.app.bomber.tik.home.LocationLiveData;
 import com.mobile.ext.glide.GlideApp;
-import com.mobile.ext.permission.PermissionCallback;
 import com.mobile.ext.permission.PermissionRequest;
 import com.mobile.guava.android.mvvm.RouterKt;
 import com.mobile.guava.jvm.coroutines.Bus;
@@ -82,19 +82,24 @@ public class VideoUploadActivity extends MyBaseActivity implements View.OnClickL
     private void initView() {
         if (videoPath != null) {
             GlideApp.with(this)
+                    .asBitmap()
                     .load(videoPath)
-                    .transition(DrawableTransitionOptions.withCrossFade())
                     .thumbnail(0.25f)
-                    .into(binding.recordCoverImg);
+                    .into(new CustomTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                            //glide加载视频缩略图转换成bitmap在转换成file用来上传
+                            binding.recordCoverImg.setImageBitmap(resource);
+                            String coverFilePath = FileUtil.saveBitmapToFile(resource, "cover");
+                            coverFile = new File(coverFilePath);
+                        }
+
+                        @Override
+                        public void onLoadCleared(@Nullable Drawable placeholder) {
+
+                        }
+                    });
             sourceVideoFile = new File(videoPath);
-            if (sourceVideoFile != null) {
-                //生成缩略图
-                Bitmap coverBitmap = FileUtil.getLocalVideoBitmap(videoPath);
-                if (coverBitmap != null) {
-                    String coverFilePath = FileUtil.saveBitmapToFile(coverBitmap, "cover");
-                    coverFile = new File(coverFilePath);
-                }
-            }
         }
 
         initLabelsData();

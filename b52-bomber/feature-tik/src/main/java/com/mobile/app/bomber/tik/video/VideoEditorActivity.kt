@@ -3,7 +3,6 @@ package com.mobile.app.bomber.tik.video
 import android.os.Bundle
 import android.view.SurfaceView
 import android.view.View
-import com.google.android.material.internal.ContextUtils.getActivity
 import com.mobile.app.bomber.common.base.Msg
 import com.mobile.app.bomber.common.base.MyBaseActivity
 import com.mobile.app.bomber.common.base.tool.SingleClick
@@ -34,6 +33,7 @@ class VideoEditorActivity : MyBaseActivity(), View.OnClickListener, OnExportList
         initView()
         initPlay()
     }
+
     //初始化视频配置
     private fun initPlay() {
         val mediasArrays = intent.getSerializableExtra("medias") as Array<*>
@@ -83,7 +83,7 @@ class VideoEditorActivity : MyBaseActivity(), View.OnClickListener, OnExportList
      * 合成视频
      */
     private fun exportVideo() {
-        exportVideoPath = "${externalCacheDir?.absolutePath}/weiseRecord.mp4"
+        exportVideoPath = "${externalCacheDir?.absolutePath}/video_${System.currentTimeMillis()}.mp4"
         val info = VideoExportInfo(exportVideoPath!!)
         info.videoBitRate = mVideoBitRate
         info.audioBitRate = mAudioBitRate
@@ -103,6 +103,7 @@ class VideoEditorActivity : MyBaseActivity(), View.OnClickListener, OnExportList
     override fun onExportCanceled() {
         Timber.tag("VideoEditorActivity").d("合成取消")
     }
+
     override fun onExportComplete() {
         Timber.tag("VideoEditorActivity").d("合成完成")
         System.out.printf("++++-"+exportVideoPath)
