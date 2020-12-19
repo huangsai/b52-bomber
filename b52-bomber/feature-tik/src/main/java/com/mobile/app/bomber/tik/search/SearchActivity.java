@@ -46,8 +46,12 @@ import com.mobile.app.bomber.common.base.tool.SingleClick;
 import com.mobile.app.bomber.tik.databinding.ActivitySearchBinding;
 import com.mobile.app.bomber.tik.search.items.SearchHistoryItem;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import timber.log.Timber;
 
@@ -200,6 +204,11 @@ public class SearchActivity extends MyBaseActivity
             Msg.INSTANCE.toast("请输入搜索内容");
             return;
         }
+        Boolean injure = inputJudge(keyword);
+        if (injure) {
+            Msg.INSTANCE.toast("只能输入26个字母和数字");
+            return;
+        }
         binding.swipeRefreshSearch.setEnabled(false);
         bundle.putString("keyword", keyword);
         fragmentSearchVideo.setArguments(bundle);
@@ -217,6 +226,22 @@ public class SearchActivity extends MyBaseActivity
         );
     }
 
+    /**
+     * 判断是否包含特殊字符
+     * @return  false:未包含 true：包含
+     */
+    public static boolean inputJudge(String editText) {
+        String speChat = "[`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]";
+        Pattern pattern = Pattern.compile(speChat);
+        Log.d("inputJudge", "pattern: "+ pattern);
+        Matcher matcher = pattern.matcher(editText);
+        Log.d("inputJudge", "matcher: "+ matcher);
+        if (matcher.find()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     @SingleClick
     @Override
     public void onClick(View v) {

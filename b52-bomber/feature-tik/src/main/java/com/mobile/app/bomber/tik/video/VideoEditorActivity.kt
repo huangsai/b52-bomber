@@ -105,6 +105,7 @@ class VideoEditorActivity : MyBaseActivity(), View.OnClickListener, OnExportList
     }
     override fun onExportComplete() {
         Timber.tag("VideoEditorActivity").d("合成完成")
+        System.out.printf("++++-"+exportVideoPath)
         hideLoading()
         VideoUploadActivity.start(this, exportVideoPath)
         finish()
